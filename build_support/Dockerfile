@@ -12,7 +12,7 @@ RUN wget https://cmake.org/files/v3.10/cmake-3.10.0-Linux-x86_64.tar.gz && \
     tar zxf cmake-3.10.0-Linux-x86_64.tar.gz
 
 RUN echo 'export PATH='$PWD'/cmake-3.10.0-Linux-x86_64/bin/:$PATH' >> profiles/cmake.profile
-RUN ./profiles/cmake.profile
+RUN source ./profiles/cmake.profile
 RUN export JAVA_HOME=`ls -d /usr/lib/jvm/java-1.8.0-openjdk-* | head -n 1`
 RUN echo 'export JAVA_HOME='$JAVA_HOME >> profiles/java.profile && \
     echo 'export JRE_HOME=$JAVA_HOME/jre' >> profiles/java.profile && \
@@ -29,10 +29,10 @@ RUN echo 'export MAVEN_HOME='$PWD'/apache-maven-3.5.0' >> profiles/maven.profile
 
 RUN wget https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.15.tar.gz
 RUN tar xzf libiconv-1.15.tar.gz && \
-    pushd libiconv-1.15 \
-    ./configure \
-    make \
-    sudo make install \
+    pushd libiconv-1.15 && \
+    ./configure && \
+    make && \
+    sudo make install && \
     popd
 
 RUN wget http://mirrors.tuna.tsinghua.edu.cn/apache/hadoop/common/hadoop-2.6.5/hadoop-2.6.5.tar.gz
