@@ -1,0 +1,505 @@
+/***************************************************************************
+ *
+ * Copyright (c) 2013 Baidu, Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ **************************************************************************/
+// Author: Wen Xiang <bigflow-opensource@baidu.com>
+//         Pan Yuchang <bigflow-opensource@baidu.com>
+// Physical execution plan defination.
+
+
+import "flume/proto/config.proto";
+import "flume/proto/entity.proto";
+import "flume/proto/logical_plan.proto";
+import "flume/proto/transfer_encoding.proto";
+
+package baidu.flume;
+
+message PbPhysicalPlan {
+    repeated PbJob job = 1;
+    optional PbEntity environment = 2;
+}
+
+message PbJob {
+    enum Type {
+        LOCAL = 1;
+        DAGMR = 2;
+        SPARK = 3;
+        TM = 4;
+
+        MONITOR = 100;
+    }
+
+    required string id = 1; // uuid
+    required Type type = 2;
+    optional bytes debug_info = 3;
+
+    optional PbLocalJob local_job = 101;
+    optional PbDceJob dce_job = 102;
+    optional PbSparkJob spark_job = 103;
+    optional PbTmJob tm_job = 104;
+
+    optional PbMonitorJob monitor_job = 200;
+    optional PbJobConfig job_config = 201;
+}
+
+message PbMonitorJob {
+    optional PbMonitorTask client_stream_task = 1;
+    optional PbMonitorTask client_prepared_task = 2;
+    optional PbMonitorTask worker_stream_task = 3;
+    optional PbMonitorTask worker_prepared_task = 4;
+}
+
+message PbMonitorTask {
+    required PbExecutor root = 1;
+    optional Input input = 2;
+
+    repeated MonitorWriter monitor_writer = 3;
+    optional MonitorReader monitor_reader = 4;
+
+    repeated PbLogicalPlanNode node = 13;
+    repeated PbScope scope = 14;
+
+    message Input {
+        required string id = 1;
+    }
+
+    message MonitorWriter {
+        enum Type {
+            LOCAL = 0;
+            RPC = 1;
+        }
+
+        required string id = 1;  // external id
+        required Type type = 2 [default = LOCAL];
+        required uint32 tag = 3;
+    }
+
+    message MonitorReader {
+        required string id = 1;  // external id
+        repeated uint32 tag = 2;
+        repeated string source = 3;
+    }
+}
+
+message PbLocalJob {
+    required PbLocalTask task = 1;
+    repeated PbLocalInput input = 2;
+}
+
+message PbLocalTask {
+    required PbExecutor root = 1;
+}
+
+message PbLocalInput {
+    required string id = 1;
+    required PbEntity spliter = 2;
+    repeated string uri = 3;
+}
+
+message PbSparkJob {
+    repeated PbSparkRDD rdd = 1;
+
+    message PbSparkJobInfo {
+        // cache_node_id -> cache_task_id is a map
+        repeated string cache_node_id = 1; // cache node id
+        repeated uint32 cache_task_id = 2; // corresponding cache_task id
+    }
+
+    optional PbSparkJobInfo job_info = 2;
+}
+
+message PbSparkTask {
+    // Move 'type' to PbSparkRDD in the future
+    enum Type {
+        INPUT = 1;
+        GENERAL = 2;
+        CACHE = 3;
+    }
+
+    optional uint32 task_index = 1;
+
+    optional Type type = 2;
+
+    // Not needed maybe
+    optional uint32 rdd_index = 3;
+    optional uint32 concurrency = 4 [default = 1];
+    optional uint32 partition_offset = 5 [default = 0];
+
+    // if it's a CACHE SparkTask, this field is needed to indicate cached node's id.
+    optional string cache_node_id = 10;
+    optional uint32 cache_task_index = 11;
+    optional uint32 cache_rdd_index = 12;
+    optional uint32 cache_effective_key_number = 13;
+
+    // cpu & heap profile
+    optional bool do_cpu_profile = 50 [default = false];
+    optional bool do_heap_profile = 51 [default = false];
+
+    optional PbHadoopInput hadoop_input = 101;
+    optional PbShuffleInput shuffle_input = 102;
+    optional PbShuffleOutput shuffle_output = 103;
+    optional PbCacheInput cache_input = 104;
+
+    optional PbExecutor root = 201;  // RDDExecutor(External)
+
+    // runtime task context
+    optional PbRuntimeTaskContext runtime_task_ctx = 301;
+
+    message PbRuntimeTaskContext {
+        optional string task_attempt_id = 1;
+    }
+
+    message PbHadoopInput {
+        optional string id = 1;
+        optional PbEntity spliter = 2;
+        repeated string uri = 3;
+        optional string input_format = 4;
+    }
+
+    message PbCacheInput {
+        optional string id = 1;
+        optional string cache_node_id = 2;
+        optional uint32 key_num = 3;
+    }
+
+    message PbShuffleOutput {
+        message Channel {
+            enum TransferType {
+                BROADCAST = 0;
+                KEY = 1;
+                SEQUENCE = 2;
+                WINDOW = 3;
+            }
+            required string from = 1;
+
+            required PbScope transfer_scope = 2;
+            required PbTransferEncoder encoder = 3;
+
+            required uint32 task_index = 4;
+            optional uint32 task_concurrency = 5 [default = 0];
+            optional uint32 task_offset = 6 [default = 0];
+            optional TransferType transfer_type = 7;
+        };
+
+        required string id = 1;
+        repeated Channel channel = 2;
+    };
+
+    message PbShuffleInput {
+        message Channel {
+            required string identity = 1;
+            required string port = 2;
+            required uint32 priority = 3;
+        }
+
+        required string id = 1;  // external id
+        required PbTransferDecoder decoder = 2;
+        repeated Channel channel = 3;
+        optional bool must_keep_empty_group = 4;
+    };
+}
+
+message PbSparkRDD {
+    optional uint32 rdd_index = 1;
+    repeated PbSparkTask task = 2;
+    repeated uint32 parent_rdd_index = 3;
+    optional uint32 concurrency = 4;
+    optional int32 memory_limit = 5;
+}
+
+message PbDceJob {
+    repeated PbDceTask task = 1;
+    repeated PbDceVertex vertex = 2;
+    optional string job_name = 3;
+}
+
+message PbDceVertex {
+    repeated uint32 next_vertex_index = 1;  // abaci.dag.next.vertex.list.$index = $value_list
+    optional uint32 concurrency = 2;  // mapred.{map,reduce}.tasks.$index=$value
+    repeated uint32 task_index = 3;  // task indexs which belong to current vertex
+    optional bool use_dynamic_partition = 4 [default = false];
+    optional int32 memory_limit = 5;  // hadoop.hce.memory.limit.$index = $value
+}
+
+message PbDceTask {
+    required uint32 task_index = 1;
+    required PbExecutor root = 2;
+    repeated uint32 next_vertex = 3;
+    optional uint32 concurrency = 4 [default = 1];
+    optional uint32 partition_offset = 5 [default = 0];  // need by merge task
+    optional uint32 vertex_index = 6;
+
+    optional MapInput input = 201;
+    optional ReduceInput reduce_input = 202;
+    optional ReduceOutput reduce_output = 203;
+
+    message MapInput {
+        required string id = 1;
+        required PbEntity spliter = 2;
+        repeated string uri = 3;
+        optional string input_format = 4;
+    }
+
+    message ReduceOutput {
+        message Channel {
+            required string from = 1;
+
+            required PbScope transfer_scope = 2;
+            required PbTransferEncoder encoder = 3;
+
+            required uint32 task_index = 4;
+            optional uint32 task_concurrency = 5 [default = 0];
+            optional uint32 task_offset = 6 [default = 0];
+            optional bool task_use_dynamic_partition = 7 [default = false];
+            optional string session_name = 8;
+            optional bool broadcast = 9 [default = false];
+            optional uint32 session_index = 10;
+        };
+
+        required string id = 1;
+        repeated Channel channel = 2;
+    };
+
+    message ReduceInput {
+        message Channel {
+            required string identity = 1;
+            required string port = 2;
+            required uint32 priority = 3;
+        }
+
+        required string id = 1;  // external id
+        required PbTransferDecoder decoder = 2;
+        repeated Channel channel = 3;
+        optional bool must_keep_empty_group = 4;
+        optional string session_name = 5;
+        repeated string broadcast_session_name = 6;
+    };
+}
+
+message PbTmJob {
+    repeated PbTmTask task = 1;
+    optional string job_name = 2;
+    optional bool need_load_token = 3;
+}
+
+message PbTmTask {
+    required uint32 task_index = 1;
+    required PbExecutor root = 2;
+    repeated uint32 next_tasks = 3;
+    optional uint32 concurrency = 4;
+    optional int32 memory_limit = 5; // memory used (MB)
+    optional int32 cpu_limit = 6; // cpu used (format, core = format / 100)
+    optional string name = 7; //task worker processor name
+
+    optional StreamInput stream_input = 201;
+    optional TaskInput task_input = 202;
+    optional TaskOutput task_output = 203;
+
+    message StreamInput {
+        required string id = 1;
+        required PbEntity spliter = 2;
+        repeated string uri = 3;
+    }
+
+    message TaskInput {
+        message Channel {
+            required string identity = 1;
+            required string port = 2;
+            required uint32 tag = 3;
+        }
+        required string id = 1;
+        repeated Channel channel = 2;
+    }
+
+    message TaskOutput {
+        message Channel {
+            required string from = 1;
+            required PbScope transfer_scope = 2;
+            required uint32 tag = 3;
+
+            required uint32 task_index = 4;
+            required string task_name = 5;
+            optional uint32 task_concurrency = 6;
+            optional bool distribute_by_default = 7 [default = false];
+        }
+        required string id = 1;
+        repeated Channel channel = 2;
+    }
+}
+
+message PbExecutor {
+    enum Type {
+        TASK = 0;               // drive other executors
+        EXTERNAL = 1;           // used by different backends to embed engine-specific logic
+        PROCESSOR = 2;          // used to executor Processor
+        LOGICAL = 3;            // used to execute a logical plan node (Sink/Load/Union)
+        SHUFFLE = 4;            // perform shuffle
+        WRITE_CACHE = 5;        // flush content to persistent storage
+        PARTIAL = 6;            // process partial inputs at one time
+        CREATE_EMPTY_RECORD = 7; // create a record for every empty group
+        FILTER_EMPTY_RECORD = 8; // filter records for every empty group
+        STREAM_TASK = 9;
+        STREAM_EXTERNAL = 10;
+        STREAM_PROCESSOR = 11;
+        STREAM_LOGICAL = 12;
+        STREAM_SHUFFLE = 13;
+    }
+
+    message Dispatcher {
+        required string identity = 1;
+        optional PbEntity objector = 2;
+        optional uint32 priority = 3;
+        optional int32 usage_count = 4;
+        optional bool need_dataset = 5 [default = true];
+    }
+
+    required Type type = 1;
+    optional bytes debug_info = 2;
+    required uint32 scope_level = 3;
+    repeated string input = 4;
+    repeated string output = 5;
+    repeated Dispatcher dispatcher = 6;
+    repeated PbExecutor child = 7;
+    optional string identity = 8;
+
+    optional PbExternalExecutor external_executor = 101;
+    optional PbProcessorExecutor processor_executor = 102;
+    optional PbLogicalExecutor logical_executor = 103;
+    optional PbShuffleExecutor shuffle_executor = 104;
+    optional PbWriteCacheExecutor write_cache_executor = 105;
+    optional PbPartialExecutor partial_executor = 106;
+    optional PbCreateEmptyRecordExecutor create_empty_record_executor = 107;
+    optional PbFilterEmptyRecordExecutor filter_empty_record_executor = 108;
+
+    optional PbStreamExternalExecutor stream_external_executor = 201;
+    optional PbStreamProcessorExecutor stream_processor_executor = 202;
+    optional PbStreamLogicalExecutor stream_logical_executor = 203;
+    optional PbStreamShuffleExecutor stream_shuffle_executor = 204;
+}
+
+message PbExternalExecutor {
+    required string id = 1;  // indicate LocalInput, DceInput or DceShuffle, etc.
+}
+
+message PbCreateEmptyRecordExecutor {
+    optional bytes output = 1;
+};
+
+message PbFilterEmptyRecordExecutor {
+    optional bytes output = 1;
+};
+
+message PbProcessorExecutor {
+    enum SourceType {
+        DUMMY = 0;
+        REQUIRE_STREAM = 1;
+        REQUIRE_ITERATOR = 2;
+    }
+
+    message Source {
+        required string identity = 1;
+        required SourceType type = 2;
+        optional bool is_prepared = 3 [default = false];
+    }
+
+    required string identity = 1;
+    required PbEntity processor = 2;
+    repeated Source source = 3;
+    optional uint32 partial_key_number = 4 [default = 0];
+}
+
+message PbLogicalExecutor {
+    required PbLogicalPlanNode node = 1;
+}
+
+message PbShuffleExecutor {
+    enum Type {
+        LOCAL = 0;  // deal with unordered input streams
+        MERGE = 1;  // deal with ordered input streams
+        COMBINE = 2;  // combine ordered and unordered input streams
+        LOCAL_DISTRIBUTE = 3;  // distribute all input streams to a fixed partition
+        BY_RECORD = 4; // distribute every record to a different group
+    }
+
+    message MergeSource {
+        required string input = 1;  // sources got from outside, with binary encoding format
+        required string output = 2;  // sources given to child
+        optional uint32 priority = 3;
+    }
+
+    required PbScope scope = 1;
+    required Type type = 2;
+    repeated PbLogicalPlanNode node = 3;
+    repeated MergeSource source = 4;
+    optional uint32 partition = 5;
+}
+
+message PbWriteCacheExecutor {
+    required string from = 1;
+    required string tmp_data_path = 2; // where cache content goes
+    optional int32 key_num = 3;
+}
+
+message PbPartialExecutor {
+    message Output {
+        required string identity = 1;
+        repeated uint32 priority = 2;
+        required PbEntity objector = 3;
+        optional bool need_hash = 4 [default = false];
+        optional bool need_buffer = 5 [default = false];
+    };
+
+    repeated PbScope scope = 1;
+    repeated PbLogicalPlanNode node = 2;
+    repeated Output output = 3;
+    repeated int32 scope_level = 4;  // <node->scope_level> one to one mapped
+}
+
+message PbStreamExternalExecutor {
+    required string id = 1;  // indicate LocalInput, DceInput or DceShuffle, etc.
+}
+
+message PbStreamProcessorExecutor {
+    message Source {
+        required string identity = 1;
+        optional bool is_batch = 2 [default = false];
+    }
+
+    //source should add is_batch
+    required string identity = 1;
+    required PbEntity processor = 2;
+    repeated Source source = 3;
+    optional bool need_status = 4 [default = false];
+    optional bool is_ignore_group = 5 [default = false];
+}
+
+message PbStreamLogicalExecutor {
+    required PbLogicalPlanNode node = 1;
+}
+
+message PbStreamShuffleExecutor {
+    enum Type {
+        LOCAL = 0;  // deal with unordered input streams
+        LOCAL_DISTRIBUTE = 1;  // distribute all input streams to a fixed partition
+        DISTRIBUTE_AS_BATCH = 2; // distribute all input streams as batch to a fixed partition
+        WINDOW = 3; // distribute all input streams according to time window
+    }
+
+    required PbScope scope = 1;
+    required Type type = 2;
+    repeated PbLogicalPlanNode node = 3;
+    optional bool need_cache = 4 [default = true];
+}

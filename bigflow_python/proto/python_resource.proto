@@ -1,0 +1,31 @@
+// Author: bigflow-opensource@baidu.com
+//
+// Python resource
+//
+
+package baidu.bigflow.python;
+
+message PbPythonResource {
+    repeated PbAddedFile normal_file = 1;
+    repeated PbAddedLibrary lib_file = 2;
+    repeated PbAddedLibrary egg_file = 3;
+    repeated PbAddedBinary binary_file = 4;
+    optional bytes cache_file_list = 11;
+    optional bytes cache_archive_list = 12;
+}
+
+message PbAddedFile {
+    optional string file_path = 1;
+    optional string path_in_resource = 2;
+    optional bool is_executable = 3;
+}
+
+message PbAddedLibrary {
+    optional string file_name = 1;
+    optional string file_path = 2;
+}
+
+message PbAddedBinary {
+    optional string file_name = 1;
+    optional bytes binary = 2;
+}

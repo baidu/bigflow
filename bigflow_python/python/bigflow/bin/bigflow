@@ -1,0 +1,22 @@
+#!/bin/bash
+CUR=`dirname "$0"`
+CUR=`cd "$CUR"; pwd`
+
+if [ $# == 0 ]; then
+    echo "Usage: bigflow {ipython, pip, version ......}"
+    echo "        ipython: run bigflow ipython"
+    echo "        pip: run bigflow pip"
+    echo "        version: get bigflow version"
+    exit 0
+fi
+
+if [ "$1" == version ];then
+    VERSION=`cat $CUR/../version.py`
+    VERSION=${VERSION#*\"}
+    VERSION=${VERSION%\"*}
+    echo $VERSION
+    exit 0
+fi
+source "$CUR/set-env.sh"
+
+"$@"

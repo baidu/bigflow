@@ -1,0 +1,77 @@
+#!/bin/bash
+CUR=`dirname "$0"`
+CUR=`cd "$CUR"; pwd`
+source "$CUR/set-env.sh"
+
+if [ ! -e $BIGFLOW_PYTHON_HOME/thirdparty ]; then
+    wget --no-verbose http://koala.dmop.baidu.com:8080/fc/getfilebyid?id=8072 -O $BIGFLOW_PYTHON_HOME/thirdparty.tar.gz
+    if [[ 0 != $? ]]; then
+        echo "Error getting thirdparty package"
+        exit -1
+    fi
+
+    tar xzf $BIGFLOW_PYTHON_HOME/thirdparty.tar.gz -C $BIGFLOW_PYTHON_HOME/
+    rm $BIGFLOW_PYTHON_HOME/thirdparty.tar.gz
+fi
+
+MODULE_NAME=$1
+PROTO_PATH=$2
+PROTO_FILE=$3
+
+function print_usage() {
+    echo "Usage:"
+    echo "fast-pb-build \${module_name} \${proto_path} \${proto_file}"
+    exit -1
+}
+
+if [ "$MODULE_NAME" == "" ]; then
+    echo -en "\033[31m"  # Red
+    echo "Missing module name"
+    echo -en "\033[0m"  # No color
+    print_usage
+fi
+
+if [ "$PROTO_PATH" == "" ]; then
+    echo -en "\033[31m"  # Red
+    echo "Missing proto path"
+    echo -en "\033[0m"  # No color
+    print_usage
+fi
+
+if [ "$PROTO_FILE" == "" ]; then
+    echo -en "\033[31m"  # Red
+    echo "Missing proto file"
+    echo -en "\033[0m"  # No color
+    print_usage
+fi
+
+MODULE_HOME=$BIGFLOW_PYTHON_HOME/pb_modules
+MODULE_PATH=$BIGFLOW_PYTHON_HOME/pb_modules/$MODULE_NAME
+
+PROTOC=$BIGFLOW_PYTHON_HOME/thirdparty/bin/protoc
+
+if [ -e ${MODULE_HOME}/${MODULE_NAME}.md5 ]; then
+    md5sum -c ${MODULE_HOME}/${MODULE_NAME}.md5 >&2
+    if [[ 0 == $? ]]; then
+        exit 0
+    fi
+fi
+
+set -e
+
+rm -rf $MODULE_PATH
+mkdir -p $MODULE_PATH
+
+$PROTOC --fastpython_out $MODULE_PATH --cpp_out $MODULE_PATH --proto_path $PROTO_PATH $PROTO_FILE >&2
+
+LIBRARY_PATH=$HADOOP_HOME/libhce/lib:$LIBRARY_PATH
+CPLUS_INCLUDE_PATH=$BIGFLOW_PYTHON_HOME/thirdparty/include
+
+export LIBRARY_PATH
+export CPLUS_INCLUDE_PATH
+
+pushd $MODULE_PATH > /dev/null
+$CUR/../../python_runtime/bin/python setup.py bdist_egg >&2
+popd > /dev/null
+
+md5sum ${PROTO_FILE} > ${MODULE_HOME}/${MODULE_NAME}.md5

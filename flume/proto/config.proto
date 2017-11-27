@@ -1,0 +1,165 @@
+// Author: bigflow-opensource@baidu.com
+//
+// All config related stuff
+//
+
+package baidu.flume;
+
+message PbKVConfig {
+    optional bytes key = 1;
+    optional bytes value = 2;
+}
+
+message PbLocalConfig {
+    optional string hadoop_client_path = 1;
+    optional string hadoop_config_path = 2;
+
+    repeated PbKVConfig hadoop_conf = 3;
+
+    // for stream
+    optional int64 round_times = 51 [default = -1];
+
+    // for status
+    optional bool status_as_meta = 101;
+    optional string status_meta_path = 102;
+    optional string status_table_path = 103;
+    optional int32 status_cache_size = 104;
+
+    optional bool use_leveldb_storage = 125;
+}
+
+message PbMapReduceConfig {
+    optional string hadoop_client_path = 1;
+    optional string hadoop_config_path = 2;
+    optional string tmp_data_path = 3;
+    optional string job_name = 4;
+
+    repeated PbKVConfig hadoop_job_conf = 5;
+
+    optional int32 default_concurrency = 6;
+    optional bool must_keep_empty_group = 7;
+    optional string prepared_archive_path = 8;
+    optional bool immediately_commit = 9;
+    optional bool use_hadoop_hash_partitioner = 10 [default=false];
+
+    // switch of heap and cpu profile
+    optional bool heap_profile = 11;
+    optional bool cpu_profile = 12;
+}
+
+message PbPagodaJobConfig {
+    optional string zk_meta_host = 1;
+    optional string zk_root_path = 2;
+
+    optional string username = 3;
+    optional string password = 4;
+
+    optional string fs_remote_data_path = 7;
+    optional string fs_local_data_path = 8;
+
+    optional string physical_name = 9;
+    optional string logical_name = 10;
+
+    optional string version = 11;
+
+    // for baidu-rpc
+    optional int32 rpc_timeout_ms = 51 [default = 30000]; // default rpc timeout 30s
+
+    // for TM
+    optional string tm_name = 101;
+    optional string tm_token = 102;
+    optional string tm_archive_path = 103;
+    optional int32 deleter_chunked_num = 104 [default = 7];
+    optional int32 deleter_normal_num = 105 [default = 3];
+    optional int32 deleter_refcnt_num = 106 [default = 1];
+    optional string deleter_archive_path = 107;
+}
+
+message PbTMConfig {
+    optional string hadoop_client_path = 1;
+    optional string hadoop_config_path = 2;
+    optional string tmp_data_path = 3;
+    optional string job_name = 4;
+
+    optional int32 default_concurrency = 5;
+    optional int32 default_memory_limit = 6;
+    optional int32 default_cpu_limit = 7;
+
+    optional PbPagodaJobConfig pagoda_job_conf = 8;
+    repeated PbKVConfig hadoop_job_conf = 9;
+    repeated PbKVConfig user_job_conf = 10;
+
+    optional string abaci_archive_path = 11;
+    optional string prepared_archive_path = 12;
+
+    // for status
+    optional string status_meta_path = 101;
+    optional string status_table_path = 102;
+    optional bool status_as_meta = 103;
+    optional int32 status_cache_size = 104;
+}
+
+message PbSparkConfig {
+    optional string hadoop_client_path = 1;
+    optional string hadoop_config_path = 2;
+    optional string spark_home_path = 3;
+    optional string tmp_data_path = 4;
+    optional string job_name = 5;
+
+    repeated PbKVConfig kv_config = 6;
+
+    optional int32 default_concurrency = 7;
+    optional bool must_keep_empty_group = 8;
+    optional string prepared_archive_path = 9;
+    optional bool immediately_commit = 10;
+    optional bool use_hadoop_hash_partitioner = 11 [default=false];
+
+    // switch of heap and cpu profile
+    optional bool heap_profile = 201;
+    optional bool cpu_profile = 202;
+}
+
+// All default values(empty) are meanningful
+// Do not change them unless you know what you're doing.
+message PbJobConfig {
+    optional string tmp_data_path_output = 1;
+    optional string tmp_data_path_input = 2;
+    optional string hadoop_client_path = 3;
+    optional string hadoop_config_path = 4;
+    optional string job_name = 5;
+    repeated PbKVConfig kv_config = 6; // such as HadoopJobConf or other kv configs, parameter format in python is "key1=value1 key2=value2"
+    optional int32 default_concurrency = 7;
+    optional int32 default_memory_limit = 8;
+    optional int32 default_cpu_limit = 9;
+    optional bool must_keep_empty_group = 10;
+    optional bool immediately_commit = 11;
+    optional bool use_hadoop_hash_partitioner = 12 [default=false];
+
+    // Spark
+    optional string spark_home_path = 13;
+    optional string prepared_archive_path = 14;
+
+    // stream
+    optional int32 round_times = 51;
+
+    // status
+    optional bool status_as_meta = 101;
+    optional string status_meta_path = 102;
+    optional string status_table_path = 103;
+    optional int32 status_cache_size = 104;
+
+    // switch of heap and cpu profile
+    optional bool heap_profile = 201;
+    optional bool cpu_profile = 202;
+
+    optional bool local_use_leveldb_storage = 301;
+}
+
+
+message PbFixedWindowConfig {
+    optional int32 step_size = 1;
+}
+
+message PbAfterProcessingTimeConfig {
+    optional int32 delay = 1;
+}

@@ -1,0 +1,70 @@
+/***************************************************************************
+ *
+ * Copyright (c) 2013 Baidu, Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ **************************************************************************/
+// Author: Wen Xiang <bigflow-opensource@baidu.com>
+//
+// Logical execution plan defination. See wing/doc/backend.rst for baisc concepts and plan.
+
+package baidu.flume;
+// Reflectable classes that contain user defined logic.
+message PbEntity {
+    required string name = 1;
+    optional bytes config = 2;
+    optional int64 id = 3; // compatible problem, can not be modified
+    optional string config_file = 4; // relative path to flume working dir
+}
+
+message PbTextOutputFormatConfig {
+    enum CompressionType {
+        NONE = 0;
+        GZIP = 1;
+    }
+    optional CompressionType compression_type = 1 [default=NONE];
+    optional bytes record_delimiter = 2 [default = '\n'];
+}
+
+message PbInputFormatEntityConfig {
+    // 1 - 200 for streaming processing
+    optional bool repeatedly = 1 [default = false];
+    optional uint64 max_record_num_per_round = 2 [default = 1000];
+    optional uint64 timeout_per_round = 3 [default = 30]; //单位为s
+
+    // 200+ for other
+    optional PbFileStreamInputFormat file_stream = 200;
+    optional string path = 201;
+}
+
+message PbInputFormatStatus {
+    required string uri = 1;
+    required int64 offset = 2;
+}
+
+message PbOutputFormatEntityConfig {
+    required bool overwrite = 1;
+    required string path = 2;
+    optional string commit_path = 3;
+    optional bool async_mode = 4 [default=true];
+    optional string output_format_config = 5;
+    optional uint32 max_waiting_time = 6;
+    optional uint32 min_waiting_time = 7;
+    // 200+ for other output format
+}
+
+message PbFileStreamInputFormat {
+    optional string filename_pattern = 1;
+}
+
