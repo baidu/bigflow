@@ -3,6 +3,8 @@ MAINTAINER  <zjsxzong89@gmail.com>
 RUN mkdir deps && \
     pushd deps
 RUN mkdir profiles
+RUN yum swap -y -q -- remove fakesystemd -- install systemd systemd-libs
+
 RUN yum clean all && \
     yum install -q -y wget tar gcc gcc-c++ make git patch openssl-devel.x86_64 flex flex-devel.x86_64 byacc xz-devel libgcrypt-devel.x86_64  libidn-devel.x86_64 ncurses-devel.x86_64 autoconf automake libtool java-1.8.0-openjdk-devel.x86_64
 
