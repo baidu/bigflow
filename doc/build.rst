@@ -10,9 +10,7 @@ sh build_deps.sh
 
 source ./environment
 
-cd ../build
-
-cmake ..
+mkdir -p ../build && cd ../build && cmake ..
 
 make
 
