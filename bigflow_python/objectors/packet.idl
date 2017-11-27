@@ -1,0 +1,14 @@
+#ifndef __IDL_PACKET_IDL__
+#define __IDL_PACKET_IDL__
+struct packet {
+    int32_t     type; // 消息类型
+    uint64_t    flag = optional(); // 标志位
+    uint64_t    stime = optional(); //send time
+    string		tag = optional();  // tag
+    int64_t     msg_time = optional();
+    string      body; // 消息体
+    binary      bin_body = optional();  //二进制消息体
+    uint32_t    body_type = optional(); //消息体类型
+};
+
+#endif

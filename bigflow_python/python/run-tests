@@ -1,0 +1,123 @@
+#!/usr/bin/env bash
+
+set -a
+export SOURCE_HOME=`dirname "$0"`
+export SOURCE_HOME=`cd "$SOURCE_HOME/bigflow"; pwd`
+TARGET_DIR=$1
+[ -z $TARGET_DIR ] && TARGET_DIR=.
+
+ERROR_LOG=$PWD/error_logs
+rm -rf $ERROR_LOG
+mkdir -p $ERROR_LOG
+FAILED=0
+
+#environment
+#export PIPELINE_TYPE=hadoop
+#export HDFS_ROOT_PATH=hdfs:///app/inf/dataflow/unittest
+#export PARALLEL_RUN=1
+
+function run_test() {
+    local dir
+    local filename
+    dir=`dirname $1`
+    filename=`basename $1`
+    pushd $dir > /dev/null
+    local LOGFILE=$PWD/${filename%.py}.test_log
+    rm -rf $LOGFILE
+    echo "Running test: $1" | tee -a $LOGFILE
+
+    bash -c '"$SOURCE_HOME"/bin/pyrun $filename | tee ${LOGFILE}.stdout; exit ${PIPESTATUS[0]}' >$LOGFILE  2>&1
+    FAILED=$?
+
+    if [ $(stat -c %s ${LOGFILE}.stdout) -ne 0 ]; then
+        echo [FAIL] stdout should have been empty.
+        echo Unexpected stdout in $1. The output is:
+        cat ${LOGFILE}.stdout
+        FAILED=-1
+    else
+        echo [OK] As expected, stdout is empty.
+    fi
+
+    rm ${LOGFILE}.stdout
+    cat $LOGFILE | grep "Warning"
+
+    # Fail and exit on the first test failure.
+    if [[ $FAILED != 0 ]]; then
+        cat $LOGFILE | grep -v "^[0-9][0-9]*" # filter all lines starting with a number.
+        echo -en "\033[31m"  # Red
+        echo "Had test failures; see logs at $ERROR_LOG/${filename%.py}.test_log"
+        echo -en "\033[0m"  # No color
+        cp $LOGFILE $ERROR_LOG
+    fi
+
+    popd > /dev/null
+
+    rm -rf $LOGFILE
+    #[ $FAILED -ne 0 ] && exit -1
+}
+
+function pp {
+    echo "run $1"
+}
+
+function parallel_run_all_tests {
+    # nohup $SOURCE_HOME/bin/bigflow_server --service_port=60019 > /dev/null 2>$1 < /dev/null &
+    # SERVER_PID=$!
+    # echo "PID: $SERVER_PID"
+    local SLEEP_SEC=1
+    local PARALLEL_NUM=20
+    for target in `find ${TARGET_DIR} -name '*_test.py' -not -path '*/\.*' | grep -v python_runtime`; do
+        run_test $target &
+        while [ $(jobs | wc -l) -ge ${PARALLEL_NUM} ]
+        do
+            sleep ${SLEEP_SEC}s
+            if [ -e $ERROR_LOG/* ]; then
+                exit -1
+            fi
+        done
+    done
+    wait
+    if [ -e $ERROR_LOG/* ]; then
+        exit -1
+    fi
+}
+
+function run_all_tests {
+    # nohup $SOURCE_HOME/bin/bigflow_server --service_port=60019 > /dev/null 2>$1 < /dev/null &
+    # SERVER_PID=$!
+    # echo "PID: $SERVER_PID"
+    for target in `find ${TARGET_DIR} -name '*_test.py' -not -path '*/\.*' | grep -v python_runtime`; do
+        { # try
+
+            run_test $target
+
+        } || { # catch
+            echo $target >> test_status.log
+        }
+    done
+}
+
+echo "Running Bigflow Python tests. Output is in $LOG_FILE."
+
+if [ "$PARALLEL_RUN" != "" ]; then
+    parallel_run_all_tests "$1"
+else
+    run_all_tests
+fi
+
+# wait all background job finishes if we already have failures.
+wait
+
+if [ -d ${ERROR_LOG} -a "$(ls -A ${ERROR_LOG})" ]; then
+    # only display the last 500 lines of log in err_log
+    tail -n 500 $ERROR_LOG/*
+    exit -1
+else
+    echo -en "\033[32m"  # Green
+    echo "Tests passed."
+    echo -en "\033[0m"  # No color
+fi
+
+echo "Testing with Python version:"
+${SOURCE_HOME}/bin/pyrun --version 1>/dev/null
+
