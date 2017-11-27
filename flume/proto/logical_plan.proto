@@ -1,0 +1,152 @@
+/***************************************************************************
+ *
+ * Copyright (c) 2013 Baidu, Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ **************************************************************************/
+// Author: Wen Xiang <wenxiang@baidu.com>
+//
+// Logical execution plan defination. See wing/doc/backend.rst for baisc concepts and plan.
+
+import "flume/proto/entity.proto";
+
+package baidu.flume;
+
+message PbLogicalPlan {
+    repeated PbLogicalPlanNode node = 1;
+    repeated PbScope scope = 2;
+    optional PbEntity environment = 3;
+}
+
+message PbLogicalPlanNode {
+    enum Type {
+        UNION_NODE = 0;
+        LOAD_NODE = 1;
+        SINK_NODE = 2;
+        PROCESS_NODE = 3;
+        SHUFFLE_NODE = 4;
+    }
+
+    required string id = 1;  // uuid
+    required Type type = 2;
+    optional bytes debug_info = 3;
+    optional PbEntity objector = 4;
+    required string scope = 5;  // scope uuid
+    optional bool cache = 6 [default = false]; // indicate if the node need to be cached
+    optional int32 memory_limit = 7 [default = 0]; // memory used (MB)
+    optional int32 cpu_limit = 8 [default = 0]; // cpu used (format, core = format / 100)
+    optional bool is_infinite = 9 [default = false]; // indicate if output data is infinite
+
+    // according to type, only corresponding member makes sense
+    optional PbUnionNode union_node = 100;
+    optional PbLoadNode load_node = 101;
+    optional PbSinkNode sink_node = 102;
+    optional PbProcessNode process_node = 103;
+    optional PbShuffleNode shuffle_node = 104;
+}
+
+message PbUnionNode {
+    repeated string from = 1;  // node uuid
+}
+
+message PbLoadNode {
+    repeated string uri = 1;
+    required PbEntity loader = 2;
+}
+
+message PbSinkNode {
+    required string from = 1; // node uuid
+    required PbEntity sinker = 2;
+}
+
+message PbProcessNode {
+    message Input {
+        required string from = 1;  // node uuid
+
+        optional bool is_partial = 101 [default = false];
+        optional bool is_prepared = 102 [default = false];
+    };
+
+    repeated Input input = 1; // node uuid
+    required PbEntity processor = 2;
+
+    optional int32 least_prepared_inputs = 101 [default = 0];
+    optional bool is_ignore_group = 102 [default = false];
+    optional int32 effective_key_num = 103 [default = -1];
+    optional bool is_stateful = 104 [default = false];
+}
+
+message PbShuffleNode {
+    enum Type {
+        BROADCAST = 0;
+        KEY = 1;
+        SEQUENCE = 2;
+        WINDOW = 3;
+    };
+
+    required string from = 1; // node uuid
+    required Type type = 2;
+    optional PbEntity key_reader = 3;  // for KEY
+    optional PbEntity partitioner = 4;  // for SEQUENCE
+    optional PbEntity time_reader = 5; // for WINDOW
+}
+
+message PbScope {
+    enum Type {
+        DEFAULT = 0;
+        INPUT = 1;  // only accept single LOAD_NODE under this scope
+        GROUP = 2;  // accept BROADCAST/KEY SHUFFLE_NODE under this scope
+        BUCKET = 3;  // accept BROADCAST/SEQUENCE SHUFFLE_NODE under this scope
+        WINDOW = 4; // accept WINDOW SHUFFLE_NODE under this scope
+    };
+
+    required string id = 1;  // uuid
+    optional Type type = 2 [default = DEFAULT];  // declare optional for compatible reason
+    optional string father = 3;  // scope uuid
+    optional bool is_sorted = 4 [default = false];
+    optional uint32 concurrency = 5 [default = 1];  // a hint for execution
+    optional bool is_infinite = 6 [default = false]; // indicate if output key or output data is infinite
+    optional bool is_stream = 7 [default = false]; // indicate if data process is stream
+
+    optional PbInputScope input_scope = 101;
+    optional PbGroupScope group_scope = 102;
+    optional PbBucketScope bucket_scope = 103;
+    optional PbWindowScope window_scope = 104;
+
+    // if this is true, every line is in a different group
+    optional bool distribute_every = 201 [default = false];
+}
+
+message PbInputScope {
+    repeated string uri = 1;
+    required PbEntity spliter = 2;
+};
+
+message PbGroupScope {
+};
+
+enum PbWindowMode {
+    ACCUMULATING = 0;
+    DISCARDING = 1;
+};
+
+message PbWindowScope {
+    optional PbEntity window = 1;
+    optional PbEntity trigger = 2;
+    optional PbWindowMode mode = 3 [default = ACCUMULATING];
+};
+
+message PbBucketScope {
+    optional uint32 bucket_size = 1 [default = 1];
+};

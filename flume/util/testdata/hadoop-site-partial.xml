@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+
+    <property>
+        <name>hadoop.job.ugi</name>
+        <value>partial,partial</value>
+        <description>username, password used by client</description>
+    </property>
+
+    <property>
+        <name>mapred.job.tracker</name>
+        <value>baidu.com:1234</value>
+        <description>The host and port that the MapReduce job tracker runs
+            at. If "local", then jobs are run in-process as a single map
+            and reduce task.
+        </description>
+    </property>
+
+</configuration>
