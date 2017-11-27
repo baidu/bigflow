@@ -29,6 +29,9 @@ Bigflow 的目标是: 使分布式程序写起来更简单，测起来更方便�
  使用 PySpark 时，有不少用户都困扰于 PySpark 的低效，或困扰于其不支持某些 CPython 库，或困扰于一些仅功能仅仅在 Scala 和 Java 中可用，在 PySpark 中暂时处于不可用状态。
  而在 Bigflow 中，Python 是一等公民（毕竟当前我们仅仅支持 Python），以上问题在 Bigflow 中都不是问题，性能、功能、易用性都对 Python 用户比较友好。
 
+### 在线试用
+[在线试用网页](http://180.76.236.159:8732/?token=e347f1e762cdcfb63bd3682781260f2fdbc4862592fd38f8) 包含了一些简单的例子介绍Bigflow的概念和API用法，同时也可以在线编写Python代码尝试Bigflow的功能，可智能提示。
+
 ### Bigflow详细文档
 
 [Bigflow 主页](http://bigflow.cloud)
