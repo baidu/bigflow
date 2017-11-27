@@ -14,7 +14,7 @@ install:
   - echo ok
 
 script:
-  - docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 2';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment && mkdir /root/bigflow/build && cd /root/bigflow/build && cmake .. && make && make release && cd /root/bigflow/bigflow_python/python && PARALLEL_NUM=2 sh run-tests && cd /root/bigflow/doc/ && sh generate_doc.sh"
+  - docker run -t -v $PWD:/root/bigflow docker pull drinkcode/bigflowbuild:buildsupport bash -c "export MAKEFLAGS='-j 2';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x env_in_docker.sh && source /environment && mkdir /root/bigflow/build && cd /root/bigflow/build && cmake .. && make && make release && cd /root/bigflow/bigflow_python/python && PARALLEL_NUM=2 sh run-tests && cd /root/bigflow/doc/ && sh generate_doc.sh"
   
 
 deploy: 
