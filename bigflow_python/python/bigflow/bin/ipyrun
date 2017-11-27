@@ -1,0 +1,8 @@
+#!/bin/bash
+
+CUR=`dirname "$0"`
+CUR=`cd "$CUR"; pwd`
+
+source "$CUR/set-env.sh"
+echo "running "$* >&2
+$CUR/../../python_runtime/bin/ipython $*

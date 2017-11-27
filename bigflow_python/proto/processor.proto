@@ -1,0 +1,17 @@
+
+package baidu.bigflow.python;
+
+import "flume/proto/entity.proto";
+
+enum PbDatasetType {
+    PCOLLECTION_TYPE = 0;
+    POBJECT_TYPE = 1;
+    PTABLE_TYPE = 2;
+}
+
+message PbPythonProcessorConfig {
+    repeated baidu.flume.PbEntity functor = 1;
+    optional bytes config = 2;
+    repeated PbDatasetType side_input_type = 3;
+}
+

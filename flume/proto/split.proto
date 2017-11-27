@@ -1,0 +1,56 @@
+/***************************************************************************
+ *
+ * Copyright (c) 2013 Baidu, Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ **************************************************************************/
+// Author: Wen Xiang <wenxiang@baidu.com>
+//
+// Extenstions for Loader::Split(), allow user to carry rich informations along with split.
+// When user choose to encode split with this message, it can be recoganized by execution
+// backend.
+
+package baidu.flume;
+
+option java_package = "com.baidu.FlumeCpp.proto";
+
+// Reflectable classes that contain user defined logic.
+message PbSplit {
+    enum Magic {
+        FLUME = 35863;  // 'flume' in cellphone's squared keyboard
+    }
+    // magic number to verify this message
+    required Magic magic = 1;
+
+    // list of hostnames where the input split is located
+    repeated string location = 2;
+
+    // total number of bytes in the data of the input split
+    optional uint64 length = 3;
+
+    // raw_split would be passed to Loader::Load(). If not set, pass the whole PbSplit
+    // message to Loader::Load();
+    optional bytes raw_split = 4;
+
+    // 900 - 999 is reserved by flume, users should start extensions from 1000
+    extensions 900 to max;
+}
+
+message PbCombineSplit {
+    extend PbSplit {
+        optional PbCombineSplit combine = 900;
+    }
+
+    repeated PbSplit split = 1;
+}

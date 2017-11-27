@@ -1,0 +1,5 @@
+#!/bin/bash
+CUR=`dirname "$0"`
+CUR=`cd "$CUR"; pwd`
+
+$CUR/bigflow python "$@"
