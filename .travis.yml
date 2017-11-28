@@ -5,7 +5,10 @@ services:
   
 os:
   - linux
-  
+
+before_install:
+  - docker pull drinkcode/bigflowbuild:buildsupport
+
 branches:
   only:
     - master
