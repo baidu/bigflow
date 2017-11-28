@@ -30,7 +30,13 @@
     git clone https://github.com/baidu/bigflow.git
     cd bigflow
 
-运行 `docker run -i -t -v $PWD:/root/bigflow centos:7.1.1503 /bin/bash` 进入centos docker镜像
+
+运行::
+
+    docker run -i -t -v $PWD:/root/bigflow centos:7.1.1503 /bin/bash
+    
+进入centos docker镜像
+
 
 在镜像中执行：::
   
