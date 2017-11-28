@@ -42,3 +42,4 @@
     make
     make release
     
+注意，上述方法的执行环境是一次性的，用户可以使用docker命令保存编译完的docker镜像，或使用daemon的方式运行，具体方法这里不再详述。请参考docker文档。
