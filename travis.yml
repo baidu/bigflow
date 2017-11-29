@@ -1,0 +1,35 @@
+sudo: required
+
+services:
+  - docker
+
+os:
+  - linux
+
+env:
+  - JOB=build_doc
+  - JOB=release
+
+branches:
+  only:
+    - master
+
+script:
+  - |
+    docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 2';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment"
+  - |
+    if [[ "$JOB" == "release" ]]; then bash -c "mkdir /root/bigflow/build && cd /root/bigflow/build && cmake .. && make && make release && cd /root/bigflow/bigflow_python/python && PARALLEL_NUM=2 sh run-tests && cd /root/bigflow/doc/ && sh generate_doc.sh"; fi;
+    if [[ "$JOB" == "build_doc" ]]; then bash -c "cd /root/bigflow/bigflow_python/python && cd /root/bigflow/doc/ && sh generate_doc.sh"; fi;
+
+
+deploy:
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file: "bigflow_python/output/bigflow_python.tar.gz"
+    skip_cleanup: true
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    on:
+      branch: master
+    local_dir: ./doc/_build/html
