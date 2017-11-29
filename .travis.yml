@@ -14,13 +14,11 @@ branches:
   only:
     - master
 
-install:
-  - echo ok
-
 script:
   - |
-    if [[ "$JOB" == "release" ]]; then docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 2';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment && mkdir /root/bigflow/build && cd /root/bigflow/build && cmake .. && make && make release && cd /root/bigflow/bigflow_python/python && PARALLEL_NUM=2 sh run-tests && cd /root/bigflow/doc/ && sh generate_doc.sh"; fi;
-    if [[ "$JOB" == "build_doc" ]]; then docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 2';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment && cd /root/bigflow/bigflow_python/python && cd /root/bigflow/doc/ && sh generate_doc.sh"; fi;
+    docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 2';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment"
+    if [[ "$JOB" == "release" ]]; then bash -c "mkdir /root/bigflow/build && cd /root/bigflow/build && cmake .. && make && make release && cd /root/bigflow/bigflow_python/python && PARALLEL_NUM=2 sh run-tests && cd /root/bigflow/doc/ && sh generate_doc.sh"; fi;
+    if [[ "$JOB" == "build_doc" ]]; then bash -c "cd /root/bigflow/bigflow_python/python && cd /root/bigflow/doc/ && sh generate_doc.sh"; fi;
 
 
 deploy:
