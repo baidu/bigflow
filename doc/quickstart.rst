@@ -165,7 +165,7 @@ Bigflow Python中所有的变换可以在 `transforms` 查看接口说明和用�
 
 更多使用示例
 ^^^^^^^^^^
-`examples <https://github.com/angopher/bigflow/tree/master/bigflow_python/python/bigflow/example>`_
+`examples <https://github.com/baidu/bigflow/tree/master/bigflow_python/python/bigflow/example>`_
 
 进阶教程
 ^^^^^^^^
