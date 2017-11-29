@@ -80,7 +80,7 @@ The Review Process
 * 如果遇到与其他commiter 提交的修改冲突的情况，那么，需要解决这个冲突才能merge 到master，解决
   冲突可以通过这种方式：
 
-  a. git remote add upstream https://github.com/angopher/bigflow.git
+  a. git remote add upstream https://github.com/baidu/bigflow.git
 
   b. git rebase upstream/master
 
