@@ -8,7 +8,7 @@ os:
 
 env:
   - JOB=build_doc
-  - JOB=build
+  - JOB=build_all
 
 branches:
   only:
@@ -17,7 +17,7 @@ branches:
 script:
   - |
       #docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 2';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment"
-      if [[ "$JOB" == "build" ]]; then docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 4';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment && mkdir /root/bigflow/build && cd /root/bigflow/build && cmake .. && make && make release && cd /root/bigflow/bigflow_python/python && PARALLEL_NUM=4 sh run-tests && cd /root/bigflow/doc/ && sh generate_doc.sh"; fi;
+      if [[ "$JOB" == "build_all" ]]; then docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 4';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment && mkdir /root/bigflow/build && cd /root/bigflow/build && cmake .. && make && make release && cd /root/bigflow/bigflow_python/python && PARALLEL_NUM=4 sh run-tests && cd /root/bigflow/doc/ && sh generate_doc.sh"; fi;
     if [[ "$TRAVIS_BRANCH" == "master" && "$JOB" == "build_doc" ]]; then docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 4';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment && mkdir /root/bigflow/build && cd /root/bigflow/build && cmake .. && make && make release && cd /root/bigflow/bigflow_python/python && PARALLEL_NUM=4 sh run-tests && cd /root/bigflow/doc/ && sh generate_doc.sh"; fi;
 
 
