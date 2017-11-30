@@ -24,7 +24,6 @@ script:
 
 
 deploy:
-  - if [[ "$JOB" == "build_doc" ]]; then exit 0; fi;
   - provider: releases
     api_key: $GITHUB_TOKEN
     file: "bigflow_python/output/bigflow_python.tar.gz"
