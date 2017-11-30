@@ -29,12 +29,11 @@ deploy:
     file: "bigflow_python/output/bigflow_python.tar.gz"
     skip_cleanup: true
     on:
-        condition: "$JOB = build_test"
+      condition: "$JOB = build_test"
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
     on:
       branch: master
+      condition: "$JOB = build_doc"
     local_dir: ./doc/_build/html
-    on:
-        condition: "$JOB = build_doc"
