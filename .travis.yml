@@ -34,16 +34,11 @@ deploy:
       repo: baidu/bigflow
       tags: true
       condition: "$JOB = build"
-      repo: baidu/bigflow
-      tags: true
-      condition: "$JOB = build"
   - provider: pages
     skip_cleanup: true
     github_token: $GITHUB_TOKEN
     on:
       branch: master
-      repo: baidu/bigflow
-      condition: "$JOB = build_doc"
       repo: baidu/bigflow
       condition: "$JOB = build_doc"
     local_dir: ./doc/_build/html
