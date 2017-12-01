@@ -1,19 +1,51 @@
 目前在centos7.1测试通过
 
-开始编译
-""""""""""""""""""""
-git clone https://github.com/baidu/bigflow.git
+编译
+"""""""""""""""""""" 
 
-cd bigflow/build_support
+::
 
-sh build_deps.sh
+    git clone https://github.com/baidu/bigflow.git
+    cd bigflow/build_support
+    sh build_deps.sh
+    source ./environment
+    mkdir -p ../build && cd ../build && cmake ..
+    make
+    make release
+    
+测试
+"""""""""""""""""""""
 
-source ./environment
+::
 
-cd ../build
+    cd bigflow_python/python/
+    sh run-tests
+    
+    
+使用Docker构建
+""""""""""""""""""""""
 
-cmake ..
+先下载bigflow代码库::
 
-make
+    git clone https://github.com/baidu/bigflow.git
+    cd bigflow
 
-make release
+
+运行::
+
+    docker run -i -t -v $PWD:/root/bigflow centos:7.1.1503 /bin/bash
+    
+进入centos docker镜像
+
+
+在镜像中执行：::
+  
+    yum install sudo -y
+    cd /root/bigflow/build_support
+    sh build_deps.sh
+    source ./environment
+    mkdir -p ../build && cd ../build && cmake ..
+    make
+    make release
+    
+注意，上述方法的执行环境是一次性的，用户可以使用docker命令保存编译完的docker镜像，或使用daemon的方式运行，具体方法这里不再详述。请参考docker文档。
