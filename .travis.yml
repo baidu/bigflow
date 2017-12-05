@@ -1,5 +1,7 @@
 language: cpp
 
+cache: ccache
+
 sudo: required
 
 services:
