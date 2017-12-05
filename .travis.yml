@@ -14,7 +14,7 @@ env:
 
 branches:
   only:
-    - master
+    - test
 
 install:
     - echo ok
