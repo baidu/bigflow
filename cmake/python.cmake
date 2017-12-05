@@ -10,7 +10,7 @@ IF(APPLE)
     sh -c "./configure --enable-shared --prefix=${PYTHON_INSTALL_DIR} --enable-unicode=ucs4 CFLAGS='-fPIC -I/usr/local/opt/openssl/include' LDFLAGS=-L/usr/local/opt/openssl/lib")
 ELSE()
   SET(PYTHON_CONFIGURE_COMMAND
-      ./configure CC='ccache gcc' --enable-shared --prefix=${PYTHON_INSTALL_DIR} CFLAGS=-fPIC --enable-unicode=ucs4 --with-system-ffi)
+      ./configure --enable-shared --prefix=${PYTHON_INSTALL_DIR} CFLAGS=-fPIC --enable-unicode=ucs4 --with-system-ffi)
 ENDIF()
 
 

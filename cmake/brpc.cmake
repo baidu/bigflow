@@ -10,7 +10,7 @@ ExternalProject_Add(
     DOWNLOAD_DIR ${THIRD_PARTY_PATH}
     DOWNLOAD_COMMAND rm -rf ${THIRD_PARTY_PATH}/brpc && git clone https://github.com/acmol/brpc.git --depth=1
     CONFIGURE_COMMAND cd ${BRPC_SOURCES_DIR} && PATH="${PROTOBUF_INSTALL_DIR}/bin:$ENV{PATH}" sh config_brpc.sh --with-glog --headers=${THIRD_PARTY_PATH}/include --libs=${THIRD_PARTY_PATH}/lib 
-    BUILD_COMMAND cd ${THIRD_PARTY_PATH}/brpc && make -j 8 CC='ccache gcc'
+    BUILD_COMMAND cd ${THIRD_PARTY_PATH}/brpc && make -j
     INSTALL_COMMAND rm -rf ${THIRD_PARTY_PATH}/include/brpc && cp -r ${BRPC_SOURCES_DIR}/src ${THIRD_PARTY_PATH}/include/brpc && cp ${BRPC_SOURCES_DIR}/libbrpc.a ${THIRD_PARTY_PATH}/lib/
 )
 
