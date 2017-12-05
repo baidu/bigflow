@@ -21,7 +21,7 @@ install:
 
 script:
   - |
-    if [[ "$JOB" == "build" ]]; then docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 4';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment && mkdir /root/bigflow/build && cd /root/bigflow/build && cmake .. && make && make release && cd /root/bigflow/bigflow_python/python && PARALLEL_NUM=4 sh run-tests"; fi;
+    if [[ "$JOB" == "build" ]]; then docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "export MAKEFLAGS='-j 12';yum install sudo -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment && mkdir /root/bigflow/build && cd /root/bigflow/build && cmake .. && make && make release && cd /root/bigflow/bigflow_python/python && PARALLEL_NUM=4 sh run-tests"; fi;
     if [[ "$JOB" == "build_doc" ]]; then docker run -t -v $PWD:/root/bigflow centos:7.1.1503 bash -c "yum install sudo wget curl tar -y -q && cd /root/bigflow/build_support && sh -x build_deps.sh && source ./environment && mkdir /root/bigflow/jq && cd /root/bigflow/jq &&  wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 -O jq && chmod +x ./jq && mkdir /root/bigflow/lastest_release && cd /root/bigflow/lastest_release && curl -s https://api.github.com/repos/baidu/bigflow/releases/latest | /root/bigflow/jq/jq -r '.assets[] | .browser_download_url' | xargs wget && tar zxvf bigflow_python.tar.gz && cd /root/bigflow/doc/ && export BIGFLOW_PYTHON_HOME='/root/bigflow/lastest_release' && sh generate_doc.sh"; fi;
 
 
