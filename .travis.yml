@@ -1,6 +1,6 @@
 language: cpp
 
-#cache: ccache
+cache: ccache
 
 sudo: required
 
