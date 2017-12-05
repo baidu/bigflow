@@ -8,7 +8,7 @@ if [ -e /.dockerenv ];then
     sudo yum swap -y -q -- remove fakesystemd -- install systemd systemd-libs
 fi
 
-sudo yum install -q -y wget tar gcc gcc-c++ make git patch openssl-devel.x86_64 flex flex-devel.x86_64 byacc xz-devel libgcrypt-devel.x86_64  libidn-devel.x86_64 ncurses-devel.x86_64 autoconf automake libtool java-1.8.0-openjdk-devel.x86_64 
+sudo yum install -q -y ccache wget tar gcc gcc-c++ make git patch openssl-devel.x86_64 flex flex-devel.x86_64 byacc xz-devel libgcrypt-devel.x86_64  libidn-devel.x86_64 ncurses-devel.x86_64 autoconf automake libtool java-1.8.0-openjdk-devel.x86_64 
 
 wget https://cmake.org/files/v3.10/cmake-3.10.0-Linux-x86_64.tar.gz
 tar zxf cmake-3.10.0-Linux-x86_64.tar.gz
