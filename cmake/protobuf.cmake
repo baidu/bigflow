@@ -9,7 +9,7 @@ ExternalProject_Add(
     DOWNLOAD_DIR ${THIRD_PARTY_PATH}
     DOWNLOAD_COMMAND rm -rf  ${PROTOBUF_SOURCES_DIR} && wget https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz -O protobuf-2.5.0.tar.gz && tar zxvf protobuf-2.5.0.tar.gz
     CONFIGURE_COMMAND cd ${PROTOBUF_SOURCES_DIR} && ./autogen.sh && CXXFLAGS=-fPIC ./configure prefix=${PROTOBUF_INSTALL_DIR}
-    BUILD_COMMAND cd ${PROTOBUF_SOURCES_DIR} && make -j 12 CC='ccache gcc'
+    BUILD_COMMAND cd ${PROTOBUF_SOURCES_DIR} && make -j 12
     INSTALL_COMMAND cd ${PROTOBUF_SOURCES_DIR} && make install && cp -r ${PROTOBUF_INSTALL_DIR}/lib ${THIRD_PARTY_PATH} && cp -r ${PROTOBUF_INSTALL_DIR}/include ${THIRD_PARTY_PATH} && cp ${PROTOBUF_INSTALL_DIR}/bin/protoc ${THIRD_PARTY_PATH}/lib
 )
 ADD_LIBRARY(protobuf STATIC IMPORTED GLOBAL)
