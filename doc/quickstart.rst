@@ -22,11 +22,8 @@
 
 Bigflow Python工作在Python 2.7环境中(其它版本尚未测试)。它使用标准的CPython解释器，同时用户也能够在代码中使用第三方的Python库。
 
-最新的Bigflow Python可以通过下面的命令获得::
+获取 `bigflow_python.tar.gz <https://github.com/baidu/bigflow/releases>`_
 
-  $ mkdir bigflow_python; cd bigflow_python
-  $ wget http://bigflow.cloud/download/bigflow_python.tar.gz
-  $ tar xzf bigflow_python.tar.gz
 
 保证系统环境中已经安装好hadoop client，并设置好HADOOP_HOME，Bigflow Python需要从Hadoop配置文件中读取相应的配置来访问HDFS。
 保证系统环境中已经安装好spark client，并设置好SPARK_HOME，Bigflow Python需要从Spark配置文件中读取相应的配置来访问Spark。
@@ -168,7 +165,7 @@ Bigflow Python中所有的变换可以在 `transforms` 查看接口说明和用�
 
 更多使用示例
 ^^^^^^^^^^
-`examples <https://github.com/angopher/bigflow/tree/master/bigflow_python/python/bigflow/example>`_
+`examples <https://github.com/baidu/bigflow/tree/master/bigflow_python/python/bigflow/example>`_
 
 进阶教程
 ^^^^^^^^
