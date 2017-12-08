@@ -31,8 +31,6 @@ deploy:
     file: "bigflow_python/output/bigflow_python.tar.gz"
     skip_cleanup: true
     on:
-      repo: baidu/bigflow
-      tags: true
       condition: "$JOB = build"
       repo: baidu/bigflow
       tags: true
@@ -42,8 +40,6 @@ deploy:
     github_token: $GITHUB_TOKEN
     on:
       branch: master
-      repo: baidu/bigflow
-      condition: "$JOB = build_doc"
       repo: baidu/bigflow
       condition: "$JOB = build_doc"
     local_dir: ./doc/_build/html
