@@ -8,7 +8,7 @@ ExternalProject_Add(
     DOWNLOAD_DIR ${THIRD_PARTY_PATH}
     DOWNLOAD_COMMAND rm -rf ${THIRD_PARTY_PATH}/leveldb && git clone https://github.com/google/leveldb.git
     CONFIGURE_COMMAND echo ""
-    BUILD_COMMAND cd ${THIRD_PARTY_PATH}/leveldb && CXXFLAGS=-fPIC make -j 8
+    BUILD_COMMAND cd ${THIRD_PARTY_PATH}/leveldb && CC=gcc CXX=g++ CXXFLAGS=-fPIC make -j 8
     INSTALL_COMMAND cp -r ${THIRD_PARTY_PATH}/leveldb/include/leveldb ${THIRD_PARTY_PATH}/include/ && cp ${LEVELDB_SOURCES_DIR}/out-static/libleveldb.a ${THIRD_PARTY_PATH}/lib
     )
 

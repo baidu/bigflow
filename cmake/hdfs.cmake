@@ -8,7 +8,7 @@ ExternalProject_Add(
     extern_hdfs
     DOWNLOAD_DIR ${THIRD_PARTY_PATH}
     DOWNLOAD_COMMAND rm -rf ${HDFS_SOURCES_DIR} && git clone https://github.com/acmol/pivotalrd-libhdfs3.git
-    CONFIGURE_COMMAND cd ${HDFS_SOURCES_DIR} && mkdir -p build && cd build && ../bootstrap --prefix=${HDFS_INSTALL_DIR} --dependency=${UUID_INSTALL_DIR}:${PROTOBUF_INSTALL_DIR}:${LIBGSASL_INSTALL_DIR}:${LIBXML2_INSTALL_DIR}:${KRB_INSTALL_DIR}
+    CONFIGURE_COMMAND cd ${HDFS_SOURCES_DIR} && mkdir -p build && cd build && CC=gcc CXX=g++ ../bootstrap --prefix=${HDFS_INSTALL_DIR} --dependency=${UUID_INSTALL_DIR}:${PROTOBUF_INSTALL_DIR}:${LIBGSASL_INSTALL_DIR}:${LIBXML2_INSTALL_DIR}:${KRB_INSTALL_DIR}
     BUILD_COMMAND cd ${HDFS_SOURCES_DIR}/build && make -j 6
     INSTALL_COMMAND cd ${HDFS_SOURCES_DIR}/build && make install
     )
