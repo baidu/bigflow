@@ -50,3 +50,7 @@ Bigflow 的目标是: 使分布式程序写起来更简单，测起来更方便�
 [如何贡献](http://bigflow.cloud/zh/contributing.html)
 
 [设计文档](http://bigflow.cloud/zh/bigflow_design.html)
+
+### 联系我们
+
+需要加入Bigflow微信技术讨论群的，请加微信号：iacmol，然后备注一下：加入Bigflow技术讨论群
