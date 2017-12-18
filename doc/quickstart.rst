@@ -24,6 +24,7 @@ Bigflow Python工作在Python 2.7环境中(其它版本尚未测试)。它使用
 
 获取 `bigflow_python.tar.gz <https://github.com/baidu/bigflow/releases>`_
 
+
 保证系统环境中已经安装好hadoop client，并设置好HADOOP_HOME，Bigflow Python需要从Hadoop配置文件中读取相应的配置来访问HDFS。
 保证系统环境中已经安装好spark client，并设置好SPARK_HOME，Bigflow Python需要从Spark配置文件中读取相应的配置来访问Spark。
 保证系统环境中已经安装好了Java，并设置好了JAVA_HOME，需要使用java来运行spark。
