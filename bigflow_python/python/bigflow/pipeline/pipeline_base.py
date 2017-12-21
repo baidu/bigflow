@@ -119,7 +119,7 @@ class PipelineBase(object):
 
         ::
 
-            >> pipeline.add('/path/to/local/or/hdfs/file', './target_path_a')
+            >> pipeline.add_file('/path/to/local/or/hdfs/file', './target_path_a')
             >> def remote_filter(self):
             ..     # This is a dumb example, don't do this in production,
             ..     import os
