@@ -37,19 +37,19 @@ Bigflow 的目标是: 使分布式程序写起来更简单，测起来更方便�
 
 ### Bigflow详细文档
 
-[Bigflow 主页](http://bigflow.cloud)
+[Bigflow 主页](https://baidu.github.io/bigflow/)
 
-[快速入门](http://bigflow.cloud/zh/quickstart.html)
+[快速入门](https://baidu.github.io/bigflow/quickstart.html)
 
-[编程指南](http://bigflow.cloud/zh/guide.html)
+[编程指南](https://baidu.github.io/bigflow/guide.html)
 
-[API 参考](http://bigflow.cloud/zh/rst/modules.html)
+[API 参考](https://baidu.github.io/bigflow/rst/modules.html)
 
-[编译构建](http://bigflow.cloud/zh/build.html)
+[编译构建](https://baidu.github.io/bigflow/build.html)
 
-[如何贡献](http://bigflow.cloud/zh/contributing.html)
+[如何贡献](https://baidu.github.io/bigflow/contributing.html)
 
-[设计文档](http://bigflow.cloud/zh/bigflow_design.html)
+[设计文档](https://baidu.github.io/bigflow/bigflow_design.html)
 
 ### 联系我们
 
