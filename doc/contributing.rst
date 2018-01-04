@@ -19,6 +19,8 @@ Contributing Documentation Changes
 
 Bigflow 用户可以对Bigflow 的文档提出修改意见，或者直接修改，并提交pull request
 
+:doc:`English Document Contributing <contributing_en_doc>`
+
 Contributing Bug Reports
 -------------------------
 

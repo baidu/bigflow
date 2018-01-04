@@ -1,0 +1,32 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-02 17:07+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.1\n"
+
+#: ../../ppt.rst:2
+msgid "ppt下载"
+msgstr ""
+
+#: ../../ppt.rst:4
+msgid "`Bigflow分享ppt-1 </download/ppt/Bigflow-1.pptx>`_"
+msgstr ""
+
+#: ../../ppt.rst:6
+msgid "`Bigflow分享ppt-2 进阶版 </download/ppt/Bigflow-2.pptx>`_"
+msgstr ""
+
