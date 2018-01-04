@@ -1,0 +1,46 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-02 17:07+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.1\n"
+
+#: ../../bigflow_design.rst:2
+msgid "Bigflow 设计文档"
+msgstr ""
+
+#: ../../bigflow_design.rst:4
+msgid "注意：下述文档为设计文档原文，后续有不少实现发生过改变，故可能有细节上与文档并不一致。 相关文档仅供学习Bigflow原理之用。"
+msgstr ""
+
+#: ../../bigflow_design.rst:7
+msgid "Bigflow架构与百度分布式技术栈："
+msgstr ""
+
+#: ../../bigflow_design.rst:13
+msgid ""
+"其中，Bigflow核心的优化与执行层称为Bigflow "
+"Core层（又称Flume），它定义了一套与引擎无关的计算描述语言，用户可以使用这种语言描述自己的计算需求，而无需关注底层的计算引擎细节。"
+msgstr ""
+
+#: ../../bigflow_design.rst:16
+msgid ":doc:`Bigflow Flume 设计文档 <flume/index>`"
+msgstr ""
+
+#: ../../bigflow_design.rst:17
+msgid ":doc:`Bigflow On Spark 设计文档 <spark/index>`"
+msgstr ""
+

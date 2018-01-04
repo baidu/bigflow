@@ -1,0 +1,60 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-02 19:05+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.1\n"
+
+#: ../../contributing_en_doc.rst:2
+msgid "Bigflow Contributing English Document"
+msgstr ""
+
+#: ../../contributing_en_doc.rst:4
+msgid "目前Bigflow 的英文文档需要同步更新。Bigflow 的文档是通过Sphinx 生成的，Bigflow 英文文档使用的是"
+msgstr ""
+
+#: ../../contributing_en_doc.rst:6
+msgid "Sphinx 的国际化支持功能。"
+msgstr ""
+
+#: ../../contributing_en_doc.rst:9
+msgid "文档更新"
+msgstr ""
+
+#: ../../contributing_en_doc.rst:11
+msgid "git clone https://github.com/baidu/bigflow.git"
+msgstr ""
+
+#: ../../contributing_en_doc.rst:13
+msgid "cd bigflow/doc/locales/en/LC_MESSAGES"
+msgstr ""
+
+#: ../../contributing_en_doc.rst:15
+msgid "找到对应.po 文件进行更新："
+msgstr ""
+
+#: ../../contributing_en_doc.rst:17
+msgid "msgid 为要完成翻译的目标语句"
+msgstr ""
+
+#: ../../contributing_en_doc.rst:19
+msgid "msgstr 目标语句的翻译"
+msgstr ""
+
+#: ../../contributing_en_doc.rst:26
+msgid "已经被翻译过的msgid 被修改后，需要删除fuzzy 行"
+msgstr ""
+

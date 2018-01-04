@@ -1,0 +1,880 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-02 17:07+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.1\n"
+
+#: ../../guide.rst:2
+msgid "编程指南"
+msgstr ""
+
+#: ../../guide.rst:4
+msgid "`概述`_"
+msgstr ""
+
+#: ../../guide.rst:5
+msgid "`后端引擎`_"
+msgstr ""
+
+#: ../../guide.rst:6
+msgid "`配置`_"
+msgstr ""
+
+#: ../../guide.rst:8
+msgid "`Hadoop配置`_"
+msgstr ""
+
+#: ../../guide.rst:9
+msgid "`bigflow-env.sh`_"
+msgstr ""
+
+#: ../../guide.rst:11
+msgid "`P类型(PType)`_"
+msgstr ""
+
+#: ../../guide.rst:13
+msgid "`PCollection`_"
+msgstr ""
+
+#: ../../guide.rst:14
+msgid "`PObject`_"
+msgstr ""
+
+#: ../../guide.rst:15
+msgid "`PTable`_"
+msgstr ""
+
+#: ../../guide.rst:16
+msgid "`变换`_"
+msgstr ""
+
+#: ../../guide.rst:17
+msgid "`apply/apply_values`_"
+msgstr ""
+
+#: ../../guide.rst:19
+msgid "`输入/输出`_"
+msgstr ""
+
+#: ../../guide.rst:20
+msgid "`SideInputs`_"
+msgstr ""
+
+#: ../../guide.rst:22
+msgid "`闭包`_"
+msgstr ""
+
+#: ../../guide.rst:24
+msgid "`附带文件`_"
+msgstr ""
+
+#: ../../guide.rst:25
+msgid "`缓存机制`_"
+msgstr ""
+
+#: ../../guide.rst:26
+msgid "`PCollection的顺序`_"
+msgstr ""
+
+#: ../../guide.rst:27
+msgid "`错误信息和日志`_"
+msgstr ""
+
+#: ../../guide.rst:28
+msgid "`其它`_"
+msgstr ""
+
+#: ../../guide.rst:31
+msgid "概述"
+msgstr ""
+
+#: ../../guide.rst:33
+msgid ""
+"Bigflow Python是一个致力于简化分布式计算任务编写和维护的Python "
+"module，它提供了对分布式数据和计算的高层抽象，你可以使用这些抽象来编写分布式计算程序。Bigflow "
+"Python能够将这些抽象映射到不同的分布式计算框架之上。"
+msgstr ""
+
+#: ../../guide.rst:35
+msgid ""
+"Bigflow Python中，最重要的抽象被称为 `P类型` "
+"，P类型是分布式数据的抽象描述，非常类似于Spark中的RDD。实际上，它们都借鉴于于Google的论文<<Flume "
+"Java>>。P类型可以通过读取(read)接口得到，例如读取文件系统中的文件/目录或是数据库中的表格，或是通过Python的已有变量构造得到。P类型可以通过"
+" `变换` "
+"来描述计算，例如，映射、分组、连接等。最终，变换后的P类型可以通过写出(write)接口持久化到文件系统/数据库中，或是将其转换为内存中的Python内置变量。此外，用户还可以将一个P类型进行缓存以便于多轮迭代计算。"
+msgstr ""
+
+#: ../../guide.rst:37
+msgid ""
+"第二个抽象概念为 `SideInputs` "
+"，它指被广播到计算中去的P类型或是Python变量。通常而言，一个计算将被并行地在计算集群中执行，这时每个计算切片都能够得到SideInputs来满足计算的需求(例如查字典)。"
+msgstr ""
+
+#: ../../guide.rst:40
+msgid "后端引擎"
+msgstr ""
+
+#: ../../guide.rst:42
+msgid "目前，Bigflow Python支持两种后端执行引擎:"
+msgstr ""
+
+#: ../../guide.rst:44
+msgid "Local -- 一个轻量的本地执行引擎，便于学习以及基于小数据集的算法验证。"
+msgstr ""
+
+#: ../../guide.rst:45
+msgid "Spark -- 开源分布式计算引擎。"
+msgstr ""
+
+#: ../../guide.rst:47
+msgid "后端执行引擎可以在创建Pipeline的时候指定，例如::"
+msgstr ""
+
+#: ../../guide.rst:54
+msgid "配置"
+msgstr ""
+
+#: ../../guide.rst:57
+msgid "Hadoop配置"
+msgstr ""
+
+#: ../../guide.rst:59
+msgid ""
+"Bigflow Python需要读取core-"
+"site.xml配置文件来访问HDFS。因此在使用时，用户需要首先设置好HADOOP_HOME环境变量。"
+msgstr ""
+
+#: ../../guide.rst:62
+msgid "bigflow-env.sh"
+msgstr ""
+
+#: ../../guide.rst:64
+msgid ""
+"bigflow-env.sh位于BIGFLOW_PYTHON_HOME/bigflow/bin下，其中包含一些Bigflow "
+"Python在运行时的可选参数。"
+msgstr ""
+
+#: ../../guide.rst:66
+msgid "Bigflow Python默认将log打印到屏幕，用户可以通过改变下面的参数来指定Log的输出文件::"
+msgstr ""
+
+#: ../../guide.rst:70
+msgid ""
+"对于一个P类型PValue，默认的str(PValue)仅会得到一个表示其具体类别的字符串。也即`print "
+"PValue`不会真正地触发计算。这时，如果希望看到一个P类型的内容，可以调用 `PValue.get()` ::"
+msgstr ""
+
+#: ../../guide.rst:78
+msgid "用户可以设置下面的变量来改变`str(PValue)`的行为 ::"
+msgstr ""
+
+#: ../../guide.rst:82
+msgid "这时，每次`print PValue`都会隐式地执行`PValue.get()`::"
+msgstr ""
+
+#: ../../guide.rst:87
+msgid "这样做的好处在于可以使Bigflow Python写出的代码更像一个单机程序。"
+msgstr ""
+
+#: ../../guide.rst:90
+msgid "P类型(PType)"
+msgstr ""
+
+#: ../../guide.rst:92
+msgid "P类型是Bigflow设计中的核心抽象，其表示集群中的分布式数据集，P类型的另一个特点是数据不可变，对P类型的任何计算都产生一个新的P类型。"
+msgstr ""
+
+#: ../../guide.rst:94
+msgid "在Bigflow Python中，共有3中不同的P类型，其中的每一种都被设计于类似Python语言的内置类型:"
+msgstr ""
+
+#: ../../guide.rst:96
+msgid ":mod:`PCollection <bigflow.pcollection>`  --  并行化的Python `list`"
+msgstr ""
+
+#: ../../guide.rst:97
+msgid ":mod:`PObject <bigflow.pobject>`      --  并行化的Python单个变量"
+msgstr ""
+
+#: ../../guide.rst:98
+msgid ":mod:`PTable <bigflow.ptable>`       --  并行化的 Python `dict`"
+msgstr ""
+
+#: ../../guide.rst:101
+msgid "PCollection"
+msgstr ""
+
+#: ../../guide.rst:103
+msgid "PCollection表示并行化的Python `list` 。其可以通过一个Python list实例转换得到，或是读取文件得到::"
+msgstr ""
+
+#: ../../guide.rst:112
+msgid ""
+"字符串 \"*[...]*\" "
+"表示p1/p2均为PCollection。绝大多数的Bigflow变换均作用于PCollection上，而且结果多为PCollection。"
+msgstr ""
+
+#: ../../guide.rst:114
+msgid "PCollection非常类似于Apache Spark中的弹性分布式数据集(RDD)。"
+msgstr ""
+
+#: ../../guide.rst:117
+msgid "PObject"
+msgstr ""
+
+#: ../../guide.rst:119
+msgid "PObject表示单个变量。其往往是聚合类变换的结果，例如max/sum/count等。"
+msgstr ""
+
+#: ../../guide.rst:126
+msgid ""
+"字符\"*o*\" 表示一个PObject。PObject往往作为一个 `SideInput` 参与到变换中。具体的例子请参照 "
+"`SideInput` 部分。"
+msgstr ""
+
+#: ../../guide.rst:129
+msgid "PTable"
+msgstr ""
+
+#: ../../guide.rst:131
+msgid ""
+"PTable非常类似于并行化的Python `dict`, "
+"其包含key到value的映射，但其value必须是另一个P类型。PTable往往是一个分组变换的结果::"
+msgstr ""
+
+#: ../../guide.rst:140
+msgid ""
+"字符串 `{k0: [...]}` 表示 `p4` 是一个PTable。 `p4` 的key类型为Python "
+"str，value为一个PCollection。"
+msgstr ""
+
+#: ../../guide.rst:145
+msgid "`p5` 也是一个PTable，它的key与 `p4` 一致，value变为了PObject类型( `transforms.max` 的结果)。"
+msgstr ""
+
+#: ../../guide.rst:147
+msgid "由于PTable仍然是一个P类型，因此它可以作为另一个PTable的value。例如::"
+msgstr ""
+
+#: ../../guide.rst:157
+msgid "也即，PTable可以无限嵌套，"
+msgstr ""
+
+#: ../../guide.rst:159
+msgid "P类型可能通过下面的三种情况构造:"
+msgstr ""
+
+#: ../../guide.rst:161
+msgid ""
+":func:`Pipeline.read() "
+"<bigflow.pipeline.pipeline_base.PipelineBase.read>`: 从外部存储读取"
+msgstr ""
+
+#: ../../guide.rst:162
+msgid ""
+":func:`Pipeline.parallelize() "
+"<bigflow.pipeline.pipeline_base.PipelineBase.parallelize>`: 通过内存变量构造"
+msgstr ""
+
+#: ../../guide.rst:163
+msgid "从另一个P类型 `变换`_ 得到"
+msgstr ""
+
+#: ../../guide.rst:165
+msgid "P类型可以通过下面的三种情况使用:"
+msgstr ""
+
+#: ../../guide.rst:167
+msgid ""
+":func:`Pipeline.write() "
+"<bigflow.pipeline.pipeline_base.PipelineBase.write>`: 持久化到外部存储"
+msgstr ""
+
+#: ../../guide.rst:168
+msgid ""
+":func:`Pipeline.get() <bigflow.pipeline.pipeline_base.PipelineBase.get>`:"
+" 转换为Python内置变量"
+msgstr ""
+
+#: ../../guide.rst:169
+msgid "作用一个 `变换`_ ，生成另一个P类型"
+msgstr ""
+
+#: ../../guide.rst:171
+msgid "P类型的不断变换构造出一个有向无环图，最终完整地表达出用户的计算逻辑。"
+msgstr ""
+
+#: ../../guide.rst:174
+msgid "变换"
+msgstr ""
+
+#: ../../guide.rst:176
+msgid "Bigflow Python提供了一系列的变换原语方便用户表达计算。"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.accumulate <bigflow.transforms.accumulate>`\\ "
+"\\(pcollection\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "将给定的PCollection按照一个初始值和方法聚合为PObject"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.aggregate <bigflow.transforms.aggregate>`\\ "
+"\\(pcollection\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "将给定的PCollection按照初始值、初段聚合方法和汇总方法聚合为PObject"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.cartesian <bigflow.transforms.cartesian>`\\ "
+"\\(\\*pcollections\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对多个输入PCollection求笛卡尔积，返回一个PCollection"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.cogroup <bigflow.transforms.cogroup>`\\ "
+"\\(\\*pcollections\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对传入的所有pcollection进行协同分组。"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.combine <bigflow.transforms.combine>`\\ "
+"\\(pcollection\\, fn\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "给定一个合并函数，聚合输入PCollection中所有元素，这些元素以迭代器的形式给出"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.distinct <bigflow.transforms.distinct>`\\ "
+"\\(pcollection\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "返回给定PCollection中所有不重复元素"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.diff <bigflow.transforms.diff>`\\ "
+"\\(pcollection1\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于给定的PCollection1和PCollection2，返回两者不相同的元素"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.extract_keys "
+"<bigflow.transforms.extract_keys>`\\ \\(ptable\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "提取给定PTable中所有的key"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.extract_values "
+"<bigflow.transforms.extract_values>`\\ \\(ptable\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "提取给定PTable中所有的value"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.filter <bigflow.transforms.filter>`\\ "
+"\\(pcollection\\, fn\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于给定的PCollection和一个断言函数，返回只满足断言函数元素的PCollection"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.first <bigflow.transforms.first>`\\ "
+"\\(pcollection\\, \\*\\*options\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "取出PCollection中的第一个元素"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.flatten <bigflow.transforms.flatten>`\\ "
+"\\(ptable\\, \\*\\*options\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于给定PTable中的key和value中每一个元素，构造(key, value)对，结果保存在PCollection中"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.flatten_values "
+"<bigflow.transforms.flatten_values>`\\ \\(ptable\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "等价于 ``extract_values(ptable)``"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.group_by <bigflow.transforms.group_by>`\\ "
+"\\(pcollection\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "利用给定的key_extractor和value_extractor对输入PCollection分组，返回一个表示分组结果的PTable"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.group_by_key "
+"<bigflow.transforms.group_by_key>`\\ \\(pcollection\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "利用给定的PCollection，使用一个默认的key/value提取函数对输入的PCollection分组"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.is_empty <bigflow.transforms.is_empty>`\\ "
+"\\(pcollection\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于输入PCollection，返回其是否为空"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.intersection "
+"<bigflow.transforms.intersection>`\\ \\(\\.\\.\\.\\[\\, \\.\\.\\.\\]\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于给定的PCollection1和PCollection2，返回所有同时存在于PCollection1和PCollection2"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.join <bigflow.transforms.join>`\\ "
+"\\(\\*pcollections\\, \\*\\*options\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于多个输入PCollection，根据key对PCollection做内连接操作"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.left_join <bigflow.transforms.left_join>`\\ "
+"\\(\\*pcollections\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于多个输入PCollection，根据key对PCollection做左连接操作"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.right_join <bigflow.transforms.right_join>`\\ "
+"\\(\\*pcollections\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于多个输入PCollection，根据key对PCollection做右连接操作"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.full_join <bigflow.transforms.full_join>`\\ "
+"\\(\\*pcollections\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于多个输入PCollection，根据key对PCollection做全连接操作"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.max <bigflow.transforms.max>`\\ "
+"\\(pcollection\\[\\, key\\]\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "得到输入PCollection中最大的元素"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.max_elements "
+"<bigflow.transforms.max_elements>`\\ \\(pcollection\\, n\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "得到输入PCollection中前n大的元素"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.min <bigflow.transforms.min>`\\ "
+"\\(pcollection\\[\\, key\\]\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "得到输入PCollection中最小的元素"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.map <bigflow.transforms.map>`\\ \\(pvalue\\, "
+"fn\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对PCollection中的每个元素做一对一映射"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.flat_map <bigflow.transforms.flat_map>`\\ "
+"\\(pvalue\\, fn\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对PCollection中的每个元素做一对N映射"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.reduce <bigflow.transforms.reduce>`\\ "
+"\\(pcollection\\, fn\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于属于PCollection，使用给定的fn将所有元素规约为单个元素"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.sort <bigflow.transforms.sort>`\\ "
+"\\(pcollection\\[\\, reverse\\]\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于输入PCollection，将其进行排序"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.sum <bigflow.transforms.sum>`\\ "
+"\\(pcollection\\, \\*\\*options\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于输入PCollection，求其所有包含元素相加的结果"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.take <bigflow.transforms.take>`\\ "
+"\\(pcollection\\, n\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "取给定PCollection中的任意n个元素。"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.transform <bigflow.transforms.transform>`\\ "
+"\\(pcollection\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对给定PCollection进行任意的变换，结果为另一个PCollection"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.union <bigflow.transforms.union>`\\ "
+"\\(\\*pvalues\\, \\*\\*options\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于多个输入PCollection/PObject，返回包含它们所有元素的PCollection"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.to_list_pobject "
+"<bigflow.transforms.to_list_pobject>`\\ \\(pvalue\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于给定的PCollection，聚合为PObject，PObject的内容为list"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid ""
+":obj:`bigflow.transforms.pipe <bigflow.transforms.pipe>`\\ \\(pvalue\\, "
+"command\\, \\.\\.\\.\\)"
+msgstr ""
+
+#: ../../<autosummary>:1
+msgid "对于给定的PCollection/PTable，返回通过command处理后的PCollection"
+msgstr ""
+
+#: ../../guide.rst:215
+msgid ""
+"以上的所有变换均需要作用于P类型之上，产生另一个P类型。例如，将 `transforms.map` "
+"作用于PCollection上产生一个新的PCollection。如果把PCollection看作Python内置的 `list` ， "
+"`transforms.map` 的用法非常类似于Python内置的 `map()` 方法::"
+msgstr ""
+
+#: ../../guide.rst:223
+msgid "PCollection同样有一个成员方法 `PCollection.map(function)`::"
+msgstr ""
+
+#: ../../guide.rst:227
+msgid "实际上， `PCollection.map(function)` 内部的实现就是 `transforms.map(self)` 。"
+msgstr ""
+
+#: ../../guide.rst:229
+msgid "此外，之前的例子也可以这样写::"
+msgstr ""
+
+#: ../../guide.rst:233
+msgid "关于 `apply()` 方法，请见下节。"
+msgstr ""
+
+#: ../../guide.rst:236
+msgid "apply/apply_values"
+msgstr ""
+
+#: ../../guide.rst:238
+msgid "所有的P类型均定义了一个成员方法 `apply()` ，其定义非常简单::"
+msgstr ""
+
+#: ../../guide.rst:242
+msgid "等价于::"
+msgstr ""
+
+#: ../../guide.rst:246
+msgid "用户可以根据自己的风格喜好编写代码::"
+msgstr ""
+
+#: ../../guide.rst:252
+msgid "或者这样写::"
+msgstr ""
+
+#: ../../guide.rst:258
+msgid "使用 `apply()` 的一个优点在于，用于可以将多个变换放到一个自定义的方法中，apply这个方法::"
+msgstr ""
+
+#: ../../guide.rst:266
+msgid "可以看到，apply自定义方法保持了风格的统一，同时使得代码更具有内聚性，更容易复用。"
+msgstr ""
+
+#: ../../guide.rst:268
+msgid "类似于 `apply()` ，PTable的成员方法 `apply_values()` 能够将一个变换作用在它的value上::"
+msgstr ""
+
+#: ../../guide.rst:277
+msgid "value中的PCollection还可以用group_by_key进行再分组::"
+msgstr ""
+
+#: ../../guide.rst:285
+msgid "可以看到，最终结果是一个嵌套的PTable。"
+msgstr ""
+
+#: ../../guide.rst:287
+msgid ""
+"PTable可以通过 `flatten()` 方法转换(\"打平\")为一个PCollection: "
+"每个key和其对应的value中所有元素将构成一个(k, v)的Python tuple::"
+msgstr ""
+
+#: ../../guide.rst:295
+msgid "对于多层嵌套的PTable， `flatten()` 将把所有的key均打平，最终结果还是一个PCollection::"
+msgstr ""
+
+#: ../../guide.rst:300
+msgid ""
+"这种情况下，如果希望仅打平value中的PTable，可以使用apply_values，即 "
+"`apply_values(transforms.flatten)`::"
+msgstr ""
+
+#: ../../guide.rst:306
+msgid "输入/输出"
+msgstr ""
+
+#: ../../guide.rst:308
+msgid ""
+"Bigflow "
+"Python提供了Pipeline.read()方法从外部存储读取数据，以及Pipeline.write()方法将数据写出。输入/输出类型被抽象为"
+" `input.Source` 和 `output.Target` ，例如，input.TextFile是一个对应于文本文件的Source。"
+msgstr ""
+
+#: ../../guide.rst:310
+msgid "目前，Pipeline.read()/write()的结果只能为PCollection。所有已实现的Source/Target如下:"
+msgstr ""
+
+#: ../../guide.rst:328
+msgid "注意，这里的SequenceFile实际上为Hadoop中的SequenceFileAsBinaryInputFormat/SequenceFileAsBinaryOutputFormat。也就是说，Key/Value均为BytesWritable。"
+msgstr ""
+
+#: ../../guide.rst:331
+msgid "SideInputs"
+msgstr ""
+
+#: ../../guide.rst:333
+msgid ""
+"当Bigflow "
+"Python提交任务时，计算被并行执行。但某些情况下，用户会期望将某些PType传入到另一个PType的变换中参与计算(由于变换实际在运行时被分布地计算，因此更确切地说，是被"
+" *广播* 到了变换)。例如，如果希望在Bigflow中进行 *mapper-side join* "
+"，一个较小的PCollection可以以字典的方式传入到较大PCollection/PTable的 `flat_map()` "
+"变换里面。当框架遍历较大PCollection/PTable每个元素时，可以直接对较小PCollection进行遍历来查找满足需要的连接条件。"
+msgstr ""
+
+#: ../../guide.rst:335
+msgid ""
+"大部分的分布式计算引擎本身提供了一些机制来满足这样的场景，例如Hadoop的 `DistributeCache` 或是Spark中的 "
+"`Broadcast varirables` 。"
+msgstr ""
+
+#: ../../guide.rst:337
+msgid "在Bigflow中，这样的机制被抽象为 `SideInputs` :你可以将一个P类型作为参数传入到另一个P类型的变换中。"
+msgstr ""
+
+#: ../../guide.rst:339
+msgid ""
+"绝大多数的变换均支持SideInputs，例如 :func:`map() <bigflow.transforms.map()>`, "
+":func:`flat_map() <bigflow.transforms.flat_map>`, :func:`filter() "
+"<bigflow.transforms.filter>` 等::"
+msgstr ""
+
+#: ../../guide.rst:348
+msgid ""
+"上面的例子中，p2是一个包含单个元素 `4` 的PObject。它被作为SideInputs传入到 `filter()` "
+"变换中，因此对应的变换表达式从原来的一个输入x，变成了有两个输入: `x` 和 `threshold` ， `threshold` "
+"为PObject在运行时的值，也就是4。"
+msgstr ""
+
+#: ../../guide.rst:351
+msgid "闭包"
+msgstr ""
+
+#: ../../guide.rst:353
+msgid ""
+"SideInputs的用法有些类似于 `闭包 "
+"<http://en.wikipedia.org/wiki/Closure_(computer_programming)>`_ "
+"。当然，闭包在Bigflow Python中也同样支持::"
+msgstr ""
+
+#: ../../guide.rst:361
+msgid ""
+"这时候，我们没有使用SideInputs: `threshold` "
+"是一个内存变量，它被filter中的lambda方法所捕获，同时也能够被正确地处理。"
+msgstr ""
+
+#: ../../guide.rst:364
+msgid "附带文件"
+msgstr ""
+
+#: ../../guide.rst:366
+msgid ""
+"通常而言，当使用Bigflow "
+"Python编写的代码被提交到分布式环境中运行时，相关的方法能够自动地被序列化/反序列化到集群中。然而用户的代码可能需要从本机import一些自己定义的库。此外，用户还可能需要将一些资源文件一起随代码进行提交，并在运行时读取资源。"
+msgstr ""
+
+#: ../../guide.rst:368
+msgid "对于这样的需求，可以使用 `Pipeline.add_file()` 方法::"
+msgstr ""
+
+#: ../../guide.rst:376
+msgid "如果需要添加的文件较多，可以使用 `Pipeline.add_directory()` 方法，将一个目录下的所有文件一起打包::"
+msgstr ""
+
+#: ../../guide.rst:383
+msgid "缓存机制"
+msgstr ""
+
+#: ../../guide.rst:385
+msgid "Pipeline的运行有两种机制触发:"
+msgstr ""
+
+#: ../../guide.rst:387
+msgid "调用 `PType.get()` 或者 `Pipeline.get(PType)` ，两者等价。"
+msgstr ""
+
+#: ../../guide.rst:388
+msgid "调用 `Pipeline.run()`"
+msgstr ""
+
+#: ../../guide.rst:390
+msgid ""
+"当Pipeline通过 `PType.get()` 触发运行时，P类型中的数据实际上首先被缓存起来，然后读取到内存中。因此如果一个P类型被调用多次"
+" `PType.get()` ，从第二次开始，Pipeline并不会真正地做计算，而是直接读取缓存数据。除了 `get()` 方法之外，显示地调用"
+" `PType.cache()` 也可以要求Bigflow "
+"Python在运行时将P类型数据缓存，并在之后的计算中直接读取缓存数据。缓存机制在需要多轮迭代计算时会很有用，例如实现PageRank算法。::"
+msgstr ""
+
+#: ../../guide.rst:403
+msgid "PCollection的顺序"
+msgstr ""
+
+#: ../../guide.rst:405
+msgid ""
+"对于分布式计算而言，元素的顺序往往难以保证。通常而言，PCollection应当被认为是无序数据集，只有 `sort()` 方法的 "
+"**直接结果** 保证元素的顺序::"
+msgstr ""
+
+#: ../../guide.rst:410
+msgid "如上文所言，任何基于sorted的后续变换均不再保证顺序，例如::"
+msgstr ""
+
+#: ../../guide.rst:414
+msgid "此时不应当再假定mapped中元素仍然有序。"
+msgstr ""
+

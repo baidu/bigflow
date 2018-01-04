@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-01-02 17:07+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.1\n"
+
+#: ../../contributing.rst:2
+msgid "Bigflow Contributing"
+msgstr ""
+
+#: ../../contributing.rst:6
+msgid "Contributing by Testing Releases"
+msgstr ""
+
+#: ../../contributing.rst:8
+msgid ""
+"Bigflow 的release 版本会列出新增功能，以及功能优化，Bigflow 用户可以通过测试Bigflow 的release 版本，指出 "
+"Bigflow 的性能、功能正确性问题，可以提交问题提交至pull request"
+msgstr ""
+
+#: ../../contributing.rst:12
+msgid "Contributing by Reviewing Changes"
+msgstr ""
+
+#: ../../contributing.rst:14
+msgid ""
+"Bigflow 用户可以review Bigflow的源代码，并且指出代码中的不合适的地方，或者可能存在的bug。对于发现的问题， "
+"用户可以自己修复或者直接提交pull request"
+msgstr ""
+
+#: ../../contributing.rst:18
+msgid "Contributing Documentation Changes"
+msgstr ""
+
+#: ../../contributing.rst:20
+msgid "Bigflow 用户可以对Bigflow 的文档提出修改意见，或者直接修改，并提交pull request"
+msgstr ""
+
+#: ../../contributing.rst:23
+msgid "Contributing Bug Reports"
+msgstr ""
+
+#: ../../contributing.rst:25
+msgid ""
+"Bigflow 用户在使用Bigflow 的过程中，或者review Bigflow 代码的过程中，发现bug，可以自己修复，或者创建pull "
+"request"
+msgstr ""
+
+#: ../../contributing.rst:29
+msgid "Bigflow 代码贡献"
+msgstr ""
+
+#: ../../contributing.rst:31
+msgid "Code Style Guide"
+msgstr ""
+
+#: ../../contributing.rst:33
+msgid "代码规范(请遵守现有代码规范)"
+msgstr ""
+
+#: ../../contributing.rst:35
+msgid "Bigflow 开发环境构建"
+msgstr ""
+
+#: ../../contributing.rst:37
+msgid ":doc:`编译构建 <build>`"
+msgstr ""
+
+#: ../../contributing.rst:39
+msgid "测试"
+msgstr ""
+
+#: ../../contributing.rst:46
+msgid "添加单测"
+msgstr ""
+
+#: ../../contributing.rst:48
+msgid "可参考已有的 `*_test.py`"
+msgstr ""
+
+#: ../../contributing.rst:50
+msgid "运行Python 单测"
+msgstr ""
+
+#: ../../contributing.rst:52
+msgid "eg:"
+msgstr ""
+
+#: ../../contributing.rst:59
+msgid "Pull Request"
+msgstr ""
+
+#: ../../contributing.rst:61
+msgid "Bigflow 开发环境构建模块已经将代码clone 到本地，并且编译通过，所以下面的所有操作在这个基础之上"
+msgstr ""
+
+#: ../../contributing.rst:63
+msgid "git checkout -b branch_name"
+msgstr ""
+
+#: ../../contributing.rst:65
+msgid "bug fix or feature develop"
+msgstr ""
+
+#: ../../contributing.rst:67
+msgid "git add file(new file or modified file)"
+msgstr ""
+
+#: ../../contributing.rst:69
+msgid "git commit -m \"comments\""
+msgstr ""
+
+#: ../../contributing.rst:71
+msgid "git push origin branch_name"
+msgstr ""
+
+#: ../../contributing.rst:74
+msgid "The Review Process"
+msgstr ""
+
+#: ../../contributing.rst:76
+msgid "reviewers 和committers 都可以review 用户提交的pull request"
+msgstr ""
+
+#: ../../contributing.rst:78
+msgid "pull request 可能被拒绝"
+msgstr ""
+
+#: ../../contributing.rst:80
+msgid "如果遇到与其他commiter 提交的修改冲突的情况，那么，需要解决这个冲突才能merge 到master，解决 冲突可以通过这种方式："
+msgstr ""
+
+#: ../../contributing.rst:83
+msgid "git remote add upstream https://github.com/baidu/bigflow.git"
+msgstr ""
+
+#: ../../contributing.rst:85
+msgid "git rebase upstream/master"
+msgstr ""
+
+#: ../../contributing.rst:87
+msgid "解决冲突"
+msgstr ""
+
+#: ../../contributing.rst:89
+msgid "修改提交到branch"
+msgstr ""
+
