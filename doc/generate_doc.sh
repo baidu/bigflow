@@ -16,5 +16,19 @@ BIGFLOW_VERSION=${VERSION}_$DATE
 echo "bigflow_version = \"${BIGFLOW_VERSION}\"" > ${WORK_ROOT}/../bigflow_python/python/bigflow/version.py
 
 $BIGFLOW pip install sphinx
-$BIGFLOW make html
-touch _build/html/.touch _build/html/.nojekyll
+$BIGFLOW pip install sphinx-intl
+
+$BIGFLOW make gettext
+$BIGFLOW sphinx-intl update -l zh -l en
+
+
+
+rm -rf html && mkdir html
+
+$BIGFLOW make -e SPHINXOPTS="-D language='zh'" html
+mv _build/html  html/zh
+
+$BIGFLOW make -e SPHINXOPTS="-D language='en'" html
+mv _build/html  html/en
+
+touch html/.touch html/.nojekyll
