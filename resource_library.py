@@ -38,7 +38,18 @@ import os
 import sys
 
 
+def print_line(file, string):
+    # In python 2 and python 3, the way to call print functions is different. 
+    if sys.version_info[0] > 2:
+        exec("print(string, file=file)")
+    else:
+        exec("print >> file, string")
+
+
 def generate_line(byte_list):
+    # Assume 'reduce' fuction needs to be imported in this way in future versions.
+    if sys.version_info[0] > 2:
+        from functools import reduce
     line = reduce(lambda x, y: x + ', ' + "%s" % str(y), byte_list)
     return line + ','
 
@@ -68,9 +79,9 @@ if __name__ == "__main__":
     resource_list = generate_resource_and_src_list(base_dir, srcs)
 
     hfile = open(header_file, 'w')
-    print >> hfile, '#ifdef __cplusplus'
-    print >> hfile, 'extern "C" {'
-    print >> hfile, '#endif'
+    print_line(hfile, '#ifdef __cplusplus')
+    print_line(hfile, 'extern "C" {')
+    print_line(hfile, '#endif')
 
     for (source, resource_name, c_filename, size) in resource_list:
         f = open(source, 'rb')
@@ -87,16 +98,16 @@ if __name__ == "__main__":
         if len(byte_list) > 0:
             line_list.append(generate_line(byte_list))
 
-        print >> hfile, "extern const char RESOURCE_%s[%d];" % (resource_name, size)
+        print_line(hfile, "extern const char RESOURCE_%s[%d];" % (resource_name, size))
         with open(c_filename, "w") as c_file:
-            print >> c_file, "const char RESOURCE_%s[] = {" % resource_name
-            line_list[len(line_list) - 1] = line_list[len(line_list) - 1][ : -1]
+            print_line(c_file, "const char RESOURCE_%s[] = {" % resource_name)
+            line_list[len(line_list) - 1] = line_list[len(line_list) - 1][:-1]
             for line in line_list:
-                print >> c_file, '   ', line
-            print >> c_file, '};'
-            print >> c_file, "unsigned int %s_len = %d;" % (resource_name, size)
+                print_line(c_file, '   ' + line)
+            print_line(c_file, '};')
+            print_line(c_file, "unsigned int %s_len = %d;" % (resource_name, size))
 
-    print >> hfile, '#ifdef __cplusplus'
-    print >> hfile, '}'
-    print >> hfile, '#endif'
+    print_line(hfile, '#ifdef __cplusplus')
+    print_line(hfile, '}')
+    print_line(hfile, '#endif')
     hfile.close()
