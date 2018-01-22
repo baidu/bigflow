@@ -46,7 +46,7 @@ def generate_line(byte_list):
 def generate_resource_and_src_list(base_dir, src_list):
     resource_list = []
     for src in src_list:
-        prefix = os.path.commonprefix({base_dir, src})
+        prefix = os.path.commonprefix([base_dir, src])
         component = src[len(prefix):].lstrip('/')
         resource_name = component.replace('/', '_').replace('.', '_')
         c_filename = resource_name + ".c"
