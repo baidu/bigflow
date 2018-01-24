@@ -637,7 +637,7 @@ def of(rtype):
         return rtype
 
     if isinstance(rtype, entity.EntitiedBySelf):
-        raise "Not Support this serde :", rtype
+        raise Exception("Not Support this serde :", rtype)
 
     if isinstance(rtype, type) and issubclass(rtype, message.Message):
         return proto_of(rtype)
