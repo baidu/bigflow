@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-05 08:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: ../../build_and_dev_on_mac.rst:2
+msgid "Disclaimer"
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:3
+msgid "Bigflow don't support running on Mac, this article is for developers only."
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:6
+msgid "Building on Mac"
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:9
+msgid "Dependency"
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:10
+msgid "XCode and its command line tools::"
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:14
+msgid ""
+"JDK(>=1.8), please goto "
+"http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html"
+" after installation, set JAVA_HOME::"
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:19
+msgid ""
+"You can add this line to your shell init file(~/.bash_profile or "
+"~/.zshrc, etc.)"
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:21
+msgid "Third party tools::"
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:26
+msgid "Building"
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:27
+msgid ""
+"Execute commands below should built all the targets defined in the "
+"CMakeLists.txt::"
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:40
+msgid "Developing"
+msgstr ""
+
+#: ../../build_and_dev_on_mac.rst:41
+msgid ""
+"We use CLion(https://www.jetbrains.com/clion/) as our primary dev tool. "
+"Open CMakeLists.txt as a project should setup everything smoothly."
+msgstr ""
+

@@ -1,0 +1,3834 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-05 08:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: ../../rst/bigflow.rst:2
+msgid "bigflow package"
+msgstr ""
+
+#: bigflow:4 of
+msgid "Bigflow Python API"
+msgstr ""
+
+#: ../../rst/bigflow.example.rst:10 ../../rst/bigflow.pipeline.rst:10
+#: ../../rst/bigflow.rst:10 ../../rst/bigflow.transform_impls.rst:10
+#: ../../rst/bigflow.util.rst:10
+msgid "Submodules"
+msgstr ""
+
+#: ../../rst/bigflow.rst:29
+msgid "Subpackages"
+msgstr ""
+
+#: ../../rst/bigflow.base.rst:2
+msgid "PipelineFactory"
+msgstr ""
+
+#: bigflow.base:1 of
+msgid "定义用于创建 :mod:`bigflow.pipeline` 的工厂类"
+msgstr ""
+
+#: bigflow.base.Pipeline:1 of
+msgid "Pipeline是用户一个分布式计算任务的抽象"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:1 of
+msgid "根据用户所指定的后端引擎类型以及基本配置构造一个Pipeline实例"
+msgstr ""
+
+#: bigflow.base.Pipeline.create bigflow.counter.increase bigflow.error.Error
+#: bigflow.example.pagerank.pagerank_algo bigflow.example.word_cnt.count_words
+#: bigflow.future.fields.agg bigflow.future.fields.flatten
+#: bigflow.future.fields.group_by bigflow.future.fields.of
+#: bigflow.future.fields.select bigflow.input.FileBase
+#: bigflow.input.SchemaTextFile bigflow.input.SequenceFile
+#: bigflow.input.SequenceFileStream bigflow.input.TextFile
+#: bigflow.input.TextFileStream bigflow.lazy_var.LazyVariable.get
+#: bigflow.lazy_var.declare bigflow.output.FileBase
+#: bigflow.output.FileBase.partition bigflow.output.FileBase.sort
+#: bigflow.output.FileBase.sort_by bigflow.output.SchemaTextFile
+#: bigflow.output.SequenceFile bigflow.output.SequenceFile.as_type
+#: bigflow.output.TextFile.with_compression bigflow.pcollection.PCollection
+#: bigflow.pcollection.PCollection.accumulate
+#: bigflow.pcollection.PCollection.agg
+#: bigflow.pcollection.PCollection.aggregate
+#: bigflow.pcollection.PCollection.as_schema
+#: bigflow.pcollection.PCollection.cartesian
+#: bigflow.pcollection.PCollection.cogroup
+#: bigflow.pcollection.PCollection.combine bigflow.pcollection.PCollection.diff
+#: bigflow.pcollection.PCollection.distinct
+#: bigflow.pcollection.PCollection.filter
+#: bigflow.pcollection.PCollection.flat_map
+#: bigflow.pcollection.PCollection.foreach
+#: bigflow.pcollection.PCollection.full_join
+#: bigflow.pcollection.PCollection.group_by
+#: bigflow.pcollection.PCollection.group_by_key
+#: bigflow.pcollection.PCollection.intersection
+#: bigflow.pcollection.PCollection.join
+#: bigflow.pcollection.PCollection.left_join
+#: bigflow.pcollection.PCollection.map bigflow.pcollection.PCollection.max
+#: bigflow.pcollection.PCollection.max_elements
+#: bigflow.pcollection.PCollection.min
+#: bigflow.pcollection.PCollection.min_elements
+#: bigflow.pcollection.PCollection.reduce
+#: bigflow.pcollection.PCollection.right_join
+#: bigflow.pcollection.PCollection.select bigflow.pcollection.PCollection.sort
+#: bigflow.pcollection.PCollection.sort_by
+#: bigflow.pcollection.PCollection.subtract
+#: bigflow.pcollection.PCollection.take bigflow.pcollection.PCollection.union
+#: bigflow.pcollection.PCollection.window_into
+#: bigflow.pipeline.local_pipeline.LocalPipeline
+#: bigflow.pipeline.local_pipeline.LocalPipeline.add_file
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_archive
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_directory
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_egg_file
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_file
+#: bigflow.pipeline.pipeline_base.PipelineBase.get
+#: bigflow.pipeline.pipeline_base.PipelineBase.parallelize
+#: bigflow.pipeline.pipeline_base.PipelineBase.read
+#: bigflow.pipeline.pipeline_base.PipelineBase.reset_counter
+#: bigflow.pipeline.pipeline_base.PipelineBase.write
+#: bigflow.pobject.PObject.flat_map bigflow.pobject.PObject.map
+#: bigflow.pobject.PObject.union bigflow.ptable.PTable
+#: bigflow.ptable.PTable.apply_key_values bigflow.ptable.PTable.apply_values
+#: bigflow.ptable.PTable.extract_values bigflow.ptype.PType
+#: bigflow.ptype.PType.apply bigflow.transforms.accumulate
+#: bigflow.transforms.aggregate bigflow.transforms.cartesian
+#: bigflow.transforms.cogroup bigflow.transforms.combine
+#: bigflow.transforms.count bigflow.transforms.diff bigflow.transforms.distinct
+#: bigflow.transforms.extract_keys bigflow.transforms.extract_values
+#: bigflow.transforms.filter bigflow.transforms.first
+#: bigflow.transforms.flat_map bigflow.transforms.flatten
+#: bigflow.transforms.flatten_values bigflow.transforms.foreach
+#: bigflow.transforms.full_join bigflow.transforms.group_by
+#: bigflow.transforms.group_by_key bigflow.transforms.idl_to_str
+#: bigflow.transforms.intersection bigflow.transforms.is_empty
+#: bigflow.transforms.join bigflow.transforms.left_join bigflow.transforms.map
+#: bigflow.transforms.max bigflow.transforms.max_elements
+#: bigflow.transforms.min bigflow.transforms.min_elements
+#: bigflow.transforms.pipe bigflow.transforms.reduce
+#: bigflow.transforms.right_join bigflow.transforms.sort
+#: bigflow.transforms.sort_by bigflow.transforms.str_to_idl
+#: bigflow.transforms.subtract bigflow.transforms.sum bigflow.transforms.take
+#: bigflow.transforms.to_list_pobject bigflow.transforms.to_pobject
+#: bigflow.transforms.transform bigflow.transforms.union
+#: bigflow.transforms.window_into bigflow.util.broadcast.broadcast_to
+#: bigflow.util.broadcast.is_same_working_scope
+#: bigflow.util.broadcast.working_scope bigflow.util.decorators.advance_logger
+#: bigflow.util.decorators.singleton bigflow.util.hadoop_client.HadoopClient
+#: bigflow.util.hadoop_client.HadoopClient.fs_dus
+#: bigflow.util.hadoop_client.HadoopClient.fs_get
+#: bigflow.util.hadoop_client.HadoopClient.fs_mkdir
+#: bigflow.util.hadoop_client.HadoopClient.fs_mv
+#: bigflow.util.hadoop_client.HadoopClient.fs_put
+#: bigflow.util.hadoop_client.HadoopClient.fs_rmr
+#: bigflow.util.hadoop_client.HadoopClient.fs_test bigflow.util.log.init_log
+#: bigflow.util.ptype_info.PTypeInfo
+#: bigflow.util.reiterable_input.ReIterableInput
+#: bigflow.util.side_input_util.SideInputsUtil bigflow.util.utils.construct
+#: bigflow.util.utils.detect_ptype bigflow.util.utils.flatten_runtime_value
+#: bigflow.util.utils.is_infinite bigflow.util.utils.is_ptype of
+msgid "Parameters"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:3 of
+msgid "指定Pipeline类型，目前支持``\"local\"``和``\"hadoop\"``"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:5 of
+msgid ""
+"Pipeline配置  hadoop模式：    job_name: 用于指定Hadoop作业名    tmp_data_path: "
+"用于指定保存运行包等信息的HDFS路径，请确保ugi有操作权限    hadoop_job_conf: "
+"用于设置Hadoop作业相关配置，优先级关系：pipeline创建时指定的参数 > bigflow自动算出的参数 > hadoop-"
+"site.xml里的参数    default_concurrency : 默认并发数。       "
+"如果某级reduce数据量过小，bigflow会利用hadoop相关feature在运行时自动调小并发。  通用配置：      "
+"pass_default_encoding_to_remote (bool/None): 是否传递defaultencoding配置值     "
+"（默认编码）到远端。      "
+"默认情况下（或配置为None)，仅在sys模块被reload过的情况下（通过sys.setdefaultencoding判断），     "
+"会将本地的sys.getdefaultencoding()传递到remote端。     设置为True，则强制将本地编码透传至远端。     "
+"设置为False，则不透传。"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:5 of
+msgid "Pipeline配置"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:7 of
+msgid "hadoop模式："
+msgstr ""
+
+#: bigflow.base.Pipeline.create:9 of
+msgid "job_name: 用于指定Hadoop作业名"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:11 of
+msgid "tmp_data_path: 用于指定保存运行包等信息的HDFS路径，请确保ugi有操作权限"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:13 of
+msgid ""
+"hadoop_job_conf: 用于设置Hadoop作业相关配置，优先级关系：pipeline创建时指定的参数 > bigflow自动算出的参数"
+" > hadoop-site.xml里的参数"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:16 of
+msgid "default_concurrency"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:15 of
+msgid "默认并发数。"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:16 of
+msgid "如果某级reduce数据量过小，bigflow会利用hadoop相关feature在运行时自动调小并发。"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:18 of
+msgid "通用配置："
+msgstr ""
+
+#: bigflow.base.Pipeline.create:20 of
+msgid ""
+"pass_default_encoding_to_remote (bool/None): 是否传递defaultencoding配置值 "
+"（默认编码）到远端。"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:23 of
+msgid ""
+"默认情况下（或配置为None)，仅在sys模块被reload过的情况下（通过sys.setdefaultencoding判断）， "
+"会将本地的sys.getdefaultencoding()传递到remote端。 设置为True，则强制将本地编码透传至远端。 "
+"设置为False，则不透传。"
+msgstr ""
+
+#: bigflow.base.Pipeline.create bigflow.example.word_cnt.count_words
+#: bigflow.future.fields.agg bigflow.future.fields.flatten
+#: bigflow.future.fields.group_by bigflow.future.fields.of
+#: bigflow.future.fields.select bigflow.input.FileBase.get_size
+#: bigflow.lazy_var.LazyVariable.get bigflow.lazy_var.declare
+#: bigflow.output.FileBase.partition bigflow.output.FileBase.sort
+#: bigflow.output.FileBase.sort_by bigflow.output.SequenceFile.as_type
+#: bigflow.output.TextFile.with_compression
+#: bigflow.pcollection.PCollection.accumulate
+#: bigflow.pcollection.PCollection.agg
+#: bigflow.pcollection.PCollection.aggregate
+#: bigflow.pcollection.PCollection.as_pobject
+#: bigflow.pcollection.PCollection.as_schema
+#: bigflow.pcollection.PCollection.cartesian
+#: bigflow.pcollection.PCollection.cogroup
+#: bigflow.pcollection.PCollection.combine
+#: bigflow.pcollection.PCollection.count bigflow.pcollection.PCollection.diff
+#: bigflow.pcollection.PCollection.distinct
+#: bigflow.pcollection.PCollection.filter bigflow.pcollection.PCollection.first
+#: bigflow.pcollection.PCollection.flat_map
+#: bigflow.pcollection.PCollection.foreach
+#: bigflow.pcollection.PCollection.full_join
+#: bigflow.pcollection.PCollection.group_by
+#: bigflow.pcollection.PCollection.group_by_key
+#: bigflow.pcollection.PCollection.intersection
+#: bigflow.pcollection.PCollection.is_empty
+#: bigflow.pcollection.PCollection.join
+#: bigflow.pcollection.PCollection.left_join
+#: bigflow.pcollection.PCollection.map bigflow.pcollection.PCollection.max
+#: bigflow.pcollection.PCollection.max_elements
+#: bigflow.pcollection.PCollection.min
+#: bigflow.pcollection.PCollection.min_elements
+#: bigflow.pcollection.PCollection.reduce
+#: bigflow.pcollection.PCollection.right_join
+#: bigflow.pcollection.PCollection.select bigflow.pcollection.PCollection.sort
+#: bigflow.pcollection.PCollection.sort_by
+#: bigflow.pcollection.PCollection.subtract bigflow.pcollection.PCollection.sum
+#: bigflow.pcollection.PCollection.take bigflow.pcollection.PCollection.union
+#: bigflow.pcollection.PCollection.window_into
+#: bigflow.pipeline.pipeline_base.PipelineBase.config
+#: bigflow.pipeline.pipeline_base.PipelineBase.default_objector
+#: bigflow.pipeline.pipeline_base.PipelineBase.get
+#: bigflow.pipeline.pipeline_base.PipelineBase.id
+#: bigflow.pipeline.pipeline_base.PipelineBase.parallelize
+#: bigflow.pipeline.pipeline_base.PipelineBase.read
+#: bigflow.pobject.PObject.as_pcollection bigflow.pobject.PObject.ceil
+#: bigflow.pobject.PObject.flat_map bigflow.pobject.PObject.floor
+#: bigflow.pobject.PObject.map bigflow.pobject.PObject.not_
+#: bigflow.pobject.PObject.round bigflow.pobject.PObject.union
+#: bigflow.ptable.PTable.apply_key_values bigflow.ptable.PTable.apply_values
+#: bigflow.ptable.PTable.extract_keys bigflow.ptable.PTable.extract_values
+#: bigflow.ptable.PTable.flatten bigflow.ptable.PTable.flatten_values
+#: bigflow.ptable.PTable.inner_most_type bigflow.ptable.PTable.nested_level
+#: bigflow.ptable.PTable.node bigflow.ptype.PType.apply bigflow.ptype.PType.get
+#: bigflow.ptype.PType.node bigflow.ptype.PType.pipeline
+#: bigflow.ptype.PType.serde bigflow.serde.common_serde
+#: bigflow.transforms.accumulate bigflow.transforms.aggregate
+#: bigflow.transforms.cartesian bigflow.transforms.cogroup
+#: bigflow.transforms.combine bigflow.transforms.count bigflow.transforms.diff
+#: bigflow.transforms.distinct bigflow.transforms.extract_keys
+#: bigflow.transforms.extract_values bigflow.transforms.filter
+#: bigflow.transforms.first bigflow.transforms.flatten
+#: bigflow.transforms.flatten_values bigflow.transforms.full_join
+#: bigflow.transforms.group_by bigflow.transforms.group_by_key
+#: bigflow.transforms.idl_to_str bigflow.transforms.intersection
+#: bigflow.transforms.is_empty bigflow.transforms.join
+#: bigflow.transforms.left_join bigflow.transforms.max
+#: bigflow.transforms.max_elements bigflow.transforms.min
+#: bigflow.transforms.min_elements bigflow.transforms.pipe
+#: bigflow.transforms.reduce bigflow.transforms.right_join
+#: bigflow.transforms.sort bigflow.transforms.sort_by
+#: bigflow.transforms.str_to_idl bigflow.transforms.subtract
+#: bigflow.transforms.sum bigflow.transforms.take
+#: bigflow.transforms.to_list_pobject bigflow.transforms.to_pobject
+#: bigflow.transforms.transform bigflow.transforms.union
+#: bigflow.transforms.window_into bigflow.util.broadcast.broadcast_to
+#: bigflow.util.broadcast.is_same_working_scope
+#: bigflow.util.broadcast.working_scope
+#: bigflow.util.hadoop_client.HadoopClient.fs_dus
+#: bigflow.util.hadoop_client.HadoopClient.fs_test
+#: bigflow.util.side_input_util.SideInputsUtil.get_input
+#: bigflow.util.side_input_util.SideInputsUtil.process_with_side_inputs
+#: bigflow.util.utils.construct bigflow.util.utils.detect_ptype
+#: bigflow.util.utils.flatten_runtime_value bigflow.util.utils.is_infinite
+#: bigflow.util.utils.is_ptype of
+msgid "Returns"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:28 of
+msgid "Pipeline实例"
+msgstr ""
+
+#: bigflow.base.Pipeline.create bigflow.example.word_cnt.count_words
+#: bigflow.input.FileBase.get_size bigflow.lazy_var.LazyVariable.get
+#: bigflow.lazy_var.declare bigflow.output.FileBase.partition
+#: bigflow.output.FileBase.sort bigflow.output.FileBase.sort_by
+#: bigflow.output.SequenceFile.as_type bigflow.output.TextFile.with_compression
+#: bigflow.pcollection.PCollection.accumulate
+#: bigflow.pcollection.PCollection.aggregate
+#: bigflow.pcollection.PCollection.as_pobject
+#: bigflow.pcollection.PCollection.as_schema
+#: bigflow.pcollection.PCollection.cartesian
+#: bigflow.pcollection.PCollection.cogroup
+#: bigflow.pcollection.PCollection.combine
+#: bigflow.pcollection.PCollection.count bigflow.pcollection.PCollection.diff
+#: bigflow.pcollection.PCollection.distinct
+#: bigflow.pcollection.PCollection.filter bigflow.pcollection.PCollection.first
+#: bigflow.pcollection.PCollection.flat_map
+#: bigflow.pcollection.PCollection.full_join
+#: bigflow.pcollection.PCollection.group_by
+#: bigflow.pcollection.PCollection.group_by_key
+#: bigflow.pcollection.PCollection.intersection
+#: bigflow.pcollection.PCollection.is_empty
+#: bigflow.pcollection.PCollection.join
+#: bigflow.pcollection.PCollection.left_join
+#: bigflow.pcollection.PCollection.map bigflow.pcollection.PCollection.max
+#: bigflow.pcollection.PCollection.max_elements
+#: bigflow.pcollection.PCollection.min
+#: bigflow.pcollection.PCollection.min_elements
+#: bigflow.pcollection.PCollection.reduce
+#: bigflow.pcollection.PCollection.right_join
+#: bigflow.pcollection.PCollection.sort bigflow.pcollection.PCollection.sort_by
+#: bigflow.pcollection.PCollection.subtract bigflow.pcollection.PCollection.sum
+#: bigflow.pcollection.PCollection.take bigflow.pcollection.PCollection.union
+#: bigflow.pcollection.PCollection.window_into
+#: bigflow.pipeline.pipeline_base.PipelineBase.config
+#: bigflow.pipeline.pipeline_base.PipelineBase.default_objector
+#: bigflow.pipeline.pipeline_base.PipelineBase.get
+#: bigflow.pipeline.pipeline_base.PipelineBase.id
+#: bigflow.pipeline.pipeline_base.PipelineBase.parallelize
+#: bigflow.pipeline.pipeline_base.PipelineBase.read
+#: bigflow.pobject.PObject.as_pcollection bigflow.pobject.PObject.cartesian
+#: bigflow.pobject.PObject.flat_map bigflow.pobject.PObject.map
+#: bigflow.pobject.PObject.union bigflow.ptable.PTable.apply_key_values
+#: bigflow.ptable.PTable.apply_values bigflow.ptable.PTable.extract_keys
+#: bigflow.ptable.PTable.extract_values bigflow.ptable.PTable.flatten
+#: bigflow.ptable.PTable.flatten_values bigflow.ptable.PTable.inner_most_type
+#: bigflow.ptable.PTable.nested_level bigflow.ptable.PTable.node
+#: bigflow.ptype.PType.apply bigflow.ptype.PType.get bigflow.ptype.PType.node
+#: bigflow.ptype.PType.pipeline bigflow.ptype.PType.serde
+#: bigflow.transforms.accumulate bigflow.transforms.aggregate
+#: bigflow.transforms.cartesian bigflow.transforms.cogroup
+#: bigflow.transforms.combine bigflow.transforms.count bigflow.transforms.diff
+#: bigflow.transforms.distinct bigflow.transforms.extract_keys
+#: bigflow.transforms.extract_values bigflow.transforms.filter
+#: bigflow.transforms.first bigflow.transforms.flatten
+#: bigflow.transforms.flatten_values bigflow.transforms.full_join
+#: bigflow.transforms.group_by bigflow.transforms.group_by_key
+#: bigflow.transforms.idl_to_str bigflow.transforms.intersection
+#: bigflow.transforms.is_empty bigflow.transforms.join
+#: bigflow.transforms.left_join bigflow.transforms.max
+#: bigflow.transforms.max_elements bigflow.transforms.min
+#: bigflow.transforms.min_elements bigflow.transforms.pipe
+#: bigflow.transforms.reduce bigflow.transforms.right_join
+#: bigflow.transforms.sort bigflow.transforms.sort_by
+#: bigflow.transforms.str_to_idl bigflow.transforms.subtract
+#: bigflow.transforms.sum bigflow.transforms.take
+#: bigflow.transforms.to_list_pobject bigflow.transforms.to_pobject
+#: bigflow.transforms.transform bigflow.transforms.union
+#: bigflow.transforms.window_into bigflow.util.broadcast.broadcast_to
+#: bigflow.util.broadcast.is_same_working_scope
+#: bigflow.util.broadcast.working_scope
+#: bigflow.util.hadoop_client.HadoopClient.fs_dus
+#: bigflow.util.hadoop_client.HadoopClient.fs_test
+#: bigflow.util.side_input_util.SideInputsUtil.get_input
+#: bigflow.util.side_input_util.SideInputsUtil.process_with_side_inputs
+#: bigflow.util.utils.construct bigflow.util.utils.detect_ptype
+#: bigflow.util.utils.flatten_runtime_value bigflow.util.utils.is_infinite
+#: bigflow.util.utils.is_ptype of
+msgid "Return type"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:31 of
+msgid "创建一个local作业： >>> base.Pipeline.create('local')"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:34 of
+msgid "创建一个hadoop作业： >>> base.Pipeline.create('hadoop',"
+msgstr ""
+
+#: bigflow.base.Pipeline.create:36 of
+msgid ""
+"job_name=\"test_app\", tmp_data_path=\"hdfs:///app/test/\", "
+"hadoop_job_conf={\"mapred.job.map.capacity\": \"1000\"})"
+msgstr ""
+
+#: bigflow.base.Options:1 bigflow.base.Options.Explain:1
+#: bigflow.base.Transformer:1 bigflow.input.FileBase:1
+#: bigflow.input.UserInputBase:1 bigflow.lazy_var.LazyVariable:1
+#: bigflow.output.FileBase:1 bigflow.output.UserOutputBase:1
+#: bigflow.pipeline.pipeline_base.PipelineBase:1 bigflow.ptype.PType:1
+#: bigflow.serde.FastPbSerdeFactory:1 bigflow.util.ptype_info.PTypeInfo:1
+#: bigflow.util.reiterable_input.ReIterableInput:1 of
+msgid "Bases: :class:`object`"
+msgstr ""
+
+#: bigflow.base.Options:1 of
+msgid "for all options"
+msgstr ""
+
+#: bigflow.base.Options.Explain:1 of
+msgid "for explain options in base.Pipeline.create"
+msgstr ""
+
+#: bigflow.base.Options.Explain:5 of
+msgid "DEFAULT: Default setting."
+msgstr ""
+
+#: bigflow.base.Options.Explain:4 of
+msgid ""
+"At most engine (Hadoop, Spark[not support yet]), the explaining file will"
+" be shown at the log directory of the 1st task of every vertex."
+msgstr ""
+
+#: bigflow.base.Options.Explain:7 of
+msgid ""
+"ON: Explain file will be shown at all task. This may be very expensive if"
+" the explaining file is too big."
+msgstr ""
+
+#: bigflow.base.Options.Explain:9 of
+msgid "OFF: Do not show any explaining file."
+msgstr ""
+
+#: bigflow.base.Options.Explain:11 of
+msgid "eg. ::"
+msgstr ""
+
+#: bigflow.base.Transformer:1 of
+msgid "Transformser基类"
+msgstr ""
+
+#: bigflow.base.Transformer:3 of
+msgid ""
+"用户在使用 :func:`bigflow.transforms.transform(self, data, Transformer, "
+"*side_inputs, **options) <bigflow.transforms.transform>` "
+"时，需要实现一个本类的子类，并重写相关方法，此类相关样例也见前述变换文档页。"
+msgstr ""
+
+#: bigflow.base.Transformer.begin_process:1 of
+msgid "此方法在开始处理数据之前被调用，以通知用户要开始处理数据了。"
+msgstr ""
+
+#: bigflow.base.Transformer.begin_process:3
+#: bigflow.base.Transformer.end_process:3 bigflow.base.Transformer.process:4 of
+msgid "用户必须返回一个可迭代的对象，其中值将会被放入结果的PCollection中。"
+msgstr ""
+
+#: bigflow.base.Transformer.end_process:1 of
+msgid "此方法在结束处理数据时被调用，以通知用户要开始处理数据了。"
+msgstr ""
+
+#: bigflow.base.Transformer.process:1 of
+msgid "此方法在处理数据之时被调用，以通知用户要开始处理数据了。 其中record即为待处理的数据。"
+msgstr ""
+
+#: ../../rst/bigflow.counter.rst:2
+msgid "Counter"
+msgstr ""
+
+#: bigflow.counter.increase:1 of
+msgid "累加name对应的counter，累加值为increment"
+msgstr ""
+
+#: bigflow.counter.increase:3 of
+msgid "counter名称，只接受str类型"
+msgstr ""
+
+#: bigflow.counter.increase:5 of
+msgid "累加值，只接受正数"
+msgstr ""
+
+#: bigflow.counter.increase bigflow.pipeline.local_pipeline.LocalPipeline.run
+#: bigflow.pipeline.pipeline_base.PipelineBase.async_run
+#: bigflow.pipeline.pipeline_base.PipelineBase.reset_all_counters
+#: bigflow.pipeline.pipeline_base.PipelineBase.reset_counter
+#: bigflow.pipeline.pipeline_base.PipelineBase.run bigflow.ptable.PTable.node
+#: bigflow.util.broadcast.working_scope bigflow.util.log.init_log of
+msgid "raises"
+msgstr ""
+
+#: bigflow.counter.increase:8 of
+msgid ""
+":exc:`error.BigflowPlanningException` -- 此函数仅允许在 "
+":mod:`Bigflow变换<bigflow.transforms>` 的用户自定义方法(UDF)中调用，否则抛出此异常"
+msgstr ""
+
+#: bigflow.counter.increase:12 of
+msgid ""
+"counter 具有 group 的概念, 如果 name 格式为\"group1|name1\"，则 group1 为 counter 所在 "
+"group; 若不包含, 则默认的 group 为 'Flume'"
+msgstr ""
+
+#: bigflow.counter.increase:14 of
+msgid ""
+"counter 属于一个 Bigflow Pipeline，并在 Pipeline 多次运行时累加，若需要将 counter 清零，请使用 "
+"Pipeline 的 "
+":meth:`reset_counter<bigflow.pipeline.pipeline_base.PipelineBase.reset_counter>`"
+" 或 "
+":meth:`reset_all_counters<bigflow.pipeline.pipeline_base.PipelineBase.reset_all_counters>`"
+" 方法 当前实现中, reset_counter 是个全局操作. reset_counter 将会重置所有 pipeline 中定义的 "
+"counter. 如有多 pipeline 重置 counter 的需求, 请为每个 pipeline 设置不同的 counter "
+"idenfier"
+msgstr ""
+
+#: ../../rst/bigflow.error.rst:2
+msgid "Exceptions"
+msgstr ""
+
+#: bigflow.error:1 of
+msgid "Python API异常定义"
+msgstr ""
+
+#: bigflow.error.BigflowHDFSException:1
+#: bigflow.error.BigflowPlanningException:1
+#: bigflow.error.BigflowRuntimeException:1 of
+msgid "Bases: :class:`bigflow.error.Error`"
+msgstr ""
+
+#: bigflow.error.BigflowHDFSException:1 of
+msgid "访问HDFS抛出的异常"
+msgstr ""
+
+#: bigflow.error.BigflowPlanningException:1 of
+msgid "Bigflow非运行期抛出异常的基类"
+msgstr ""
+
+#: bigflow.error.BigflowRPCException:1
+#: bigflow.error.InvalidLogicalPlanException:1
+#: bigflow.error.InvalidSeqSerdeException:1 of
+msgid "Bases: :class:`bigflow.error.BigflowPlanningException`"
+msgstr ""
+
+#: bigflow.error.BigflowRPCException:1 of
+msgid "Bigflow RPC失败抛出的异常"
+msgstr ""
+
+#: bigflow.error.BigflowRPCException:3 of
+msgid "本异常有可能在今后移除，如有需要，建议捕获其父类"
+msgstr ""
+
+#: bigflow.error.BigflowRuntimeException:1 of
+msgid "Bigflow运行期抛出异常的基类"
+msgstr ""
+
+#: bigflow.error.Error:1 of
+msgid "Bases: :class:`exceptions.Exception`"
+msgstr ""
+
+#: bigflow.error.Error:1 of
+msgid "基类"
+msgstr ""
+
+#: bigflow.error.Error:3 of
+msgid "异常信息"
+msgstr ""
+
+#: bigflow.error.Error:5 of
+msgid "导致该异常的内部异常"
+msgstr ""
+
+#: bigflow.error.InvalidConfException:1 bigflow.error.InvalidDataException:1 of
+msgid "Bases: :class:`bigflow.error.BigflowRuntimeException`"
+msgstr ""
+
+#: bigflow.error.InvalidConfException:1 of
+msgid "配置错误所导致的运行期异常"
+msgstr ""
+
+#: bigflow.error.InvalidDataException:1 of
+msgid "数据错误所导致的运行期异常"
+msgstr ""
+
+#: bigflow.error.InvalidLogicalPlanException:1 of
+msgid "Bigflow 执行计划构造抛出的异常"
+msgstr ""
+
+#: bigflow.error.InvalidSeqSerdeException:1 of
+msgid "Bigflow 序列化文件传入key和value的serde异常"
+msgstr ""
+
+#: ../../rst/bigflow.example.rst:2
+msgid "bigflow.example package"
+msgstr ""
+
+#: bigflow.example:1 of
+msgid "Bigflow Python代码示例"
+msgstr ""
+
+#: bigflow.example:3 of
+msgid "代码位于 `$BIGFLOW_PYTHON_HOME/bigflow/example` 中，可以直接通过pyrun脚本运行。 例如::"
+msgstr ""
+
+#: ../../rst/bigflow.example.pagerank.rst:2
+msgid "PageRank"
+msgstr ""
+
+#: bigflow.example.pagerank:1 of
+msgid "Bigflow Python代码示例: 实现PageRank"
+msgstr ""
+
+#: bigflow.example.pagerank:3 bigflow.ptype:6 bigflow.util.broadcast:5 of
+msgid "Author: Wang, Cong(bigflow-opensource@baidu.com)"
+msgstr ""
+
+#: bigflow.example.pagerank.pagerank_algo:1 of
+msgid "接受表示网页链接关系的PCollection，求出每个网页的Rank指标"
+msgstr ""
+
+#: bigflow.example.pagerank.pagerank_algo:3 of
+msgid "输入PCollection，格式为(from_page_id, to_page_id)"
+msgstr ""
+
+#: bigflow.example.pagerank.pagerank_algo:6 of
+msgid "Result:"
+msgstr ""
+
+#: bigflow.example.pagerank.pagerank_algo:7 of
+msgid "PCollection:  表示结果的PCollection，格式为(page_id, rank)"
+msgstr ""
+
+#: ../../rst/bigflow.example.word_cnt.rst:2
+msgid "WordCount"
+msgstr ""
+
+#: bigflow.example.word_cnt:1 of
+msgid "Bigflow Python实现word count示例"
+msgstr ""
+
+#: bigflow.example.word_cnt:3 of
+msgid "示例展示了如何使用Bigflow Python API实现分布式计算中经典的word count，主要包括4步:"
+msgstr ""
+
+#: bigflow.example.word_cnt:5 of
+msgid "使用 ``Pipeline.create()`` 方法创建一个Pipeline实例 ``_p`` 。"
+msgstr ""
+
+#: bigflow.example.word_cnt:6 of
+msgid "通过 ``_p.read()`` 方法读取HDFS文本文件，得到输入PCollection"
+msgstr ""
+
+#: bigflow.example.word_cnt:7 of
+msgid ""
+"对PCollection应用 :func:`.count_words_in_pcollection` "
+"算法，算法由Bigflow提供的基本变换拼接而成"
+msgstr ""
+
+#: bigflow.example.word_cnt:8 of
+msgid "使用 ``_p.write()`` 方法将结果写出"
+msgstr ""
+
+#: bigflow.example.word_cnt.count_words:1 of
+msgid ""
+"将输入PCollection的每个元素(文本文件的每一行)切分成单词，统计每个单词个数，返回 内容为(word, "
+"count)的PCollection"
+msgstr ""
+
+#: bigflow.example.word_cnt.count_words:4 of
+msgid "通过读取文本文件构造的PCollection"
+msgstr ""
+
+#: bigflow.example.word_cnt.count_words:7 of
+msgid "表示统计结果的PCollection"
+msgstr ""
+
+#: ../../rst/bigflow.future.fields.rst:2 ../../rst/bigflow.util.utils.rst:2
+msgid "Others"
+msgstr ""
+
+#: bigflow.future.fields:1 of
+msgid ""
+"Author: zhangyuncong Date:   2015-09-23 16:18:06 Last Modified by:   "
+"zhangyuncong Last Modified time: 2015-12-24 16:18:06"
+msgstr ""
+
+#: bigflow.future.fields.FieldsDictSerde:1 bigflow.serde.BoolSerde:1
+#: bigflow.serde.CPickleSerde:1 bigflow.serde.ChainSerde:1
+#: bigflow.serde.DictSerde:1 bigflow.serde.FloatSerde:1
+#: bigflow.serde.IdlPacketSerde:1 bigflow.serde.IntSerde:1
+#: bigflow.serde.ListSerde:1 bigflow.serde.Optional:1
+#: bigflow.serde.SameTypeListSerde:1 bigflow.serde.SetSerde:1
+#: bigflow.serde.StrSerde:1 bigflow.serde.TupleLikeListSerde:1
+#: bigflow.serde.TupleSerde:1 of
+msgid "Bases: :class:`bigflow.serde.CppSerde`"
+msgstr ""
+
+#: bigflow.future.fields.FieldsDictSerde:1 of
+msgid "Use for the dict with know fields"
+msgstr ""
+
+#: bigflow.future.fields.agg:1 bigflow.pcollection.PCollection.agg:1 of
+msgid "选择一些字段去做一些聚合操作。"
+msgstr ""
+
+#: bigflow.future.fields.agg:3 bigflow.future.fields.group_by:3
+#: bigflow.future.fields.select:3 bigflow.pcollection.PCollection.agg:3
+#: bigflow.pcollection.PCollection.select:3 of
+msgid "输入数据集，需要是一个每个元素都是dict的pcollection"
+msgstr ""
+
+#: bigflow.future.fields.agg:5 bigflow.future.fields.select:5
+#: bigflow.pcollection.PCollection.agg:5
+#: bigflow.pcollection.PCollection.select:5 of
+msgid "格式为：  a,b=>c,d,e  即，输入字段=>输出字段"
+msgstr ""
+
+#: bigflow.future.fields.agg:7 bigflow.pcollection.PCollection.agg:7 of
+msgid ""
+"函数原型为 (*input_pcollections) => (*output_pcollection_or_pobjects) "
+"即，该函数的输入参数为多个pcollection， 每个pcollection表示数据的一个字段的全部行所拼成的一个pcollection。 "
+"该函数的返回值是一些pobject或 pcollection所组成的tuple（如果只有一个元素可以不必返回tuple）。"
+msgstr ""
+
+#: bigflow.future.fields.agg:14 bigflow.pcollection.PCollection.agg:14 of
+msgid ""
+"返回一个每个元素是一个dict的pcollection。 "
+"这个pcollection中所有元素输出的几个pcollection进行笛卡尔积并添加字段名后的结果。"
+msgstr ""
+
+#: bigflow.future.fields.agg:17 bigflow.future.fields.flatten:9
+#: bigflow.future.fields.group_by:14 bigflow.future.fields.select:18
+#: bigflow.pcollection.PCollection.agg:17
+#: bigflow.pcollection.PCollection.select:18 of
+msgid "例如：::"
+msgstr ""
+
+#: bigflow.future.fields.flatten:1 of
+msgid "打平PTable为一个PCollection。如果K,V中有同样的字段，则以value中为准。"
+msgstr ""
+
+#: bigflow.future.fields.flatten:3 of
+msgid "输入数据集，需要是一个PTable，key,value中都必须为字典。"
+msgstr ""
+
+#: bigflow.future.fields.flatten:6 of
+msgid "返回一个每个元素是一个dict的pcollection，表示PTable打平后的结果， 如果key,value中有同样字段，以value为准。"
+msgstr ""
+
+#: bigflow.future.fields.get_out_fields_serde:1
+#: bigflow.future.fields.get_serde_of_fields:1
+#: bigflow.future.fields.select_cols:1 bigflow.output.user_define_format:1 of
+msgid "内部函数"
+msgstr ""
+
+#: bigflow.future.fields.get_serde_of_field:1 of
+msgid "get serde of field"
+msgstr ""
+
+#: bigflow.future.fields.group_by:1 of
+msgid "按fields分组。"
+msgstr ""
+
+#: bigflow.future.fields.group_by:5 of
+msgid ""
+"如果fields为一个str，则会按“,”进行切割，然后按切割出的字段进行分组。 "
+"如果fields为一个list，则直接按list中的多个字段进行分组。"
+msgstr ""
+
+#: bigflow.future.fields.group_by:9 of
+msgid "返回一个key为一个包含指定字段的dict，value为原数据集的PTable。"
+msgstr ""
+
+#: bigflow.future.fields.group_by:11 of
+msgid ""
+"需要注意的是，由于python原生的dict的key不能为dict，所以，这个返回的PTable上不能调用get操作， "
+"如果需要get结果，可以先调用flatten。"
+msgstr ""
+
+#: bigflow.future.fields.of:1 of
+msgid ""
+"创建FieldsDictSerde，用来序列化、反序列化有指定字段的字典。 "
+"因为字段已知，则key无需序列化，序列化出来的数据会小于marshal序列化后的结果。"
+msgstr ""
+
+#: bigflow.future.fields.of:4 of
+msgid ""
+"可以传入一个字段名组成的列表， 也可以传入一个key是字段名，value是相应字段所用的serde的dict。 "
+"如果只传入字段名，则表示所有类型都是可被marshal序列化的类型。"
+msgstr ""
+
+#: bigflow.future.fields.of:8 of
+msgid "相应的序列化器。"
+msgstr ""
+
+#: bigflow.future.fields.select:1 bigflow.pcollection.PCollection.select:1 of
+msgid "对每条数据选择一些字段进行变换。"
+msgstr ""
+
+#: bigflow.future.fields.select:7 bigflow.pcollection.PCollection.select:7 of
+msgid ""
+"函数原型为 (*input_pobjects) => (*output_pcollection_or_pobjects) "
+"即，该函数的输入参数为多个pobject，每个pobject表示数据的一个字段， "
+"对这个pobject上进行的操作会执行在每行数据上；该函数的返回值是一些pobject或 "
+"pcollection所组成的tuple（如果只有一个元素可以不必返回tuple）。"
+msgstr ""
+
+#: bigflow.future.fields.select:13 bigflow.pcollection.PCollection.select:13 of
+msgid ""
+"返回一个每个元素是一个dict的pcollection。 这个pcollection中所有元素相当于对原数据每条数据进行一次fn处理， "
+"处理后返回的tuple中的所有数据集进行笛卡尔积， 最终再把所有输入数据处理后得出的结果拼成一个数据集。"
+msgstr ""
+
+#: ../../rst/bigflow.input.rst:2
+msgid "Input"
+msgstr ""
+
+#: bigflow.input:1 of
+msgid "定义所有的数据源(Source)，用于Pipeline.read()方法"
+msgstr ""
+
+#: bigflow.input:3 of
+msgid "实现一个Source需要实现四个接口："
+msgstr ""
+
+#: bigflow.input:5 of
+msgid "有一个input_format属性，是一个flume::Loader"
+msgstr ""
+
+#: bigflow.input:6 of
+msgid "有一个objector属性，是一个Objector"
+msgstr ""
+
+#: bigflow.input:7 of
+msgid "有一个uris属性，返回一个uri列表"
+msgstr ""
+
+#: bigflow.input:8 of
+msgid "有一个transform_from_node方法，把一个Node变换成一个PType"
+msgstr ""
+
+#: bigflow.input:9 of
+msgid "有一个get_size方法，计算本文件读出数据量有多少。可以返回-1(?)表示未知大小。"
+msgstr ""
+
+#: bigflow.input.FileBase:1 of
+msgid "用于Pipeline.read()方法读取文件的基类"
+msgstr ""
+
+#: bigflow.input.FileBase:3 of
+msgid "读取文件的path，必须均为str或unicode类型"
+msgstr ""
+
+#: bigflow.input.FileBase.get_size:1 of
+msgid "获得所有读取文件在文件系统中的大小"
+msgstr ""
+
+#: bigflow.input.FileBase.get_size:3 of
+msgid "文件大小，以字节为单位"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:1 of
+msgid "Bases: :class:`bigflow.input.TextFile`"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:1 bigflow.output.SchemaTextFile:1 of
+msgid "读取文本文件生成支持字段操作的SchemaPCollection"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:3 of
+msgid "读取文件的path, 必须均为str类型"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:4 of
+msgid ""
+"Arbitrary keyword arguments, 其中关键参数， (1). 若columns(list), "
+"每一项为字段名，则生成SchemaPCollection的元素是dict，dict中的value类型都是str;  (2). "
+"若columns(list), 每一项为(字段名，类型)，则生成SchemaPCollection的元素是dict， "
+"dict中的值类型是字段对应的类型;  (3). "
+"若columns(int)，表示分割的列数，则生成SchemaPCollection的元素是tuple，tuple中的每个元素的类型都是str， "
+"separator(str)表示每行数据字段分隔符，默认分隔符是Tab(\"       \");  (4). 若columns(list), "
+"每一项为python基本类型(int, str, float)，则生成SchemaPcollection的元素是tuple， "
+"每个tuple中的元素的类型和columns中的类型一一对应；separator(str)表示每行数据字段分隔符，默认分隔符是Tab(\""
+"        \");  "
+"ignore_overflow(bool)表示如果文件有多余的列，是否可以忽略掉。默认为False，即出现多余的列时即会报错。  "
+"ignore_illegal_line(bool): 表示当文件某一行的列数少于提供的字段数时，是否可以忽略该文件行。若不设置，则抛出异常"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:4 of
+msgid ""
+"Arbitrary keyword arguments, 其中关键参数， (1). 若columns(list), "
+"每一项为字段名，则生成SchemaPCollection的元素是dict，dict中的value类型都是str;"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:7 of
+msgid ""
+"(2). 若columns(list), 每一项为(字段名，类型)，则生成SchemaPCollection的元素是dict， "
+"dict中的值类型是字段对应的类型;"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:10 of
+msgid ""
+"(3). "
+"若columns(int)，表示分割的列数，则生成SchemaPCollection的元素是tuple，tuple中的每个元素的类型都是str， "
+"separator(str)表示每行数据字段分隔符，默认分隔符是Tab(\"       \");"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:13 of
+msgid ""
+"(4). 若columns(list), 每一项为python基本类型(int, str, "
+"float)，则生成SchemaPcollection的元素是tuple， "
+"每个tuple中的元素的类型和columns中的类型一一对应；separator(str)表示每行数据字段分隔符，默认分隔符是Tab(\""
+"        \");"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:16 of
+msgid "ignore_overflow(bool)表示如果文件有多余的列，是否可以忽略掉。默认为False，即出现多余的列时即会报错。"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:18 of
+msgid "ignore_illegal_line(bool): 表示当文件某一行的列数少于提供的字段数时，是否可以忽略该文件行。若不设置，则抛出异常"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile:21 bigflow.input.SequenceFile:13
+#: bigflow.output.SchemaTextFile:11 of
+msgid "Example"
+msgstr ""
+
+#: bigflow.input.SchemaTextFile.transform_from_node:1
+#: bigflow.input.SequenceFile.transform_from_node:1
+#: bigflow.input.TextFile.transform_from_node:1
+#: bigflow.input.TextFileStream.transform_from_node:1
+#: bigflow.output.SchemaTextFile.transform_to_node:1
+#: bigflow.output.TextFile.transform_to_node:1 of
+msgid "内部接口"
+msgstr ""
+
+#: bigflow.input.SequenceFile:1 bigflow.input.SequenceFileStream:1
+#: bigflow.input.TextFile:1 bigflow.input.TextFileStream:1 of
+msgid "Bases: :class:`bigflow.input.FileBase`"
+msgstr ""
+
+#: bigflow.input.SequenceFile:1 of
+msgid "表示读取SequenceFile的数据源，SequenceFile的(Key, Value)必须均为BytesWritable，并由用户自行解析"
+msgstr ""
+
+#: bigflow.input.SequenceFile:3 bigflow.input.SequenceFileStream:3
+#: bigflow.input.TextFile:3 of
+msgid "读取文件的path，必须均为str类型"
+msgstr ""
+
+#: bigflow.input.SequenceFile:4 of
+msgid ""
+"其中关键参数： combine_multi_file: 是否可以合并多个文件到一个mapper中处理。默认为True。 partitioned: "
+"默认为False，如果置为True，则返回的数据集为一个ptable，    "
+"ptable的key是split_info，value这个split上的全部数据所组成的pcollection。 key_serde: "
+"key如何反序列化 value_serde: value如何反序列化 "
+"如果未设定key_serde/value_serde，则会忽略掉key，只把value用默认序列化器反序列化并返回。"
+msgstr ""
+
+#: bigflow.input.SequenceFile:4 of
+msgid ""
+"其中关键参数： combine_multi_file: 是否可以合并多个文件到一个mapper中处理。默认为True。 partitioned: "
+"默认为False，如果置为True，则返回的数据集为一个ptable，"
+msgstr ""
+
+#: bigflow.input.SequenceFile:7 of
+msgid "ptable的key是split_info，value这个split上的全部数据所组成的pcollection。"
+msgstr ""
+
+#: bigflow.input.SequenceFile:8 of
+msgid ""
+"key_serde: key如何反序列化 value_serde: value如何反序列化 "
+"如果未设定key_serde/value_serde，则会忽略掉key，只把value用默认序列化器反序列化并返回。"
+msgstr ""
+
+#: bigflow.input.SequenceFile:29 of
+msgid "有时，Pb包在本地没有，例如，py文件在hdfs，则可以使用下边的方法："
+msgstr ""
+
+#: bigflow.input.SequenceFile:40 of
+msgid "如果需要自定义Serde，参见：:class:`bigflow.serde.Serde`。"
+msgstr ""
+
+#: bigflow.input.SequenceFile.as_type:1
+#: bigflow.input.SequenceFileStream.as_type:1 of
+msgid "通过kv_deserializer反序列化读取的(Key, Value)"
+msgstr ""
+
+#: bigflow.input.SequenceFile.as_type:3
+#: bigflow.input.SequenceFileStream.as_type:3
+#: bigflow.output.SequenceFile.as_type:9 of
+msgid "kv_deserializer的期望签名为:"
+msgstr ""
+
+#: bigflow.input.SequenceFile.as_type:5
+#: bigflow.input.SequenceFileStream.as_type:5 of
+msgid "kv_deserializer(key: str, value: str) => object"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:1 of
+msgid "表示读取SequenceFile的无穷数据源，SequenceFile的(Key, Value)必须均为BytesWritable，并由用户自行解析"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:4 of
+msgid ""
+"可选的参数。  [Hint] max_record_num_per_round: 用于指定每轮订阅的日志条数，默认值为1000  [Hint] "
+"timeout_per_round: 用于指定每轮订阅的超时时间（单位为s），默认为10s  key_serde: key如何反序列化  "
+"value_serde: value如何反序列化  "
+"如果未设定key_serde/value_serde，则会忽略掉key，只把value用默认序列化器反序列化并返回。"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:4 of
+msgid "可选的参数。"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:6 of
+msgid "[Hint] max_record_num_per_round: 用于指定每轮订阅的日志条数，默认值为1000"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:8 of
+msgid "[Hint] timeout_per_round: 用于指定每轮订阅的超时时间（单位为s），默认为10s"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:10 of
+msgid "key_serde: key如何反序列化"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:12 of
+msgid "value_serde: value如何反序列化"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:14 of
+msgid "如果未设定key_serde/value_serde，则会忽略掉key，只把value用默认序列化器反序列化并返回。"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:18 bigflow.input.TextFileStream:22 of
+msgid "如果path中含有子目录，则以子目录作为数据源；如果path中没有子目录，则以path作为数据源"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:20 bigflow.input.TextFileStream:24 of
+msgid "目录中有效的文件名为从0开始的正整数；如果文件不存在，会一直等待该文件"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream:22 bigflow.input.TextFileStream:26 of
+msgid "目录中的文件不允许被修改，添加需要保证原子（可以先写成其他文件名，然后进行mv）"
+msgstr ""
+
+#: bigflow.input.SequenceFileStream.transform_from_node:1 of
+msgid "内部方法"
+msgstr ""
+
+#: bigflow.input.TextFile:1 of
+msgid "表示读取的文本文件的数据源"
+msgstr ""
+
+#: bigflow.input.TextFile:5 bigflow.input.TextFileStream:5 of
+msgid "读取文件数据示例：::"
+msgstr ""
+
+#: bigflow.input.TextFile:35 of
+msgid "**options: 其中关键参数："
+msgstr ""
+
+#: bigflow.input.TextFile:15 of
+msgid "combine_multi_file: 是否可以合并多个文件到一个mapper中处理。默认为True。"
+msgstr ""
+
+#: bigflow.input.TextFile:18 of
+msgid "partitioned: 默认为False，如果置为True，则返回的数据集为一个ptable，"
+msgstr ""
+
+#: bigflow.input.TextFile:18 of
+msgid "ptable的key是split_info，value这个split上的全部数据所组成的pcollection。::"
+msgstr ""
+
+#: bigflow.input.TextFileStream:1 of
+msgid "表示读取的文本文件的无穷数据源。"
+msgstr ""
+
+#: bigflow.input.TextFileStream:3 of
+msgid "读取文件目录的path，必须均为str类型"
+msgstr ""
+
+#: bigflow.input.UserInputBase:1 of
+msgid "用户输入抽象基类"
+msgstr ""
+
+#: bigflow.input.UserInputBase:3 of
+msgid "用户需要按以下方法重写split/load函数"
+msgstr ""
+
+#: bigflow.input.UserInputBase:5 of
+msgid "Eg. ::"
+msgstr ""
+
+#: bigflow.input.UserInputBase:19 of
+msgid ""
+"用户可以重写post_process以实现一些后处理， "
+"post_process有一个传入参数，是一个PTable，这个PTable的key是split string, "
+"value是这个split上的数据。 默认post_process方法是`bigflow.transforms.flatten_values`."
+msgstr ""
+
+#: bigflow.input.UserInputBase.get_serde:1 of
+msgid "User can override this method to set the serde"
+msgstr ""
+
+#: bigflow.input.UserInputBase.get_size:1 of
+msgid "user can override this method to calculate the size of the input data"
+msgstr ""
+
+#: bigflow.input.UserInputBase.load:1 of
+msgid ""
+"Load data from a split. The return value will be flattened into a "
+"PCollection."
+msgstr ""
+
+#: bigflow.input.UserInputBase.post_process:1 of
+msgid "User can override post_process method to do some post_process."
+msgstr ""
+
+#: bigflow.input.UserInputBase.split:1 of
+msgid "splits urls as some splits. User should override this method."
+msgstr ""
+
+#: bigflow.input.user_define_format:1 of
+msgid "return a FileBase object from a UserInputBase"
+msgstr ""
+
+#: ../../rst/bigflow.lazy_var.rst:2
+msgid "lazy_var"
+msgstr ""
+
+#: bigflow.lazy_var.LazyVariable:1 of
+msgid "Lazy Variable，用于加载字典等外部数据"
+msgstr ""
+
+#: bigflow.lazy_var.LazyVariable:4 bigflow.lazy_var.LazyVariable.get:10
+#: bigflow.lazy_var.declare:12 bigflow.pcollection.PCollection.as_schema:19 of
+msgid "Examples"
+msgstr ""
+
+#: bigflow.lazy_var.LazyVariable.get:1 of
+msgid "获取真正的Python Object，在第一次调用get方法时会构造一次Python Object并缓存住 以后每次调用get直接从缓存中读取"
+msgstr ""
+
+#: bigflow.lazy_var.LazyVariable.get:6 of
+msgid "真正需要获取的Python Object"
+msgstr ""
+
+#: bigflow.lazy_var.declare:1 of
+msgid ""
+"根据给定的Python Object生成函数，生成一个 LazyVariable 变量； 可以用该接口来加载一个外部字典或任意的Python "
+"Object 在真正需要使用 Python Object 的时候，可以调用LazyVariable的get获取"
+msgstr ""
+
+#: bigflow.lazy_var.declare:5 of
+msgid "生成Python Object的函数"
+msgstr ""
+
+#: bigflow.lazy_var.declare:8 of
+msgid "可被延迟加载的变量"
+msgstr ""
+
+#: ../../rst/bigflow.output.rst:2
+msgid "Output"
+msgstr ""
+
+#: bigflow.output:1 of
+msgid "定义所有的数据输出抽象(Target)，用于Pipeline.write()方法"
+msgstr ""
+
+#: bigflow.output.FileBase:1 of
+msgid "用于Pipeline.write()方法读取文件的基类"
+msgstr ""
+
+#: bigflow.output.FileBase:3 bigflow.output.SchemaTextFile:3
+#: bigflow.output.SequenceFile:3 of
+msgid "写文件的path，必须为str类型"
+msgstr ""
+
+#: bigflow.output.FileBase.partition:1 of
+msgid "对输出结果进行分组"
+msgstr ""
+
+#: bigflow.output.FileBase.partition:3 of
+msgid "输出结果的分组个数，具体表现为产生n个输出文件，文件内容为各组数据"
+msgstr ""
+
+#: bigflow.output.FileBase.partition:5 of
+msgid "用于指定分组方式的函数"
+msgstr ""
+
+#: bigflow.output.FileBase.partition:8 bigflow.output.FileBase.sort:6
+#: bigflow.output.FileBase.sort_by:8 bigflow.output.SequenceFile.as_type:6
+#: bigflow.output.TextFile.with_compression:6 of
+msgid "返回self"
+msgstr ""
+
+#: bigflow.output.FileBase.sort:1 of
+msgid "根据数据实际值对数据进行排序(默认为升序)"
+msgstr ""
+
+#: bigflow.output.FileBase.sort:3 bigflow.output.FileBase.sort_by:5 of
+msgid "是否降序排序"
+msgstr ""
+
+#: bigflow.output.FileBase.sort_by:1 of
+msgid "通过key_read_fn获取key，并根据key对数据进行排序(默认为升序)"
+msgstr ""
+
+#: bigflow.output.FileBase.sort_by:3 of
+msgid "用户获取key的函数"
+msgstr ""
+
+#: bigflow.output.SchemaTextFile:1 of
+msgid "Bases: :class:`bigflow.output.TextFile`"
+msgstr ""
+
+#: bigflow.output.SchemaTextFile:5 of
+msgid ""
+"Arbitrary keyword arguments, 其中关键参数， 若SchemaPCollection的元素是dict, "
+"必须指定columns(list)表示输出的字段名， 若SchemaPCollection的元素是tuple, 可以直接输出所有数据 "
+"separator(str)表示每行数据字段分隔符，默认分隔符是Tab(\"       \")"
+msgstr ""
+
+#: bigflow.output.SequenceFile:1 bigflow.output.TextFile:1 of
+msgid "Bases: :class:`bigflow.output.FileBase`"
+msgstr ""
+
+#: bigflow.output.SequenceFile:1 of
+msgid ""
+"输出到SequenceFile文件的Target，SequenceFile的(Key, "
+"Value)将被写为BytesWritable，用户使用as_type()函数自行将数据序列化"
+msgstr ""
+
+#: bigflow.output.SequenceFile:5 of
+msgid ""
+"其中关键参数有： overwrite: 如果目标位置已经存在，是否进行覆盖写操作。默认为True。 async_mode: "
+"是否使用异步写。默认为True。 key_serde: key如何被序列化为字符串。 value_serde: value如果被序列化为字符串。 "
+"需要注意, key_serde/value_serde如果设置，则数据必须是一个两个元素的tuple。 "
+"如果不设置，则认为全部的数据使用默认序列化器写到sequence file的value中，key为空。"
+msgstr ""
+
+#: bigflow.output.SequenceFile.as_type:1 of
+msgid "通过kv_serializer将数据序列化为(Key, Value)"
+msgstr ""
+
+#: bigflow.output.SequenceFile.as_type:3 of
+msgid "序列化函数"
+msgstr ""
+
+#: bigflow.output.SequenceFile.as_type:11 of
+msgid "kv_deserializer(object) => (str, str)"
+msgstr ""
+
+#: bigflow.output.TextFile:1 of
+msgid "输出到文本文件的Target"
+msgstr ""
+
+#: bigflow.output.TextFile:8 of
+msgid "Args:"
+msgstr ""
+
+#: bigflow.output.TextFile:4 of
+msgid "path (str):  写文件的path，必须为str类型 **options: 其中关键参数有："
+msgstr ""
+
+#: bigflow.output.TextFile:6 of
+msgid "overwrite: 如果目标位置已经存在，是否进行覆盖写操作。默认为True。 async_mode: 是否使用异步写。默认为True。"
+msgstr ""
+
+#: bigflow.output.TextFile:9 of
+msgid "record_delimiter: 输出文本的分隔符，默认'"
+msgstr ""
+
+#: bigflow.output.TextFile:13 of
+msgid "'；"
+msgstr ""
+
+#: bigflow.output.TextFile:11 of
+msgid "若指定为None，则将所有数据按字节流连续输出"
+msgstr ""
+
+#: bigflow.output.TextFile.with_compression:1 of
+msgid "对输出文件进行压缩"
+msgstr ""
+
+#: bigflow.output.TextFile.with_compression:3 of
+msgid "压缩格式，目前仅支持\"gzip\""
+msgstr ""
+
+#: bigflow.output.UserOutputBase:1 of
+msgid "用户Output基类"
+msgstr ""
+
+#: bigflow.output.UserOutputBase.close:1 bigflow.output.UserOutputBase.sink:1
+#: of
+msgid "用户可以重写该方法。"
+msgstr ""
+
+#: bigflow.output.UserOutputBase.get_commiter:1 of
+msgid "用户可以重写该方法。 返回一个commiter, 默认表示不需要commit阶段 commiter应该是一个无参函数。"
+msgstr ""
+
+#: bigflow.output.UserOutputBase.open:1 of
+msgid "用户可以重写该方法。 传入参数partition表示这是第几个partition"
+msgstr ""
+
+#: bigflow.output.UserOutputBase.partition_fn:1 of
+msgid ""
+"用户可以重写该方法。 返回一个partition fn。 partition_fn原型应为：(data, total_partition) => "
+"partition 返回None则表示不太关心如何partition。"
+msgstr ""
+
+#: bigflow.output.UserOutputBase.partition_fn:6 of
+msgid "如果partition_number"
+msgstr ""
+
+#: bigflow.output.UserOutputBase.partition_number:1 of
+msgid "用户可以重写该方法。 返回一个int型的数，表示总共要把数据partition成多少份。"
+msgstr ""
+
+#: bigflow.output.UserOutputBase.pre_process:1 of
+msgid "用户可以重写该方法。 进行前处理，默认不处理"
+msgstr ""
+
+#: bigflow.output.UserOutputBase.sink:3 of
+msgid "该方法对每条数据调用一次"
+msgstr ""
+
+#: ../../rst/bigflow.pcollection.rst:2
+msgid "PCollection"
+msgstr ""
+
+#: bigflow.pcollection:1 of
+msgid ":class:`bigflow.pcollection.PCollection` 定义"
+msgstr ""
+
+#: bigflow.pcollection.PCollection:1 bigflow.pobject.PObject:1
+#: bigflow.ptable.PTable:1 of
+msgid "Bases: :class:`bigflow.ptype.PType`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection:1 of
+msgid "用于表示分布式数据集的 :class:`bigflow.ptype.PType`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection:3 bigflow.pobject.PObject:4 of
+msgid "用户不应当直接使用其构造方法"
+msgstr ""
+
+#: bigflow.pcollection.PCollection:5 bigflow.ptype.PType:18 of
+msgid "LogicalPlan.Node"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.accumulate:1 of
+msgid ""
+"等同于 :func:`bigflow.transforms.accumulate(self, zero, accumulate_fn, "
+"*side_inputs, **options) <bigflow.transforms.accumulate>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.accumulate:5
+#: bigflow.pcollection.PCollection.aggregate:7 bigflow.transforms.accumulate:11
+#: of
+msgid "初始值，或是一个返回初始值的方法"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.accumulate:7
+#: bigflow.pcollection.PCollection.aggregate:9 bigflow.transforms.accumulate:13
+#: of
+msgid "聚合方法"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.accumulate:9
+#: bigflow.pcollection.PCollection.aggregate:11
+#: bigflow.pcollection.PCollection.filter:7
+#: bigflow.pcollection.PCollection.flat_map:7
+#: bigflow.pcollection.PCollection.foreach:7
+#: bigflow.pcollection.PCollection.map:7
+#: bigflow.pcollection.PCollection.reduce:8 bigflow.pobject.PObject.flat_map:5
+#: bigflow.pobject.PObject.map:5 bigflow.transforms.accumulate:15
+#: bigflow.transforms.aggregate:29 bigflow.transforms.flat_map:12
+#: bigflow.transforms.foreach:12 bigflow.transforms.map:12
+#: bigflow.transforms.reduce:9 of
+msgid "参与运算的SideInputs"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.accumulate:10
+#: bigflow.pcollection.PCollection.aggregate:12
+#: bigflow.pcollection.PCollection.combine:5
+#: bigflow.pcollection.PCollection.distinct:5
+#: bigflow.pcollection.PCollection.filter:8
+#: bigflow.pcollection.PCollection.flat_map:8
+#: bigflow.pcollection.PCollection.group_by:9
+#: bigflow.pcollection.PCollection.map:8 bigflow.pcollection.PCollection.max:7
+#: bigflow.pcollection.PCollection.max_elements:9
+#: bigflow.pcollection.PCollection.min:7
+#: bigflow.pcollection.PCollection.min_elements:9
+#: bigflow.pcollection.PCollection.window_into:5
+#: bigflow.pobject.PObject.flat_map:6 bigflow.pobject.PObject.map:6
+#: bigflow.ptable.PTable.apply_key_values:6
+#: bigflow.ptable.PTable.apply_values:7 bigflow.ptable.PTable.extract_values:3
+#: bigflow.transforms.accumulate:16 bigflow.transforms.aggregate:30
+#: bigflow.transforms.cartesian:4 bigflow.transforms.cogroup:17
+#: bigflow.transforms.count:5 bigflow.transforms.distinct:5
+#: bigflow.transforms.extract_keys:5 bigflow.transforms.extract_values:5
+#: bigflow.transforms.filter:9 bigflow.transforms.first:5
+#: bigflow.transforms.flat_map:13 bigflow.transforms.flatten:5
+#: bigflow.transforms.flatten_values:5 bigflow.transforms.foreach:13
+#: bigflow.transforms.full_join:6 bigflow.transforms.group_by:9
+#: bigflow.transforms.group_by_key:6 bigflow.transforms.idl_to_str:5
+#: bigflow.transforms.join:5 bigflow.transforms.left_join:6
+#: bigflow.transforms.map:13 bigflow.transforms.max:7
+#: bigflow.transforms.max_elements:9 bigflow.transforms.min:7
+#: bigflow.transforms.min_elements:9 bigflow.transforms.pipe:6
+#: bigflow.transforms.right_join:6 bigflow.transforms.str_to_idl:5
+#: bigflow.transforms.to_list_pobject:5 bigflow.transforms.to_pobject:5
+#: bigflow.transforms.transform:31 of
+msgid "可配置选项"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.accumulate:12
+#: bigflow.pcollection.PCollection.aggregate:14
+#: bigflow.transforms.accumulate:18 bigflow.transforms.aggregate:32 of
+msgid "聚合结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.aggregate:1 of
+msgid ""
+"等同于 :func:`bigflow.transforms.aggregate(self, aggregate_fn, combine_fn, "
+"*side_inputs, **options) <bigflow.transforms.aggregate>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.aggregate:5 bigflow.transforms.accumulate:9
+#: bigflow.transforms.aggregate:21 bigflow.transforms.cartesian:3
+#: bigflow.transforms.cogroup:16 bigflow.transforms.combine:15
+#: bigflow.transforms.count:3 bigflow.transforms.distinct:3
+#: bigflow.transforms.filter:5 bigflow.transforms.first:3
+#: bigflow.transforms.full_join:5 bigflow.transforms.group_by:3
+#: bigflow.transforms.group_by_key:4 bigflow.transforms.is_empty:3
+#: bigflow.transforms.join:4 bigflow.transforms.left_join:5
+#: bigflow.transforms.max:3 bigflow.transforms.max_elements:3
+#: bigflow.transforms.min:3 bigflow.transforms.min_elements:3
+#: bigflow.transforms.reduce:5 bigflow.transforms.right_join:5
+#: bigflow.transforms.sort:3 bigflow.transforms.sort_by:3
+#: bigflow.transforms.sum:3 bigflow.transforms.take:4
+#: bigflow.transforms.transform:22 bigflow.transforms.window_into:3 of
+msgid "输入PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.as_pobject:1 of
+msgid "等同于 to ``self.first()``"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.as_pobject:3 of
+msgid "转换结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.as_schema:1 of
+msgid "根据字段，返回一个SchemaPCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.as_schema:3 of
+msgid ""
+"类型可以是，tuple，list，dict； 当fields是tuple或list时, 会判断每个元素的类型：     "
+"fields中的每个元素是python基本类型或一个serde；     接口将构造TupleSerde设置到PCollection每个元素"
+"      fields中的每个元素是python string，抛出异常  当fields是dict时：     "
+"fields的key标识字段类型，value标识该字段的类型，如 {\"name\": str, \"age\": int}     "
+"当前PCollection中的每个元素必须是dict，dict内的key必须相同。     "
+"fields内的key要和PCollection内的key必须相同"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.as_schema:3 of
+msgid "类型可以是，tuple，list，dict； 当fields是tuple或list时, 会判断每个元素的类型："
+msgstr ""
+
+#: bigflow.pcollection.PCollection.as_schema:5 of
+msgid "fields中的每个元素是python基本类型或一个serde； 接口将构造TupleSerde设置到PCollection每个元素"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.as_schema:8 of
+msgid "fields中的每个元素是python string，抛出异常"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.as_schema:13 of
+msgid "当fields是dict时："
+msgstr ""
+
+#: bigflow.pcollection.PCollection.as_schema:11 of
+msgid ""
+"fields的key标识字段类型，value标识该字段的类型，如 {\"name\": str, \"age\": int} "
+"当前PCollection中的每个元素必须是dict，dict内的key必须相同。 "
+"fields内的key要和PCollection内的key必须相同"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.as_schema:15 of
+msgid "表示转化后的PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.cartesian:1 of
+msgid "与其他的PCollection做笛卡尔积"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.cartesian:3 of
+msgid "其他的PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.cartesian:5
+#: bigflow.pcollection.PCollection.cogroup:7
+#: bigflow.pcollection.PCollection.full_join:7
+#: bigflow.pcollection.PCollection.join:7
+#: bigflow.pcollection.PCollection.left_join:7
+#: bigflow.pcollection.PCollection.right_join:7 of
+msgid "更多的PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.cartesian:7
+#: bigflow.pcollection.PCollection.diff:6
+#: bigflow.pcollection.PCollection.take:7
+#: bigflow.pcollection.PCollection.union:10 bigflow.pobject.PObject.union:8
+#: bigflow.ptable.PTable.flatten:3 bigflow.transforms.subtract:9
+#: bigflow.transforms.take:10 bigflow.transforms.union:7 of
+msgid "表示结果的PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.cogroup:1 of
+msgid ""
+"等同于 :func:`bigflow.transforms.cogroup(self, other, *others) "
+"<bigflow.transforms.cogroup>`,"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.cogroup:5 of
+msgid "用于协同分组的PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.cogroup:9
+#: bigflow.pcollection.PCollection.group_by:11
+#: bigflow.pcollection.PCollection.group_by_key:5
+#: bigflow.pcollection.PCollection.window_into:7 bigflow.transforms.cogroup:19
+#: bigflow.transforms.group_by:11 bigflow.transforms.group_by_key:8
+#: bigflow.transforms.window_into:8 of
+msgid "分组结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.combine:1 of
+msgid ""
+"等同于 :func:`bigflow.transforms.combine(self, fn) "
+"<bigflow.transforms.combine>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.combine:3 bigflow.transforms.combine:17 of
+msgid "合并函数"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.combine:7 bigflow.transforms.combine:23 of
+msgid "合并结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.count:1 of
+msgid ""
+"返回元素的数量，等同于 :func:`bigflow.transforms.count(self) "
+"<bigflow.transforms.count>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.count:5
+#: bigflow.pcollection.PCollection.take:3 bigflow.transforms.count:7
+#: bigflow.transforms.take:6 of
+msgid "元素数量"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.diff:1 of
+msgid "返回与另一个PCollection中不相同的元素"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.diff:3
+#: bigflow.pcollection.PCollection.intersection:3 of
+msgid "另一个PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.distinct:1 of
+msgid ""
+"元素去重，等同于 :func:`bigflow.transforms.distinct(self) "
+"<bigflow.transforms.distinct>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.distinct:7 bigflow.transforms.distinct:7 of
+msgid "不重复元素，以PCollection给出"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.filter:1 of
+msgid ""
+"过滤元素，等同于 :func:`bigflow.transforms.filter(self, fn, *side_inputs, "
+"**options) <bigflow.transforms.filter>`,"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.filter:5 bigflow.transforms.filter:7 of
+msgid "断言函数"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.filter:10 bigflow.transforms.filter:11 of
+msgid "过滤结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.first:1 of
+msgid "取第一个元素"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.first:3
+#: bigflow.pcollection.PCollection.is_empty:3 bigflow.transforms.sum:7 of
+msgid "表示结果的PObject"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.flat_map:1 of
+msgid ""
+"对所有元素进行一对多映射，等同于 :func:`bigflow.transforms.flat_map(self, fn, "
+"*side_inputs, **options) <bigflow.transforms.flat_map>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.flat_map:5
+#: bigflow.pcollection.PCollection.foreach:5
+#: bigflow.pcollection.PCollection.map:5 bigflow.pobject.PObject.flat_map:3
+#: bigflow.pobject.PObject.map:3 bigflow.ptable.PTable.apply_key_values:3
+#: bigflow.transforms.flat_map:10 bigflow.transforms.foreach:10
+#: bigflow.transforms.map:10 bigflow.transforms.transform:26 of
+msgid "变换函数"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.flat_map:10
+#: bigflow.pcollection.PCollection.map:10
+#: bigflow.pobject.PObject.as_pcollection:3 bigflow.pobject.PObject.flat_map:8
+#: bigflow.pobject.PObject.map:8 bigflow.ptable.PTable.apply_key_values:8
+#: bigflow.ptable.PTable.apply_values:9 of
+msgid "变换结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.foreach:1 of
+msgid ""
+"等同于 :func:`bigflow.transforms.foreach(self, fn, *side_inputs, **options) "
+"<bigflow.transforms.foreach>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.foreach:9 bigflow.transforms.foreach:16 of
+msgid "None"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.full_join:1 of
+msgid ""
+"与其他PCollection做全连接操作，等同于 :func:`bigflow.transforms.full_join(self, other,"
+" *others) <bigflow.transforms.full_join>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.full_join:5
+#: bigflow.pcollection.PCollection.join:5
+#: bigflow.pcollection.PCollection.left_join:5
+#: bigflow.pcollection.PCollection.right_join:5 of
+msgid "做连接操作的PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.full_join:9 of
+msgid "全连接结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.group_by:1 of
+msgid ""
+"对元素分组，等同于 :func:`bigflow.transforms.group_by(self, key_extractor, "
+"value_extractor) <bigflow.transforms.group_by>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.group_by:5 bigflow.transforms.group_by:5 of
+msgid "用于提取key的函数"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.group_by:7 bigflow.transforms.group_by:7 of
+msgid "用于提取value的函数"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.group_by_key:1 of
+msgid "与 ``group_by`` 变换类似，但使用默认的key/value提取函数对元素分组"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.group_by_key:3
+#: bigflow.pcollection.PCollection.reduce:9
+#: bigflow.pcollection.PCollection.take:5 bigflow.transforms.reduce:10
+#: bigflow.transforms.sum:5 bigflow.transforms.take:8 of
+msgid "可配置参数"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.intersection:1 of
+msgid "返回与另一个PCollection的交集"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.intersection:6 of
+msgid "表示交集的PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.is_empty:1 of
+msgid "判断此PCollection是否为空"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.join:1 of
+msgid ""
+"与其他PCollection做连接操作，等同于 :func:`bigflow.transforms.join(self, other, "
+"*others) <bigflow.transforms.join>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.join:9 bigflow.transforms.full_join:8
+#: bigflow.transforms.join:7 bigflow.transforms.left_join:8
+#: bigflow.transforms.right_join:8 of
+msgid "连接结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.left_join:1 of
+msgid ""
+"与其他PCollection做左连接操作，等同于 :func:`bigflow.transforms.left_join(self, other,"
+" *others) <bigflow.transforms.left_join>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.left_join:9 of
+msgid "左连接结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.map:1 of
+msgid ""
+"对所有元素进行一对一映射变换，等同于 :func:`bigflow.transforms.map(self, fn, *side_inputs, "
+"**options) <bigflow.transforms.map>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.max:1 of
+msgid ""
+"取最大元素，等同于 :func:`bigflow.transforms.max(self, key) "
+"<bigflow.transforms.max>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.max:5
+#: bigflow.pcollection.PCollection.max_elements:7 bigflow.transforms.max:5
+#: bigflow.transforms.max_elements:7 bigflow.transforms.min_elements:7 of
+msgid "用于提取key的函数，与Python内置``max()``中的 ``key`` 参数相同"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.max:9 bigflow.transforms.max:9 of
+msgid "包含最大元素的PObject"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.max_elements:1 of
+msgid ""
+"取前n大元素，等同于 :func:`bigflow.transforms.max_elements(self, n, key) "
+"<bigflow.transforms.max_elements>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.max_elements:5
+#: bigflow.pcollection.PCollection.min_elements:5
+#: bigflow.transforms.max_elements:5 bigflow.transforms.min_elements:5 of
+msgid "必须大于0"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.max_elements:11
+#: bigflow.transforms.max_elements:11 of
+msgid "包含前n大元素的PCollection，注意对于n=1，这里仍然返回PCollection 而非PObject"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.min:1 of
+msgid ""
+"取最小元素, 等同于 :func:`bigflow.transforms.min(self, key) "
+"<bigflow.transforms.min>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.min:5
+#: bigflow.pcollection.PCollection.min_elements:7 bigflow.transforms.min:5 of
+msgid "用于提取key的函数，与Python内置``min()``中的 ``key`` 参数相同"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.min:9 of
+msgid "最小元素"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.min_elements:1 of
+msgid ""
+"取前n小元素，等同于 :func:`bigflow.transforms.min_elements(self, key) "
+"<bigflow.transforms.min_elements>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.min_elements:11
+#: bigflow.transforms.min_elements:11 of
+msgid "包含前n小元素的PCollection，注意对于n=1，这里仍然返回PCollection 而非PObject"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.reduce:1 of
+msgid ""
+"使用给定的fn将所有元素规约为单个元素， 等同于 :func:`bigflow.transforms.reduce(self, fn, "
+"*side_inputs, **options) <bigflow.transforms.reduce>`,"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.reduce:6 bigflow.transforms.reduce:7 of
+msgid "规约函数"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.reduce:11 bigflow.transforms.reduce:12 of
+msgid "规约结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.right_join:1 of
+msgid ""
+"与其他PCollection做右连接操作，等同于 :func:`bigflow.transforms.right_join(self, "
+"other, *others) <bigflow.transforms.right_join>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.right_join:9 of
+msgid "右连接结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.sort:1 of
+msgid ""
+"对元素排序，等同于 :func:`bigflow.transforms.sort(self, reverse) "
+"<bigflow.transforms.sort>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.sort:5
+#: bigflow.pcollection.PCollection.sort_by:7 bigflow.transforms.sort:5
+#: bigflow.transforms.sort_by:7 of
+msgid "若True则降序排列，否则为升序排列"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.sort:8
+#: bigflow.pcollection.PCollection.sort_by:10 bigflow.transforms.sort:8
+#: bigflow.transforms.sort_by:10 of
+msgid "排序结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.sort_by:1 of
+msgid ""
+"使用给定的key对元素排序，等同于 :func:`bigflow.transforms.sort_by(self, fn, reverse) "
+"<bigflow.transforms.sort_by>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.sort_by:5 of
+msgid "用于提取key的函数，与Python内置``sort()``中的 ``key`` 参数相同"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.substract:1 of
+msgid "已废弃，请使用subtract."
+msgstr ""
+
+#: bigflow.pcollection.PCollection.subtract:1 of
+msgid "返回不存在另一个PCollection中的元素，相当于做容器减法"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.subtract:3 bigflow.transforms.subtract:6 of
+msgid "作为减数的PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.subtract:6 of
+msgid "表示减法结果的PCollection"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.sum:1 of
+msgid "将所有元素相加，等同于 :func:`bigflow.transforms.sum(self) <bigflow.transforms.sum>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.sum:5 of
+msgid "相加结果"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.take:1 of
+msgid "给定PCollection中的任意n个元素，等同于 :func:`bigflow.transforms.take`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.transform:1 of
+msgid ""
+"等同于 :func:`bigflow.transforms.transform(self, *args, **options) "
+"<bigflow.transforms.transform>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.union:1 of
+msgid ""
+"将元素与其他PCollection/PObject中的所有元素共同构成新的PCollection 等同于 "
+":func:`bigflow.transforms.union(self, other, *others) "
+"<bigflow.transforms.union>`"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.union:6
+#: bigflow.pcollection.PCollection.union:8 bigflow.pobject.PObject.union:4
+#: bigflow.pobject.PObject.union:6 of
+msgid "其他PCollection/PObject"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.window_into:1 of
+msgid "对元素根据Window分组"
+msgstr ""
+
+#: bigflow.pcollection.PCollection.window_into:3 of
+msgid "用于分组的Window"
+msgstr ""
+
+#: ../../rst/bigflow.pipeline.rst:2
+msgid "bigflow.pipeline package"
+msgstr ""
+
+#: bigflow.pipeline:1 of
+msgid "Package containing all Pipeline implementations"
+msgstr ""
+
+#: ../../rst/bigflow.pipeline.local_pipeline.rst:2
+msgid "LocalPipeline"
+msgstr ""
+
+#: bigflow.pipeline.local_pipeline:1 of
+msgid "LocalPipeline定义"
+msgstr ""
+
+#: bigflow.pipeline.local_pipeline.LocalPipeline:1 of
+msgid "Bases: :class:`bigflow.pipeline.pipeline_base.PipelineBase`"
+msgstr ""
+
+#: bigflow.pipeline.local_pipeline.LocalPipeline:1 of
+msgid "在本地引擎单机执行的Pipeline"
+msgstr ""
+
+#: bigflow.pipeline.local_pipeline.LocalPipeline:3 of
+msgid "一些引擎相关的参数"
+msgstr ""
+
+#: bigflow.pipeline.local_pipeline.LocalPipeline.add_file:1
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_file:1 of
+msgid "向Pipeline添加单个文件，使得该文件能够在运行期被访问"
+msgstr ""
+
+#: bigflow.pipeline.local_pipeline.LocalPipeline.add_file:3 of
+msgid "需要添加的文件路径，可以是本地路径或者 HDFS 路径."
+msgstr ""
+
+#: bigflow.pipeline.local_pipeline.LocalPipeline.add_file:5 of
+msgid ""
+"local 引擎运行时访问该文件的路径, 应是相对路径. 也即本地引擎在执行时, file_path 将会被映射到该 resource_path,"
+" 用户程序可以以该路径访问"
+msgstr ""
+
+#: bigflow.pipeline.local_pipeline.LocalPipeline.add_file:8
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_file:8 of
+msgid "若为True，则该文件在运行期会被添加可执行属性"
+msgstr ""
+
+#: bigflow.pipeline.local_pipeline.LocalPipeline.run:1
+#: bigflow.pipeline.pipeline_base.PipelineBase.run:1 of
+msgid "立刻运行Pipeline并等待结束"
+msgstr ""
+
+#: bigflow.pipeline.local_pipeline.LocalPipeline.run:3
+#: bigflow.pipeline.pipeline_base.PipelineBase.async_run:3
+#: bigflow.pipeline.pipeline_base.PipelineBase.run:3 of
+msgid ":exc:`BigflowRuntimeException` -- 若运行期出错抛出此异常"
+msgstr ""
+
+#: ../../rst/bigflow.pipeline.mr_pipeline.rst:2
+msgid "MRPipeline"
+msgstr ""
+
+#: ../../rst/bigflow.pipeline.pipeline_base.rst:2
+msgid "BasePipeline"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base:1 of
+msgid "Pipeline基类定义"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase:1 of
+msgid "Pipeline基类"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_archive:1 of
+msgid "向Pipeline添加一个压缩文件，使得该文件在运行期自动被解包"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_archive:3 of
+msgid "文件路径，目前仅支持HDFS"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_archive:5 of
+msgid "运行期访问该文件解压后的路径"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_cache_id:1 of
+msgid "save the ptype cache node id for use"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_directory:1 of
+msgid "向Pipeline添加一个目录，使得该目录下的文件/子目录能够在运行期被访问"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_directory:3 of
+msgid "需要添加的本地目录路径"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_directory:5 of
+msgid "计算引擎运行时访问该目录的路径, 应是相对路径. 如未提供, 则 dir_path 下的所有 文件和子目录将会在远端的当前目录."
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_directory:8 of
+msgid "是否仅添加目录下的.py/.pyc/.egg文件，默认为False"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_directory:11 of
+msgid ""
+"如 resource_path 未提供, 且调用了多次 add_directory, 各个目录下的文件或者子目录如果存在重 名, 则为未定义行为."
+" 有可能在添加时就出错, 也有可能在远端启动出错. 为避免该情况, 可以为每个要添 加的 dir_path 设置惟一的 "
+"resource_path."
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_egg_file:1 of
+msgid "向Pipeline添加一个egg文件，使得该文件会在运行期自动被添加到PYTHONPATH中"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_egg_file:3 of
+msgid "egg文件路径"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_file:3 of
+msgid "需要添加的文件路径或者比特数据流"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_file:5 of
+msgid ""
+"计算引擎运行时访问该文件的本地路径, 应是相对路径. 也即在远端, source 将会被映射 成该 resource_path 路径, "
+"用户程序可以直接用该路径访问."
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.add_file:10 of
+msgid "若为True, 则表示远端文件的内容即为 source 的比特数据流, 默认为 False, source 应为一个文件路径"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.async_run:1 of
+msgid "立刻运行Pipeline并等待作业提交完成"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.config:1 of
+msgid "获得job config"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.config:3 of
+msgid "用户不应当修改此Pipeline job config"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.default_objector:1 of
+msgid "返回该Pipeline的默认序列化/反序列化器"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.default_objector:3 of
+msgid "序列化/反序列化器，用户不应当修改此objector"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.get:1 of
+msgid ""
+"将一个P类型表示的数据汇聚为内存变量，相当于调用pvalue.get()。改方法隐式调用pvalue.cache() "
+"并立即触发Pipeline.run()"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.get:4 of
+msgid "P类型实例"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.get:7 of
+msgid "内存变量"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.id:1 of
+msgid "得到表示该Pipeline的唯一ID"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.id:3 of
+msgid "Pipeline ID"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.parallelize:1 of
+msgid "将一段内存变量映射为一个P类型实例"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.parallelize:3 of
+msgid "任意类型的内存变量"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.parallelize:5 of
+msgid "serde: 设置dataset的serde对象"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.parallelize:7 of
+msgid "表示该内存变量的P类型"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.read:1 of
+msgid "将外部存储的数据映射为一个PCollection，并在运行时读取数据"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.read:3 of
+msgid "表示外部存储的Source实例"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.read:6 of
+msgid "读取结果"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.reset_all_counters:1 of
+msgid "将所有counter清零"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.reset_all_counters:3
+#: bigflow.pipeline.pipeline_base.PipelineBase.reset_counter:6 of
+msgid ""
+":exc:`error.BigflowRuntimeException` -- 此方法不允许在 "
+":mod:`Bigflow变换<bigflow.transforms>` 的用户自定义方法(UDF)中调用，否则抛出此异常"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.reset_counter:1 of
+msgid "将一个counter清零, 若 name 中不包含 group 部分, 则默认将 Flume group 下面对应的 counter 清零"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.reset_counter:3 of
+msgid "counter名称，其说明请参考 :mod:`counter模块<bigflow.counter>`"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.set_fini_hook:1 of
+msgid ""
+"向Pipeline设置一个结束钩子，使得Pipeline能够在进程结束前依次执行 :param name: 钩子名称 :type name: "
+"str :param fn: 方法名称 :type fn: callable"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.set_init_hook:1 of
+msgid ""
+"向Pipeline设置一个初始化钩子，使得Pipeline能够在进程启动时依次执行(按钩子名字排序) :param name: 钩子名称, "
+"用户应使用 str 作为钩子名字, 同时钩子应使用 ascii 码中字符. :type name: str :param fn: 方法名称 "
+":type fn: callable"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.write:1 of
+msgid "将一个PCollection映射为外部存储数据，并在运行期写到该外部存储"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.write:3 of
+msgid "要写出的PCollection"
+msgstr ""
+
+#: bigflow.pipeline.pipeline_base.PipelineBase.write:5 of
+msgid "表示外部存储的Target实例"
+msgstr ""
+
+#: ../../rst/bigflow.pobject.rst:2 bigflow.pobject.PObject.ceil:3
+#: bigflow.pobject.PObject.floor:3 bigflow.pobject.PObject.not_:3
+#: bigflow.pobject.PObject.round:4 of
+msgid "PObject"
+msgstr ""
+
+#: bigflow.pobject:1 of
+msgid ":class:`bigflow.pobject.PObject` 定义"
+msgstr ""
+
+#: bigflow.pobject.PObject:1 of
+msgid ""
+"用于表示单个元素的 :class:`bigflow.ptype.PType`，通常为聚合类变换的结果，例如 "
+":func:`bigflow.pcollection.PCollection.combine()`, "
+":func:`bigflow.pcollection.PCollection.aggregate()`"
+msgstr ""
+
+#: bigflow.pobject.PObject:5 of
+msgid ""
+"Python不允许重载这3个运算符(and, or, not)，用户不应该在PObject上使用这三个运算符。Bigflow重载的是按位运算(&,"
+" |, ^)"
+msgstr ""
+
+#: bigflow.pobject.PObject:7 of
+msgid "PObject类上重载了以下操作符："
+msgstr ""
+
+#: bigflow.pobject.PObject:9 of
+msgid "双目操作符："
+msgstr ""
+
+#: bigflow.pobject.PObject:11 of
+msgid ""
+"__add__, __sub__, __mul__, __div__, __floordiv__, __mod__, __pow__, "
+"__lshift__, __rshift__, __and__, __xor__, __or__, __lt__, __le__, __eq__,"
+" __ge__, __gt__, __ne__ __radd__, __rsub__, __rmul__, __rdiv__, "
+"__rfloordiv__, __rmod__, __rpow__, __rlshift__, __rrshift__, __rand__, "
+"__rxor__, __ror__"
+msgstr ""
+
+#: bigflow.pobject.PObject:19 of
+msgid "单目操作符："
+msgstr ""
+
+#: bigflow.pobject.PObject:21 of
+msgid "__neg__, __pos__, __abs__, __invert__"
+msgstr ""
+
+#: bigflow.pobject.PObject:23 of
+msgid "这些操作都将返回一个把相应数据进行相应变换后的pobject。"
+msgstr ""
+
+#: bigflow.pobject.PObject:25 of
+msgid "例如：p.sum() / p.count()等价于p.sum().map(lambda s, c: s / c, p.count())"
+msgstr ""
+
+#: bigflow.pobject.PObject:27 of
+msgid ""
+"同时, PObject 禁止了 bool 操作, 调用 bool(PObject) 或者 if PObject 将会抛出异常. :param "
+"node: LogicalPlan.Node :type node: Node"
+msgstr ""
+
+#: bigflow.pobject.PObject.as_pcollection:1 of
+msgid "将PObject转为PCollection"
+msgstr ""
+
+#: bigflow.pobject.PObject.cartesian:1 of
+msgid ""
+"求当前算子与pvalues的笛卡尔积。 等价于 :func:`bigflow.transforms.cartesian(self, "
+"*pvalues, **options) <bigflow.transforms.cartesian>`"
+msgstr ""
+
+#: bigflow.pobject.PObject.cartesian:5 of
+msgid ""
+"Args: *pvalues (PObject/PCollection) :returns: "
+"此PObject与所有参数的笛卡尔积。结果PCollection中的每条记录是一个tuple。"
+msgstr ""
+
+#: bigflow.pobject.PObject.cartesian:7 of
+msgid "每个tuple的第n个元素是第n个输入ptype对象的记录。"
+msgstr ""
+
+#: bigflow.pobject.PObject.ceil:1 of
+msgid "PObject ceil(类似于math.ceil)算子"
+msgstr ""
+
+#: bigflow.pobject.PObject.flat_map:1 of
+msgid "对包含的元素进行一对多变换，等同于 ``transforms.map(self, fn, *side_inputs, **options)``"
+msgstr ""
+
+#: bigflow.pobject.PObject.floor:1 of
+msgid "PObject floor(类似于math.floor)算子"
+msgstr ""
+
+#: bigflow.pobject.PObject.map:1 of
+msgid "对包含的元素进行变换，等同于 ``transforms.map(self, fn, *side_inputs, **options)``"
+msgstr ""
+
+#: bigflow.pobject.PObject.not_:1 of
+msgid "PObject not算子"
+msgstr ""
+
+#: bigflow.pobject.PObject.round:1 of
+msgid "PObject round(类似于math.round)算子 :param n: 小数点后面保留的位数"
+msgstr ""
+
+#: bigflow.pobject.PObject.union:1 of
+msgid ""
+"将元素与其他PCollection/PObject中的所有元素共同构成PCollection 等同于 "
+"``transforms.union(self, other, *others)``"
+msgstr ""
+
+#: ../../rst/bigflow.ptable.rst:2
+msgid "PTable"
+msgstr ""
+
+#: bigflow.ptable:1 of
+msgid ":class:`.PTable` 定义"
+msgstr ""
+
+#: bigflow.ptable.PTable:1 of
+msgid "用于表示具有分布式Key-Value映射关系的 :class:`bigflow.ptype.PType`"
+msgstr ""
+
+#: bigflow.ptable.PTable:3 of
+msgid "Constructor .. note:: 用户不应当直接使用其构造方法"
+msgstr ""
+
+#: bigflow.ptable.PTable:6 of
+msgid "PTable的Value"
+msgstr ""
+
+#: bigflow.ptable.PTable:9 of
+msgid "Methods:"
+msgstr ""
+
+#: bigflow.ptable.PTable.apply_key_values:1 of
+msgid "将Key和Value做一个变换"
+msgstr ""
+
+#: bigflow.ptable.PTable.apply_key_values:5 bigflow.transforms.transform:30 of
+msgid "参与计算的SideInputs"
+msgstr ""
+
+#: bigflow.ptable.PTable.apply_values:1 of
+msgid "对Value进行一个变换"
+msgstr ""
+
+#: bigflow.ptable.PTable.apply_values:3 of
+msgid "作用在Value上的变换函数"
+msgstr ""
+
+#: bigflow.ptable.PTable.apply_values:5 of
+msgid "变换所需要的参数列表"
+msgstr ""
+
+#: bigflow.ptable.PTable.extract_keys:1 of
+msgid ""
+"提取给定PTable中所有的key，等价于 ``transforms.extract_keys(self, options)`` :param "
+"\\*\\*options: 可配置选项"
+msgstr ""
+
+#: bigflow.ptable.PTable.extract_keys:4 bigflow.transforms.extract_keys:7 of
+msgid "所有的key，以PCollection给出"
+msgstr ""
+
+#: bigflow.ptable.PTable.extract_values:1 of
+msgid "提取给定PTable中所有的value，等价于 ``transforms.extract_values(self, options)``"
+msgstr ""
+
+#: bigflow.ptable.PTable.extract_values:5 bigflow.transforms.extract_values:7
+#: bigflow.transforms.flatten_values:7 of
+msgid "所有的value，以PCollection给出"
+msgstr ""
+
+#: bigflow.ptable.PTable.flatten:1 of
+msgid ""
+"对于每个Key和Value中的每个元素(value 1, value 2, ... value m)，构造(Key, value 1), "
+"(Key, value 2), ... (Key, value m)，结果使用PCollection表示"
+msgstr ""
+
+#: bigflow.ptable.PTable.flatten_values:1 of
+msgid ""
+"使用Value中的每个元素(value 1, value 2, ... value m)，构造PCollection，等价于 "
+"``self.extract_values()``"
+msgstr ""
+
+#: bigflow.ptable.PTable.flatten_values:3 of
+msgid "包含所有Value的PCollection"
+msgstr ""
+
+#: bigflow.ptable.PTable.inner_most_type:1 of
+msgid "返回其最内部Value的类型"
+msgstr ""
+
+#: bigflow.ptable.PTable.inner_most_type:3 of
+msgid "最内部Value类型，PCollection或PObject"
+msgstr ""
+
+#: bigflow.ptable.PTable.key_serdes:1 of
+msgid "返回Key的序列化/反序列化器"
+msgstr ""
+
+#: bigflow.ptable.PTable.nested_level:1 of
+msgid "返回该PTable的嵌套层级，即其Value中包含几个PTable"
+msgstr ""
+
+#: bigflow.ptable.PTable.nested_level:3 of
+msgid "嵌套层级"
+msgstr ""
+
+#: bigflow.ptable.PTable.node:1 of
+msgid "返回PTable所对应的Node"
+msgstr ""
+
+#: bigflow.ptable.PTable.node:3 bigflow.util.utils.construct:5 of
+msgid "node"
+msgstr ""
+
+#: bigflow.ptable.PTable.node:6 of
+msgid ":exc:`BigflowPlanningException` -- 若无法得到Node"
+msgstr ""
+
+#: bigflow.ptable.PTable.node:8 of
+msgid "用户不应当使用此方法"
+msgstr ""
+
+#: ../../rst/bigflow.ptype.rst:2 bigflow.util.utils.construct:14
+#: bigflow.util.utils.is_infinite:3 of
+msgid "PType"
+msgstr ""
+
+#: bigflow.ptype:1 of
+msgid "Definition of :class:`.PType`."
+msgstr ""
+
+#: bigflow.ptype.PType:1 of
+msgid ""
+"PType is a basic abstraction of data, which represents an immutable, "
+"partitioned collection of elements that can be operated on paraellel."
+msgstr ""
+
+#: bigflow.ptype.PType:4 of
+msgid "A PType can be either produced by:"
+msgstr ""
+
+#: bigflow.ptype.PType:6 of
+msgid ":func:`bigflow.pipeline.pipeline_base.PipelineBase.read`"
+msgstr ""
+
+#: bigflow.ptype.PType:7 of
+msgid ":func:`bigflow.pipeline.pipeline_base.PipelineBase.parallelize`"
+msgstr ""
+
+#: bigflow.ptype.PType:8 of
+msgid ":mod:`bigflow.transforms` of other PTypes"
+msgstr ""
+
+#: bigflow.ptype.PType:10 of
+msgid "A PType can be consumed by:"
+msgstr ""
+
+#: bigflow.ptype.PType:12 of
+msgid ":func:`bigflow.pipeline.pipeline_base.PipelineBase.write`"
+msgstr ""
+
+#: bigflow.ptype.PType:13 of
+msgid ":func:`bigflow.pipeline.pipeline_base.PipelineBase.get`"
+msgstr ""
+
+#: bigflow.ptype.PType:14 of
+msgid ":mod:`bigflow.transforms` of itself"
+msgstr ""
+
+#: bigflow.ptype.PType:16 of
+msgid "End-users are not supposed to use its raw constructor."
+msgstr ""
+
+#: bigflow.ptype.PType.apply:1 of
+msgid ""
+"Apply a transform on itself, p.apply(transform, *args) is equivalent to "
+"p.transform(*args)"
+msgstr ""
+
+#: bigflow.ptype.PType.apply:3 of
+msgid "transform to be applied"
+msgstr ""
+
+#: bigflow.ptype.PType.apply:5 of
+msgid "variable length argument list"
+msgstr ""
+
+#: bigflow.ptype.PType.apply:7 of
+msgid "result of transform"
+msgstr ""
+
+#: bigflow.ptype.PType.cache:1 of
+msgid "Persist this PType on storage."
+msgstr ""
+
+#: bigflow.ptype.PType.get:1 of
+msgid "Get runtime value from this PType, equivalent to ``pipeline.get(self)``."
+msgstr ""
+
+#: bigflow.ptype.PType.get:3 of
+msgid "runtime value"
+msgstr ""
+
+#: bigflow.ptype.PType.node:1 of
+msgid "Return the internal node it holds."
+msgstr ""
+
+#: bigflow.ptype.PType.node:3 of
+msgid "End-users are not supposed to use this function."
+msgstr ""
+
+#: bigflow.ptype.PType.node:5 of
+msgid "The node."
+msgstr ""
+
+#: bigflow.ptype.PType.pipeline:1 of
+msgid "Return the pipeline this PType belongs to"
+msgstr ""
+
+#: bigflow.ptype.PType.pipeline:3 of
+msgid "pipeline"
+msgstr ""
+
+#: bigflow.ptype.PType.serde:1 of
+msgid "Return the serde of the dataset"
+msgstr ""
+
+#: bigflow.ptype.PType.serde:3 of
+msgid "The serde."
+msgstr ""
+
+#: ../../rst/bigflow.serde.rst:2
+msgid "Serde"
+msgstr ""
+
+#: bigflow.serde:1 of
+msgid "Bigflow 内置序列化/反序列化器"
+msgstr ""
+
+#: bigflow.serde.BoolSerde:1 of
+msgid "bool类型序列化/反序列化器"
+msgstr ""
+
+#: bigflow.serde.CPickleSerde:1 of
+msgid "使用CPickle去做序列化/反序列化的Serde"
+msgstr ""
+
+#: bigflow.serde.ChainSerde:1 of
+msgid "serde for chain transform. for example:"
+msgstr ""
+
+#: bigflow.serde.ChainSerde:3 of
+msgid ""
+"serdex should deserialize a string unless the last serde. "
+"ChainSerde(serdeA, serdB); "
+"serdeB->serialize(serdeA->serialize(object,obj)); "
+"serdeA->deserialize(serdeB->deserialize(buf));"
+msgstr ""
+
+#: bigflow.serde.CppSerde:1 bigflow.serde.ObjectorSerde:1
+#: bigflow.serde.ProtobufSerde:1 of
+msgid "Bases: :class:`bigflow.serde.Serde`"
+msgstr ""
+
+#: bigflow.serde.CppSerde:1 of
+msgid "所有c++实现的serde类都要求继承于此类"
+msgstr ""
+
+#: bigflow.serde.CppSerde.get_entity_name:1
+#: bigflow.serde.ObjectorSerde.get_entity_name:1
+#: bigflow.serde.Serde.get_entity_name:1 of
+msgid "获取类名"
+msgstr ""
+
+#: bigflow.serde.DefaultSerde:1 of
+msgid ""
+"Bases: :class:`bigflow.core.serde.omnitypes_objector.OmniObjector`, "
+":class:`bigflow.serde.CppSerde`"
+msgstr ""
+
+#: bigflow.serde.DefaultSerde:1 of
+msgid "默认的序列化/反序列化器"
+msgstr ""
+
+#: bigflow.serde.DictSerde:1 of
+msgid "Serde for dict"
+msgstr ""
+
+#: bigflow.serde.FastPbSerdeFactory:1 of
+msgid "Create ProtobufSerde by fast-python-pb"
+msgstr ""
+
+#: bigflow.serde.FastPbSerdeFactory.get_serde:1 of
+msgid "get protobuf serde"
+msgstr ""
+
+#: bigflow.serde.FloatSerde:1 of
+msgid "float类型序列化/反序列化器"
+msgstr ""
+
+#: bigflow.serde.IdlPacketSerde:1 of
+msgid "Serde for idl_packet"
+msgstr ""
+
+#: bigflow.serde.IdlPacketSerde.get_log_type:1 of
+msgid "get log_type"
+msgstr ""
+
+#: bigflow.serde.IdlPacketSerde.serialize:1 of
+msgid "serialzie"
+msgstr ""
+
+#: bigflow.serde.IntSerde:1 of
+msgid "int类型序列化/反序列化器"
+msgstr ""
+
+#: bigflow.serde.IntSerde.serialize:1 of
+msgid "serialize int obj"
+msgstr ""
+
+#: bigflow.serde.ListSerde:1 of
+msgid "list序列化/反序列化器"
+msgstr ""
+
+#: bigflow.serde.ObjectorSerde:1 of
+msgid "Serde for objector serde"
+msgstr ""
+
+#: bigflow.serde.Optional:1 of
+msgid "用于支持None的序列化/反序列化"
+msgstr ""
+
+#: bigflow.serde.ProtobufSerde:1 of
+msgid "Serde for protobuf"
+msgstr ""
+
+#: bigflow.serde.SameTypeListSerde:1 of
+msgid "list序列化/反序列化器，要求list中元素均为同一类型"
+msgstr ""
+
+#: bigflow.serde.Serde:1 of
+msgid "Bases: :class:`bigflow.core.entity.EntitiedBySelf`"
+msgstr ""
+
+#: bigflow.serde.Serde:1 of
+msgid "所有python实现的serde类要求继承于此类，用户可以通过继承Serde实现自定义的序列化/反序列化器"
+msgstr ""
+
+#: bigflow.serde.Serde:12 of
+msgid "在大部分的变换中都可以传递一个特殊的叫serde的参数， 设置该参数即可指定产出的PCollection的serde。"
+msgstr ""
+
+#: bigflow.serde.Serde:15 of
+msgid "p.map(lambda x: MyCostomObject(x), serde=CustomSerde())"
+msgstr ""
+
+#: bigflow.serde.SetSerde:1 of
+msgid "Serde for set"
+msgstr ""
+
+#: bigflow.serde.StrSerde:1 of
+msgid "str类型序列化/反序列化器"
+msgstr ""
+
+#: bigflow.serde.TupleLikeListSerde:1 of
+msgid "list序列化/反序列化器，list中每个元素可以为任意类型"
+msgstr ""
+
+#: bigflow.serde.TupleSerde:1 of
+msgid "tuple序列化/反序列化器"
+msgstr ""
+
+#: bigflow.serde.any:1 of
+msgid "Return a serde use the default serde."
+msgstr ""
+
+#: bigflow.serde.bool_:1 of
+msgid "Return an optional bool serde."
+msgstr ""
+
+#: bigflow.serde.common_serde:1 of
+msgid ""
+"输出输入serde集合中的公共serde 目前只维护系统定义的serde, 对于用户自定义的serde, 返回None :param "
+"serdes: serde instances or classes"
+msgstr ""
+
+#: bigflow.serde.common_serde:5 of
+msgid "如果找到合适的公共serde则返回，否则返回None"
+msgstr ""
+
+#: bigflow.serde.dict_of:1 of
+msgid "Return an optional dict serde"
+msgstr ""
+
+#: bigflow.serde.extract_elem:1 bigflow.serde.origin:1 of
+msgid "inner function"
+msgstr ""
+
+#: bigflow.serde.float_:1 of
+msgid "Return an optional float serde."
+msgstr ""
+
+#: bigflow.serde.int_:1 of
+msgid "Return an optional int serde."
+msgstr ""
+
+#: bigflow.serde.list_of:1 of
+msgid "Return an optional list serde."
+msgstr ""
+
+#: bigflow.serde.of:1 of
+msgid "Return the serde you want."
+msgstr ""
+
+#: bigflow.serde.of:3 of
+msgid ""
+"If the input arg is a type instance, such as int, str, float or a tuple "
+"of type instances, such as (int, str) or a list of type instances, such "
+"as [int, str] and [int] the function will return the corresponding serde "
+"to serialize and deserialize the data."
+msgstr ""
+
+#: bigflow.serde.of:8 of
+msgid "The returned serde can process the Nonable data."
+msgstr ""
+
+#: bigflow.serde.of:12 of
+msgid ""
+"Note:   [int] means a list of ints, it can accept any number of ints you "
+"want,"
+msgstr ""
+
+#: bigflow.serde.of:11 of
+msgid ""
+"but [int, str] can only accecpt a list who has exactly 2 elements. (if "
+"your data to serialize has more than 2 elements, the remaining elements "
+"may be lost)"
+msgstr ""
+
+#: bigflow.serde.proto_of:1 of
+msgid "Return an protobuf serde Warning: this is not optional"
+msgstr ""
+
+#: bigflow.serde.sample:1 of
+msgid "Return a serde can process your input data."
+msgstr ""
+
+#: bigflow.serde.sample:3 of
+msgid ""
+"Note: if the sample is a list, when all the data is the same type, we "
+"assume"
+msgstr ""
+
+#: bigflow.serde.set_of:1 of
+msgid "Return an optional set serde"
+msgstr ""
+
+#: bigflow.serde.str_:1 of
+msgid "Return an optional str serde."
+msgstr ""
+
+#: bigflow.serde.tuple_of:1 of
+msgid "Return an optional tuple serde."
+msgstr ""
+
+#: ../../rst/bigflow.transform_impls.rst:2
+msgid "bigflow.transform_impls package"
+msgstr ""
+
+#: bigflow.transform_impls:1 of
+msgid "Package of all transform definitions and implementations"
+msgstr ""
+
+#: ../../rst/bigflow.transforms.rst:2
+msgid "Transforms"
+msgstr ""
+
+#: bigflow.transforms:1 of
+msgid "定义Bigflow Python中所有的变换"
+msgstr ""
+
+#: bigflow.transforms:3 of
+msgid ""
+"Author: Wang, Cong(bigflow-opensource@baidu.com), panyunhong(bigflow-"
+"opensource@baidu.com)"
+msgstr ""
+
+#: bigflow.transforms:5 of
+msgid "**注意：除特殊说明外，所有变换的用户自定义方法(UDF)输入参数都不允许修改**"
+msgstr ""
+
+#: bigflow.transforms.accumulate:1 of
+msgid "将给定的PCollection按照一个初始值和方法聚合为PObject"
+msgstr ""
+
+#: bigflow.transforms.accumulate:3 of
+msgid "假设输入类型为I，输出类型为O，则zero、accumulate_fn的期望签名为:"
+msgstr ""
+
+#: bigflow.transforms.accumulate:5 bigflow.transforms.aggregate:5 of
+msgid "zero:  O或zero() => O"
+msgstr ""
+
+#: bigflow.transforms.accumulate:7 of
+msgid "accumulate_fn:  accumulate_fn(O, I) => O  (accumulate_fn的第一个参数允许被修改)"
+msgstr ""
+
+#: bigflow.transforms.accumulate:21 of
+msgid ""
+"由于该函数的语义是数据必然按顺序一条条的流过，限制了该函数可以进行的优化工作， "
+"所以如果可以使用aggregate或reduce替换时，尽量使用aggregate/reduce替换该函数。"
+msgstr ""
+
+#: bigflow.transforms.accumulate:29 of
+msgid "TODO: Another example"
+msgstr ""
+
+#: bigflow.transforms.aggregate:1 of
+msgid "将给定的PCollection按照初始值、初段聚合方法和汇总方法聚合为PObject"
+msgstr ""
+
+#: bigflow.transforms.aggregate:3 of
+msgid "假设输入类型I，输出类型为O，则zero、aggregate_fn、combine_fn的期望签名为:"
+msgstr ""
+
+#: bigflow.transforms.aggregate:7 of
+msgid "aggregate_fn:  aggregate_fn(O, I) => O  (aggregate_fn的第一个参数允许被修改)"
+msgstr ""
+
+#: bigflow.transforms.aggregate:9 of
+msgid "combine_fn:  combine_fn(O, O) => O  (combine_fn的第一个参数允许被修改)"
+msgstr ""
+
+#: bigflow.transforms.aggregate:12 of
+msgid "在执行时aggregate会把输入pcollection先切分成许多个分片，然后对每个分片使用zero生成一个O类型的初始值。"
+msgstr ""
+
+#: bigflow.transforms.aggregate:14 of
+msgid "随后，在每个分片上，持续调用aggregate_fn，将分片上全部的数据聚合为一个O类型的值。"
+msgstr ""
+
+#: bigflow.transforms.aggregate:16 of
+msgid "最后，会再将所有分片上生成的那些O类型的值汇聚到一起，使用combine_fn最终聚合到一起。"
+msgstr ""
+
+#: bigflow.transforms.aggregate:18 bigflow.transforms.combine:9 of
+msgid "分片的规则用户不应作任何假设。"
+msgstr ""
+
+#: bigflow.transforms.aggregate:23 of
+msgid "初始值，或是一个返回初始值的方法。"
+msgstr ""
+
+#: bigflow.transforms.aggregate:25 of
+msgid "初段聚合方法。该方法需要两个参数。"
+msgstr ""
+
+#: bigflow.transforms.aggregate:27 of
+msgid "汇总方法"
+msgstr ""
+
+#: bigflow.transforms.cartesian:1 of
+msgid "对多个输入PCollection求笛卡尔积，返回一个PCollection"
+msgstr ""
+
+#: bigflow.transforms.cartesian:6 of
+msgid "笛卡尔积"
+msgstr ""
+
+#: bigflow.transforms.cogroup:1 of
+msgid "对传入的所有pcollection进行协同分组。"
+msgstr ""
+
+#: bigflow.transforms.cogroup:3 of
+msgid ""
+"cogroup要求所有传入的PCollection的每个元素都是一个(k, v)对， "
+"cogroup会用k来作为分组的key，对多个输入PCollection进行协同分组， 返回一个PTable表示分组结果。"
+msgstr ""
+
+#: bigflow.transforms.cogroup:7 of
+msgid ""
+"这个返回的PTable的每个value为一个tuple，tuple的每个元素是一个PCollection， "
+"其中第n个PCollection表示输入的第n个PCollection在当前key下的全部数据。"
+msgstr ""
+
+#: bigflow.transforms.cogroup:10 of
+msgid "如果某个输入PCollection在某个key下无数据，则对应的PCollection为一个空PCollection。"
+msgstr ""
+
+#: bigflow.transforms.cogroup:12 of
+msgid "目前不能像group_by指定key_extractor。"
+msgstr ""
+
+#: bigflow.transforms.cogroup:14 of
+msgid "group_by_key可以理解成是cogroup只传有一个参数的特殊情况。"
+msgstr ""
+
+#: bigflow.transforms.combine:1 of
+msgid "给定一个合并函数，聚合输入PCollection中所有元素，这些元素以迭代器的形式给出"
+msgstr ""
+
+#: bigflow.transforms.combine:3 of
+msgid "默认情况下，输入类型与输出类型需要一致，假设为O类型，fn的期望签名为 fn([O...]) => O，[]表示输入可遍历"
+msgstr ""
+
+#: bigflow.transforms.combine:5 of
+msgid ""
+"在执行时会把输入pcollection先切分成许多个分片，然后对每个分片的数据组成一个列表，然后调用fn， "
+"将每个分片中的数据合并成一个O类型的变量。 然后，会再将所有分片上生成的那些O类型的值汇聚到一起，组成一个列表，再使用fn最终聚合到一起。"
+msgstr ""
+
+#: bigflow.transforms.combine:11 of
+msgid ""
+"用户可以显式的指定pre_combine=False，关掉预聚合。如果关掉预聚合，则会直接将全部的数据组成一个列表交给fn， "
+"聚合成一个值。则这种情况下，fn需要的输入类型与fn返回的类型可以是不同类型的。"
+msgstr ""
+
+#: bigflow.transforms.combine:19 of
+msgid "可配置选项 其中重要配置项为： pre_combine(bool): 是否进行预聚合。默认为True。"
+msgstr ""
+
+#: bigflow.transforms.count:1 of
+msgid "返回给定PCollection中元素的数量"
+msgstr ""
+
+#: bigflow.transforms.diff:1 of
+msgid "对于给定的PCollection1和PCollection2，返回两者不相同的元素"
+msgstr ""
+
+#: bigflow.transforms.diff:3 bigflow.transforms.intersection:4 of
+msgid "输入1"
+msgstr ""
+
+#: bigflow.transforms.diff:5 bigflow.transforms.intersection:6 of
+msgid "输入2"
+msgstr ""
+
+#: bigflow.transforms.diff:8 of
+msgid "表示差异的PCollection"
+msgstr ""
+
+#: bigflow.transforms.distinct:1 of
+msgid "返回给定PCollection中所有不重复元素"
+msgstr ""
+
+#: bigflow.transforms.extract_keys:1 of
+msgid "提取给定PTable中所有的key"
+msgstr ""
+
+#: bigflow.transforms.extract_keys:3 bigflow.transforms.extract_values:3
+#: bigflow.transforms.flatten:3 bigflow.transforms.flatten_values:3 of
+msgid "输入PTable"
+msgstr ""
+
+#: bigflow.transforms.extract_values:1 of
+msgid "提取给定PTable中所有的value"
+msgstr ""
+
+#: bigflow.transforms.extract_values:15 of
+msgid "无论PTable为多少层嵌套，都会抽取出最内层的value"
+msgstr ""
+
+#: bigflow.transforms.filter:1 of
+msgid "对于给定的PCollection和一个断言函数，返回只满足断言函数元素的PCollection"
+msgstr ""
+
+#: bigflow.transforms.filter:3 of
+msgid "假设输入类型为I，fn的期望签名为 fn(I) => bool"
+msgstr ""
+
+#: bigflow.transforms.first:1 of
+msgid "取出PCollection中的第一个元素"
+msgstr ""
+
+#: bigflow.transforms.first:7 of
+msgid "取出的单个元素，以PObject给出"
+msgstr ""
+
+#: bigflow.transforms.flat_map:1 of
+msgid "对PCollection中的每个元素做一对N映射"
+msgstr ""
+
+#: bigflow.transforms.flat_map:3 of
+msgid "对变换函数必须返回一个可遍历变量(即实现了__iter__()方法)，将迭代器中的所有元素 构造PCollection"
+msgstr ""
+
+#: bigflow.transforms.flat_map:6 of
+msgid "假设输入类型为I，fn的期望签名为 fn(I) => [O...]，[]表示返回结果可遍历"
+msgstr ""
+
+#: bigflow.transforms.flat_map:8 bigflow.transforms.foreach:8
+#: bigflow.transforms.map:8 of
+msgid "输入P类型"
+msgstr ""
+
+#: bigflow.transforms.flat_map:16 bigflow.transforms.foreach:16
+#: bigflow.transforms.map:16 of
+msgid "Results:"
+msgstr ""
+
+#: bigflow.transforms.flat_map:16 of
+msgid "PCollection:  变换后的PCollection"
+msgstr ""
+
+#: bigflow.transforms.flat_map:29 of
+msgid "注意返回结果可以为空:"
+msgstr ""
+
+#: bigflow.transforms.flat_map:34 of
+msgid "如果返回的对象不能被遍历，则运行时会报错。 典型的错误用法包括None或返回一个单个元素。"
+msgstr ""
+
+#: bigflow.transforms.flat_map:37 of
+msgid ""
+"返回对象只要是可迭代类型即可，不必一定是list。 特别是，需要输出较多数据时， 使用list可能会导致内存占用过大， "
+"用户可以直接利用python的yield语法生成一个generator， 达到不需要占用大量内存的目的。"
+msgstr ""
+
+#: bigflow.transforms.flat_map:53 of
+msgid "这种用法可以避免产生大list，从而避免内存占用过大的问题。"
+msgstr ""
+
+#: bigflow.transforms.flatten:1 of
+msgid "对于给定PTable中的key和value中每一个元素，构造(key, value)对，结果保存在PCollection中"
+msgstr ""
+
+#: bigflow.transforms.flatten:7 of
+msgid "(key, value)对，结果以PCollection表示"
+msgstr ""
+
+#: bigflow.transforms.flatten_values:1 of
+msgid "等价于 ``extract_values(ptable)``"
+msgstr ""
+
+#: bigflow.transforms.foreach:1 of
+msgid ""
+"对给定的PCollection/PObject中的每个元素应用一个函数，函数并不期望有任何的 返回，而是利用其副作用产生效果。 "
+"该函数一般用于产出数据到外部存储，同一条数据可能会被多次调用， 用户需要注意在下游去重，或想办法保证foreach操作具有幂等性质。"
+msgstr ""
+
+#: bigflow.transforms.foreach:6 of
+msgid "假设输入类型为I，fn的期望签名为 fn(I) => object，即返回值类型任意(并被忽略)"
+msgstr ""
+
+#: bigflow.transforms.full_join:1 of
+msgid ""
+"对于多个输入PCollection，根据key对PCollection做全连接操作 ，连接结果为(key, (value 1, value 2, "
+"..., value n))，若第m个PCollection没有元素， 则value m为None"
+msgstr ""
+
+#: bigflow.transforms.group_by:1 of
+msgid "利用给定的key_extractor和value_extractor对输入PCollection分组，返回一个表示分组结果的PTable"
+msgstr ""
+
+#: bigflow.transforms.group_by_key:1 of
+msgid "利用给定的PCollection，使用一个默认的key/value提取函数对输入的PCollection分组 ，返回一个表示分组的PTable"
+msgstr ""
+
+#: bigflow.transforms.idl_to_str:1 of
+msgid "对于给定的PCollection，对每条数据执行idl解包。并过滤掉idl packet类型为Heartbeat和EOF的数据。"
+msgstr ""
+
+#: bigflow.transforms.idl_to_str:3 bigflow.transforms.pipe:3
+#: bigflow.transforms.str_to_idl:3 bigflow.transforms.to_list_pobject:3
+#: bigflow.transforms.to_pobject:3 of
+msgid "输入"
+msgstr ""
+
+#: bigflow.transforms.idl_to_str:5 bigflow.transforms.str_to_idl:5 of
+msgid "可配置选项  log_type: idl数据类型，目前支持log_text和log_bin，默认为log_text"
+msgstr ""
+
+#: bigflow.transforms.idl_to_str:7 bigflow.transforms.str_to_idl:7 of
+msgid "log_type: idl数据类型，目前支持log_text和log_bin，默认为log_text"
+msgstr ""
+
+#: bigflow.transforms.idl_to_str:9 bigflow.transforms.pipe:19
+#: bigflow.transforms.str_to_idl:9 of
+msgid "处理后的PCollection"
+msgstr ""
+
+#: bigflow.transforms.intersection:1 of
+msgid ""
+"对于给定的PCollection1和PCollection2，返回所有同时存在于PCollection1和PCollection2 "
+"中的元素，即取两者交集"
+msgstr ""
+
+#: bigflow.transforms.intersection:9 of
+msgid "相交结果"
+msgstr ""
+
+#: bigflow.transforms.is_empty:1 of
+msgid "对于输入PCollection，返回其是否为空"
+msgstr ""
+
+#: bigflow.transforms.is_empty:6 of
+msgid "表示返回结果的PObject"
+msgstr ""
+
+#: bigflow.transforms.join:1 of
+msgid ""
+"对于多个输入PCollection，根据key对PCollection做内连接操作 ，连接结果为(key, (value1, value2, "
+"..., valuen))"
+msgstr ""
+
+#: bigflow.transforms.left_join:1 of
+msgid ""
+"对于多个输入PCollection，根据key对PCollection做左连接操作 ，连接结果为(key, (value 1, value 2, "
+"..., value n))，若第m个PCollection没有元素， 则value m为None"
+msgstr ""
+
+#: bigflow.transforms.make_tuple:1 of
+msgid "将所有输入的PObject合并成一个PObject(tuple)。"
+msgstr ""
+
+#: bigflow.transforms.make_tuple:3 of
+msgid ""
+"除返回值类型及输入类型都全是PObject外， 结果与 :func:`bigflow.transforms.cartesian(self, "
+"*pvalues, **options) <bigflow.transforms.cartesian>` 相同。"
+msgstr ""
+
+#: bigflow.transforms.make_tuple:8 of
+msgid ""
+"Args: *pobjects (PObject) 待操作PObjects。所有输入都必须是PObject. :returns: "
+"返回一个PObject(tuple), tuple中的第n个元素是第n个输入PObject对应的值。 :rtype: PObject"
+msgstr ""
+
+#: bigflow.transforms.map:1 of
+msgid "对PCollection中的每个元素做一对一映射"
+msgstr ""
+
+#: bigflow.transforms.map:3 of
+msgid "对给定的PCollection/PObject中的每个元素应用一个变换函数，以函数的返回结果 构造PCollection/PObject"
+msgstr ""
+
+#: bigflow.transforms.map:6 of
+msgid "假设输入类型为I，fn的期望签名为 fn(I) => O"
+msgstr ""
+
+#: bigflow.transforms.map:16 of
+msgid "PType:  变换后的PCollection/PObject，与输入类型一致"
+msgstr ""
+
+#: bigflow.transforms.max:1 of
+msgid "得到输入PCollection中最大的元素"
+msgstr ""
+
+#: bigflow.transforms.max_elements:1 of
+msgid "得到输入PCollection中前n大的元素"
+msgstr ""
+
+#: bigflow.transforms.min:1 of
+msgid "得到输入PCollection中最小的元素"
+msgstr ""
+
+#: bigflow.transforms.min:9 of
+msgid "包含最小元素的PObject"
+msgstr ""
+
+#: bigflow.transforms.min_elements:1 of
+msgid "得到输入PCollection中前n小的元素"
+msgstr ""
+
+#: bigflow.transforms.pipe:1 of
+msgid "对于给定的PCollection/PTable，返回通过command处理后的PCollection"
+msgstr ""
+
+#: bigflow.transforms.pipe:5 of
+msgid "命令行"
+msgstr ""
+
+#: bigflow.transforms.pipe:6 of
+msgid ""
+"可配置选项  type: pipe类型，目前支持streaming和bistreaming，默认为streaming  buffer_size: "
+"缓存大小（单条数据），默认64MB  input_fields_num: 输入command的一条数据有几个field，默认为1。 "
+"PTable上调用pipe不需要指定；如果PCollection上调用pipe需要输入多个field，则要指定改配置，并且PCollection的元素类型需为tuple"
+"  output_fields_num: command输出的数据有几个field，默认为1  field_delimiter: "
+"streaming模式下field的分割符，默认为tab（制表符）"
+msgstr ""
+
+#: bigflow.transforms.pipe:8 of
+msgid "type: pipe类型，目前支持streaming和bistreaming，默认为streaming"
+msgstr ""
+
+#: bigflow.transforms.pipe:10 of
+msgid "buffer_size: 缓存大小（单条数据），默认64MB"
+msgstr ""
+
+#: bigflow.transforms.pipe:12 of
+msgid ""
+"input_fields_num: 输入command的一条数据有几个field，默认为1。 "
+"PTable上调用pipe不需要指定；如果PCollection上调用pipe需要输入多个field，则要指定改配置，并且PCollection的元素类型需为tuple"
+msgstr ""
+
+#: bigflow.transforms.pipe:15 of
+msgid "output_fields_num: command输出的数据有几个field，默认为1"
+msgstr ""
+
+#: bigflow.transforms.pipe:17 of
+msgid "field_delimiter: streaming模式下field的分割符，默认为tab（制表符）"
+msgstr ""
+
+#: bigflow.transforms.pipe:24 of
+msgid "pipe作用于PCollection上，pipe会将数据直接发送到管道中，框架对数据如何划分不做任何保证；"
+msgstr ""
+
+#: bigflow.transforms.pipe:26 of
+msgid ""
+"2. pipe作用于PTable上，pipe会将PTable的Key和数据一起发送到管道中（支持嵌套）， "
+"并保证相同Key的数据会顺序发送到管道中，例如下列代码："
+msgstr ""
+
+#: bigflow.transforms.pipe:41 of
+msgid "用户程序（cat）接收到的数据为，column间默认使用制表符（tab）作为分割符："
+msgstr ""
+
+#: bigflow.transforms.pipe:43 of
+msgid "key1_a      key2_a  value1"
+msgstr ""
+
+#: bigflow.transforms.pipe:45 of
+msgid "key1_a      key2_a  value2"
+msgstr ""
+
+#: bigflow.transforms.pipe:47 of
+msgid "key1_a      key2_b  value3"
+msgstr ""
+
+#: bigflow.transforms.pipe:49 of
+msgid "key1_a      key2_b  value4"
+msgstr ""
+
+#: bigflow.transforms.pipe:51 of
+msgid "key1_b      key2_c  value5"
+msgstr ""
+
+#: bigflow.transforms.pipe:53 of
+msgid "key1_b      key2_c  value6"
+msgstr ""
+
+#: bigflow.transforms.pipe:55 of
+msgid "3. 尽量不要在PTable上通过apply_values中使用pipe（应该使用apply）， 不仅性能极差而且发送给管道的数据不包含Key；"
+msgstr ""
+
+#: bigflow.transforms.reduce:1 of
+msgid "对于属于PCollection，使用给定的fn将所有元素规约为单个元素"
+msgstr ""
+
+#: bigflow.transforms.reduce:3 of
+msgid "假设输入类型为I，fn的期望签名为 fn(I1, I2) => I，即输出的类型必须与输入相同  (fn的第一个参数允许被修改)"
+msgstr ""
+
+#: bigflow.transforms.right_join:1 of
+msgid ""
+"对于多个输入PCollection，根据key对PCollection做右连接操作 ，连接结果为(key, (value 1, value 2, "
+"..., value n))，若第m个PCollection没有元素， 则value m为None"
+msgstr ""
+
+#: bigflow.transforms.sort:1 of
+msgid "对于输入PCollection，将其进行排序"
+msgstr ""
+
+#: bigflow.transforms.sort_by:1 of
+msgid "对于输入PCollection，使用给定的key将其进行排序"
+msgstr ""
+
+#: bigflow.transforms.sort_by:5 of
+msgid ""
+"用于提取key的函数，与Python内置``sort()``中的 ``key`` "
+"参数相同。提取的key不能为None。可以返回一个key的列表，每个key都可以分别按照升序或者降序排"
+msgstr ""
+
+#: bigflow.transforms.sort_by:24 of
+msgid "sort时所有元素类型必须相同，否则可能出现结果不正确。例如，元素1与元素2.0可能排序结果不正确。 但作为排序的key的多列可以类型不同。"
+msgstr ""
+
+#: bigflow.transforms.sort_by:27 of
+msgid "sort/sort_by后的数据集只有以下操作可以保证顺序："
+msgstr ""
+
+#: bigflow.transforms.sort_by:29 of
+msgid "accumulate,transform操作"
+msgstr ""
+
+#: bigflow.transforms.sort_by:31 of
+msgid "aggregate的第一个聚合函数(即签名为O+I=>O的那个函数)。"
+msgstr ""
+
+#: bigflow.transforms.sort_by:33 of
+msgid "first 和 take (暂不保证语义，未来会支持)"
+msgstr ""
+
+#: bigflow.transforms.sort_by:35 of
+msgid "由于操作性质，其它操作保序也无意义（或语义不明），故不保证顺序。"
+msgstr ""
+
+#: bigflow.transforms.sort_by:37 of
+msgid ""
+"3. sort后调用write并不保证顺序。如果想保证输出有序，可以参考此文档： "
+"http://bigflow.cloud/zh/rst/bigflow.output.html"
+msgstr ""
+
+#: bigflow.transforms.str_to_idl:1 of
+msgid "对于给定的PCollection，对每条数据执行idl打包。要求输入的数据类型为str。"
+msgstr ""
+
+#: bigflow.transforms.substract:1 of
+msgid "此接口已废弃。请使用subtract。"
+msgstr ""
+
+#: bigflow.transforms.subtract:1 of
+msgid ""
+"对于给定的PCollection1和PCollection2，返回所有存在于PCollection1但不在PCollection2 "
+"中的元素，相当于做容器减法"
+msgstr ""
+
+#: bigflow.transforms.subtract:4 of
+msgid "作为被减数的PCollection"
+msgstr ""
+
+#: bigflow.transforms.sum:1 of
+msgid "对于输入PCollection，求其所有包含元素相加的结果"
+msgstr ""
+
+#: bigflow.transforms.take:1 of
+msgid "取给定PCollection中的任意n个元素。 （如果总元素数量不足n，则返回输入pcollection）"
+msgstr ""
+
+#: bigflow.transforms.to_list_pobject:1 of
+msgid "对于给定的PCollection，聚合为PObject，PObject的内容为list"
+msgstr ""
+
+#: bigflow.transforms.to_list_pobject:7 of
+msgid "聚合后的list"
+msgstr ""
+
+#: bigflow.transforms.to_list_pobject:30 of
+msgid ""
+"这个是最易被滥用的一个transform。 它可以使一个PCollection转化为一个元素为list的PObject， "
+"用户可以在后续的map操作中拿到这个list进行任意的单机操作， 在一些场景下，如复用现有单机代码时，比较有用。 "
+"但是，该变换将使得Bigflow许多优化无法执行，导致运行效率下降， 另外，在apply_values中使用时， "
+"由于每个分组的数据必须转化为一个list， 则导致在一个分组内数据过多时，会占用大量内存资源， 甚至可能引起作业因内存占用过多而Out-Of-"
+"Memory失败。"
+msgstr ""
+
+#: bigflow.transforms.to_list_pobject:40 of
+msgid "故，使用该变换前，请三思，尽量使用以下其它算子替换掉此方法， 一些较为通用的替代方案如下（下列替换方案，按顺序前边的比后边的效率高）："
+msgstr ""
+
+#: bigflow.transforms.to_list_pobject:43 of
+msgid ":func:`bigflow.transforms.aggregate <bigflow.transforms.aggregate>`"
+msgstr ""
+
+#: bigflow.transforms.to_list_pobject:44 of
+msgid ":func:`bigflow.transforms.transform <bigflow.transforms.transform>`"
+msgstr ""
+
+#: bigflow.transforms.to_pobject:1 of
+msgid "对于给定的PCollection/PTable，聚合为PObject，PObject的内容为list/dict"
+msgstr ""
+
+#: bigflow.transforms.to_pobject:7 of
+msgid "聚合后的list/dict"
+msgstr ""
+
+#: bigflow.transforms.transform:1 of
+msgid "对给定PCollection进行任意的变换，结果为另一个PCollection"
+msgstr ""
+
+#: bigflow.transforms.transform:3 of
+msgid "transform有两种形式，形式一："
+msgstr ""
+
+#: bigflow.transforms.transform:5 of
+msgid ""
+"基本原型为`transform(pcollection, initializer, transformer, finalizer, "
+"*side_inputs, **options)`"
+msgstr ""
+
+#: bigflow.transforms.transform:7 of
+msgid ""
+"transform将PCollection的处理分为3个阶段: 初始化，遍历及结束，分别对应于 initializer, "
+"transformer和finalizer三个处理函数。三个函数之间有一个状态 "
+"status(也可以理解为上下文context)，同时有一个emitter参数可以向输出PCollection发送数据"
+msgstr ""
+
+#: bigflow.transforms.transform:11 of
+msgid "假定输入数据类型为I，输出数据类型为O，initializer, transformer, finalizer各自的期望签名为:"
+msgstr ""
+
+#: bigflow.transforms.transform:13 of
+msgid "initializer(emitter, *side_inputs) => status(object)"
+msgstr ""
+
+#: bigflow.transforms.transform:15 of
+msgid ""
+"transformer(status, emitter, I, *side_inputs) => status(object) "
+"(transformer的第一个参数允许被修改)"
+msgstr ""
+
+#: bigflow.transforms.transform:18 of
+msgid "finalizer(status, emitter, *side_inputs) => None  (finalizer的第一个参数允许被修改)"
+msgstr ""
+
+#: bigflow.transforms.transform:20 of
+msgid "emitter.emit(O)"
+msgstr ""
+
+#: bigflow.transforms.transform:24 of
+msgid "初始化函数"
+msgstr ""
+
+#: bigflow.transforms.transform:28 of
+msgid "结束函数"
+msgstr ""
+
+#: bigflow.transforms.transform:33 of
+msgid "表示返回结果的PCollection"
+msgstr ""
+
+#: bigflow.transforms.transform:55 of
+msgid "形式二："
+msgstr ""
+
+#: bigflow.transforms.transform:57 of
+msgid ""
+"基本原型为`transform(pcollection, transformer, *side_inputs, **options)` "
+"其中transformer应为 :class:`bigflow.base.Transformer "
+"<bigflow.base.Transformer>` 类的子类， Transformer.begin_process在数据开始处理前会被调用。 "
+"Transformer.process在数据开始处理时，每条数据调用一次，传入需要的数据。 "
+"Transformer.end_process在数据处理完成后被调用。 "
+"用户需要输出的数据以列表或其它可迭代对象的形式返回，其中所有元素都会被作为输出PCollection中的一个元素。 "
+"（注意，如果不需要输出请返回一个空的[]，而不要返回None）"
+msgstr ""
+
+#: bigflow.transforms.transform:114 of
+msgid "本方法为Bigflow所提供的最底层和最复杂的变换方法，它可以表达对PCollection 的任意变换。"
+msgstr ""
+
+#: bigflow.transforms.transform:117 of
+msgid "在有其它函数(如aggregate)能完成同样功能时，尽量不要使用该函数，框架无法了解该函数内部实现， 无法进行许多深层次的优化工作。"
+msgstr ""
+
+#: bigflow.transforms.union:1 of
+msgid "对于多个输入PCollection/PObject，返回包含它们所有元素的PCollection"
+msgstr ""
+
+#: bigflow.transforms.union:3 of
+msgid "输入PCollection必须为同类型"
+msgstr ""
+
+#: bigflow.transforms.union:5 of
+msgid "输入PCollection/PObject"
+msgstr ""
+
+#: bigflow.transforms.window_into:1 of
+msgid "利用给定的window对输入PCollection分组，返回一个表示分组结果的PTable"
+msgstr ""
+
+#: bigflow.transforms.window_into:5 of
+msgid "输入Window"
+msgstr ""
+
+#: ../../rst/bigflow.util.rst:2
+msgid "bigflow.util package"
+msgstr ""
+
+#: bigflow.util:1 of
+msgid "Utility classes"
+msgstr ""
+
+#: ../../rst/bigflow.util.broadcast.rst:2
+msgid "BroadcastUtil"
+msgstr ""
+
+#: bigflow.util.broadcast:1 of
+msgid "A utility module containing some helper method for broadcasting mechnism"
+msgstr ""
+
+#: bigflow.util.broadcast:3 of
+msgid "End-users are not supposed to use the functions."
+msgstr ""
+
+#: bigflow.util.broadcast.broadcast_to:1 of
+msgid "Broadcast given PType instance to given scope"
+msgstr ""
+
+#: bigflow.util.broadcast.broadcast_to:3 bigflow.util.broadcast.working_scope:3
+#: bigflow.util.ptype_info.PTypeInfo:3 of
+msgid "PType instance"
+msgstr ""
+
+#: bigflow.util.broadcast.broadcast_to:5 of
+msgid "scope"
+msgstr ""
+
+#: bigflow.util.broadcast.broadcast_to:8 of
+msgid "new PType after broadcast"
+msgstr ""
+
+#: bigflow.util.broadcast.is_same_working_scope:1 of
+msgid ""
+"Judge if v1 and v2 works on the same scope. When both of them are PType "
+"but their working scopes are different, return False; otherwise returns "
+"true."
+msgstr ""
+
+#: bigflow.util.broadcast.is_same_working_scope:5 of
+msgid "object 1"
+msgstr ""
+
+#: bigflow.util.broadcast.is_same_working_scope:7 of
+msgid "object 2"
+msgstr ""
+
+#: bigflow.util.broadcast.is_same_working_scope:10 of
+msgid "if v1 and v2 work on the same scope"
+msgstr ""
+
+#: bigflow.util.broadcast.working_scope:1 of
+msgid "Returns the working scope of a given PType instance"
+msgstr ""
+
+#: bigflow.util.broadcast.working_scope:6 of
+msgid "working scope"
+msgstr ""
+
+#: bigflow.util.broadcast.working_scope:9 of
+msgid ":exc:`ValueError` -- if invalid argument is given"
+msgstr ""
+
+#: ../../rst/bigflow.util.decorators.rst:2
+msgid "Decorators"
+msgstr ""
+
+#: bigflow.util.decorators:1 of
+msgid "Decorators used by Bigflow Python API"
+msgstr ""
+
+#: bigflow.util.decorators.advance_logger:1 of
+msgid "A decorator that log performance infos of a function call at runtime"
+msgstr ""
+
+#: bigflow.util.decorators.advance_logger:3 of
+msgid "\"DEBUG\" or \"INFO\"(case ignored), log level"
+msgstr ""
+
+#: bigflow.util.decorators.singleton:1 of
+msgid "A decorator that makes a class singleton"
+msgstr ""
+
+#: bigflow.util.decorators.singleton:3 of
+msgid "class to decorate"
+msgstr ""
+
+#: ../../rst/bigflow.util.hadoop_client.rst:2
+msgid "HadoopClient"
+msgstr ""
+
+#: bigflow.util.hadoop_client:1 of
+msgid "A utility to wrap Hadoop console command"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient:1 of
+msgid "A wrapper class of Hadoop console command"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient:3 of
+msgid "内部类，请用户不要使用该类，未来不保证接口兼容，请直接使用hadoop-client。"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient:5 of
+msgid "path of Hadoop client(usually 'hadoop' executable file)"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient:7 of
+msgid "path of Hadoop configuration"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_dus:1 of
+msgid "Wraps console command 'hadoop fs -dus <path>'"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_dus:3 of
+msgid "path to get size"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_dus:6 of
+msgid "path size"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_get:1 of
+msgid "Wraps console command 'hadoop fs -get <source> <target>'"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_get:3
+#: bigflow.util.hadoop_client.HadoopClient.fs_mv:3
+#: bigflow.util.hadoop_client.HadoopClient.fs_put:3 of
+msgid "path of source"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_get:5
+#: bigflow.util.hadoop_client.HadoopClient.fs_mv:5
+#: bigflow.util.hadoop_client.HadoopClient.fs_put:5 of
+msgid "path of target"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_mkdir:1 of
+msgid "Wraps console command 'hadoop fs -mkdir -p <path>'"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_mkdir:3 of
+msgid "path to be created"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_mv:1 of
+msgid "Wraps console command 'hadoop fs -mv <source> <target>'"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_put:1 of
+msgid "Wraps console command 'hadoop fs -put <source> <target>'"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_rmr:1 of
+msgid "Wraps console command 'hadoop fs -rmr <path>'"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_rmr:3 of
+msgid "path to be removed"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_test:1 of
+msgid "Wraps console command 'hadoop fs -test -e <path>'"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_test:3 of
+msgid "path to test"
+msgstr ""
+
+#: bigflow.util.hadoop_client.HadoopClient.fs_test:6 of
+msgid "if path exist"
+msgstr ""
+
+#: bigflow.util.hadoop_client.extract_fs_name_from_path:1 of
+msgid "Get fs.defaultFS from path like \"hdfs://abcde:22222/a/b/c\""
+msgstr ""
+
+#: ../../rst/bigflow.util.log.rst:2
+msgid "Logging"
+msgstr ""
+
+#: bigflow.util.log:1 of
+msgid "A utility wraps Python built-in loggings"
+msgstr ""
+
+#: bigflow.util.log.LogFormatter:1 of
+msgid "Bases: :class:`logging.Formatter`"
+msgstr ""
+
+#: bigflow.util.log.LogFormatter:1 of
+msgid "Log formatter used in Tornado."
+msgstr ""
+
+#: bigflow.util.log.LogFormatter:3 of
+msgid "Key features of this formatter are:"
+msgstr ""
+
+#: bigflow.util.log.LogFormatter:5 of
+msgid "Color support when logging to a terminal that supports it."
+msgstr ""
+
+#: bigflow.util.log.LogFormatter:6 of
+msgid "Timestamps on every log line."
+msgstr ""
+
+#: bigflow.util.log.LogFormatter:7 of
+msgid "Robust against str/bytes encoding problems."
+msgstr ""
+
+#: bigflow.util.log.LogFormatter:9 of
+msgid ""
+"This formatter is enabled automatically by "
+"`tornado.options.parse_command_line` (unless ``--logging=none`` is used)."
+msgstr ""
+
+#: bigflow.util.log.LogFormatter.format:1 of
+msgid "Format the specified record as text."
+msgstr ""
+
+#: bigflow.util.log.LogFormatter.format:3 of
+msgid ""
+"The record's attribute dictionary is used as the operand to a string "
+"formatting operation which yields the returned string. Before formatting "
+"the dictionary, a couple of preparatory steps are carried out. The "
+"message attribute of the record is computed using LogRecord.getMessage()."
+" If the formatting string uses the time (as determined by a call to "
+"usesTime(), formatTime() is called to format the event time. If there is "
+"exception information, it is formatted using formatException() and "
+"appended to the message."
+msgstr ""
+
+#: bigflow.util.log.enable_pretty_logging:1 of
+msgid "Turns on formatted logging output as configured."
+msgstr ""
+
+#: bigflow.util.log.enable_pretty_logging_at_debug:1 of
+msgid "Turns on formatted logging output only at DEBUG level"
+msgstr ""
+
+#: bigflow.util.log.init_log:1 of
+msgid "init_log - initialize log module"
+msgstr ""
+
+#: bigflow.util.log.init_log:3 of
+msgid ""
+"msg above the level will be displayed DEBUG < INFO < WARNING < ERROR < "
+"CRITICAL  ``the default value is logging.INFO``"
+msgstr ""
+
+#: bigflow.util.log.init_log:3 of
+msgid ""
+"msg above the level will be displayed DEBUG < INFO < WARNING < ERROR < "
+"CRITICAL"
+msgstr ""
+
+#: bigflow.util.log.init_log:6 of
+msgid "``the default value is logging.INFO``"
+msgstr ""
+
+#: bigflow.util.log.init_log:9 of
+msgid ":exc:`OSError` -- fail to create log directories"
+msgstr ""
+
+#: bigflow.util.log.init_log:10 of
+msgid ":exc:`IOError` -- fail to open log file"
+msgstr ""
+
+#: ../../rst/bigflow.util.ptype_info.rst:2
+msgid "PTypeInfo"
+msgstr ""
+
+#: bigflow.util.ptype_info:1 of
+msgid "A utility class to convert PType class name to a string"
+msgstr ""
+
+#: bigflow.util.ptype_info.PTypeInfo:1 of
+msgid ""
+"A utility to keep class type of a PType and store its class name in its "
+"``type`` attribute"
+msgstr ""
+
+#: ../../rst/bigflow.util.reiterable_input.rst:2
+msgid "ReIterables"
+msgstr ""
+
+#: bigflow.util.reiterable_input:1 of
+msgid "A utility to convert a Python iterator to iterable"
+msgstr ""
+
+#: bigflow.util.reiterable_input.ReIterableInput:1 of
+msgid "A utility to convert a Python iterator to re-iterable object"
+msgstr ""
+
+#: bigflow.util.reiterable_input.ReIterableInput:3 of
+msgid "input iterator"
+msgstr ""
+
+#: ../../rst/bigflow.util.side_input_util.rst:2
+msgid "SideInputUtil"
+msgstr ""
+
+#: bigflow.util.side_input_util:1 bigflow.util.side_input_util.SideInputsUtil:1
+#: of
+msgid "A utility to generate LogicalPlan node for SideInputs"
+msgstr ""
+
+#: bigflow.util.side_input_util.SideInputsUtil:3 of
+msgid "the input to be processed"
+msgstr ""
+
+#: bigflow.util.side_input_util.SideInputsUtil:5 of
+msgid "a tuple with PType as SideInputs"
+msgstr ""
+
+#: bigflow.util.side_input_util.SideInputsUtil:8 of
+msgid "End-users are not supposed to use this class."
+msgstr ""
+
+#: bigflow.util.side_input_util.SideInputsUtil.get_input:1 of
+msgid "Get the corresponding node of input"
+msgstr ""
+
+#: bigflow.util.side_input_util.SideInputsUtil.get_input:3 of
+msgid "input node"
+msgstr ""
+
+#: bigflow.util.side_input_util.SideInputsUtil.process_with_side_inputs:1 of
+msgid "Convert all SideInputs as prepared nodes in LogicalPlan"
+msgstr ""
+
+#: bigflow.util.side_input_util.SideInputsUtil.process_with_side_inputs:3 of
+msgid "processed node"
+msgstr ""
+
+#: bigflow.util.utils:1 of
+msgid "Author: panyunhong(bigflow-opensource@baidu.com)"
+msgstr ""
+
+#: bigflow.util.utils.construct:1 of
+msgid "Construct a PType from a LogicalPlan node"
+msgstr ""
+
+#: bigflow.util.utils.construct:3 of
+msgid "the Pipeline constructed PType belongs to"
+msgstr ""
+
+#: bigflow.util.utils.construct:7 of
+msgid "class of PType to construct"
+msgstr ""
+
+#: bigflow.util.utils.construct:12 of
+msgid "Kwargs:"
+msgstr ""
+
+#: bigflow.util.utils.construct:11 of
+msgid ""
+"nested_leve: specify PTable's nested level if PType is a PTable "
+"inner_most_type:  specify PTable's inner-most type if PType is a PTable"
+msgstr ""
+
+#: bigflow.util.utils.detect_ptype:1 of
+msgid "Detect the default PType type for a runtime value"
+msgstr ""
+
+#: bigflow.util.utils.detect_ptype:3 of
+msgid "a runtime value, cannot be PType"
+msgstr ""
+
+#: bigflow.util.utils.detect_ptype:6 of
+msgid "detected PType class"
+msgstr ""
+
+#: bigflow.util.utils.flatten_runtime_value:1 of
+msgid "Flatten a Python dict to tuple"
+msgstr ""
+
+#: bigflow.util.utils.flatten_runtime_value:3 of
+msgid "value to flatten"
+msgstr ""
+
+#: bigflow.util.utils.flatten_runtime_value:6 of
+msgid "flatten result"
+msgstr ""
+
+#: bigflow.util.utils.is_infinite:1 of
+msgid "Return if a PType is infinite"
+msgstr ""
+
+#: bigflow.util.utils.is_infinite:6 of
+msgid "True if the PType is infinite, False otherwise"
+msgstr ""
+
+#: bigflow.util.utils.is_ptype:1 of
+msgid "Return if an object is a PType"
+msgstr ""
+
+#: bigflow.util.utils.is_ptype:3 of
+msgid "object"
+msgstr ""
+
+#: bigflow.util.utils.is_ptype:6 of
+msgid "True if the object is a PType, False otherwise"
+msgstr ""
+
+#: ../../rst/modules.rst:2
+msgid "All Modules"
+msgstr ""
+

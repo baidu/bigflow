@@ -1,0 +1,2920 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-05 08:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: ../../flume/analysises/data_flow_analysis.rst:3
+msgid "DataFlowAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:6
+#: ../../flume/analysises/executor_dependency_analysis.rst:6
+#: ../../flume/analysises/partial_node_analysis.rst:6
+#: ../../flume/analysises/prepared_node_analysis.rst:6
+#: ../../flume/analysises/promotable_node_analysis.rst:6
+#: ../../flume/analysises/reduce_number_analysis.rst:6
+#: ../../flume/analysises/scope_basic_info_analysis.rst:6
+#: ../../flume/analysises/scope_level_analysis.rst:6
+#: ../../flume/analysises/task_flow_analysis.rst:6
+#: ../../flume/analysises/task_index_analysis.rst:6
+#: ../../flume/analysises/vertex_analysis.rst:6
+#: ../../flume/passes/add_task_unit_pass.rst:6
+#: ../../flume/passes/build_aggregator_pass.rst:6
+#: ../../flume/passes/build_dummy_executor_pass.rst:6
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:6
+#: ../../flume/passes/build_logical_executor_pass.rst:6
+#: ../../flume/passes/build_map_input_pass.rst:6
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:6
+#: ../../flume/passes/build_partial_executor_pass.rst:6
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:6
+#: ../../flume/passes/build_physical_plan_pass.rst:6
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:6
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:6
+#: ../../flume/passes/build_task_executor_pass.rst:6
+#: ../../flume/passes/load_logical_plan_pass.rst:6
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:6
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:6
+#: ../../flume/passes/merge_single_node_pass.rst:6
+#: ../../flume/passes/merge_task_pass.rst:6
+#: ../../flume/passes/promote_global_partial_node_pass.rst:6
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:6
+#: ../../flume/passes/promote_union_downstream_pass.rst:6
+#: ../../flume/passes/remove_empty_unit_pass.rst:6
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:6
+#: ../../flume/passes/remove_useless_union_pass.rst:6
+#: ../../flume/passes/split_shuffle_pass.rst:6
+msgid "1. 功能介绍"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:7
+msgid ""
+"DataFlowAnalysis的主要作用是分析plan中每个节点的数据流信息, 主要的信息包括数据流上游节点, 数据流下游节点, "
+"以及相应的连接边。在头文件中定义了一个Info的struct结构, DataFlowAnalysis使用Info结构来存储每个节点数据流信息。"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:11
+msgid "Info结构如下"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:13
+msgid "nodes：当前节点所有的孩子节点, 包含自身"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:14
+msgid "users：当前节点所有直接下游节点"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:15
+msgid "needs：当前节点所有直接上游节点"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:16
+msgid "upstreams：当前节点所有上游节点"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:17
+msgid "downstreams：当前节点所有下游节点"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:18
+msgid "inputs：当前节点所有直接输入的边"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:19
+msgid "outputs：当前节点所有直接输出的边"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:22
+#: ../../flume/analysises/executor_dependency_analysis.rst:10
+#: ../../flume/analysises/partial_node_analysis.rst:13
+#: ../../flume/analysises/prepared_node_analysis.rst:12
+#: ../../flume/analysises/promotable_node_analysis.rst:11
+#: ../../flume/analysises/reduce_number_analysis.rst:10
+#: ../../flume/analysises/scope_basic_info_analysis.rst:10
+#: ../../flume/analysises/scope_level_analysis.rst:10
+#: ../../flume/analysises/task_flow_analysis.rst:16
+#: ../../flume/analysises/task_index_analysis.rst:10
+#: ../../flume/analysises/vertex_analysis.rst:11
+#: ../../flume/passes/add_task_unit_pass.rst:11
+#: ../../flume/passes/build_aggregator_pass.rst:15
+#: ../../flume/passes/build_dummy_executor_pass.rst:14
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:21
+#: ../../flume/passes/build_logical_executor_pass.rst:17
+#: ../../flume/passes/build_map_input_pass.rst:11
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:10
+#: ../../flume/passes/build_partial_executor_pass.rst:14
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:10
+#: ../../flume/passes/build_physical_plan_pass.rst:10
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:17
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:20
+#: ../../flume/passes/build_task_executor_pass.rst:11
+#: ../../flume/passes/load_logical_plan_pass.rst:10
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:12
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:10
+#: ../../flume/passes/merge_single_node_pass.rst:15
+#: ../../flume/passes/merge_task_pass.rst:36
+#: ../../flume/passes/promote_global_partial_node_pass.rst:10
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:10
+#: ../../flume/passes/promote_union_downstream_pass.rst:10
+#: ../../flume/passes/remove_empty_unit_pass.rst:11
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:11
+#: ../../flume/passes/remove_useless_union_pass.rst:11
+#: ../../flume/passes/split_shuffle_pass.rst:10
+msgid "2. 依赖说明"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:23
+#: ../../flume/analysises/executor_dependency_analysis.rst:11
+#: ../../flume/analysises/partial_node_analysis.rst:14
+#: ../../flume/analysises/prepared_node_analysis.rst:13
+#: ../../flume/analysises/promotable_node_analysis.rst:12
+#: ../../flume/analysises/reduce_number_analysis.rst:11
+#: ../../flume/analysises/scope_basic_info_analysis.rst:11
+#: ../../flume/analysises/scope_level_analysis.rst:11
+#: ../../flume/analysises/task_flow_analysis.rst:17
+#: ../../flume/analysises/task_index_analysis.rst:11
+#: ../../flume/analysises/vertex_analysis.rst:12
+#: ../../flume/passes/add_task_unit_pass.rst:18
+#: ../../flume/passes/build_aggregator_pass.rst:20
+#: ../../flume/passes/build_dummy_executor_pass.rst:19
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:26
+#: ../../flume/passes/build_logical_executor_pass.rst:22
+#: ../../flume/passes/build_map_input_pass.rst:16
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:15
+#: ../../flume/passes/build_partial_executor_pass.rst:19
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:15
+#: ../../flume/passes/build_physical_plan_pass.rst:15
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:22
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:25
+#: ../../flume/passes/build_task_executor_pass.rst:22
+#: ../../flume/passes/load_logical_plan_pass.rst:15
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:17
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:15
+#: ../../flume/passes/merge_single_node_pass.rst:20
+#: ../../flume/passes/merge_task_pass.rst:39
+#: ../../flume/passes/promote_global_partial_node_pass.rst:15
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:15
+#: ../../flume/passes/promote_union_downstream_pass.rst:15
+#: ../../flume/passes/remove_empty_unit_pass.rst:16
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:16
+#: ../../flume/passes/remove_useless_union_pass.rst:16
+#: ../../flume/passes/split_shuffle_pass.rst:15
+msgid "**ANALYSIS**"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:25
+#: ../../flume/analysises/prepared_node_analysis.rst:15
+#: ../../flume/analysises/scope_basic_info_analysis.rst:13
+#: ../../flume/analysises/scope_level_analysis.rst:13
+#: ../../flume/passes/add_task_unit_pass.rst:20
+#: ../../flume/passes/build_aggregator_pass.rst:22
+#: ../../flume/passes/build_dummy_executor_pass.rst:21
+#: ../../flume/passes/build_dummy_executor_pass.rst:27
+#: ../../flume/passes/build_dummy_executor_pass.rst:31
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:28
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:34
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:38
+#: ../../flume/passes/build_logical_executor_pass.rst:30
+#: ../../flume/passes/build_logical_executor_pass.rst:34
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:17
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:23
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:27
+#: ../../flume/passes/build_partial_executor_pass.rst:17
+#: ../../flume/passes/build_partial_executor_pass.rst:21
+#: ../../flume/passes/build_partial_executor_pass.rst:27
+#: ../../flume/passes/build_partial_executor_pass.rst:31
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:23
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:27
+#: ../../flume/passes/build_physical_plan_pass.rst:24
+#: ../../flume/passes/build_physical_plan_pass.rst:28
+#: ../../flume/passes/build_task_executor_pass.rst:31
+#: ../../flume/passes/build_task_executor_pass.rst:35
+#: ../../flume/passes/load_logical_plan_pass.rst:13
+#: ../../flume/passes/load_logical_plan_pass.rst:17
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:17
+#: ../../flume/passes/merge_task_pass.rst:45
+#: ../../flume/passes/merge_task_pass.rst:50
+#: ../../flume/passes/remove_empty_unit_pass.rst:14
+#: ../../flume/passes/remove_empty_unit_pass.rst:18
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:14
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:18
+#: ../../flume/passes/remove_useless_union_pass.rst:14
+#: ../../flume/passes/remove_useless_union_pass.rst:18
+#: ../../flume/passes/split_shuffle_pass.rst:17
+msgid "无"
+msgstr ""
+
+#: ../../flume/analysises/data_flow_analysis.rst:28
+#: ../../flume/analysises/executor_dependency_analysis.rst:16
+#: ../../flume/analysises/partial_node_analysis.rst:19
+#: ../../flume/analysises/prepared_node_analysis.rst:18
+#: ../../flume/analysises/promotable_node_analysis.rst:19
+#: ../../flume/analysises/reduce_number_analysis.rst:17
+#: ../../flume/analysises/scope_basic_info_analysis.rst:16
+#: ../../flume/analysises/scope_level_analysis.rst:16
+#: ../../flume/analysises/task_flow_analysis.rst:22
+#: ../../flume/analysises/task_index_analysis.rst:17
+#: ../../flume/analysises/vertex_analysis.rst:18
+msgid "`返回 <../plan_pass.html#analysis>`_"
+msgstr ""
+
+#: ../../flume/analysises/executor_dependency_analysis.rst:3
+msgid "ExecutorDependencyAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/executor_dependency_analysis.rst:7
+msgid "ExecutorDependencyAnalysis的作用是分析当前节点在同一个task内的Executor依赖关系。"
+msgstr ""
+
+#: ../../flume/analysises/executor_dependency_analysis.rst:13
+#: ../../flume/analysises/partial_node_analysis.rst:16
+#: ../../flume/analysises/promotable_node_analysis.rst:14
+#: ../../flume/analysises/reduce_number_analysis.rst:13
+#: ../../flume/analysises/task_flow_analysis.rst:19
+#: ../../flume/analysises/task_index_analysis.rst:13
+msgid "`DataFlowAnalysis <data_flow_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/analysises/partial_node_analysis.rst:3
+msgid "PartialNodeAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/partial_node_analysis.rst:7
+msgid ""
+"PartialNodeAnalysis的作用是分析哪些LOCAL_SHUFFLE节点是partial的。 整个过程包含三个部分, "
+"首先分析可以partial的PROCESS节点, 其次根据上下游数据流关系, 分析哪些SHUFFLE 节点是可以partial, "
+"最后根据之前的分析, 为那些可以partial的LOCAL_SHUFFLE节点做上标记。 //TODO(Pan Yuchang)"
+msgstr ""
+
+#: ../../flume/analysises/prepared_node_analysis.rst:3
+msgid "PreparedNodeAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/prepared_node_analysis.rst:7
+msgid ""
+"PreparedNodeAnalysis的作用是将符合条件的节点做上Prepared标记, 被做上Prepared标记的那条边的数据 "
+"在发送的时候会被优先发送, 以保证尽快装载进入内存, 具体使用场景请参考 `BuildShuffleEncoderDecoderPass "
+"<../passes/build_shuffle_encoder_decoder_pass.html>`_"
+msgstr ""
+
+#: ../../flume/analysises/promotable_node_analysis.rst:3
+msgid "PromotableNodeAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/promotable_node_analysis.rst:7
+msgid ""
+"PromotableNodeAnalysis的作用是为符合条件的节点做上Promotable标记, 为节点移动提供信息。整个分析包含 三个部分, "
+"分别为叶子节点分析, SHUFFLE节点分析以及DUMMY节点分析。"
+msgstr ""
+
+#: ../../flume/analysises/promotable_node_analysis.rst:15
+#: ../../flume/analysises/reduce_number_analysis.rst:14
+#: ../../flume/analysises/task_index_analysis.rst:14
+msgid "`ScopeBasicInfoAnalysis <scope_basic_info_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/analysises/promotable_node_analysis.rst:16
+msgid "`PartialNodeAnalysis <partial_node_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/analysises/reduce_number_analysis.rst:3
+msgid "ReduceNumberAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/reduce_number_analysis.rst:7
+msgid "ReduceNumberAnalysis的作用是为task分配并发度, 若是用户指定并发度, 则使用用户指定的, 否则使用默认值。"
+msgstr ""
+
+#: ../../flume/analysises/scope_basic_info_analysis.rst:3
+msgid "ScopeBasicInfoAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/scope_basic_info_analysis.rst:7
+msgid "ScopeBasicInfoAnalysis的作用是分析DEFAULT节点与TASK节点的SCOPE信息。"
+msgstr ""
+
+#: ../../flume/analysises/scope_level_analysis.rst:3
+msgid "ScopeLevelAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/scope_level_analysis.rst:7
+msgid "ScopeLevelAnalysis的作用是分析每个JOB的非叶子节点的SCOPE信息。"
+msgstr ""
+
+#: ../../flume/analysises/task_flow_analysis.rst:3
+msgid "TaskFlowAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/task_flow_analysis.rst:7
+msgid "TaskFlowAnalysis的作用是分析task之间的数据流关系, 同时在头文件中定义Info的struct结构, 用于保存task上下游信息。"
+msgstr ""
+
+#: ../../flume/analysises/task_flow_analysis.rst:10
+msgid "Info结构说明"
+msgstr ""
+
+#: ../../flume/analysises/task_flow_analysis.rst:12
+msgid "input_tasks：直接输入的task"
+msgstr ""
+
+#: ../../flume/analysises/task_flow_analysis.rst:13
+msgid "output_tasks：直接输出的task"
+msgstr ""
+
+#: ../../flume/analysises/task_index_analysis.rst:3
+msgid "TaskIndexAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/task_index_analysis.rst:7
+msgid "TaskIndexAnalysis的作用是为每个task编号, 其中编号为0的节点必须是输入节点。"
+msgstr ""
+
+#: ../../flume/analysises/vertex_analysis.rst:3
+msgid "VertexAnalysis"
+msgstr ""
+
+#: ../../flume/analysises/vertex_analysis.rst:7
+msgid ""
+"VertexAnalysis的作用是分析可以合并成一个vertex的tasks, 并且将这些tasks进行合并, 合并之后 产生vertexs, "
+"同时为这些vertexs打上编号。和task编号的方式类型, 需要将具有输入的vertex编号为0."
+msgstr ""
+
+#: ../../flume/analysises/vertex_analysis.rst:14
+msgid "`TaskFlowAnalysis <task_flow_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/analysises/vertex_analysis.rst:15
+msgid "`TaskIndexAnalysis <task_index_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/backend.rst:3
+msgid "Backend和执行流程"
+msgstr ""
+
+#: ../../flume/backend.rst:5
+msgid "本章描述Flume如何在不同引擎上执行通用的逻辑执行计划."
+msgstr ""
+
+#: ../../flume/core.rst:3 ../../flume/overview.rst:33
+msgid "Flume-Core"
+msgstr ""
+
+#: ../../flume/core.rst:5
+msgid "本章讲述Flume项目的核心表示层: 逻辑执行计划. 逻辑执行计划的执行请参见 :doc:`executor`"
+msgstr ""
+
+#: ../../flume/core.rst:9
+msgid "核心概念"
+msgstr ""
+
+#: ../../flume/core.rst:11
+msgid ""
+"Flume将分布式计算过程抽象为数据流在算子上的变换, 这就引申出了两个Flume中的核心概念: 算子和算子应用的范围. "
+"接下来我们分别讲解这些概念."
+msgstr ""
+
+#: ../../flume/core.rst:18
+msgid "Processor"
+msgstr ""
+
+#: ../../flume/core.rst:20
+msgid "在Flume中, 最核心的算子是Processor, 它接受N路数据流, 产出1路数据流. 我们这里举两个例子."
+msgstr ""
+
+#: ../../flume/core.rst:25
+msgid "上图描述了FilterProcessor的逻辑, 它过滤掉的输入流X中的奇数数据, 得到一个新的数据流O."
+msgstr ""
+
+#: ../../flume/core.rst:30
+msgid "上图描述了CartesianProcessor的逻辑, 它有两路输入X Y, 输出是X和Y中数据的笛卡尔积."
+msgstr ""
+
+#: ../../flume/core.rst:34
+msgid "Processor可以被串联/级联组成Dag, 如下图所示:"
+msgstr ""
+
+#: ../../flume/core.rst:39
+msgid ""
+"通过上图我们可以看到, Processor之间可以任意串联, 一个Processor后面也可以跟随任意个后继Processor, "
+"然后后继的每个Processor在该路上得到的输入都是一样的, 比如B和C得到的输入就完全一样."
+msgstr ""
+
+#: ../../flume/core.rst:46
+msgid "Group/Scope"
+msgstr ""
+
+#: ../../flume/core.rst:48
+msgid "Processor算子是Flume中的基本计算单元, 它体现了分布式计算中的'计算', 我们需要另外的概念来描述'分布式'. 考虑下面的例子"
+msgstr ""
+
+#: ../../flume/core.rst:58
+msgid ""
+"rollup是Oracle SQL数据库的概念, 含义是层级聚集, 具体到上面的例子, "
+"就是分别以week和(week,weekday)作为分组应用进行求和, 其结果形如:"
+msgstr ""
+
+#: ../../flume/core.rst:62
+msgid "周"
+msgstr ""
+
+#: ../../flume/core.rst:62
+msgid "天"
+msgstr ""
+
+#: ../../flume/core.rst:62
+msgid "销售额"
+msgstr ""
+
+#: ../../flume/core.rst:64 ../../flume/core.rst:65 ../../flume/core.rst:66
+#: ../../flume/core.rst:67 ../../flume/core.rst:68 ../../flume/core.rst:69
+#: ../../flume/core.rst:70
+msgid "1"
+msgstr ""
+
+#: ../../flume/core.rst:64
+msgid "4363.55"
+msgstr ""
+
+#: ../../flume/core.rst:65 ../../flume/core.rst:70 ../../flume/core.rst:71
+#: ../../flume/core.rst:72 ../../flume/core.rst:73 ../../flume/core.rst:74
+#: ../../flume/core.rst:75
+msgid "2"
+msgstr ""
+
+#: ../../flume/core.rst:65
+msgid "4794.76"
+msgstr ""
+
+#: ../../flume/core.rst:66 ../../flume/core.rst:72
+msgid "3"
+msgstr ""
+
+#: ../../flume/core.rst:66
+msgid "4718.25"
+msgstr ""
+
+#: ../../flume/core.rst:67 ../../flume/core.rst:73
+msgid "4"
+msgstr ""
+
+#: ../../flume/core.rst:67
+msgid "5387.45"
+msgstr ""
+
+#: ../../flume/core.rst:68 ../../flume/core.rst:74
+msgid "5"
+msgstr ""
+
+#: ../../flume/core.rst:68
+msgid "5027.34"
+msgstr ""
+
+#: ../../flume/core.rst:69
+msgid "24291.35"
+msgstr ""
+
+#: ../../flume/core.rst:70
+msgid "5652.84"
+msgstr ""
+
+#: ../../flume/core.rst:71
+msgid "4583.02"
+msgstr ""
+
+#: ../../flume/core.rst:72
+msgid "5555.77"
+msgstr ""
+
+#: ../../flume/core.rst:73
+msgid "5936.67"
+msgstr ""
+
+#: ../../flume/core.rst:74
+msgid "4508.74"
+msgstr ""
+
+#: ../../flume/core.rst:75
+msgid "26237.04"
+msgstr ""
+
+#: ../../flume/core.rst:76
+msgid "A"
+msgstr ""
+
+#: ../../flume/core.rst:76
+msgid "50528.39"
+msgstr ""
+
+#: ../../flume/core.rst:79
+msgid ""
+"我们看到, 所有这些输出都是SumProcessor的计算结果, 区别在于该算子应用的范围. 因此在Flume的定义中, "
+"每个算子以Group为基本处理单位, 每次处理一组数据. 又因为分组是嵌套的, 如在{第一周销售记录}这一组数据, 又可按照工作日继续细分, "
+"我们用Scope来面表达相同地位分组的集合. 每一个算子, 都必须置于某一个Scope下, 处理该Scope下所有Group的数据. "
+"按照这种思路, 我们用如下图所示的逻辑执行计划来描述上述SQL的计算逻辑:"
+msgstr ""
+
+#: ../../flume/core.rst:88
+msgid ""
+"在Flume中, 我们用Shuffle这个名词来表达分组和排序. 一个Shuffle过程可以有N路输入源参与, "
+"其结果表示为一个嵌套的Scope和其中的N个ShuffleNode, 每个ShuffleNode有一路输入和一路输出, "
+"输入是参与Shuffle过程的输入源, 其输出可以被同Scope的后续算子操作."
+msgstr ""
+
+#: ../../flume/core.rst:94
+msgid "逻辑执行计划"
+msgstr ""
+
+#: ../../flume/core.rst:96
+msgid "在上一节中, 我们讲述了Flume计算抽象的基本原则. 本节我们要讲述完整的核心表示层：逻辑执行计划. 首先我们介绍逻辑执行计划的各个组成部分."
+msgstr ""
+
+#: ../../flume/core.rst:99
+msgid "**Node**"
+msgstr ""
+
+#: ../../flume/core.rst:101
+msgid "组成逻辑计划的基本单位"
+msgstr ""
+
+#: ../../flume/core.rst:102
+msgid "Node上绑定着相应的自定义算子"
+msgstr ""
+
+#: ../../flume/core.rst:103
+msgid "每个Node上只有一路逻辑上的输出"
+msgstr ""
+
+#: ../../flume/core.rst:104
+msgid "逻辑执行计划上的所有Node组成一个DAG"
+msgstr ""
+
+#: ../../flume/core.rst:106
+msgid "**Scope/Group**"
+msgstr ""
+
+#: ../../flume/core.rst:108
+msgid "Scope是地位相同的各个数据分组的集合"
+msgstr ""
+
+#: ../../flume/core.rst:109
+msgid "Scope中的数据按key分组, 每组为一个Group"
+msgstr ""
+
+#: ../../flume/core.rst:110
+msgid "逻辑计划上的每个Node都属于某个Scope"
+msgstr ""
+
+#: ../../flume/core.rst:111
+msgid "逻辑计划中的所有Scope组成一棵树"
+msgstr ""
+
+#: ../../flume/core.rst:113
+msgid "**算子/Entity**"
+msgstr ""
+
+#: ../../flume/core.rst:115
+msgid "算子是可以被反射的C++类, 用以承载用户逻辑. 具体参见 flume/core/entity.h"
+msgstr ""
+
+#: ../../flume/core.rst:116
+msgid "在所有算子中, 数据流被抽象为无类型的, 每条数据的类型都是void*"
+msgstr ""
+
+#: ../../flume/core.rst:117
+msgid "每个带有输出的Node上必须指定Objector算子, 该算子负责完成数据的序列化和反序列化工作"
+msgstr ""
+
+#: ../../flume/core.rst:119
+msgid ""
+"逻辑执行计划在 flume/proto/logical_plan.proto和entity.proto中定义, "
+"下面给出以上三个概念的proto定义::"
+msgstr ""
+
+#: ../../flume/core.rst:174
+msgid "下面分别介绍各个逻辑计划节点."
+msgstr ""
+
+#: ../../flume/core.rst:178
+msgid "PROCESS_NODE"
+msgstr ""
+
+#: ../../flume/core.rst:180
+msgid "PROCESS_NODE是基本的数据处理节点, N入单出, 下面是它的proto定义::"
+msgstr ""
+
+#: ../../flume/core.rst:196
+msgid "Processor的接口定义如下:"
+msgstr ""
+
+#: ../../flume/core.rst:243
+msgid ""
+"每个PROCESS_NODE都属于一个Scope, 该Scope存在多组数据. 从每个Processor对象的角度看, 在其生命期内, "
+"其时序关系如下图所示:"
+msgstr ""
+
+#: ../../flume/core.rst:249
+msgid "每次Begin-Group周期该Processor处理其所在Scope的一个分组."
+msgstr ""
+
+#: ../../flume/core.rst:253
+msgid "LOAD_NODE"
+msgstr ""
+
+#: ../../flume/core.rst:255
+msgid ""
+"LOAD_NODE代表了框架的输入, 每个Load操作会在Global Scope下创建一个新Scope和该Scope下的一个LOAD_NODE."
+" 之所以Load操作会创建Scope, 是因为很多情况下数据是按组存储的, 比如UDW存储中的partition概念."
+msgstr ""
+
+#: ../../flume/core.rst:258
+msgid "LOAD_NODE的proto定义如下::"
+msgstr ""
+
+#: ../../flume/core.rst:265
+msgid ""
+"Loader算子的定义比较接近与Hadoop中InputFormat的设定, 分为且分和读取两个部分. 不同的是, "
+"Loader算子并不默认输入都是KeyValue形式的. 另外, 在执行的时候, 每个split都是其数据所在分组的key. "
+"Loader算子的接口定义如下:"
+msgstr ""
+
+#: ../../flume/core.rst:287
+msgid "SINK_NODE"
+msgstr ""
+
+#: ../../flume/core.rst:289
+msgid ""
+"SINK_NODE代表了框架的输出. 和PROCESS_NODE相同, SINK_NODE也属于某个Scope, "
+"将该组Scope中的每组数据输出到外部系统. SINK_NODE的proto定义如下::"
+msgstr ""
+
+#: ../../flume/core.rst:297
+msgid "Sinker的接口定义如下:"
+msgstr ""
+
+#: ../../flume/core.rst:318
+msgid "SHUFFLE_NODE"
+msgstr ""
+
+#: ../../flume/core.rst:320
+msgid "SHUFFLE_NODE代表分组后的数据流, 由Shuffle操作产生. 其proto定义如下所述::"
+msgstr ""
+
+#: ../../flume/core.rst:336
+msgid ""
+"Flume支持两种分组方式, 按Key聚集和分桶. 按Key聚集是为参与分组的每条记录附加一个key, 把所有key的记录汇聚到同一组中. "
+"分桶是指事先决定好分组数量, 再把每条记录分配到某个桶中的分组方式."
+msgstr ""
+
+#: ../../flume/core.rst:339
+msgid "这个过程中涉及到KeyReader和Partitioner两种算子, 其接口定义如下:"
+msgstr ""
+
+#: ../../flume/core.rst:369
+msgid "UNION_NODE"
+msgstr ""
+
+#: ../../flume/core.rst:371
+msgid "UNION_NODE用来将多个数据源和合并为一个数据源统一处理, 其proto定义如下::"
+msgstr ""
+
+#: ../../flume/core.rst:379
+msgid "编程实例 - WordCount"
+msgstr ""
+
+#: ../../flume/core.rst:381
+msgid "这里我们实现一个小程序，用来计算在两个文件中出现频率最高的前50个词."
+msgstr ""
+
+#: ../../flume/core.rst:676
+msgid "Reference"
+msgstr ""
+
+#: ../../flume/core.rst:678
+msgid "本节讲述 LogicalPlan 类提供的各个接口."
+msgstr ""
+
+#: ../../flume/core.rst:681
+msgid "Load"
+msgstr ""
+
+#: ../../flume/core.rst:683
+msgid "用于读入数据源，需要指定数据所在的路径。"
+msgstr ""
+
+#: ../../flume/core.rst:685
+msgid "有两种调用方法：传入包含所有路径的 vector<string>， 或直接列出每个路径，最多支持4个，以下大多API都支持这两种方式。"
+msgstr ""
+
+#: ../../flume/core.rst:687
+msgid ""
+"组成逻辑计划时会在 Global Scope 中创建一个 Scope 和一个 LoadNode ，同时使用 ``By<Loader>()`` "
+"方法指定具体使用的 Loader （可自定义）， ``As<Objector>()`` 方法指定 Objector "
+"（可自定义），表示本节点处理完成后传输给下游节点的数据格式。"
+msgstr ""
+
+#: ../../flume/core.rst:690
+msgid "Sink"
+msgstr ""
+
+#: ../../flume/core.rst:691
+msgid "用于将结果写入目标路径，调用时要指定写入时使用的Sinker（可自定义）和目的路径。"
+msgstr ""
+
+#: ../../flume/core.rst:694
+msgid "Process"
+msgstr ""
+
+#: ../../flume/core.rst:695
+msgid "具体的数据处理逻辑，用户可自己实现此方法。需要指定所属Scope，以及数据来源的节点。"
+msgstr ""
+
+#: ../../flume/core.rst:698
+msgid "Union"
+msgstr ""
+
+#: ../../flume/core.rst:699
+msgid "合并多条数据流, 用户只能控制使用的Objector, 合并操作由框架保证。"
+msgstr ""
+
+#: ../../flume/core.rst:702
+msgid "Shuffle"
+msgstr ""
+
+#: ../../flume/core.rst:703
+msgid "Shuffle节点, 新建一个scope, 存放为每一个来源节点创建的shuffle node。"
+msgstr ""
+
+#: ../../flume/core.rst:705
+msgid ""
+"shuffle node 可以通过 ``MatchAny() MatchBy() DistributeAll()`` "
+"等方法设置不同的shuffle方式，需要指定KeyReader。"
+msgstr ""
+
+#: ../../flume/core.rst:708
+msgid "ToProtoMessage"
+msgstr ""
+
+#: ../../flume/core.rst:709
+msgid "将一个节点的相关信息写入pb的message，方便作为执行计划传递给runtime。"
+msgstr ""
+
+#: ../../flume/core.rst:712
+msgid "RunLocally"
+msgstr ""
+
+#: ../../flume/core.rst:713
+msgid "本地执行逻辑计划。"
+msgstr ""
+
+#: ../../flume/core.rst:716
+msgid "Run"
+msgstr ""
+
+#: ../../flume/core.rst:717
+msgid "远程模式执行逻辑计划，同时指定执行后端和运行资源。"
+msgstr ""
+
+#: ../../flume/executor.rst:3
+msgid "算子执行框架"
+msgstr ""
+
+#: ../../flume/executor.rst:5
+msgid ""
+"本章描述Flume-Runtime如何把各个用户算子串联在一起, 相关代码在 flume/runtime 目录下. 关于算子及其逻辑组织关系, "
+"参见  :doc:`core`"
+msgstr ""
+
+#: ../../flume/executor.rst:10
+msgid "基本类型"
+msgstr ""
+
+#: ../../flume/executor.rst:12
+msgid "**Executor** 是驱动用户算子的最小执行单位. 其接口定义如下:"
+msgstr ""
+
+#: ../../flume/executor.rst:36
+msgid "在Executor接口中出现的 **Source** 代表数据源, 其接口定义如下:"
+msgstr ""
+
+#: ../../flume/executor.rst:82
+msgid "串联执行模型"
+msgstr ""
+
+#: ../../flume/executor.rst:84
+msgid ""
+"在 :ref:`ref-to-processor` 一节中, 我们给出了个算子串联的例子. 对于这种模型, "
+"下图展示了Executor如何处理这种情形:"
+msgstr ""
+
+#: ../../flume/executor.rst:90
+msgid ""
+"假设这些Processor都是以流式处理的方式串联在一起, 如果在Processor A中产生了一条记录, Executor "
+"A会将这条记录依次发送给下游的处理节点. 调用关系如下:"
+msgstr ""
+
+#: ../../flume/executor.rst:93
+msgid "ProcessorA->Process"
+msgstr ""
+
+#: ../../flume/executor.rst:95
+msgid "EmitterA->Emit"
+msgstr ""
+
+#: ../../flume/executor.rst:97
+msgid "ExecutorB->Receive"
+msgstr ""
+
+#: ../../flume/executor.rst:99
+msgid "ProcessorB->Process"
+msgstr ""
+
+#: ../../flume/executor.rst:101
+msgid "EmitterB->Emit"
+msgstr ""
+
+#: ../../flume/executor.rst:103
+msgid "ExecutorD->Receive"
+msgstr ""
+
+#: ../../flume/executor.rst:104 ../../flume/executor.rst:111
+#: ../../flume/executor.rst:134 ../../flume/executor.rst:140
+#: ../../flume/executor.rst:144 ../../flume/executor.rst:148
+#: ../../flume/executor.rst:152 ../../flume/executor.rst:168
+#: ../../flume/executor.rst:180
+msgid "..."
+msgstr ""
+
+#: ../../flume/executor.rst:106
+msgid "ExecutorC->Receive"
+msgstr ""
+
+#: ../../flume/executor.rst:108
+msgid "ProcessorC->Process"
+msgstr ""
+
+#: ../../flume/executor.rst:110
+msgid "EmitterC->Emit"
+msgstr ""
+
+#: ../../flume/executor.rst:115
+msgid "flume/runtime/common/sub_executor_manager.h 负责在各个Executor之间建立数据依赖关系"
+msgstr ""
+
+#: ../../flume/executor.rst:119
+msgid "嵌套执行模型"
+msgstr ""
+
+#: ../../flume/executor.rst:121
+msgid ""
+"在 :ref:`ref-to-scope` 一节中, 我们展示了Flume如何表示嵌套的分组及嵌套分组中的计算逻辑. "
+"下图展示了Executor如何执行这类带有嵌套'子图'的逻辑计划:"
+msgstr ""
+
+#: ../../flume/executor.rst:127
+msgid ""
+"对于蓝色的ShuffleExecutor来说, 它有两个子Executor, 一个是ProcessorExecutor, 用来执行求和算子, "
+"另一个是嵌套的ShuffleExecutor, 用来执行嵌套分组. 和一般的Executor一样, "
+"ShuffleExecutor从外部Source获得数据, 当读完全部一组数据后, "
+"ShuffleExecutor会依据用户提供的KeyReader将所有的数据分组, 并依次把每一组数据交给子Executor处理. "
+"对于某一组数据而言, ShuffleExecutor的调用逻辑如下:"
+msgstr ""
+
+#: ../../flume/executor.rst:133 ../../flume/executor.rst:172
+msgid "FatherExecutor->Receive"
+msgstr ""
+
+#: ../../flume/executor.rst:135 ../../flume/executor.rst:173
+msgid "FatherExecutor->ReceiveDone"
+msgstr ""
+
+#: ../../flume/executor.rst:137
+msgid "FatherExecutor->GroupDatas"
+msgstr ""
+
+#: ../../flume/executor.rst:139
+msgid "ChildExecutor1->BeginGroup first-day"
+msgstr ""
+
+#: ../../flume/executor.rst:141
+msgid "ChildExecutorN->Begingroup first-day"
+msgstr ""
+
+#: ../../flume/executor.rst:143 ../../flume/executor.rst:179
+msgid "ChildExecutorN->FinishGroup"
+msgstr ""
+
+#: ../../flume/executor.rst:145 ../../flume/executor.rst:181
+msgid "ChildExecutor1->FinishGroup"
+msgstr ""
+
+#: ../../flume/executor.rst:147
+msgid "FatherSource->DispatchData"
+msgstr ""
+
+#: ../../flume/executor.rst:149
+msgid "FatherSource->NotifyDone"
+msgstr ""
+
+#: ../../flume/executor.rst:151
+msgid "ChildExecutor1->BeginGroup second-day"
+msgstr ""
+
+#: ../../flume/executor.rst:154
+msgid ""
+"从前面的定义中我们看到, Executor接口中有BeginGroup和FinishGroup两个方法, 该方法由其父Executor调用, "
+"用以控制每组数据的执行流程. BeginGroup用来通知执行流进入到一个新的Scope, 所有上游数据依赖都开始处理该Scope上的一个分组. "
+"FinishGroup通知执行流即将退出对应的Scope, 每个Executor都只处理某个Scope上的数据, "
+"当相应Scope上的FinishGroup被调用时, 以为着所有下游数据依赖都开始处理该组数据, 这是Executor就开始准备接收上游数据, "
+"并将处理后的数据发往下游."
+msgstr ""
+
+#: ../../flume/executor.rst:161
+msgid ""
+"按照flume-core的接口定义, 每个算子不仅需要拿到其所在Scope的分组信息, 还需要拿到所有包含Scope的分组信息, "
+"故父Executor还需向子Executor透传高层Scope的分组信息. 调用关系如下:"
+msgstr ""
+
+#: ../../flume/executor.rst:165
+msgid "FatherExecutor->BeginGroup first-week"
+msgstr ""
+
+#: ../../flume/executor.rst:167
+msgid "ChildExecutor1->BeginGroup first-week"
+msgstr ""
+
+#: ../../flume/executor.rst:169
+msgid "ChildExecutorN->BeginGroup first-week"
+msgstr ""
+
+#: ../../flume/executor.rst:171 ../../flume/executor.rst:177
+msgid "FatherExecutor->FinishGroup"
+msgstr ""
+
+#: ../../flume/executor.rst:175
+msgid "FatherExecutor->Run"
+msgstr ""
+
+#: ../../flume/executor.rst:183
+msgid ""
+"从上面的讲述中, 我们可以看到所有的Executor按照父子关系组织成一棵树, 同时所有的数据源被串联成Dag. 关于这一模型, 也可参见 "
+":doc:`planner`"
+msgstr ""
+
+#: ../../flume/executor.rst:188
+msgid "示例场景"
+msgstr ""
+
+#: ../../flume/executor.rst:190
+msgid ""
+"假设我们在分布式数据库中存储了两组日志, 分别是网站A和网站B的登录日志. 网站A中以用户名为ID进行登录, 网站B以邮箱地址为ID进行登录, "
+"两组日志总都有IP信息. 我们希望汇总一下每个IP有多少个独立的登录ID. 下面的SQL可以完成该统计:"
+msgstr ""
+
+#: ../../flume/executor.rst:201
+msgid "这个SQL可以翻译成下图所示的逻辑执行计划:"
+msgstr ""
+
+#: ../../flume/executor.rst:206
+msgid ""
+"上图中, 绿色节点是LOAD_NODE, 蓝色节点是PROCESS_NODE, 黄色节点是SHUFFLE_NODE, "
+"红色节点是SINK_NODE. 下面的图片反映了如何在本地执行该计划:"
+msgstr ""
+
+#: ../../flume/executor.rst:212
+msgid "上图中方形节点代表Executor, 蓝线标识了父子关系, 圆形节点代表数据源/用户算子, 红线标识数据流. 下面是远程执行时的Executor树:"
+msgstr ""
+
+#: ../../flume/executor.rst:218
+msgid "上图省略了部分节点, 只画出了Executor之间的关系."
+msgstr ""
+
+#: ../../flume/flumecpp.rst:3
+msgid "Flume C++"
+msgstr ""
+
+#: ../../flume/flumecpp.rst:5
+msgid ""
+"Flume C++是基于Flume-Core开发的一种方便用户直接使用的C++泛型接口. Flume C++的设计参考了google的 "
+"`flumejava "
+"<http://pages.cs.wisc.edu/~akella/CS838/F12/838-CloudPapers/FlumeJava.pdf>`_."
+msgstr ""
+
+#: ../../flume/flumecpp.rst:10
+msgid "基本数据模型和接口"
+msgstr ""
+
+#: ../../flume/flumecpp.rst:12
+msgid ""
+"Flume C++的基本类型是PCollection<T>, 该类型抽象了Map阶段的输入流, 即按行组织的数据流, 每一行的类型都是T. "
+"对于一个PCollection<T>对象, 我们不提供直接访问其行数据的接口, 相反我们提供了ParallelDo接口, "
+"用户可以将自定义的functor传入, 对PCollection<T>中的每一行应用该functor. 下面的伪代码反映了其使用方式."
+msgstr ""
+
+#: ../../flume/flumecpp.rst:32
+msgid ""
+"从PCollection<T>衍生出来的类型是PTable<K, V>, 实际上PTable<K, V>继承自PCollection< "
+"Pair<K, V> >. 返回类型为Pair<K, V>的functor, 可以将PCollection<T>转化为PTable<K, "
+"V>.在MR模型中, PTable<K, V>实际上代表MR中Mapper的输出结果. 下面的伪代码给出了一种使用方法."
+msgstr ""
+
+#: ../../flume/flumecpp.rst:47
+msgid ""
+"PTable<K, V>在PCollection提供的接口之外, 还提供了GroupByKey接口, 这个接口会将PTable<K, "
+"V>转化为PTable<K, Collection<V>>. 代码示例如下:"
+msgstr ""
+
+#: ../../flume/flumecpp.rst:54
+msgid ""
+"这一转换过程可以类比为MapReduce模型中的Shuffle过程, 在这个过程中得到的PTable<K, "
+"Collection<V>>是Flume C++的第三种基础类型. PTable<K, Collection<V>>代表了被分组后的数据, "
+"对于这类数据, 我们可以进行Combine操作. 代码示例:"
+msgstr ""
+
+#: ../../flume/flumecpp.rst:68
+msgid ""
+"上面的用户代码展示了一个WordCount程序的书写流程. 事实上, Flume "
+"C++所有的数据操作都可以被抽象成在这几种基本数据类型之间的转换. 下面的图展示了转换的路径:"
+msgstr ""
+
+#: ../../flume/flumecpp.rst:76
+msgid "扩展接口"
+msgstr ""
+
+#: ../../flume/flumecpp.rst:78
+msgid ""
+"上一节中, 我们展示了模仿FlumeJava提供的Flume C++基本接口. 可以看到, 该接口基本是基于MapReduce模型进行设计. "
+"然而, 从 :doc:`core` 的设计中我们可以看到, Flume的底层抽象实际上具有比MR模型更强的表达能力. "
+"我们可以从以下几个方面对Flume C++进行扩展:"
+msgstr ""
+
+#: ../../flume/flumecpp.rst:82
+msgid ""
+"提供更加丰富的接口. 实际上, FlumeJava中的PCollection和 `Spark "
+"<http://spark.apache.org/docs/latest/scala-programming-guide.html>`_ "
+"中的RDD概念有很大相似性. 而在 :doc:`core` 的设计中, 每一个逻辑计划节点只有一路输出, "
+"因此该逻辑节点实际上可以被看做一个PCollection(RDD). 因此, Spark中为RDD提供的操作方法, 也都可以较容易的基于 "
+":doc:`core` 实现."
+msgstr ""
+
+#: ../../flume/flumecpp.rst:88
+msgid ""
+"提供嵌套分组的PTable. 在FlumeJava的论文中, PTable<K, V>是用来描述带有分组信息的集合, PTable<K, "
+"Collection<V>>用来描述分组后的集合. 我们可以通过提供PTable<K1, K2, V>这样的集合, 使得Flume "
+"C++同样具有描述嵌套分组的能力. 这样, 用户就可以把同一个算子应用到不同的分组作用域中, 提高代码复用能力. 该机制经过扩展, "
+"也可能具备支持实时计算的能力, 如:"
+msgstr ""
+
+#: ../../flume/flumecpp.rst:104
+msgid ""
+"实现PObject和Accumulator接口. PObject是FlumeJava中的概念, 它提供了一种方便的手段, "
+"使得可以从程序中直接获得分布式计算的结果. Accumulator是Spark中的概念, 它类似于MapReduce中的Counter, "
+"只不过Accumulator可以被绑定到一个程序变量上, 在分布式计算结束后可以从程序中直接访问到. 这两种机制的加入, "
+"可以方便多轮迭代计算的开发."
+msgstr ""
+
+#: ../../flume/flumecpp.rst:112
+msgid "API Reference"
+msgstr ""
+
+#: ../../flume/flumecpp.rst:114
+msgid "待补充"
+msgstr ""
+
+#: ../../flume/index.rst:2
+msgid "欢迎来到Flume项目"
+msgstr ""
+
+#: ../../flume/index.rst:4
+msgid ""
+"Flume是百度研发的分布式数据流计算框架, 目标是提供比MapReduce更加灵活易用的计算模型。 "
+"它是Bigflow和Wing（百度内部一个分布式SQL项目）的底层优化和执行引擎。"
+msgstr ""
+
+#: ../../flume/index.rst:7
+msgid "它设计之初部分参考了Google的FlumeJava，故得此名。"
+msgstr ""
+
+#: ../../flume/index.rst:10
+msgid "用户文档"
+msgstr ""
+
+#: ../../flume/index.rst:22
+msgid "开发者文档"
+msgstr ""
+
+#: ../../flume/index.rst:36
+msgid "索引与图表"
+msgstr ""
+
+#: ../../flume/index.rst:38
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../flume/index.rst:39
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ../../flume/index.rst:40
+msgid ":ref:`search`"
+msgstr ""
+
+#: ../../flume/overview.rst:3
+msgid "系统概览"
+msgstr ""
+
+#: ../../flume/overview.rst:5
+msgid ""
+"Flume是百度INF和BDG团队联合开发的分布式数据流计算框架, 目标是提供比MapReduce更加灵活易用的计算模型. "
+"众所周知，MapReduce 模型将数据处理分为 Map/Shuffle/Reduce 三个阶段, 降低了海量数据处理的开发难度, "
+"对于普通的计算能够较好的支持. 但是在现实的数据处理中, 复杂的计算逻辑往往需要多轮 MapReduce, 这往往导致高昂的开发和运行成本."
+msgstr ""
+
+#: ../../flume/overview.rst:10
+msgid ""
+"Flume的设计参考了Google的FlumeJava和Apache的Spark, 将分布式计算看成是分布式数据集在算子上的变换. "
+"这一抽象不显式指定分布式计算的轮数/方式, 而是更贴近描述用户的逻辑. Flume项目分成三个层次: Flume-Core，Flume-Api"
+"和Flume-Runtime. 如下图所示:"
+msgstr ""
+
+#: ../../flume/overview.rst:19
+msgid "Flume-Api"
+msgstr ""
+
+#: ../../flume/overview.rst:21
+msgid "Flume-Api层的目标是在Flume-Core的接口上提供面向终端用户的易用性接口, 它主要完成三方面的内容:"
+msgstr ""
+
+#: ../../flume/overview.rst:23
+msgid "提供强类型的数据集抽象"
+msgstr ""
+
+#: ../../flume/overview.rst:24
+msgid "提供易用的数据集操作接口"
+msgstr ""
+
+#: ../../flume/overview.rst:25
+msgid "根据类型信息, 自动推导生成Flume-Core中的部分算子, 简化开发代价"
+msgstr ""
+
+#: ../../flume/overview.rst:27
+msgid ""
+"Flume可以根据不同的需求和应用领域提供多套Api, 比如类似flumejava的Api和类似spark的Api, 都可以基于Flume-"
+"Core开发, 可以显著降低开发成本. 从这个角度看,INF的Bigflow和BDG的 Wing项目都是一种Flume-Api."
+msgstr ""
+
+#: ../../flume/overview.rst:35
+msgid ""
+"Flume-Core是Flume的表示层, 提供了对分布式数据计算的抽象表示, 这一表示被称为 **逻辑执行计划** , "
+"该逻辑执行计划由分布式计算操作及其绑定算子组成. Flume-Core提供了一套接口来生成逻辑执行计划, "
+"并可以在分布式环境下反射并执行用户的算子."
+msgstr ""
+
+#: ../../flume/overview.rst:39
+msgid "详见 :doc:`core`"
+msgstr ""
+
+#: ../../flume/overview.rst:43
+msgid "Flume-Runtime"
+msgstr ""
+
+#: ../../flume/overview.rst:45
+msgid ""
+"Flume-Runtime是Flume的执行层, 其主要设计目标是提供一套通用的算子执行和优化机制, 可以使得用Flume-"
+"Core描述的逻辑执行计划能够在各种物理执行引擎上工作. 目前Flume-Runtime支持本地执行, 和在DAGMR上运行, "
+"将来Flume还会扩展到更多的平台上(后注：现已支持Spark和公司内部的Gemini）. 从这个角度看, Flume-"
+"Runtime本质上是一个通用的Worker运行时库."
+msgstr ""
+
+#: ../../flume/overview.rst:51
+msgid "详见"
+msgstr ""
+
+#: ../../flume/overview.rst:53
+msgid ":doc:`backend`"
+msgstr ""
+
+#: ../../flume/overview.rst:54
+msgid ":doc:`executor`"
+msgstr ""
+
+#: ../../flume/overview.rst:55
+msgid ":doc:`planner`"
+msgstr ""
+
+#: ../../flume/overview.rst:59
+msgid "参考文献"
+msgstr ""
+
+#: ../../flume/overview.rst:61
+msgid ""
+"`Google FlumeJava "
+"<http://pages.cs.wisc.edu/~akella/CS838/F12/838-CloudPapers/FlumeJava.pdf>`_"
+msgstr ""
+
+#: ../../flume/overview.rst:62
+msgid "`Apache Crunch <http://crunch.apache.org/>`_"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:3
+msgid "AddTaskUnitPass"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:7
+msgid ""
+"在plan被创建起来之后中, plan中的节点会被直接连接在ROOT节点下, 需要在ROOT节点下创建TASK节点, "
+"使得plan可以按照TASK为单位执行。AddTaskUnitPass的作用就是创建TASK节点。"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:12
+#: ../../flume/passes/build_aggregator_pass.rst:16
+#: ../../flume/passes/build_dummy_executor_pass.rst:15
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:22
+#: ../../flume/passes/build_logical_executor_pass.rst:18
+#: ../../flume/passes/build_map_input_pass.rst:12
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:11
+#: ../../flume/passes/build_partial_executor_pass.rst:15
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:11
+#: ../../flume/passes/build_physical_plan_pass.rst:11
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:18
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:21
+#: ../../flume/passes/build_task_executor_pass.rst:12
+#: ../../flume/passes/load_logical_plan_pass.rst:11
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:13
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:11
+#: ../../flume/passes/merge_single_node_pass.rst:16
+#: ../../flume/passes/merge_task_pass.rst:37
+#: ../../flume/passes/promote_global_partial_node_pass.rst:11
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:11
+#: ../../flume/passes/promote_union_downstream_pass.rst:11
+#: ../../flume/passes/remove_empty_unit_pass.rst:12
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:12
+#: ../../flume/passes/remove_useless_union_pass.rst:12
+#: ../../flume/passes/split_shuffle_pass.rst:11
+msgid "**PASS**"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:14
+msgid "`LoadLogicalPlanPass <load_logical_plan_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:15
+msgid "`RemoveUselessUnionPass <remove_useless_union_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:16
+msgid "`RemoveUnsinkedUnitPass <remove_unsinked_unit_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:23
+#: ../../flume/passes/build_aggregator_pass.rst:25
+#: ../../flume/passes/build_dummy_executor_pass.rst:24
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:31
+#: ../../flume/passes/build_logical_executor_pass.rst:27
+#: ../../flume/passes/build_map_input_pass.rst:24
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:20
+#: ../../flume/passes/build_partial_executor_pass.rst:24
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:20
+#: ../../flume/passes/build_physical_plan_pass.rst:21
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:27
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:30
+#: ../../flume/passes/build_task_executor_pass.rst:28
+#: ../../flume/passes/load_logical_plan_pass.rst:20
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:23
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:20
+#: ../../flume/passes/merge_single_node_pass.rst:25
+#: ../../flume/passes/merge_task_pass.rst:42
+#: ../../flume/passes/promote_global_partial_node_pass.rst:20
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:21
+#: ../../flume/passes/promote_union_downstream_pass.rst:20
+#: ../../flume/passes/remove_empty_unit_pass.rst:21
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:21
+#: ../../flume/passes/remove_useless_union_pass.rst:21
+#: ../../flume/passes/split_shuffle_pass.rst:20
+msgid "3. 图示说明"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:24
+#: ../../flume/passes/build_aggregator_pass.rst:26
+#: ../../flume/passes/build_dummy_executor_pass.rst:25
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:32
+#: ../../flume/passes/build_logical_executor_pass.rst:28
+#: ../../flume/passes/build_map_input_pass.rst:25
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:21
+#: ../../flume/passes/build_partial_executor_pass.rst:25
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:21
+#: ../../flume/passes/build_physical_plan_pass.rst:22
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:28
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:31
+#: ../../flume/passes/build_task_executor_pass.rst:29
+#: ../../flume/passes/load_logical_plan_pass.rst:21
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:24
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:21
+#: ../../flume/passes/merge_single_node_pass.rst:26
+#: ../../flume/passes/merge_task_pass.rst:43
+#: ../../flume/passes/promote_global_partial_node_pass.rst:21
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:22
+#: ../../flume/passes/promote_union_downstream_pass.rst:21
+#: ../../flume/passes/remove_empty_unit_pass.rst:22
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:22
+#: ../../flume/passes/remove_useless_union_pass.rst:22
+#: ../../flume/passes/split_shuffle_pass.rst:21
+msgid "**plan图（运行前）**"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:29
+msgid "上图中, 右侧三个DEFAULT节点直接被连接在ROOT节点之下, 需要在三者与ROOT节点之间创建TASK节点。"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:31
+#: ../../flume/passes/build_aggregator_pass.rst:33
+#: ../../flume/passes/build_dummy_executor_pass.rst:29
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:36
+#: ../../flume/passes/build_logical_executor_pass.rst:32
+#: ../../flume/passes/build_map_input_pass.rst:32
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:25
+#: ../../flume/passes/build_partial_executor_pass.rst:29
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:25
+#: ../../flume/passes/build_physical_plan_pass.rst:26
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:35
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:39
+#: ../../flume/passes/build_task_executor_pass.rst:33
+#: ../../flume/passes/load_logical_plan_pass.rst:25
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:32
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:35
+#: ../../flume/passes/merge_single_node_pass.rst:34
+#: ../../flume/passes/merge_task_pass.rst:48
+#: ../../flume/passes/promote_global_partial_node_pass.rst:35
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:36
+#: ../../flume/passes/promote_union_downstream_pass.rst:41
+#: ../../flume/passes/remove_empty_unit_pass.rst:34
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:30
+#: ../../flume/passes/remove_useless_union_pass.rst:30
+#: ../../flume/passes/split_shuffle_pass.rst:28
+msgid "**plan图（运行后）**"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:36
+msgid "对plan应用了RemoveUnsinkedUnitPass之后, DEFAULT节点与ROOT节点之间创建了TASK节点。"
+msgstr ""
+
+#: ../../flume/passes/add_task_unit_pass.rst:39
+#: ../../flume/passes/build_aggregator_pass.rst:41
+#: ../../flume/passes/build_dummy_executor_pass.rst:34
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:41
+#: ../../flume/passes/build_logical_executor_pass.rst:37
+#: ../../flume/passes/build_map_input_pass.rst:40
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:30
+#: ../../flume/passes/build_partial_executor_pass.rst:34
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:30
+#: ../../flume/passes/build_physical_plan_pass.rst:31
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:44
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:48
+#: ../../flume/passes/build_task_executor_pass.rst:38
+#: ../../flume/passes/load_logical_plan_pass.rst:33
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:41
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:43
+#: ../../flume/passes/merge_single_node_pass.rst:43
+#: ../../flume/passes/merge_task_pass.rst:53
+#: ../../flume/passes/promote_global_partial_node_pass.rst:43
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:44
+#: ../../flume/passes/promote_union_downstream_pass.rst:49
+#: ../../flume/passes/remove_empty_unit_pass.rst:42
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:38
+#: ../../flume/passes/remove_useless_union_pass.rst:38
+#: ../../flume/passes/split_shuffle_pass.rst:36
+msgid "`返回 <../plan_pass.html#pass>`_"
+msgstr ""
+
+#: ../../flume/passes/build_aggregator_pass.rst:3
+msgid "BuildAggregatorPass"
+msgstr ""
+
+#: ../../flume/passes/build_aggregator_pass.rst:7
+msgid "BuildAggregatorPass的作用是将满足下列条件的LOCAL_SHUFFLE节点转变成为Aggregator节点, 其中条件如下："
+msgstr ""
+
+#: ../../flume/passes/build_aggregator_pass.rst:9
+msgid "unit为LOCAL_SHUFFLE"
+msgstr ""
+
+#: ../../flume/passes/build_aggregator_pass.rst:10
+msgid "unit的父节点不为TASK节点"
+msgstr ""
+
+#: ../../flume/passes/build_aggregator_pass.rst:11
+msgid "unit本身不要求排序"
+msgstr ""
+
+#: ../../flume/passes/build_aggregator_pass.rst:12
+msgid "unit的孩子节点中至少包含一个PROCESS节点"
+msgstr ""
+
+#: ../../flume/passes/build_aggregator_pass.rst:18
+#: ../../flume/passes/build_dummy_executor_pass.rst:17
+msgid "`BuildShuffleWriterReaderPass <build_shuffle_writer_reader_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_aggregator_pass.rst:31
+msgid "上图中, 计划中包含一个满足条件的LOCAL_SHUFFLE节点。"
+msgstr ""
+
+#: ../../flume/passes/build_aggregator_pass.rst:38
+msgid "对plan应用了BuildAggregatorPass之后, 满足条件的LOCAL_SHUFFLE节点被修改成为AGGREGATE。"
+msgstr ""
+
+#: ../../flume/passes/build_dummy_executor_pass.rst:3
+msgid "BuildDummyExecutorPass"
+msgstr ""
+
+#: ../../flume/passes/build_dummy_executor_pass.rst:7
+msgid ""
+"BuildDummyExecutorPass的作用是将所有被标记成DUMMY的节点修改成为DUMMY节点, 并且为其创建Executor。 "
+"关于DUMMY节点的创建, 具体请参考"
+msgstr ""
+
+#: ../../flume/passes/build_dummy_executor_pass.rst:10
+#: ../../flume/passes/promote_global_partial_node_pass.rst:13
+msgid "`PromoteUnionDownstreamPass <promote_union_downstream_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_dummy_executor_pass.rst:11
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:13
+msgid "`PromoteGlobalParitalNodePass <promote_global_partial_node_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:3
+msgid "BuildLocalShuffleExecutorPass"
+msgstr ""
+
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:7
+msgid ""
+"BuildLocalShuffleExecutorPass的作用是标记LOCAL_SHUFFLE, "
+"并且为LOCAL_SHUFFLE节点创建Executor。主要 过程包含两个步骤："
+msgstr ""
+
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:10
+msgid "第一个步骤是标记符合条件的DEFAULT节点, 将其标记成LOCAL_SHUFFLE节点, 标记条件 如下："
+msgstr ""
+
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:13
+msgid "unit为DEFAULT节点"
+msgstr ""
+
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:14
+msgid "unit包含PbScope"
+msgstr ""
+
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:15
+msgid "unit只包含类型为SHUFFLE的叶节点"
+msgstr ""
+
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:17
+msgid "第二个步骤是找到符合以上条件的节点, 修改成LOCAL_SHUFFLE, 并创建相应的Executor。"
+msgstr ""
+
+#: ../../flume/passes/build_local_shuffle_executor_pass.rst:24
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:13
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:13
+#: ../../flume/passes/build_task_executor_pass.rst:17
+msgid "`BuildLogicalExecutorPass <build_logical_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_logical_executor_pass.rst:3
+msgid "BuildLogicalExecutorPass"
+msgstr ""
+
+#: ../../flume/passes/build_logical_executor_pass.rst:7
+msgid "BuildLogicalExecutorPass的作用是为LOGICAL节点创建Executor, LOGICAL的条家年如下："
+msgstr ""
+
+#: ../../flume/passes/build_logical_executor_pass.rst:9
+msgid "unit是叶子节点"
+msgstr ""
+
+#: ../../flume/passes/build_logical_executor_pass.rst:10
+msgid "unit的父节点不是LOGICAL节点"
+msgstr ""
+
+#: ../../flume/passes/build_logical_executor_pass.rst:11
+msgid ""
+"unit不包含GlobalPartialMerged标记, 具体请参考 `MergePromoteGlobalPartialPass "
+"<merge_promote_global_partial_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_logical_executor_pass.rst:12
+msgid "unit的类型必须是LOAD, SINK, UNION, PROCESS中的一种"
+msgstr ""
+
+#: ../../flume/passes/build_logical_executor_pass.rst:13
+msgid ""
+"unit没有ExecuteByFather标记, 具体请参考 `BuildMapInputPass "
+"<build_map_input_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_logical_executor_pass.rst:20
+#: ../../flume/passes/build_task_executor_pass.rst:16
+msgid "`BuildPartialExecutorPass <build_partial_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_logical_executor_pass.rst:24
+#: ../../flume/passes/build_task_executor_pass.rst:25
+msgid "`ScopeLevelAnalysis <../analysises/scope_level_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_map_input_pass.rst:3
+msgid "BuildMapInputPass"
+msgstr ""
+
+#: ../../flume/passes/build_map_input_pass.rst:7
+msgid ""
+"在plan中, 有一些节点没有输入, 这些节点为LOAD节点, BuildMapInputPass的作用就是创建Map Input节点, "
+"同时创建相应的Executor。"
+msgstr ""
+
+#: ../../flume/passes/build_map_input_pass.rst:14
+msgid "`RemoveEmptyUnitPass <remove_empty_unit_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_map_input_pass.rst:18
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:24
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:27
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:19
+#: ../../flume/passes/merge_single_node_pass.rst:22
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:17
+msgid "`DataFlowAnalysis <../analysises/data_flow_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_map_input_pass.rst:19
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:20
+msgid "`ScopeBasicInfoAnalysis <../analysises/scope_basic_info_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_map_input_pass.rst:20
+#: ../../flume/passes/build_physical_plan_pass.rst:17
+msgid "`TaskIndexAnalysis <../analysises/task_index_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_map_input_pass.rst:21
+msgid "`ReduceNumberAnalysis <../analysises/reduce_number_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_map_input_pass.rst:30
+msgid "上图中, 由于输入为LOAD节点, LOAD节点所属的SCOPE, 需要变成MAP_INPUT类型"
+msgstr ""
+
+#: ../../flume/passes/build_map_input_pass.rst:37
+msgid "运行BuildMapInput之后, LOAD节点的父节点变成MAP_INPUT类型。"
+msgstr ""
+
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:3
+msgid "BuildMergeShuffleExecutorPass"
+msgstr ""
+
+#: ../../flume/passes/build_merge_shuffle_executor_pass.rst:7
+msgid "BuildLogicalExecutorPass的作用是为MERGE_SHUFFLE节点创建Executor, 同时更新Executor信息。"
+msgstr ""
+
+#: ../../flume/passes/build_partial_executor_pass.rst:3
+msgid "BuildPartialExecutorPass"
+msgstr ""
+
+#: ../../flume/passes/build_partial_executor_pass.rst:7
+msgid "BuildPartialExecutorPass的作用是为PROCESS节点创建Executor, PROCESS节点条件如下："
+msgstr ""
+
+#: ../../flume/passes/build_partial_executor_pass.rst:9
+msgid "unit必须是PROCESS节点"
+msgstr ""
+
+#: ../../flume/passes/build_partial_executor_pass.rst:10
+msgid ""
+"unit必须具有GlobalPartialMerged标记, 具体请参考 `MergePromoteGlobalPartialPass "
+"<merge_promote_global_partial_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_partial_executor_pass.rst:11
+msgid "unit的父节点不能是PARTIAL_PROCESSOR节点。"
+msgstr ""
+
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:3
+msgid "BuildPartialShuffleExecutorPass"
+msgstr ""
+
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:7
+msgid "BuildLogicalExecutorPass的作用是为PARTIAL_SHUFFLE节点创建Executor, 同时更新Executor信息。"
+msgstr ""
+
+#: ../../flume/passes/build_partial_shuffle_executor_pass.rst:17
+#: ../../flume/passes/promote_global_partial_node_pass.rst:17
+#: ../../flume/passes/promote_union_downstream_pass.rst:17
+msgid "`PartialNodeAnalysis <../analysises/partial_node_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_physical_plan_pass.rst:3
+msgid "BuildPhysicalPlanPass"
+msgstr ""
+
+#: ../../flume/passes/build_physical_plan_pass.rst:7
+msgid "BuildPhysicalPlanPass的作用是根据plan的所有信息，生成相应的PbPhysical。"
+msgstr ""
+
+#: ../../flume/passes/build_physical_plan_pass.rst:13
+msgid "`BuildTaskExecutorPass <build_task_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_physical_plan_pass.rst:18
+msgid "`VertesAnalysis <../analysises/vertes_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:3
+msgid "BuildShuffleEncoderDecoderPass"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:7
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:7
+msgid ""
+"在plan中, task与task之间, 经过SplitShufflePass的拆分, "
+"将PARTIAL_SHUFFLEF分配到数据流上游的task中, 将MERGE_SHUFFLE分配到数据流下游的task中, "
+"从而利用HCE平台完成shuffle工作。在利用平台shuffle的同时, 需要给平台提供keys, "
+"ENCODER节点的作用就是在平台shuffle之前, 提供keys, 而DECODER节点的作用是在平台 完成shuffle之后, "
+"将key解析出来。"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:12
+msgid ""
+"BuildShuffleEncoderDecoderPass的作用就是在PARTIAL_SHUFFLE与MERGE_SHUFFLE之间添加ENCODER与DECODER,"
+" 添加的顺序为先添加DECODER, 再添加ENCODER, "
+"完成之后BuildShuffleEncoderDecoderPass会将被标记的SHUFFLE 节点删除。"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:20
+msgid "`BuildMapInputPass <build_map_input_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:33
+msgid "上图中, PARTIAL_SHUFFLE与MERGE_SHUFFLE分别属于两个task。"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_encoder_decoder_pass.rst:40
+msgid ""
+"运行BuildShuffleEncoderDecoderPass之后, 在task之间创建了ENCODER节点, "
+"同时在MERGE_SHUFFLE端创建了 DECODER节点。"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:3
+msgid "BuildShuffleWriterReaderPass"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:12
+msgid ""
+"同时, 需要在ENCODER端添加SHUFFLE_WRITER, 在DECODER端添加SHUFFLE_READER, "
+"SHUFFLE_WRITER主要是对数据 进行序列化, SHUFFLE_READER主要是对数据进行反序列化, "
+"从而保证数据在shuffle前与shuffle后的一致性。"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:15
+msgid ""
+"BuildShuffleEncoderDecoderPass的作用就是在PARTIAL_SHUFFLE与MERGE_SHUFFLE之间添加SHUFFLE_WRITER与"
+" SHUFFLE_READER, 添加的顺序为先添加READER, 再添加WRITER, "
+"完成之后BuildShuffleWriterReaderPass更新 SHUFFLE_WRITER与SHUFFLE_READER中的数据流信息。"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:23
+msgid ""
+"`BuildShuffleEncoderDecoderPass "
+"<build_shuffle_encoder_decoder_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:36
+msgid ""
+"上图为运行BuildShuffleEncoderDecoderPass之后的结果, 在此基础上需要添加SHUFFLE_WRITER与 "
+"SHUFFLE_READER。"
+msgstr ""
+
+#: ../../flume/passes/build_shuffle_writer_reader_pass.rst:44
+msgid ""
+"运行BuildShuffleWriterReaderPass之后, 在task之间创建了SHUFFLE_WRITER节点, "
+"同时在MERGE_SHUFFLE端 创建了SHUFFLE_READER节点。"
+msgstr ""
+
+#: ../../flume/passes/build_task_executor_pass.rst:3
+msgid "BuildTaskExecutorPass"
+msgstr ""
+
+#: ../../flume/passes/build_task_executor_pass.rst:7
+msgid ""
+"BuildTaskExecutorPass的作用是将所有TASK节点以下, 叶结点以上的中间节点所具有的Executor信息分别汇集 "
+"到各自的父节点当中。"
+msgstr ""
+
+#: ../../flume/passes/build_task_executor_pass.rst:14
+msgid "`BuildAggregatorPass <build_aggregator_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_task_executor_pass.rst:15
+msgid "`BuildDummyExecutorPass <build_dummy_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_task_executor_pass.rst:18
+msgid "`BuildLocalShuffleExecutorPass <build_local_shuffle_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_task_executor_pass.rst:19
+msgid ""
+"`BuildPartialShuffleExecutorPass "
+"<build_partial_shuffle_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_task_executor_pass.rst:20
+msgid "`BuildMergeShuffleExecutorPass <build_merge_shuffle_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/build_task_executor_pass.rst:24
+msgid ""
+"`ExecutorDependencyAnalysis "
+"<../analysises/executor_dependency_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/passes/load_logical_plan_pass.rst:3
+msgid "LoadLogicalPlanPass"
+msgstr ""
+
+#: ../../flume/passes/load_logical_plan_pass.rst:7
+msgid "LoadLogicalPlanPass的主要作用是读取PbLogicalPlan, 根据Pb的内容, 生成plan。"
+msgstr ""
+
+#: ../../flume/passes/load_logical_plan_pass.rst:23
+msgid "无图。"
+msgstr ""
+
+#: ../../flume/passes/load_logical_plan_pass.rst:30
+msgid "运行了LoadLogicalPlanPass之后, 生成的plan如上图所示。"
+msgstr ""
+
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:3
+msgid "MergeDistributeShufflePass"
+msgstr ""
+
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:7
+msgid ""
+"在plan中, 连续的两个TASK中后者具有SHUFFLE节点, 并且第二个TASK中的SHUFFLE节点类型为SEQUENCE, "
+"并且没有指定partitioner, 那么就可以考虑将给SHUFFLE节点完整的移动到第一个TASK中去。 "
+"MergeDistributeShufflePass的作用就是找到这样的TASK, 并且完成移动。"
+msgstr ""
+
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:15
+msgid "`MergeSingleNodePass <merge_single_node_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:29
+msgid ""
+"上图中, 节点task2具有一个EXTERNAL节点, 其中包含两个SHUFFLE节点, 并且节点类型为SEQUENCE, 并且没有 "
+"指定partitioner, 那么就可以将整个EXTERNAL节点上移到task1中去, 并且删除task2。"
+msgstr ""
+
+#: ../../flume/passes/merge_distribute_shuffle_pass.rst:37
+msgid ""
+"对plan应用了MergeDistributeShufflePass之后, 原先在task2中的EXTERNAL节点被整体移动到task1中去, "
+"并且 task2被删除。"
+msgstr ""
+
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:3
+msgid "MergePromoteGlobalPartialPass"
+msgstr ""
+
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:7
+#: ../../flume/passes/promote_global_partial_node_pass.rst:7
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:7
+#: ../../flume/passes/promote_union_downstream_pass.rst:7
+#: ../../flume/passes/split_shuffle_pass.rst:7
+msgid "//TODO(Dai Weiwei)"
+msgstr ""
+
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:26
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:33
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:40
+#: ../../flume/passes/promote_global_partial_node_pass.rst:26
+#: ../../flume/passes/promote_global_partial_node_pass.rst:33
+#: ../../flume/passes/promote_global_partial_node_pass.rst:40
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:27
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:34
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:41
+#: ../../flume/passes/promote_union_downstream_pass.rst:26
+#: ../../flume/passes/promote_union_downstream_pass.rst:39
+#: ../../flume/passes/promote_union_downstream_pass.rst:46
+#: ../../flume/passes/split_shuffle_pass.rst:26
+#: ../../flume/passes/split_shuffle_pass.rst:33
+msgid "//TODO(Dai Weiwei), 图示说明"
+msgstr ""
+
+#: ../../flume/passes/merge_promote_global_partial_pass.rst:28
+#: ../../flume/passes/promote_global_partial_node_pass.rst:28
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:29
+#: ../../flume/passes/promote_union_downstream_pass.rst:28
+msgid "**plan图（运行中）**"
+msgstr ""
+
+#: ../../flume/passes/merge_single_node_pass.rst:3
+msgid "MergeSingleNodePass"
+msgstr ""
+
+#: ../../flume/passes/merge_single_node_pass.rst:7
+msgid ""
+"在plan创建起来之后，有一些TASK节点孩子节点只有类型为PROCESS，UNION，SINK的节点，而这些节点完全可以 "
+"合并到同一个TASK中去，而不会对结果造成任何影响。MergeSingleNodePass的作用就是将只有PROCESS，UNION， "
+"SINK节点的TASK进行合并。"
+msgstr ""
+
+#: ../../flume/passes/merge_single_node_pass.rst:11
+msgid ""
+"在一些特殊情况下，并不是所有TASK都能被合并，譬如A->B，B->C，C->D，A->D，在A，C，D都可以合并的情 "
+"况下，若B也能合并，那么ABCD将会被全比合并到一个TASK中去，若B不能合并，则只能将CD合并。"
+msgstr ""
+
+#: ../../flume/passes/merge_single_node_pass.rst:18
+msgid "`AddTaskUnitPass <add_task_unit_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/merge_single_node_pass.rst:31
+msgid ""
+"上图中，节点task2与节点task5含有SHUFFLE节点，所以无法进行合并，而task1，task6，task3，task4只含有 "
+"PROCESS，UNION，SINK节点，所以具有合并条件。"
+msgstr ""
+
+#: ../../flume/passes/merge_single_node_pass.rst:39
+msgid ""
+"对plan应用了MergeSingleNodePass之后，执行计划中task1与task6进行了合并，task3与task4进行了合并， "
+"减少了TASK节点的数量。"
+msgstr ""
+
+#: ../../flume/passes/merge_task_pass.rst:3
+msgid "MergeTaskPass"
+msgstr ""
+
+#: ../../flume/passes/merge_task_pass.rst:7
+msgid ""
+"MergeTaskPass主要包含四个Pass, MergeConcurrencyOneTaskAnalysis, "
+"MergeDownstreamTaskAnalysis, MergeBrotherTaskAnalysis, "
+"MergeTaskActionPass。其中, 各个MergeConcurrencyOneTaskAnalysis, "
+"MergeBrotherTaskAnalysis不会处理所有符合条件的Task, 当找到一组可以合并的Task之后, 便会执行 "
+"MergeTaskActionPass操作, 由于MergeDownstreamTaskAnalysis的特殊性, 不会存在连续可合并的上下游 "
+"Task，所以Pass会找到所有可以上推的Scope，一次性完成合并操作。"
+msgstr ""
+
+#: ../../flume/passes/merge_task_pass.rst:13
+msgid ""
+"MergeConcurrencyOneTaskAnalysis主要的功能是分析所有Concurrency为1的Task, "
+"并且把能够合并的Task进行 标记, 然后由MergeTaskActionPass执行合并操作。在一些特殊情况下, 并不是所有TASK都能被合并,"
+" 譬如A->B, B->C, C->D, A->D, 在A, C, D都可以合并的情况下, 若B也能合并, "
+"那么ABCD将会被全比合并到一个TASK中去, 若B不能合并, 则只能将CD合并。"
+msgstr ""
+
+#: ../../flume/passes/merge_task_pass.rst:18
+msgid ""
+"MergeDownstreamTaskAnalysis主要的功能是分析所有可能的具有Distributed的Task, 并且将其中能够被上推到 "
+"上游Task的Scope进行标记, 然后由MergeTaskActionPass执行上推操作。"
+msgstr ""
+
+#: ../../flume/passes/merge_task_pass.rst:21
+msgid ""
+"MergeBrotherTaskAnalysis主要的功能是分析所有具有相同VertexIndex的Task, 并且标记其中能够合并的Task, "
+"然后由MergeTaskActionPass执行合并操作。"
+msgstr ""
+
+#: ../../flume/passes/merge_task_pass.rst:24
+msgid ""
+"MergeTaskActionPass主要的功能是对标记为需要合并的Task进行合并, 合并Task的同时将具有相同identity的 "
+"节点进行合并，重新计算合并后Task的Concurrency。"
+msgstr ""
+
+#: ../../flume/passes/merge_task_pass.rst:28
+msgid "整个Pass在执行的过程中, 按照以下顺序执行:"
+msgstr ""
+
+#: ../../flume/passes/merge_task_pass.rst:30
+msgid "合并所有Concurrency为1的Task进行合并分析, 若是没有可以合并的Task，执行第2步, 否则执行第1步;"
+msgstr ""
+
+#: ../../flume/passes/merge_task_pass.rst:31
+msgid "合并所有可以上推的Distributed Scope, 若是没有可以上推的Scope, 执行第3步, 否则执行第2步;"
+msgstr ""
+
+#: ../../flume/passes/merge_task_pass.rst:32
+msgid "合并所有属于同一Vertex的Task, 若是没有满足合并要求的Task, 执行结束, 否则执行第3步;"
+msgstr ""
+
+#: ../../flume/passes/promote_global_partial_node_pass.rst:3
+msgid "PromoteGlobalPartialNodePass"
+msgstr ""
+
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:3
+msgid "PromotePurePartialShufflePass"
+msgstr ""
+
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:13
+msgid "`MergePromoteGlobalPartialPass <merge_promote_global_partial_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/promote_pure_partial_shuffle_pass.rst:18
+msgid "`PromotableNodeAnalysis <../analysises/promotable_node_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/passes/promote_union_downstream_pass.rst:3
+msgid "PromoteUnionDownstreamPass"
+msgstr ""
+
+#: ../../flume/passes/promote_union_downstream_pass.rst:13
+msgid "`MergeDistributeShufflePass <merge_distribute_shuffle_pass.html>`_"
+msgstr ""
+
+#: ../../flume/passes/remove_empty_unit_pass.rst:3
+msgid "RemoveEmptyUnitPass"
+msgstr ""
+
+#: ../../flume/passes/remove_empty_unit_pass.rst:7
+msgid "在plan中, 经过优化后的plan可能会产生空的节点, 这些节点没有孩子节点。RemoveEmptyUnitPass的作用就是 删除这类节点。"
+msgstr ""
+
+#: ../../flume/passes/remove_empty_unit_pass.rst:30
+msgid ""
+"上图中, 由于plan存在无数据输出的非SINK类型节点, 所以在运行 `RemoveUnsinkedUnitPass "
+"<remove_unsinked_unit_pass.html>`_ 之后, 产生了大量的空节点。"
+msgstr ""
+
+#: ../../flume/passes/remove_empty_unit_pass.rst:39
+msgid "对plan应用了RemoveEmptyUnitPass之后, 所有空节点都被删除, 只剩下ROOT节点。"
+msgstr ""
+
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:3
+msgid "RemoveUnsinkedUnitPass"
+msgstr ""
+
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:7
+msgid ""
+"在plan中, 只有类型为SINK的叶子节点才能够作为最后一个没有输出的节点, 当没有输出的节点不是SINK类型时, "
+"说明在plan中存在无效的执行分支, 需要被删除。RemoveUnsinkedUnitPass的作用就是删除这类节点。"
+msgstr ""
+
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:27
+msgid "上图中, 右侧的执行分支的结束节点没有输出, 但是又不是类型为SINK的节点, 该分支在执行过程在不具有任何 执行的意义, 可以被删除。"
+msgstr ""
+
+#: ../../flume/passes/remove_unsinked_unit_pass.rst:35
+msgid "对plan应用了RemoveUnsinkedUnitPass之后, 执行计划中的右侧执行分支被删除。"
+msgstr ""
+
+#: ../../flume/passes/remove_useless_union_pass.rst:3
+msgid "RemoveUselessUnionPass"
+msgstr ""
+
+#: ../../flume/passes/remove_useless_union_pass.rst:7
+msgid ""
+"在plan中, 类型为UNION的节点往往只会将多路输入汇集成一路输出, 当UNION节点的输入只有一路的时候, "
+"该UNION节点就失去了UNION节点的作用, 可以被删除。RemoveUselessUnionPass的作用就是删除这类节点。"
+msgstr ""
+
+#: ../../flume/passes/remove_useless_union_pass.rst:27
+msgid ""
+"上图中, 共有4个UNION节点, 而实际上, 只有第一个UNION节点起到汇聚多路输入的作用, 后面三个UNION的输入 只有一路, "
+"所以可以被删除。"
+msgstr ""
+
+#: ../../flume/passes/remove_useless_union_pass.rst:35
+msgid "对plan应用了RemoveUselessUnionPass之后, 执行计划中多余的UNION节点被删除。"
+msgstr ""
+
+#: ../../flume/passes/split_shuffle_pass.rst:3
+msgid "SplitShufflePass"
+msgstr ""
+
+#: ../../flume/passes/split_shuffle_pass.rst:13
+msgid "`PromotePurePartialShufflePass <promote_pure_partial_shuffle_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:3
+msgid "Planner优化——Analysis与Pass说明"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:6
+msgid "1. Analysis与Pass调用"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:12 ../../flume/plan_pass.rst:16
+msgid "//TODO(Wen Xiang)"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:15
+msgid "2. Analysis与Pass依赖"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:19
+msgid "3. Analysis介绍"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:20
+msgid "`DataFlowAnalysis <analysises/data_flow_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:21
+msgid "`ScopeBasicInfoAnalysis <analysises/scope_basic_info_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:22
+msgid "`PartialNodeAnalysis <analysises/partial_node_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:23
+msgid "`PromotableNodeAnalysis <analysises/promotable_node_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:24
+msgid "`ReduceNumberAnalysis <analysises/reduce_number_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:25
+msgid "`PreparedNodeAnalysis <analysises/prepared_node_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:26
+msgid "`TaskIndexAnalysis <analysises/task_index_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:27
+msgid "`TaskFlowAnalysis <analysises/task_flow_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:28
+msgid "`VertexAnalysis <analysises/vertex_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:29
+msgid "`ScopeLevelAnalysis <analysises/scope_level_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:30
+msgid ""
+"`ExecutorDependencyAnalysis "
+"<analysises/executor_dependency_analysis.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:33
+msgid "4. Pass介绍"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:34
+msgid "`LoadLogicalPlanPass <passes/load_logical_plan_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:35
+msgid "`RemoveUnsinkedUnitPass <passes/remove_unsinked_unit_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:36
+msgid "`RemoveUselessUnionPass <passes/remove_useless_union_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:37
+msgid "`RemoveEmptyUnitPass <passes/remove_empty_unit_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:38
+msgid "`AddTaskUnitPass <passes/add_task_unit_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:39
+msgid "`MergeSingleNodePass <passes/merge_single_node_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:40
+msgid "`MergeDistributeShufflePass <passes/merge_distribute_shuffle_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:41
+msgid "`PromoteUnionDownstreamPass <passes/promote_union_downstream_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:42
+msgid ""
+"`PromoteGlobalPartialNodePass "
+"<passes/promote_global_partial_node_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:43
+msgid ""
+"`MergePromoteGlobalPartialPass "
+"<passes/merge_promote_global_partial_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:44
+msgid ""
+"`PromotePurePartialShufflePass "
+"<passes/promote_pure_partial_shuffle_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:45
+msgid "`SplitShufflePass <passes/split_shuffle_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:46
+msgid "`BuildMapInputPass <passes/build_map_input_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:47
+msgid ""
+"`BuildShuffleEncoderDecoderPass "
+"<passes/build_shuffle_encoder_decoder_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:48
+msgid ""
+"`BuildShuffleWriterReaderPass "
+"<passes/build_shuffle_writer_reader_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:49
+msgid "`BuildAggregatorPass <passes/build_aggregator_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:50
+msgid "`BuildDummyExecutorPass <passes/build_dummy_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:51
+msgid "`BuildLogicalExecutorPass <passes/build_logical_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:52
+msgid "`BuildPartialExecutorPass <passes/build_partial_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:53
+msgid ""
+"`BuildLocalShuffleExecutorPass "
+"<passes/build_local_shuffle_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:54
+msgid ""
+"`BuildPartialShuffleExecutorPass "
+"<passes/build_partial_shuffle_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:55
+msgid ""
+"`BuildMergeShuffleExecutorPass "
+"<passes/build_merge_shuffle_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:56
+msgid "`BuildTaskExecutorPass <passes/build_task_executor_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:57
+msgid "`BuildPhysicalPlanPass <passes/build_physical_plan_pass.html>`_"
+msgstr ""
+
+#: ../../flume/plan_pass.rst:58
+msgid "`MergeTaskPass <passes/merge_task_pass.html>`_"
+msgstr ""
+
+#: ../../flume/planner.rst:3
+msgid "优化器框架"
+msgstr ""
+
+#: ../../flume/planner.rst:5
+msgid ""
+"Flume的优化器框架承担两个任务, 一是把逻辑执行计划转换为物理执行计划, 二是针对不同的backend对执行流程进行优化. "
+"一般来说，每个backend都有一个对应的planner作为专用的优化器."
+msgstr ""
+
+#: ../../flume/planner.rst:10
+msgid "工作流程"
+msgstr ""
+
+#: ../../flume/planner.rst:12
+msgid "Planner的工作流程分为三个步骤:"
+msgstr ""
+
+#: ../../flume/planner.rst:14
+msgid "把逻辑执行计划翻译成flume任务的中间表示层Plan"
+msgstr ""
+
+#: ../../flume/planner.rst:15
+msgid "在Plan上对执行流程进行优化, 包括通用优化和与backend有关的专用优化"
+msgstr ""
+
+#: ../../flume/planner.rst:16
+msgid "把优化结束的Plan翻译成物理执行计划"
+msgstr ""
+
+#: ../../flume/planner.rst:18
+msgid "从这里可以看出, planner与Flume-Core和Flume-Runtime中的算子执行框架具有紧密的联系."
+msgstr ""
+
+#: ../../flume/planner.rst:21
+msgid "执行计划的中间表示"
+msgstr ""
+
+#: ../../flume/planner.rst:23
+msgid ""
+"Plan是介于逻辑执行计划和物理执行计划之间的一种表示, 这种中间表示是一棵树, 树的非叶子节点由Unit组成, 代表一个Executor, "
+"叶子节点由LeafUnit组成, 代表Executor上的一个用户算子/数据集."
+msgstr ""
+
+#: ../../flume/planner.rst:27
+msgid "所有的叶子节点之间还有一些边表示数据集之间的依赖关系, 因此Plan的描述其实是Tree + DAG."
+msgstr ""
+
+#: ../../flume/planner.rst:29
+msgid ""
+"节点之间的父子关系在Plan中称为Control, 叶子节点之间的数据依赖在Plan中称为Dependency, "
+"Plan提供了以下接口来修改节点之间的关系: ::"
+msgstr ""
+
+#: ../../flume/planner.rst:41
+msgid "Unit/LeafUnit"
+msgstr ""
+
+#: ../../flume/planner.rst:43
+msgid "Unit/LeafUnit中记录了如下信息:"
+msgstr ""
+
+#: ../../flume/planner.rst:45
+msgid "id, 仅在LeafUnit中有效, 唯一标识用户算子/数据集的输出"
+msgstr ""
+
+#: ../../flume/planner.rst:46
+msgid "type, Executor的类型, 例如DEFAULT, LOGICAL, LOCAL_SHUFFLE, EXTERNAL"
+msgstr ""
+
+#: ../../flume/planner.rst:47
+msgid "scope_level, 和Executor中的scope_level含义相同"
+msgstr ""
+
+#: ../../flume/planner.rst:48
+msgid "father, 父节点"
+msgstr ""
+
+#: ../../flume/planner.rst:49
+msgid "childs, 子节点, 包括Unit和LeafUnit"
+msgstr ""
+
+#: ../../flume/planner.rst:50
+msgid "nodes, 以当前节点为根的子树中的所有LeafUnit"
+msgstr ""
+
+#: ../../flume/planner.rst:51
+msgid "inputs, 从非nodes节点到nodes节点的所有Dependency"
+msgstr ""
+
+#: ../../flume/planner.rst:52
+msgid "outputs, 从nodes节点到非nodes节点的所有Dependency"
+msgstr ""
+
+#: ../../flume/planner.rst:53
+msgid "users, 由outputs的所有目标节点组成的集合"
+msgstr ""
+
+#: ../../flume/planner.rst:54
+msgid "needs, 由inputs的所有源节点组成的集合"
+msgstr ""
+
+#: ../../flume/planner.rst:55
+msgid "upstreams, 节点集合, 每个upstream和当前节点之间都存在一条Dependency链"
+msgstr ""
+
+#: ../../flume/planner.rst:56
+msgid "downstreams, 节点集合, 当前节点和每个downstream之间都存在一条Dependency链"
+msgstr ""
+
+#: ../../flume/planner.rst:58
+msgid "优化器可以通过Unit/LeafUnit提供的接口读取以上信息"
+msgstr ""
+
+#: ../../flume/planner.rst:61
+msgid "Plan"
+msgstr ""
+
+#: ../../flume/planner.rst:63
+msgid "除了修改节点关系的接口, Plan还提供了以下方法: ::"
+msgstr ""
+
+#: ../../flume/planner.rst:67
+msgid "根据逻辑执行计划初始化Unit/LeafUnit, 并维护节点上a的信息 ::"
+msgstr ""
+
+#: ../../flume/planner.rst:71
+msgid "获取根节点, 结合Unit中的childs信息, 可以实现对Executor-Tree的遍历 ::"
+msgstr ""
+
+#: ../../flume/planner.rst:75
+msgid "创建一个新的Unit节点, 返回的节点没有父节点, 也不属于任何Dependency ::"
+msgstr ""
+
+#: ../../flume/planner.rst:79
+msgid "获取所有Unit/LeafUnit的集合 ::"
+msgstr ""
+
+#: ../../flume/planner.rst:83
+msgid "以拓扑顺序获取所有LeafUnit的集合"
+msgstr ""
+
+#: ../../flume/planner.rst:86
+msgid "优化框架"
+msgstr ""
+
+#: ../../flume/planner.rst:88
+msgid "Flume-Runtime的优化框架由Pass和Dispatcher组成."
+msgstr ""
+
+#: ../../flume/planner.rst:91
+msgid "Pass"
+msgstr ""
+
+#: ../../flume/planner.rst:93
+msgid "所有的优化都被认为是对Plan的一种变换, 即一个优化算法的输入是一个Plan, 输出也是一个Plan. 这种变换被抽象为Pass:"
+msgstr ""
+
+#: ../../flume/planner.rst:105
+msgid "从代码层次看，planner的执行过程是通过逻辑执行计划创建Plan, 创建多个Pass对Plan进行修改, 最后生成物理执行计划."
+msgstr ""
+
+#: ../../flume/planner.rst:108
+msgid "Dispatcher"
+msgstr ""
+
+#: ../../flume/planner.rst:110
+msgid "通常来说, Pass对Plan进行的变换需要按照一定的顺序对Unit/LeafUnit进行遍历, 这种遍历模型就是Dispatcher."
+msgstr ""
+
+#: ../../flume/planner.rst:122
+msgid ""
+"Dispatcher的接口和Pass是一样的, 两者的区别在于含义不同, Pass代表一个完整的优化过程, 经过一个Pass的处理, "
+"Plan必须处于一个合理的状态, 而一个Pass可能包括多个Dispatcher, 每个Dispatcher也可能执行多次."
+msgstr ""
+
+#: ../../flume/planner.rst:127
+msgid "RuleDispatcher"
+msgstr ""
+
+#: ../../flume/planner.rst:129
+msgid ""
+"RuleDispatcher是一个单节点遍历模型, 它把对Plan的处理拆分成对每一个节点的处理, "
+"对每一个节点的处理则被抽象为对这个节点使用若干Rule, 这个类定义如下:"
+msgstr ""
+
+#: ../../flume/planner.rst:153
+msgid ""
+"RuleDispatcher的Run方法首先从plan中获取所有Unit/LeafUnit节点, 然后对每一个节点执行Dispatch方法, "
+"后者尝试对这个节点应用所有注册的Rule."
+msgstr ""
+
+#: ../../flume/planner.rst:156
+msgid "RuleDispatcher对Plan的遍历是无序的, 目前扩展了两类固定顺序的RuleDispatcher:"
+msgstr ""
+
+#: ../../flume/planner.rst:158
+msgid "DepthFirstDispatcher: 按照Plan中的Control关系深度遍历, 提供PRE_ORDER和POST_ORDER两种模式"
+msgstr ""
+
+#: ../../flume/planner.rst:159
+msgid "TopologicalDispatcher: 按照LeafUnit的Dependency关系进行拓扑遍历, 提供顺序和逆序两种模式"
+msgstr ""
+
+#: ../../flume/planner.rst:162
+msgid "优化算法"
+msgstr ""
+
+#: ../../flume/planner.rst:164
+msgid "优化算法继承Pass接口, 目前支持的优化包括独立算子合并, 分桶合并, Partial-Processor前置."
+msgstr ""
+
+#: ../../flume/planner.rst:167
+msgid "独立算子合并"
+msgstr ""
+
+#: ../../flume/planner.rst:169
+msgid ""
+"global scope中的每个独立算子(Process, Union, Sink)默认会产生一轮独立的分布式计算, "
+"本算法将其中连续的独立算子合并到同一轮."
+msgstr ""
+
+#: ../../flume/planner.rst:176
+msgid "分桶合并"
+msgstr ""
+
+#: ../../flume/planner.rst:178
+msgid ""
+"当使用分桶进行shuffle时, DistributeByDefault表明数据可以按照任意方式分成N份, "
+"这时数据会按照flume内置的一个算法来分桶, 但如果数据在前一轮计算中已经按照某种方式分成了N份, "
+"那么flume就没必要再进行一次分桶shuffle了, 本算法把这种情况下的分桶计算和前一轮计算合并."
+msgstr ""
+
+#: ../../flume/planner.rst:186
+msgid "Partial-Processor前置"
+msgstr ""
+
+#: ../../flume/planner.rst:188
+msgid ""
+"partial属性表明同一组数据可以分任意多次进行运算, 如果数据在shuffle之后进行partial运算, "
+"本算法可以把这次运算提前到shuffle之前, 以减少shuffle的数据量."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:3
+msgid "Planner编码规范"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:5
+msgid ""
+"为了统一Flume项目中Planner部分的编码风格, 增强代码的可读性和可维护性, 这里对Pass/Rule的编写/组织作出约定, "
+"开发者在为Planner编写代码之前, 请务必阅读此规范. 关于Planner的基础知识, 请参见 :doc:`planner`"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:11
+msgid "前言"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:13
+msgid "Planner的编程需遵守以下原则."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:16
+msgid "1.可读性优先"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:18
+msgid ""
+"Planner部分的代码基本都是基于图的计算和变换, 代码很容易变得晦涩难懂. 在性能/可读性/可扩展性这三个代码基本评判标准之间, "
+"我们认为可读性>可扩展性>性能."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:21
+msgid ""
+"Planner中的代码往往只在任务提交时运行一遍, 且在一般计算中的算子数量往往有限, 故执行计划的分析和优化绝不会成为整个任务的瓶颈, "
+"因此性能因素在Planner的编码过程中通常可以不予考虑."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:24
+msgid ""
+"原则上, 我们希望一个Pass可以被复用在多个Backend上, 出于这种考虑, 我们可以将某个Pass设计的较为复杂, 适应更广泛的边界条件, "
+"但是这种复杂不应该影响到代码的可读性. 可读性是一切复用的基础."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:29
+msgid "2.遵循范式"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:31
+msgid ""
+"基于图的算法在实现上往往具有较大的自由度, 尤其在C++这样的混合型语言上, 同一种遍历过程都可以有多种写法. 不幸的是, "
+"这种自由度往往会对代码的阅读和理解造成严重干扰."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:34
+msgid ""
+"Flume在Planner中提供了一些机制, 如利用PassManager来管理Pass之间的依赖, "
+"利用Dispatcher/Rule的来规范化遍历过程, 提供机制可以在每个图节点上加标记(Tag), 这些机制存在的主要目的是固化相应的 "
+"*编程范式*, 而不在于提供编程方便性."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:38
+msgid ""
+"我们在为Planner编写代码时, **不应该** 试图绕过这些机制, 或是自行实现类似机制. 严格遵循范式, 在牺牲编程自由度的同时, "
+"可以方便代码阅读者把更多的精力关注到图算法上, 这一点尤其重要."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:43
+msgid "3.代码组织原则"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:45
+msgid ""
+"所有的Planner代码, 要按照入口Pass/内部Pass/Rule的原则来组织(入口/内部Pass参见 :ref:`rule_8`). "
+"Pass/Rule本身应该是无状态的(常量除外), 所有的计算结果(包括中间结果)都应该体现在Plan/Unit上, "
+"这一点和过程式编程语言十分相似. 对应的, 我们可以把入口Pass看作是模块, 把内部Pass看成是方法, Rule看成是语句."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:50
+msgid ""
+"每个编译单元中有且只有一个入口Pass, 其中应该包含尽量完整的逻辑.  功能相同, 或者逻辑相似但使用范围不同的Pass, "
+"应该尽量被整合到一个Pass文件中. 分散定义且数量很多的Pass文件往往不利于代码阅读和维护, 同时也不利用公共逻辑的抽取和复用. "
+"如果某一Analysis只对某一个Pass产生作用, 建议将它和该Pass合并到同一文件中去."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:55
+msgid ""
+"和Pass相反, 作为'语句'级的编程结构, 每个Rule中包含的逻辑要尽量简单易懂. 对于复杂的Rule, 要利用 :ref:`rule_3`,"
+" :ref:`rule_4`, :ref:`rule_5` 中描述的技巧进行拆解."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:58
+msgid ""
+"另外, 我们往往利用在节点打Tag的方式, 在Pass&Rule之间传递信息. 这里要注意的是, 如果某个头文件暴露了过多的公共Tag, "
+"往往说明这个模块和其它模块之间的职责分配不够清晰, 纠缠在一起的多个Pass会增加阅读的难度. 编程的时候, 要尽量设法避免暴露不必要的Tag."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:64
+msgid "规范"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:69
+msgid "0.文档范式"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:71 ../../flume/planner-styleguide.rst:91
+#: ../../flume/planner-styleguide.rst:153
+#: ../../flume/planner-styleguide.rst:199
+#: ../../flume/planner-styleguide.rst:245
+#: ../../flume/planner-styleguide.rst:303
+#: ../../flume/planner-styleguide.rst:387
+#: ../../flume/planner-styleguide.rst:451
+#: ../../flume/planner-styleguide.rst:475
+#: ../../flume/planner-styleguide.rst:528
+msgid "约定"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:73
+msgid "描述信息"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:78 ../../flume/planner-styleguide.rst:125
+#: ../../flume/planner-styleguide.rst:175
+#: ../../flume/planner-styleguide.rst:221
+#: ../../flume/planner-styleguide.rst:273
+#: ../../flume/planner-styleguide.rst:331
+#: ../../flume/planner-styleguide.rst:423
+#: ../../flume/planner-styleguide.rst:462
+#: ../../flume/planner-styleguide.rst:501
+#: ../../flume/planner-styleguide.rst:549
+msgid "Bad Example"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:84 ../../flume/planner-styleguide.rst:146
+#: ../../flume/planner-styleguide.rst:192
+#: ../../flume/planner-styleguide.rst:238
+#: ../../flume/planner-styleguide.rst:296
+#: ../../flume/planner-styleguide.rst:380
+#: ../../flume/planner-styleguide.rst:444
+#: ../../flume/planner-styleguide.rst:468
+#: ../../flume/planner-styleguide.rst:521
+#: ../../flume/planner-styleguide.rst:566
+msgid "Good Example"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:89
+msgid "1.使用规定的遍历算法"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:93
+msgid ""
+"flume/planner目录下提供了若干种格式化的遍历方法, 他们包括基于从属关系的先序/中序/后序遍历, 基于数据流的正/反拓扑序遍历, "
+"基于Task的遍历等. 我们编写的所有算法, 都必须基于这些机制进行遍历."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:96
+msgid "'自由'的遍历方式往往造成难以阅读的代码. 另外, 通过一定程度的训练和适应, 一旦接受现有的设定, 会发现还是可以比较自如的实现各种图算法的."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:151
+msgid "2.把完整判断放入Accept函数中"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:155
+msgid "所有的遍历算法都需要实现Accept和Run方法. 尽量把所有的判断逻辑放在Accept中, 而不是分布在两个函数中."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:197
+msgid "3.避免在Rule::Run函数中做二次遍历"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:201
+msgid "尽量利用Accept方法将某个Rule的作用锚定在直接操作的节点上, 而不是锚定在上游/父节点上."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:243
+msgid "4.在Rule中只访问周围节点"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:247
+msgid ""
+"Unit中提供了方法, 能够得到某个节点的父/子/直接上下游节点. 同时, "
+"如DataFlowAnalysis这样的公共Pass提供了访问所有前继/后继/子孙的方法."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:250
+msgid "我们约定, 在相似的实现代价下, 优先采用只访问周围节点的算法. 这样的实现往往更容易理解, 同时能够减少不必要的外部依赖."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:301
+msgid "5.保持一个Rule内的逻辑尽量简单"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:305
+msgid "Rule为Planner代码编写过程中的最小单位. 一个Rule内包含Accept和Run两个方法, 这两个方法需被视为整体看待."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:308
+msgid ""
+"类似于一般程序编写中不要定义过长的语句, 我们在Planner中也不要编写职责过于复杂的Rule. 如果一个Rule中的逻辑过于复杂, "
+"我们要尽量分拆这个Rule."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:385
+msgid "6.只使用Tag保存状态和中间结果"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:389
+msgid ""
+"有三个地方可以保存计算中间结果: 全局变量, Rule中定义的成员变量, Unit节点上记录的Tag标记. 我们约定, **只允许** "
+"在Unit上通过Tag保存中间计算结果."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:392
+msgid ""
+"在全局变量上保存中间结果容易引起并发和扩展性问题. 成员变量上保存的结果不方便在Rule之间分享, 并且往往会使Rule的设计变得更加复杂. "
+"故作此约定."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:449
+msgid "7.不要使用公共类型作为Tag"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:453
+msgid ""
+"Tag机制的实现依赖于C++的类型系统, 在Unit上可以为每一种C++类型保存唯一实例. 如果用公共类型, "
+"如std::map/std::string等作为Tag类型, 则很容易和其它Pass产生冲突/混淆. 因此不要使用这些类型作为Tag."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:457
+msgid "另外, 我们约定各种Proto类型只能由相应的BuildXxxMessagePass使用."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:473
+msgid "8.禁止显式调用Pass的Run方法"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:477
+msgid ""
+"PassManager中定义了Pass之间的依赖关系, 每个Pass可以在定义的时候声明自己依赖哪些Pass, "
+"然后通过PassManager中的Apply方法来调用Pass."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:480
+msgid ""
+"统一的依赖入口, 可以方便我们对代码做调整和拆分, 同时PassManager在调用Pass会记录相应的调试信息, 方便我们跟踪线上问题. "
+"为了维护代码的统一性, 我们禁止在单测之外直接调用Pass::Run方法."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:483
+msgid ""
+"一些Pass在遍历过程中会改变拓扑, 从而破坏所依赖的Analysis结果. 遇到这种情形, 建议实现者多思考一下, "
+"大部分情况下可以通过调整算法规避这些问题. 如果确实无法避免, 可以将一个Pass拆分成入口Pass和内部Pass."
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:526
+msgid "9.保证Run方法的返回值正确"
+msgstr ""
+
+#: ../../flume/planner-styleguide.rst:530
+msgid ""
+"Rule::Run和Pass::Run的返回值代表Plan的拓扑或者关键信息是否发生改变. 有时程序员为了简单实现, "
+"会让这两个方法总是返回true. 这种做法容易导致死循环, 并且使得优化中间步骤变多, 影响调试. 因此我们约定, "
+"实现Pass时一定要保证返回值正确."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:3
+msgid "传输数据编码格式"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:5
+msgid "本文档描述了一种编码算法, 可以把多路/多种分组方式的多条数据流编码成一条Key/Value数据流. 该算法用于跨Task的数据传输和归并."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:10
+msgid "背景"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:12
+msgid ""
+"关于计算和数据模型, 请先参见 :doc:`core`. 在逻辑执行计划中, 根据算法的需求, 我们有很多路数据, 每路数据都有不同的分组方式. "
+"然而在任意一个特定的分布式框架, 都只支持有限种分组方式, 在数据的路数上往往也有限制."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:16
+msgid ""
+"所以, 我们需要一种编码方式, 能够把以任意方式分组的多路数据合并成一路, 使得这路数据流只要按照唯一的Key进行合并/排序, "
+"就可以高效的进行解码并进行处理. 具体来说, 就是满足下述两个要求:"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:20
+msgid "得到一个Key, 就能从中解码出该条数据属于哪个Logical Plan Node, 以及其所属Scope的Key."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:23
+msgid "编码后的Key按照逐字节比较的方式, 就能得到需要的shuffle顺序, 不需要自定义比较函数."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:25
+msgid ""
+"对于同一个Scope下的不同分组, 可以按照相应key的顺序进行传输. 不同分组的数据不能重叠在合并后的流中, 总是把前一组数据传输完毕, "
+"才会继续传输下一组."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:29
+msgid "对于同一个Scope下不同路的数据, 可以指定每路到达的顺序, 即让某些路比其它路先到达."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:32
+msgid "这样可以尽量降低需要进行缓存的数据量."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:36
+msgid "编码格式"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:38
+msgid "首先给出整体的编码方式 ::"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:54
+msgid "下面具体解释一下各个字段的意义."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:56
+msgid "scope-tag/node-tag."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:58
+msgid ""
+"标记该条数据属于哪个Scope/Node, 整数(uint8/uint16/uint32/uint64). 整数位数由参与编码的路数决定, "
+"如果某个Scope下只有一路子Scope/Node参与编码, 则相应的scope-tag/node-tag被省略. "
+"这些tag也能起到调整shuffle顺序的作用, tag排在前面那路会被优先传输."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:64
+msgid "scope-key/order-key"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:66
+msgid ""
+"如果某个Node上面有N个Scope, 则这个Node中的每条Record都会附带有N个Key. 在通过分布式框架进行传输/归并的过程中, "
+"一些Scope需要在传输后恢复相应的Scope/Key, 比如做GroupBy的时候. 在另一些时候, 只需要保持顺序即可, "
+"不必恢复出具体的Key出来, 例如做SortBy的时候."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:72
+msgid "fix-size-encoding."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:74
+msgid ""
+"适用于对固定长度的Key进行编码. 编码时只存储数据内容, 不存储长度. 当ShuffleNode的type为BySequence时, "
+"得到的partition就可以采用这种方式进行编码."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:78
+msgid "escape-encoding."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:80
+msgid ""
+"适用于对变长字符串进行编码. 对字符串中的'\\\\0''\\\\1'两种字符用'\\\\1'进行转义, "
+"即编码为'\\\\1\\\\0'和'\\\\1\\\\1', 尾部以'\\\\0'结束. 这种编码的优点在于在多个Key的情况下能够保证比较顺序."
+" 比如考虑两组数据 ::"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:88
+msgid "如果直接串联两个字段(字符串和整数), 因为第二个字段为固定长度的整数, 也能够正常解码. 这时编码后的结果如下 ::"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:95
+msgid "这时如果把编码后的字符串进行逐字节比较, 得到结果和直接比较的结果相反. 而转义编码则不存在这个问题 ::"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:104
+msgid "last-element-encoding."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:106
+msgid "适用于对最后一个Key进行编码. 这时我们不需要存储Key的长度, 只需一直读到buffer的尾部即可完成解码."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:111
+msgid "使用场景&实例分析"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:113
+msgid "单路Groupby"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:115
+msgid ""
+"对于常见的单路Groupby, 只有一个Scope和一个Node参与Groupby, 这时不需要scope-tag和node-tag. "
+"因为只有一个Key, 所以可以采用last-element-encoding. 所以最终编码的结果就是原始Key."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:119
+msgid "两路Join"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:121
+msgid ""
+"两路Join典型的逻辑计划是单个Scope, 其中有两个Node. 这时按照规则得到的编码格式是 (escaped-key) + (0|1). "
+"在shuffle后, 对于每一组数据, 第0路会先到达并缓存, 第1路后到达并流式处理, 即可完成迪卡尔积的计算. 在这个过程中, "
+"只有第0路需要被缓存起来."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:126
+msgid "单路GroupBy + Distinct"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:128
+msgid ""
+"该场景下典型的逻辑计划为一组嵌套的Scope下面的一个Node. 因为每一层只有一个Scope/Node, tag可以被省略. GroupBy "
+"Key需要转义, Distinct Key因为在最末尾, 不需要被转义. 这样Key编码就是 escaped-group-key + "
+"distinct-key"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:133
+msgid "单Task同时处理多个维度的分组"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:135
+msgid ""
+"这种场景会在Task合并优化后出现, 起到平衡Task负载的优化效果. 我们假设这里把多个GroupBy逻辑合并到一个Task中处理, "
+"这时的编码就是scope-tag + scope-key. 因为每个Scope内部只有单一的Node, 故不需要node-tag. "
+"因为scope-key在最尾部, 故不需要转义."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:141
+msgid "现有编码方式及改进"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:143
+msgid "DCE下目前采用的编码方式为 ::"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:162
+msgid "目前的编码方式主要用来提供两个保证:"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:164
+msgid "可以区分出来自不同Task/Partition的数据,"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:166
+msgid ""
+"因为DCE不支持多输出, 所以在特定的拓扑下一个Task有可能接受到本应由其它Task处理的数据. 另外, "
+"把Partition信息编码到Key中, 也方便实现HCE要求的Partitioner. 前置的partition, 后面的task-"
+"id即是为此而设置."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:171
+msgid "嵌套Scope中来自于父Scope的数据先传输."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:173
+msgid ""
+"该保证是为了支持混合方式Shuffle, 即某些属于先传输到Reduce端进行Local Shuffle, 再和MR传输的数据进行合并. "
+"priority-tag和begin-seq/end-seq即是为了这个目的设置."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:177
+msgid ""
+"目前的编码方式的缺点在于对于原始的Key增加了过多的额外编码. 对于单Task/单Partition的情形, 单路Groupby的场景, "
+"本来只存储原始Key就能解决问题, 但是目前的编码方式至少多用了14个字节. 实际上, 至少在我们的benchmark中, "
+"大部分场景下的原始Key不超过10个字节."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:181
+msgid "结合上文提到过的编码方式, 我们可以采用如下方式进行编码: ::"
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:187
+msgid ""
+"根据全局的task数量及partitioin数量, 决定修要几个bit用来存储Task-Id, 几个bit用来存储partition. 目前来说,"
+" 大部分任务可以用uint16来满足. 这里需要注意的是, 因为考虑到对DCE合并partition功能的支持, 我们预留一个bit, "
+"用来作为partition间的分隔符, 以区分空数据的task."
+msgstr ""
+
+#: ../../flume/shuffle-encoding.rst:193
+msgid ""
+"Task内部的数据采用上文的编码方式进行编码. 这个编码方式对于不同场景的适应性比较好, "
+"不会出现目前编码方式中对简单case浪费大量编码空间的问题."
+msgstr ""
+

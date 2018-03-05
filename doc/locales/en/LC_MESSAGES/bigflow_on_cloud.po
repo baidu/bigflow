@@ -1,0 +1,87 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-05 08:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: ../../bigflow_on_cloud.rst:2
+msgid "Cloud Document"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:5
+msgid "公有云资源申请"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:7
+msgid ""
+"参考 `百度云环境准备 "
+"<https://cloud.baidu.com/doc/BMR/QuickGuide.html#.E7.99.BE.E5.BA.A6.E4.BA.91.E7.8E.AF.E5.A2.83.E5.87.86.E5.A4.87>`_"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:10
+msgid "集群环境"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:12
+msgid "集群创建"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:14
+msgid ""
+"参考 `集群创建 "
+"<https://cloud.baidu.com/doc/BMR/QuickGuide.html#.E9.9B.86.E7.BE.A4.E5.87.86.E5.A4.87>`_"
+" 中集群准备的第三步和第四步"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:16
+msgid "注意，请选择spark 2.0 集群"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:18
+msgid "数据准备"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:20
+msgid ""
+"数据上传至对象存储BOS（具体操作详见 `对象存储BOS入门指南 <https://cloud.baidu.com/doc/BOS"
+"/GettingStarted-new.html#.E5.BC.80.E9.80.9ABOS.E6.9C.8D.E5.8A.A1>`_ ）"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:22
+msgid "从BOS 上传至集群HDFS，参考指令："
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:24
+msgid ""
+"hadoop distcp bos_path hdfs_path (eg: hadoop distcp bos://spark-input-"
+"data/join_lists_input/  hdfs:///user/input)"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:27
+msgid "设置环境变量"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:29
+msgid "公有云有现有的hadoop spark 环境，不需要下载hadoop client、spark client"
+msgstr ""
+
+#: ../../bigflow_on_cloud.rst:40
+msgid ""
+"我们申请了一些 `公有云 <https://cloud.baidu.com/?from=console>`_ "
+"的资源，如果想试用Bigflow，可以 `联系 <bigflow-opensource@baidu.com>`_ 我们。"
+msgstr ""
+

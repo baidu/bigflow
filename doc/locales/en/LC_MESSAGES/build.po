@@ -1,0 +1,56 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-05 08:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: ../../build.rst:1
+msgid "目前在centos7.1测试通过"
+msgstr ""
+
+#: ../../build.rst:4
+msgid "编译"
+msgstr ""
+
+#: ../../build.rst:17
+msgid "测试"
+msgstr ""
+
+#: ../../build.rst:26
+msgid "使用Docker构建"
+msgstr ""
+
+#: ../../build.rst:28
+msgid "先下载bigflow代码库::"
+msgstr ""
+
+#: ../../build.rst:34
+msgid "运行::"
+msgstr ""
+
+#: ../../build.rst:38
+msgid "进入centos docker镜像"
+msgstr ""
+
+#: ../../build.rst:41
+msgid "在镜像中执行：::"
+msgstr ""
+
+#: ../../build.rst:51
+msgid "注意，上述方法的执行环境是一次性的，用户可以使用docker命令保存编译完的docker镜像，或使用daemon的方式运行，具体方法这里不再详述。请参考docker文档。"
+msgstr ""
+

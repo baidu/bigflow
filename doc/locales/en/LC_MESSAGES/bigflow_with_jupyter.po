@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-05 08:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: ../../bigflow_with_jupyter.rst:3
+msgid "下载bigflow_python.tar.gz"
+msgstr ""
+
+#: ../../bigflow_with_jupyter.rst:15
+msgid "安装pysqlite"
+msgstr ""
+
+#: ../../bigflow_with_jupyter.rst:25
+msgid "安装jupyter"
+msgstr ""
+
+#: ../../bigflow_with_jupyter.rst:32
+msgid "运行jupyter"
+msgstr ""
+
+#: ../../bigflow_with_jupyter.rst:35
+msgid "::"
+msgstr ""
+
+#: ../../bigflow_with_jupyter.rst:35
+msgid "bigflow jupyter notebook --no-browse --port 8732 --ip=*"
+msgstr ""
+
+#: ../../bigflow_with_jupyter.rst:37
+msgid "之后按提示，访问页面即可。"
+msgstr ""
+

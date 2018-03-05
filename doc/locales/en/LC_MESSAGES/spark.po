@@ -1,0 +1,1006 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2017, Baidu
+# This file is distributed under the same license as the Bigflow Python
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Bigflow Python 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-05 08:31+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: ../../spark/architecture.rst:3
+msgid "整体架构"
+msgstr ""
+
+#: ../../spark/architecture.rst:5
+msgid ""
+"从流程上讲： (Client端)：用户使用Bigflow API写出的代码经由Core "
+"API转换为逻辑计划后，通过SparkPlanner翻译为物理计划， "
+"再由一个维护SparkContext和任务执行情况的后台Launcher从物理计划构建出Spark RDD DAG图，然后提交给Spark平台"
+msgstr ""
+
+#: ../../spark/architecture.rst:9
+msgid ""
+"(Worker端): 当某一个RDD的分片在Spark平台的某一个Executor进程中，调用compute()进行执行时，Bigflow "
+"Worker会 构造出一棵执行树，与Spark RDD进行交互，驱动数据的计算过程"
+msgstr ""
+
+#: ../../spark/architecture.rst:12
+msgid "整个过程如下图所示"
+msgstr ""
+
+#: ../../spark/architecture.rst:19
+msgid "每个Spark RDD内部分装一个Bigflow Task，并在Task内部构建Executor Tree"
+msgstr ""
+
+#: ../../spark/background.rst:3
+msgid "背景"
+msgstr ""
+
+#: ../../spark/background.rst:5
+msgid ""
+"作为INF DC所规划的对外统一分布式API，Bigflow目前支持了Local/DCE两种计算引擎， Task "
+"Manager流式计算引擎正在联合开发和迭代中。将更多的计算引擎纳入Bigflow中， 可以使得用户有更多的选择"
+msgstr ""
+
+#: ../../spark/background.rst:9
+msgid ""
+"另一方面，作为社区最火热的Apache Spark，在公司内部的应用规模也越来越大，相对于 "
+"传统的DCE(MapReduce)而言，Spark的常驻内存式计算模型能够在许多业务场景（尤其是中 "
+"小规模数据计算的场景）下有更好的性能。但Spark在公司内部的应用还有许多有待改进的 方面，例如，作为Spark的Python "
+"API，PySpark有功能不够完善、性能比较低的缺点"
+msgstr ""
+
+#: ../../spark/case.rst:3
+msgid "示例"
+msgstr ""
+
+#: ../../spark/case.rst:6
+msgid "示例1 – 单Stage('map-only')作业"
+msgstr ""
+
+#: ../../spark/case.rst:20 ../../spark/case.rst:44
+msgid "生成的计划示意图如下："
+msgstr ""
+
+#: ../../spark/case.rst:28
+msgid "示例2 – WordCount"
+msgstr ""
+
+#: ../../spark/definitions.rst:3
+msgid "名次解释"
+msgstr ""
+
+#: ../../spark/definitions.rst:5
+msgid ""
+"Bigflow API: 面向Bigflow最终用户的API，提供了函数式编程风格的高层计算抽象接口， "
+"简单易用。API中最主要的抽象包括Pipeline（计算的入口，同时可以指定某种特定的执行 "
+"引擎），PTypes（分布式数据集抽象，概念来自Google FlumeJava中的PCollection，与Spark RDD类似）"
+msgstr ""
+
+#: ../../spark/definitions.rst:10
+msgid ""
+"Bigflow Core API: 面向Bigflow开发者，用于逻辑计划描述的API，由Node和Scope构成，拥 有比Bigflow "
+"API更加强大的计算描述能力"
+msgstr ""
+
+#: ../../spark/definitions.rst:13
+msgid ""
+"Bigflow Planner: Bigflow的分布式计算计划优化层，其有两个任务：将逻辑计划翻译为针对 "
+"于特定执行引擎的物理执行计划，同时在这个过程中对计划进行逻辑和物理层面的优化。对于 "
+"每一个Bigflow所支持的分布式计算执行引擎，其均有相应的Planner实现，例如DCEPlanner， SparkPlanner等"
+msgstr ""
+
+#: ../../spark/definitions.rst:18
+msgid ""
+"Bigflow Runtime: Bigflow的分布式计算执行层，负责实际的计算过程。其包含两部分：作为Client "
+"端将作业提交给分布式计算平台的部分，以及作为Worker在分布式平台的执行节点上进行数据计算的部分"
+msgstr ""
+
+#: ../../spark/design_goal.rst:3
+msgid "设计目标"
+msgstr ""
+
+#: ../../spark/design_goal.rst:6
+msgid "功能指标"
+msgstr ""
+
+#: ../../spark/design_goal.rst:8
+msgid "Baidu Bigflow(以下简称Bigflow)能够将Baidu Spark(以下简称Spark)作为底层支持的引擎之一， 更加具体地："
+msgstr ""
+
+#: ../../spark/design_goal.rst:11
+msgid "当前Bigflow的多语言版本API均可以使用：Bigflow Python和C++ API"
+msgstr ""
+
+#: ../../spark/design_goal.rst:12
+msgid ""
+"除指定Pipeline（引擎的抽象，例如Pipeline.create(\"Hadoop\")修改为Pipeline.create(\"Spark\")）"
+" 的代码外，现有的使用Bigflow写出的计算任务，均可以不加修改地运行在Spark平台上"
+msgstr ""
+
+#: ../../spark/design_goal.rst:14
+msgid "支持的范围尚不包括未正式发布的流式计算接口（这部分对应于Spark Streaming）"
+msgstr ""
+
+#: ../../spark/design_goal.rst:17
+msgid "性能指标"
+msgstr ""
+
+#: ../../spark/design_goal.rst:19
+msgid "Bigflow on Spark的作业运行性能应当尽可能高效"
+msgstr ""
+
+#: ../../spark/design_goal.rst:21
+msgid "Bigflow Python API性能应当明显地优于PySpark"
+msgstr ""
+
+#: ../../spark/design_goal.rst:22
+msgid "Bigflow C++ API写出的逻辑应当与Spark Scala API性能相仿"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:3
+msgid "设计思路及折衷"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:6
+msgid "需要利用Spark的哪些机制"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:8
+msgid "作为所谓的“下一代数据处理引擎\"，Spark与相对更早的Hadoop相比，主要有下面几个优点："
+msgstr ""
+
+#: ../../spark/design_ideas.rst:10
+msgid "高层抽象的API"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:12
+msgid "常驻内存的计算机制"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:14
+msgid "一站式的计算服务，对于离线、流式、机器学习等都有支持"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:16
+msgid ""
+"对于1，Bigflow拥有层次更高、更加统一的抽象模型，比如可嵌套的抽象数据集等。对接的工作，就是 "
+"为了能够将Bigflow的抽象模型能够对接到Spark引擎上执行"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:19
+msgid "对于3，Bigflow同样支持多种计算场景，只不过是通过对接多种计算引擎来实现"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:21
+msgid ""
+"对于2，这里是Bigflow对接工作的“对接点”，也就是所要利用Spark引擎的地方。更详细地，Bigflow的作业 "
+"在分布式环境下执行时，应当能够享受到："
+msgstr ""
+
+#: ../../spark/design_ideas.rst:24
+msgid "Spark的常驻式Executor以及基于线程的细调度调度模式，使得任务分片的调度代价更小、速度更快"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:26
+msgid "Spark Cache机制对于迭代式计算的良好支持，Bigflow的Cache与Spark拥有非常相似的语义，应当能够充分利用Spark Cache"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:28
+msgid "基于Lineage的fail-over机制"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:30
+msgid "此外，对于相对较小规模的计算任务，Spark可以使用Hash-Based Shuffle，在不需要排序的Shuffle场景中， 可以有更好的性能"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:35
+msgid "数据计算方式"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:37
+msgid ""
+"对于Bigflow的某个Task而言，Spark RDD被看作是一个\"壳\"：RDD将输入数据通过Bigflow所实现的变换(例如 "
+"mapPartition方法的自定义函数)，将数据交给Bigflow Executor，然后Executor在内部完成所有所需要的计算， "
+"再交还给Spark RDD。再使用RDD的repartition方法，通过Bigflow所实现的partition函数进行数据的分组/排序， "
+"实现Bigflow所需要的Shuffle。Shuffle数据进入到下一个Stage的RDD中，重复计算过程"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:42
+msgid ""
+"在这种方式下，相当于仅利用了Spark的Task调度以及Shuffle机制，此外，能够尽可能少地进行Bigflow与Spark之 "
+"间的数据交换，以减少数据的序列化/反序列化以及潜在需要的拷贝开销"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:54 ../../spark/model_design.rst:398
+msgid "Cache机制"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:56
+msgid ""
+"Bigflow应当能够将数据存储在Spark Cache中，由于Spark的Cache是以RDD为粒度，应当考虑使用更加底层的接口直 "
+"接与Spark的内存管理进行交互，而不是直接使用诸如RDD.cache()这样的接口"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:60
+msgid "Spark RDD与Bigflow RuntimeWorker的交互方式"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:62
+msgid ""
+"Spark使用Scala编写，运行环境是JVM，而Bigflow RuntimeWorker主体使用C++编写，对于JVM而言属于Native。对"
+" 于Bigflow Python API，运行时还有CPython Interpreter(同样Native实现)。主要考虑两种实现方式："
+msgstr ""
+
+#: ../../spark/design_ideas.rst:65
+msgid ""
+"JNI：Bigflow runtime与Spark runtime通过Java Native "
+"Interface(简称JNI)进行数据交换。具体来说，Bigflow "
+"Runtime(worker)以一个so的方式被JVM加载，并通过Scala的native method方法进行调用。这种方式使得两种语言 "
+"C++/Scala在进程内部进行通讯，在Spark的Executor执行方式下，这种方式相当于一个“多线程\"模型，如下图所示："
+msgstr ""
+
+#: ../../spark/design_ideas.rst:74
+msgid ""
+"Pipe：Bigflow runtime与Spark runtime通过Pipe进行数据交换。具体来说，Bigflow "
+"Runtime(worker)以更加 "
+"“常规”的方式，执行的入口是Backend::Execute()方法。这种方式使得两种语言C++/Scala进行进程间通讯，在 "
+"Spark的Executor执行方式下，这种方式相当于一个“多进程”模型，如下图所示："
+msgstr ""
+
+#: ../../spark/design_ideas.rst:83
+msgid "JNI vs Pipe"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:85
+msgid "Pipe优于JNI之处："
+msgstr ""
+
+#: ../../spark/design_ideas.rst:87
+msgid "相互隔离的环境"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:89
+msgid "相对简单的实现"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:91
+msgid "对于Bigflow Python API而言，由于CPython GIL的原因，只有多进程模型才能够充分利用CPU的多核。"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:93
+msgid "JNI优于Pipe之处："
+msgstr ""
+
+#: ../../spark/design_ideas.rst:95
+msgid "更高的效率：共享内存，没有序列化开销"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:97
+msgid "更加直接的交互方式"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:99
+msgid "可以使用多Executor，每个Executor单线程的方式规避CPython GIL所导致的多线程性能问题"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:102
+msgid "访问Peta等存储的方式"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:104
+msgid ""
+"Bigflow目前动态依赖了libhdfs.so，并使用了其内部的hdfs C API访问Peta。对于Baidu Spark而言，其访问的是 "
+"社区HDFS接口，与公司内部的Peta已经有很大的不同，为了能够做到适配，目前使用的是DS同学所提供的Peta-Agent "
+"方案，即通过在机器上部署一个agent做社区接口访问Peta的适配。这样可能会带来两个问题："
+msgstr ""
+
+#: ../../spark/design_ideas.rst:108
+msgid ""
+"1. Bigflow的用户如果需要使用对接Spark的功能，也需要在自己的环境部署Peta-Agent，否则会出现访问错误。不 "
+"过由于目前公司内部要使用Spark本身就需要Peta-Agent，这一点是可以接受的"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:111
+msgid ""
+"2. Bigflow需要在client和运行端处理好内部Peta接口/社区接口的环境隔离，防止两种相似的接口及相应的依赖混 "
+"用导致出错。针对这一点，Bigflow on Spark需要有独立的Runtime-Worker构建，保证运行在Spark集群上的worker "
+"与运行在DCE集群上的worker有不同的Peta依赖"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:116
+msgid "内存管理"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:118
+msgid ""
+"由于Spark的常驻内存计算机制，当Bigflow所实现的native代码由于正常或是出现错误结束是，JVM端所实现的 "
+"Scala代码都应当保证能够显式调用Bigflow相应的JNI接口释放native内存以免出现内存泄漏。实际上，Spark在 "
+"1.2.0版本之后添加了TaskContext.addOnCompleteCallback接口，以保证RDD的迭代器在正常/非正常结束时均能够 "
+"调用某些清理逻辑，Bigflow需要使用这个方法在回调函数中显式释放内存"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:124
+msgid "Bigflow在Spark平台的作业分发"
+msgstr ""
+
+#: ../../spark/design_ideas.rst:126
+msgid ""
+"Bigflow Runtime(Worker)部分需要一个完整的Python解释器与原生库、Bigflow Executor、Pb "
+"Message解析以及与 Spark交互的相关逻辑以及其他静态/动态依赖的第三方库等。从已有的经验来看，预计编译后的大小在200MB以上， "
+"而Bigflow本身以client的形式提供给用户(并非平台或是服务)，因此若每次向Spark平台提交作业均需要上传这样 "
+"的包，会使得准备时间较长。因此需要与Bigflow on DCE一样，通过用户指定的一个HDFS上的tmp_data_path做基于 "
+"版本的预部署：当第一次提交Bigflow on "
+"Spark作业时，检查tmp_data_path/{Bigflow版本号}/{预部署包名.tar.gz} "
+"是否存在，若不存在在本地生成预部署压缩包完成上传，若存在则继续使用"
+msgstr ""
+
+#: ../../spark/development_environment.rst:3
+msgid "开发环境"
+msgstr ""
+
+#: ../../spark/development_environment.rst:5
+msgid "Bigflow的开发工作完全按照层次做解耦，不同层之间通过Pb进行计划的序列化/反序列化交互， 按照层次划分的"
+msgstr ""
+
+#: ../../spark/development_environment.rst:8
+msgid "Bigflow API：与具体的语言有关，这里涉及Python/C++"
+msgstr ""
+
+#: ../../spark/development_environment.rst:10
+msgid "Bigflow Core："
+msgstr ""
+
+#: ../../spark/development_environment.rst:12
+msgid "相关软件及硬件"
+msgstr ""
+
+#: ../../spark/development_environment.rst:15
+msgid "项目规范"
+msgstr ""
+
+#: ../../spark/development_environment.rst:17
+msgid "代码规范"
+msgstr ""
+
+#: ../../spark/development_environment.rst:19
+msgid "对于C++/Python，要求符合公司的代码规范"
+msgstr ""
+
+#: ../../spark/development_environment.rst:21
+msgid "对于Scala，公司尚无统一规范，因此与官方规范相一致(http://docs.scala-lang.org/style/)"
+msgstr ""
+
+#: ../../spark/development_environment.rst:24
+msgid "单元测试"
+msgstr ""
+
+#: ../../spark/development_environment.rst:26
+msgid "GTest(C++) unittest(Python) ScalaTest(Scala)"
+msgstr ""
+
+#: ../../spark/development_environment.rst:31
+msgid "构建工具"
+msgstr ""
+
+#: ../../spark/development_environment.rst:33
+msgid "Blade(C++) Maven(Scala)"
+msgstr ""
+
+#: ../../spark/development_environment.rst:37
+msgid "开发工具 无要求"
+msgstr ""
+
+#: ../../spark/index.rst:2
+msgid "Bigflow On Spark 设计"
+msgstr ""
+
+#: ../../spark/model_design.rst:3
+msgid "模块设计"
+msgstr ""
+
+#: ../../spark/model_design.rst:6
+msgid "Core API(LogicalPlan)"
+msgstr ""
+
+#: ../../spark/model_design.rst:8
+msgid "作为逻辑计划层，与LogicalPlan与分布式计算引擎无关，因此完全沿用已有的设计/实现"
+msgstr ""
+
+#: ../../spark/model_design.rst:11
+msgid "SparkPlanner"
+msgstr ""
+
+#: ../../spark/model_design.rst:14
+msgid "逻辑计划定义(proto描述)"
+msgstr ""
+
+#: ../../spark/model_design.rst:16
+msgid ""
+"一个或多个PbSparkTask(按照Shuffle划分后的执行树)构成一个PbSparkRDD，一个或多个PbSparkRDD构成 "
+"PbSparkJob"
+msgstr ""
+
+#: ../../spark/model_design.rst:79
+msgid "Planner策略–LogicalOptimizing"
+msgstr ""
+
+#: ../../spark/model_design.rst:81
+msgid "LoadLogicalPlanPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:83
+msgid "读取PbLogicalPlan，生成以Node为单位的Plan"
+msgstr ""
+
+#: ../../spark/model_design.rst:85
+msgid "本Pass应当第一个被执行，相当于Planner初始化"
+msgstr ""
+
+#: ../../spark/model_design.rst:87
+msgid "SplitUnionUnitPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:89
+msgid ""
+"若两个Node之间存在重边，将UnionNode加到其中一条边上（以避免重边的存在），同时将UnionNode打上<MustKeep> "
+"tag，以避免被RemoveUselessUnionPass删除。"
+msgstr ""
+
+#: ../../spark/model_design.rst:91
+msgid "SplitUnionUnitPass功能示例："
+msgstr ""
+
+#: ../../spark/model_design.rst:98
+msgid "PromotePartialProcessPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:100
+msgid ""
+"SortedSourceAnalysis: 为每个Unit打<SortedSource> tag，内容是离自己最近的Sorted "
+"Scope所产生的Unit"
+msgstr ""
+
+#: ../../spark/model_design.rst:107
+msgid ""
+"FindPartialProcessAndPromote：若一个PartialProcessNode直接上游只有1个，同时该上游处于不包含该 "
+"PartialProcessNode的SortedShuffleScope中，则可以将该PartialProcessNode前移到SortedShuffleScope内"
+msgstr ""
+
+#: ../../spark/model_design.rst:115
+msgid "PruneCachedPathPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:117
+msgid "将具有<CacheReader> tag的Node进行变换："
+msgstr ""
+
+#: ../../spark/model_design.rst:119
+msgid "构造一个LoadScope和LoadNode"
+msgstr ""
+
+#: ../../spark/model_design.rst:121
+msgid "构造一个ProcessNode对LoadNode的数据进行变换"
+msgstr ""
+
+#: ../../spark/model_design.rst:123
+msgid "若被Cache数据具有分组信息，则构造相应的ShuffleScope/ShuffleNode还原分组信息"
+msgstr ""
+
+#: ../../spark/model_design.rst:125
+msgid "若Node为ProcessNode，则将分组Key去掉"
+msgstr ""
+
+#: ../../spark/model_design.rst:127
+msgid "切断与上游Unit的边"
+msgstr ""
+
+#: ../../spark/model_design.rst:129
+msgid "添加到原下游Unit的边"
+msgstr ""
+
+#: ../../spark/model_design.rst:131
+msgid "CacheAnalysis"
+msgstr ""
+
+#: ../../spark/model_design.rst:133
+msgid ""
+"把尚未Cache过，但Node信息中具有is_cache属性的Node打上<ShouldCache> "
+"tag，以在接下来的Pass中更新为一个Writer"
+msgstr ""
+
+#: ../../spark/model_design.rst:135
+msgid "RemoveUnsinkedPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:137
+msgid "删除掉没有下游，且不具有<HasSideEffect> tag的Unit"
+msgstr ""
+
+#: ../../spark/model_design.rst:144
+msgid "本Pass被许多Pass所依赖，进行诸如Unit前移、剪枝之后的清理工作"
+msgstr ""
+
+#: ../../spark/model_design.rst:146
+msgid "RemoveUselessUnionPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:148
+msgid "删除只有一个上游，同时不具有<MustKeep> tag的Union Node"
+msgstr ""
+
+#: ../../spark/model_design.rst:155
+msgid ""
+"按照定义，UnionNode仅为一种虚拟节点，目的在于合并逻辑上的同构数据流，而不表示具体的执行逻辑。因此仅有 "
+"一个上游的UnionNode通常来说没有意义，可以直接删去。但当利用UnionNode处理重边时（参见SplitUnionUnitPass）， "
+"此时插入的UnionNode仅有一个上游且不能删除，这样的UnionNode被打上<MustKeep> tag"
+msgstr ""
+
+#: ../../spark/model_design.rst:159 ../../spark/model_design.rst:248
+msgid "RemoveEmptyUnitPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:161
+msgid "删除没有孩子节点的非叶子节点"
+msgstr ""
+
+#: ../../spark/model_design.rst:163
+msgid ""
+"本Pass主要配合RemoveUnsinkedPass和RemoveUselessUnionPass一起，在后两者删除掉一条路径上的节点后，将被 "
+"删“空”的Unit删除"
+msgstr ""
+
+#: ../../spark/model_design.rst:166
+msgid "AddDistributeByDefaultPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:168
+msgid ""
+"查找Global "
+"Scope下的UnionNode或具有Partial边的ProcessNode，为其添加一个DistributeByDefaultScope，同时"
+" 将ProcessNode的非Partial边改为Broadcast到新添加的Scope中"
+msgstr ""
+
+#: ../../spark/model_design.rst:177
+msgid "Planner策略–TopologicalOptimizing"
+msgstr ""
+
+#: ../../spark/model_design.rst:179
+msgid "AddTaskUnitPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:181
+msgid "Task切分：为所有GlobalScope上的节点添加一个父Unit，Unit类型为Task"
+msgstr ""
+
+#: ../../spark/model_design.rst:188
+msgid "AddTaskUnitPass可以看作是逻辑计划与物理计划的分割点，Task可以是分布式作业的物理执行单元"
+msgstr ""
+
+#: ../../spark/model_design.rst:190
+msgid "SetDefaultConcurrencyPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:192
+msgid "本Pass依赖于DataFlowAnalysis"
+msgstr ""
+
+#: ../../spark/model_design.rst:194
+msgid ""
+"为Task设置concurrency并发量，然后尝试使用concurrency设置DistributeByDefault类型Bucket "
+"ShuffleScope的 桶数。"
+msgstr ""
+
+#: ../../spark/model_design.rst:197
+msgid "设置Task concurrency的原则为："
+msgstr ""
+
+#: ../../spark/model_design.rst:199
+msgid "若Task Unit已有TaskConcurrency标签，则使用TaskConcurrency标签值"
+msgstr ""
+
+#: ../../spark/model_design.rst:201
+msgid "否则，若Task并非Mapper，则使用Default concurrency"
+msgstr ""
+
+#: ../../spark/model_design.rst:203
+msgid "为DistributeByDefault类型Bucket ShuffleScope的方式为："
+msgstr ""
+
+#: ../../spark/model_design.rst:205
+msgid "ShuffleScope需要为其所在的Task的直接孩子，同时Task不为Mapper Task。"
+msgstr ""
+
+#: ../../spark/model_design.rst:207
+msgid ""
+"用Task的<TaskConcurrency>标签设置设置Bucket ShuffleScope的桶数(bucket "
+"size)。同时打上<NotUserSetBucketSize> tag，标明桶数并非显式设置。"
+msgstr ""
+
+#: ../../spark/model_design.rst:210
+msgid ""
+"遍历该ShuffleScope的上游Unit的Father "
+"Scope(上游ShuffleScope)，若其ID与该ShuffleScope相同，则说明上 "
+"游ShuffleScope是由当前ShuffleScope前移产生，也对其打上<NotUserSetBucketSize> tag"
+msgstr ""
+
+#: ../../spark/model_design.rst:213
+msgid "PromotePartialUnitPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:215
+msgid "本Pass负责将位于一个Task\"入口处\"的Scope、ShuffleNode和PartialProcessNode前移到上一个Task中，以使得："
+msgstr ""
+
+#: ../../spark/model_design.rst:217
+msgid ""
+"1. 对于Scope和ShuffleNode的移动，可以使得上一个Task能够获取Shuffle的信息，即理解Shuffle Key以及相应的 "
+"Partition等等"
+msgstr ""
+
+#: ../../spark/model_design.rst:220
+msgid ""
+"2. 对于PartialProcessNode的移动，可以使得计算逻辑在Shuffle过程之前进行，对于绝大多数场景，该移动可以 "
+"减少Shuffle数据的条数"
+msgstr ""
+
+#: ../../spark/model_design.rst:223
+msgid "Pass示意图："
+msgstr ""
+
+#: ../../spark/model_design.rst:229
+msgid "MergeTaskPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:231
+msgid "用于Task的合并逻辑，主要应当分两部分："
+msgstr ""
+
+#: ../../spark/model_design.rst:233
+msgid "将上下游Task合并，合并的规则主要有："
+msgstr ""
+
+#: ../../spark/model_design.rst:235
+msgid "上下游Task有显式指定的并发值，并且相等，合并后并发值为原相等的并发值"
+msgstr ""
+
+#: ../../spark/model_design.rst:237
+msgid "上下游Task中，有一个没有显示指定的并发值(也就是并发量可以随意指定)，另一个有显式指定的并发值，"
+msgstr ""
+
+#: ../../spark/model_design.rst:238
+msgid "则合并后的并发值为显式指定的那个"
+msgstr ""
+
+#: ../../spark/model_design.rst:246
+msgid "Planner翻译–RuntimeProcedure"
+msgstr ""
+
+#: ../../spark/model_design.rst:250
+msgid ""
+"将一个空的非叶子Unit删除：在经过一系列的合并/删除/前移工作之后可能出现这种情况。尽管Runtime Executor "
+"应当能够处理空Unit(什么都不做)，从性能上的考虑，本Pass很有必要"
+msgstr ""
+
+#: ../../spark/model_design.rst:253
+msgid "AddCommonExecutorPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:255
+msgid ""
+"将与计算引擎无关的非叶子Unit转换为相应的ExecutorUnit，例如，ProcessUnit转换为ProcessExecutor，为生成Pb"
+" message做准备"
+msgstr ""
+
+#: ../../spark/model_design.rst:258
+msgid "AddTransferExecutorPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:260
+msgid "将与Spark引擎相关的非叶子Unit转换为相应的ExecutorUnit，例如，添加ShuffleInputExecutor/ShuffleOutputExecutor"
+msgstr ""
+
+#: ../../spark/model_design.rst:263
+msgid "Planner翻译–TranslationProcedure"
+msgstr ""
+
+#: ../../spark/model_design.rst:265
+msgid "BuildCommonExecutorPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:267
+msgid "（AddCommonExecutorPass的后续工作）：为添加的CommonExecutor构建Pb message"
+msgstr ""
+
+#: ../../spark/model_design.rst:269
+msgid "BuildTransferExecutorPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:271
+msgid "（AddTransferExecutorPass的后续工作）：为添加的TransferExecutor构建Pb message"
+msgstr ""
+
+#: ../../spark/model_design.rst:273
+msgid "BuildPhysicalPlanPass"
+msgstr ""
+
+#: ../../spark/model_design.rst:275
+msgid "（所有优化/翻译工作的最后一步）：生成总的PbSparkJob message，得到最终的物理计划"
+msgstr ""
+
+#: ../../spark/model_design.rst:278
+msgid "SparkRuntime"
+msgstr ""
+
+#: ../../spark/model_design.rst:281
+msgid "Runtime(client):"
+msgstr ""
+
+#: ../../spark/model_design.rst:283
+msgid "SparkBackend："
+msgstr ""
+
+#: ../../spark/model_design.rst:285
+msgid "作为client执行入口，SparkBackend负责如下职能："
+msgstr ""
+
+#: ../../spark/model_design.rst:287
+msgid "提交一个由Pb Message描述的逻辑计划，通过SparkPlanner将其翻译为物理计划"
+msgstr ""
+
+#: ../../spark/model_design.rst:289
+msgid ""
+"为上层的SparkPipeline维护作业的上下文状态BackendContext，其首先代理一个JVM下的SparkContext， "
+"通过以进程间RPC或是进程内JNI调用的方式与SparkContext通讯。同时BackendContext也负责记录Backend自身 "
+"的状态信息，例如哪些Node被Cache/哪些路径已经被写过等"
+msgstr ""
+
+#: ../../spark/model_design.rst:293
+msgid "SparkJob："
+msgstr ""
+
+#: ../../spark/model_design.rst:295
+msgid ""
+"SparkJob(.scala): 是通过spark-submit提交作业时指定的main "
+"class，即Spark任务的入口方法。SparkJob应当 "
+"接受用于描述物理计划的PbPhysicalPlan，将其解释为能够实际执行的Spark任务并提交给Spark执行。具体而言， "
+"就是通过PbPhysicalPlan中的PbRDD构造出RDD，以及他们之间的lineage，构造方式如下："
+msgstr ""
+
+#: ../../spark/model_design.rst:299
+msgid ""
+"对于InputRDD，构造出相应的HadoopInputRDD，通过Hadoop "
+"InputFormat读取，然后使用mapPartitions方法 调用封装了Bigflow "
+"Task的functor，由functor驱动Bigflow Runtime逻辑"
+msgstr ""
+
+#: ../../spark/model_design.rst:302
+msgid ""
+"对于GeneralRDD，对parent "
+"RDD使用repartitionAndSortWithinPartitions进行shuffle，然后同样使用mapPartitions"
+msgstr ""
+
+#: ../../spark/model_design.rst:303
+msgid "驱动Bigflow Task"
+msgstr ""
+
+#: ../../spark/model_design.rst:305
+msgid ""
+"对于没有下游的RDD，意味着其会有输出，将所有RDD union起来，汇集一个根RDD，根RDD没有任何数据，其作用是 "
+"驱动Spark执行编译好的RDD"
+msgstr ""
+
+#: ../../spark/model_design.rst:308
+msgid "最终，这样的逻辑可以通过一个接口来描述："
+msgstr ""
+
+#: ../../spark/model_design.rst:316
+msgid "Runtime(Worker):"
+msgstr ""
+
+#: ../../spark/model_design.rst:318
+msgid "这一部分负责在Spark平台节点上运行时，RDD与Bigflow Worker的交互模块，主要的示意图如下："
+msgstr ""
+
+#: ../../spark/model_design.rst:324
+msgid "图中主要的类/模块解释："
+msgstr ""
+
+#: ../../spark/model_design.rst:326
+msgid "BigflowExecutor.iterator"
+msgstr ""
+
+#: ../../spark/model_design.rst:328
+msgid ""
+"BigflowExecutor封装一个C++端的BigflowTask，并使用JNI接口暴露给JVM，以使得Spark RDD运行期进行计算时 "
+"被调用。"
+msgstr ""
+
+#: ../../spark/model_design.rst:331
+msgid ""
+"RDD在运行时，通过一个内置的Iterator驱动数据的执行。Iterator是仅能遍历一次的迭代器，其需要实现两个抽 "
+"象方法：next()和hasNext()"
+msgstr ""
+
+#: ../../spark/model_design.rst:334
+msgid ""
+"Iterator是一个拉数据的模型。现有的Bigflow RuntimeDispatcher是一个推数据的模型。我们需要一个中间的Buffer "
+"将dispatcher推数据模型转换为拉模型，其伪代码如下："
+msgstr ""
+
+#: ../../spark/model_design.rst:363
+msgid "BigflowTask"
+msgstr ""
+
+#: ../../spark/model_design.rst:365
+msgid ""
+"BigflowTask是一个Bigflow任务的对外抽象，它通过一个PbSparkTask的PbMessage构造，由SparkExecutorFactory"
+" 构造一个Bigflow "
+"ExecutorTree。通过ExecutorTree中的(Hadoop/Shuffle)InputExecutor和ShuffleOutputExecutor"
+" 提供数据输入和产出的相关接口。"
+msgstr ""
+
+#: ../../spark/model_design.rst:369
+msgid "除此之外，BigflowTask还负责维护所有的C++端分配的内存。"
+msgstr ""
+
+#: ../../spark/model_design.rst:371
+msgid "BigflowTask的对外接口应当包含："
+msgstr ""
+
+#: ../../spark/model_design.rst:379
+msgid "KVBuffer"
+msgstr ""
+
+#: ../../spark/model_design.rst:381
+msgid ""
+"BigflowTask的输出以K/V键值对分别序列化后的bytes数组表示，KVBuffer负责Runtime C++端的序列化后数据与JVM "
+"的交互。具体地，申请一段内存buffer，然后依次向buffer内填充，具体的填充方式为key length, key bytes, value "
+"length, value_bytes。同时，KVBuffer也维护一个指针，指明当前数据读取的位置，以供JVM端根据位置取走 bytes数据"
+msgstr ""
+
+#: ../../spark/model_design.rst:386
+msgid "KVBuffer的对外接口应当包含："
+msgstr ""
+
+#: ../../spark/model_design.rst:400
+msgid ""
+"Spark有一个CacheManager作为缓存机制的抽象，它为RDD隐藏了更下层的存储机制BlockManager。CacheManager其 "
+"对外只暴露一个接口："
+msgstr ""
+
+#: ../../spark/model_design.rst:411
+msgid ""
+"由于Bigflow将Spark RDD看作是粗粒度的Task，因此getOrCompute并不适用。我们需要实现一个Bigflow "
+"SparkCacheManager更细粒度地与Spark的CacheManager/BlockManager进行交互，管理cache："
+msgstr ""
+
+#: ../../spark/model_design.rst:414
+msgid "SparkCacheManager::CacheWriter:"
+msgstr ""
+
+#: ../../spark/model_design.rst:416
+msgid ""
+"CacheWriter自身维护一个链表/数组对缓存cache数据，通过其自身的write(key, value)将数据缓存起来，并在 "
+"writer.close()调用时构造一个Java Iterator，调用Scala下的"
+msgstr ""
+
+#: ../../spark/model_design.rst:419
+msgid ""
+"CacheManager.putInBlockManager进行缓存。(注意putInBlockManager是一个私有方法，需要通过反射强行调用)，"
+" 如下图所示："
+msgstr ""
+
+#: ../../spark/model_design.rst:428
+msgid "SparkCacheManager::Reader:"
+msgstr ""
+
+#: ../../spark/model_design.rst:430
+msgid ""
+"BlockManager的get方法直接返回一个Some[BlockResult]，当数据已被缓存并正确读取时，可以通过BlockResult.data"
+" 拿到以Iterator表示的数据。对于Bigflow而言，可以利用其构造一个"
+msgstr ""
+
+#: ../../spark/model_design.rst:433
+msgid "RDD作为输入源（类似于HadoopInputRDD），如下图所示："
+msgstr ""
+
+#: ../../spark/model_design.rst:441
+msgid "其他相关问题：构建、部署和依赖"
+msgstr ""
+
+#: ../../spark/model_design.rst:443
+msgid "由上讨论，Runtime的worker部分通过RDD内部通过JNI调用的方式来完成，其包含："
+msgstr ""
+
+#: ../../spark/model_design.rst:445
+msgid "C++部分封装在一个叫做Runtime的模块里面，比如baidu.bigflow.runtime.spark.Runtime，"
+msgstr ""
+
+#: ../../spark/model_design.rst:447
+msgid "执行的入口SparkTask"
+msgstr ""
+
+#: ../../spark/model_design.rst:449
+msgid "数据交互相关模块的实现，例如OutputBuffer"
+msgstr ""
+
+#: ../../spark/model_design.rst:451
+msgid "SparkExecutorFactory及所有的Executor实现"
+msgstr ""
+
+#: ../../spark/model_design.rst:453
+msgid "FlumeLogService用于Debug的Log模块"
+msgstr ""
+
+#: ../../spark/model_design.rst:455
+msgid "FlumeCounterService用于实现Counter的模块"
+msgstr ""
+
+#: ../../spark/model_design.rst:457
+msgid ""
+"这个模块要求能够以-fPic的方式编译为动态链接库在运行时被加载到JVM中通过JNI调用。例如，对于Bigflow Python， "
+"这个链接库可以叫做libbflpyrt.so(BigflowPythonRuntime)："
+msgstr ""
+
+#: ../../spark/model_design.rst:460
+msgid ""
+"Python Interpreter不能够使用静态编译的方式构建，即Bigflow自带的Python在编译时，使用动态编译得到 "
+"libpython.so，将其打包进前面提到的libbflpyrt.so"
+msgstr ""
+
+#: ../../spark/model_design.rst:463
+msgid "Python Runtime也要替换为相应的基于libpython.so的版本"
+msgstr ""
+
+#: ../../spark/test.rst:3
+msgid "测试相关"
+msgstr ""
+
+#: ../../spark/test.rst:6
+msgid "功能测试"
+msgstr ""
+
+#: ../../spark/test.rst:8
+msgid "单元测试：主要使用GTest(针对C++代码)/Scala(针对Scala代码)进行"
+msgstr ""
+
+#: ../../spark/test.rst:10
+msgid ""
+"集成测试：Bigflow目前使用LocalPipeline做本地的集成测试，由于Spark本身支持Local运行模式，由Driver进程调度Spark"
+" task 执行，因此功能测试较为简单，相对于目前所有的Bigflow测试"
+msgstr ""
+
+#: ../../spark/test.rst:13
+msgid "case，指需要将测试使用的引擎改为Spark执行即可，不需要专门搭建测试集群"
+msgstr ""
+
+#: ../../spark/test.rst:16
+msgid "性能测试"
+msgstr ""
+
+#: ../../spark/test.rst:18
+msgid ""
+"这里主要指集成测试中的性能部分，保证对于使用Spark Local模式运行某一个case，其运行的时间应当在一个合理的范围内，放 "
+"置由于代码的Bug/设计的不合理导致性能下降的情况"
+msgstr ""
+
+#: ../../spark/test.rst:22
+msgid "与PySpark的Benchmark Case"
+msgstr ""
+
+#: ../../spark/test.rst:24
+msgid "待添加"
+msgstr ""
+
