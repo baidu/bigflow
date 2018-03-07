@@ -53,4 +53,4 @@ Bigflow 的目标是: 使分布式程序写起来更简单，测起来更方便�
 
 ### 联系我们
 
-需要加入Bigflow微信技术讨论群的，请加微信号：iacmol，然后备注一下：加入Bigflow技术讨论群
+需要加入Bigflow微信技术讨论群的，请加微信号：iacmol 或 himddheart，然后备注一下：加入Bigflow技术讨论群
