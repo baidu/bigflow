@@ -32,3 +32,4 @@ $BIGFLOW make -e SPHINXOPTS="-D language='en'" html
 mv _build/html  html/en
 
 touch html/.touch html/.nojekyll
+echo '<meta http-equiv="Refresh" content="0; url=zh/index.html" />' > html/index.html
