@@ -262,7 +262,7 @@ std::list<const LogicalPlan::Scope*> LogicalPlan::Scope::ScopeStack() const {
 
 PbScope LogicalPlan::Scope::ToProtoMessage() const {
     if (m_message.type() == PbScope::BUCKET && m_message.has_concurrency()) {
-        // TODO(wenxiang): provide seperate interface to set bucket size
+        // TODO(wenxiang): provide separate interface to set bucket size
         m_message.mutable_bucket_scope()->set_bucket_size(m_message.concurrency());
     }
     return m_message;
