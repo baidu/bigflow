@@ -1,0 +1,219 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Exceptions &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.error.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.error">
+<span id="exceptions"></span><h1>Exceptions<a class="headerlink" href="#module-bigflow.error" title="永久链接至标题">¶</a></h1>
+<p>Python API异常定义</p>
+<span class="target" id="module-bigflow.error"></span><dl class="exception">
+<dt id="bigflow.error.BigflowHDFSException">
+<em class="property">exception </em><code class="descclassname">bigflow.error.</code><code class="descname">BigflowHDFSException</code><span class="sig-paren">(</span><em>msg=None</em>, <em>internal=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.error.BigflowHDFSException" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.error.Error" title="bigflow.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.error.Error</span></code></a></p>
+<p>访问HDFS抛出的异常</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="bigflow.error.BigflowPlanningException">
+<em class="property">exception </em><code class="descclassname">bigflow.error.</code><code class="descname">BigflowPlanningException</code><span class="sig-paren">(</span><em>msg=None</em>, <em>internal=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.error.BigflowPlanningException" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.error.Error" title="bigflow.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.error.Error</span></code></a></p>
+<p>Bigflow非运行期抛出异常的基类</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="bigflow.error.BigflowRPCException">
+<em class="property">exception </em><code class="descclassname">bigflow.error.</code><code class="descname">BigflowRPCException</code><span class="sig-paren">(</span><em>msg=None</em>, <em>internal=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.error.BigflowRPCException" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.error.BigflowPlanningException" title="bigflow.error.BigflowPlanningException"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.error.BigflowPlanningException</span></code></a></p>
+<p>Bigflow RPC失败抛出的异常</p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">本异常有可能在今后移除，如有需要，建议捕获其父类</p>
+</div>
+</dd></dl>
+
+<dl class="exception">
+<dt id="bigflow.error.BigflowRuntimeException">
+<em class="property">exception </em><code class="descclassname">bigflow.error.</code><code class="descname">BigflowRuntimeException</code><span class="sig-paren">(</span><em>msg=None</em>, <em>internal=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.error.BigflowRuntimeException" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.error.Error" title="bigflow.error.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.error.Error</span></code></a></p>
+<p>Bigflow运行期抛出异常的基类</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="bigflow.error.Error">
+<em class="property">exception </em><code class="descclassname">bigflow.error.</code><code class="descname">Error</code><span class="sig-paren">(</span><em>msg=None</em>, <em>internal=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.error.Error" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<p>基类</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
+<li><strong>msg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a><em>, </em><em>optional</em>) -- 异常信息</li>
+<li><strong>internal</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(在 Python v3.7)"><em>Exception</em></a><em>, </em><em>optional</em>) -- 导致该异常的内部异常</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="exception">
+<dt id="bigflow.error.InvalidConfException">
+<em class="property">exception </em><code class="descclassname">bigflow.error.</code><code class="descname">InvalidConfException</code><span class="sig-paren">(</span><em>msg=None</em>, <em>internal=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.error.InvalidConfException" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.error.BigflowRuntimeException" title="bigflow.error.BigflowRuntimeException"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.error.BigflowRuntimeException</span></code></a></p>
+<p>配置错误所导致的运行期异常</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="bigflow.error.InvalidDataException">
+<em class="property">exception </em><code class="descclassname">bigflow.error.</code><code class="descname">InvalidDataException</code><span class="sig-paren">(</span><em>msg=None</em>, <em>internal=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.error.InvalidDataException" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.error.BigflowRuntimeException" title="bigflow.error.BigflowRuntimeException"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.error.BigflowRuntimeException</span></code></a></p>
+<p>数据错误所导致的运行期异常</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="bigflow.error.InvalidLogicalPlanException">
+<em class="property">exception </em><code class="descclassname">bigflow.error.</code><code class="descname">InvalidLogicalPlanException</code><span class="sig-paren">(</span><em>msg=None</em>, <em>internal=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.error.InvalidLogicalPlanException" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.error.BigflowPlanningException" title="bigflow.error.BigflowPlanningException"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.error.BigflowPlanningException</span></code></a></p>
+<p>Bigflow 执行计划构造抛出的异常</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="bigflow.error.InvalidSeqSerdeException">
+<em class="property">exception </em><code class="descclassname">bigflow.error.</code><code class="descname">InvalidSeqSerdeException</code><span class="sig-paren">(</span><em>msg=None</em>, <em>internal=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.error.InvalidSeqSerdeException" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.error.BigflowPlanningException" title="bigflow.error.BigflowPlanningException"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.error.BigflowPlanningException</span></code></a></p>
+<p>Bigflow 序列化文件传入key和value的serde异常</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

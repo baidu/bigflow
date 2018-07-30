@@ -1,0 +1,252 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>lazy_var &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.lazy_var.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.lazy_var">
+<span id="lazy-var"></span><h1>lazy_var<a class="headerlink" href="#module-bigflow.lazy_var" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="bigflow.lazy_var.LazyVariable">
+<em class="property">class </em><code class="descclassname">bigflow.lazy_var.</code><code class="descname">LazyVariable</code><span class="sig-paren">(</span><em>var_id</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.lazy_var.LazyVariable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Lazy Variable，用于加载字典等外部数据</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># coding: utf-8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">lazy_var</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mydict</span><span class="o">.</span><span class="n">txt</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key1</span>    <span class="n">value1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key2</span>    <span class="n">value2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key3</span>    <span class="n">value3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="s2">&quot;&quot;</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">load_dict</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>            <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>            <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">return</span> <span class="n">data</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_lazy_var</span> <span class="o">=</span> <span class="n">lazy_var</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">load_dict</span><span class="p">(</span><span class="s2">&quot;./mydict.txt&quot;</span><span class="p">))</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="c1"># 获取lazy_var内容</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">my_dict</span> <span class="o">=</span> <span class="n">my_lazy_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">return</span> <span class="n">my_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">my_dict</span> <span class="o">=</span> <span class="n">my_lazy_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="c1"># 可以在本地直接获取lazy_var内容</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="c1"># [&quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot;]</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span> <span class="n">my_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">pipeline</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">Pipeline</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">pipeline</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;./mydict.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;./mydict.txt&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">keys</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="s2">&quot;key1&quot;</span><span class="p">,</span> <span class="s2">&quot;key2&quot;</span><span class="p">,</span> <span class="s2">&quot;key3&quot;</span><span class="p">,</span> <span class="s2">&quot;key4&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="c1"># 可以在transforms中获取lazy_var内容</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">values</span> <span class="o">=</span> <span class="n">keys</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">get_value</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="c1"># [&quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot;, None]</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span> <span class="n">values</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="bigflow.lazy_var.LazyVariable.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.lazy_var.LazyVariable.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>获取真正的Python Object，在第一次调用get方法时会构造一次Python Object并缓存住
+以后每次调用get直接从缓存中读取</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>None</strong> – </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">真正需要获取的Python Object</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">var(Python Object)</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">lazy_var</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fn</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">}</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_lazy_var</span> <span class="o">=</span> <span class="n">lazy_var</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">my_lazy_var</span><span class="p">)</span>
+<span class="go">&lt;class &#39;bigflow.lazy_var.LazyVariable&#39;&gt;</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_dict</span> <span class="o">=</span> <span class="n">my_lazy_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_dict</span>
+<span class="go">{&#39;A&#39;: &#39;1&#39;, &#39;C&#39;: &#39;3&#39;, &#39;B&#39;: &#39;2&#39;}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">my_dict</span><span class="p">)</span>
+<span class="go">&lt;type &#39;dict&#39;&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.lazy_var.declare">
+<code class="descclassname">bigflow.lazy_var.</code><code class="descname">declare</code><span class="sig-paren">(</span><em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.lazy_var.declare" title="Permalink to this definition">¶</a></dt>
+<dd><p>根据给定的Python Object生成函数，生成一个 LazyVariable 变量；
+可以用该接口来加载一个外部字典或任意的Python Object
+在真正需要使用 Python Object 的时候，可以调用LazyVariable的get获取</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fn</strong> (<em>Python function</em><em> or </em><em>Python callable Object</em>) – 生成Python Object的函数</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">可被延迟加载的变量</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">lazy_variable(<a class="reference internal" href="#bigflow.lazy_var.LazyVariable" title="bigflow.lazy_var.LazyVariable">LazyVariable</a>)</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">lazy_var</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fn</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_lazy_var</span> <span class="o">=</span> <span class="n">lazy_var</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">my_lazy_var</span><span class="p">)</span>
+<span class="go">&lt;class &#39;bigflow.lazy_var.LazyVariable&#39;&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

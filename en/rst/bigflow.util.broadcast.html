@@ -1,0 +1,215 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BroadcastUtil &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.util.broadcast.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.util.broadcast">
+<span id="broadcastutil"></span><h1>BroadcastUtil<a class="headerlink" href="#module-bigflow.util.broadcast" title="Permalink to this headline">¶</a></h1>
+<p>A utility module containing some helper method for broadcasting mechnism</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">End-users are not supposed to use the functions.</p>
+</div>
+<p>Author: Wang, Cong(<a class="reference external" href="mailto:bigflow-opensource&#37;&#52;&#48;baidu&#46;com">bigflow-opensource<span>&#64;</span>baidu<span>&#46;</span>com</a>)</p>
+<dl class="function">
+<dt id="bigflow.util.broadcast.broadcast_to">
+<code class="descclassname">bigflow.util.broadcast.</code><code class="descname">broadcast_to</code><span class="sig-paren">(</span><em>pvalue</em>, <em>scope</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.broadcast.broadcast_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Broadcast given PType instance to given scope</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pvalue</strong> (<a class="reference internal" href="bigflow.ptype.html#bigflow.ptype.PType" title="bigflow.ptype.PType"><em>PType</em></a>) – PType instance</li>
+<li><strong>scope</strong> (<em>LogicalPlan.Scope</em>) – scope</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">new PType after broadcast</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.ptype.html#bigflow.ptype.PType" title="bigflow.ptype.PType">PType</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.util.broadcast.is_same_working_scope">
+<code class="descclassname">bigflow.util.broadcast.</code><code class="descname">is_same_working_scope</code><span class="sig-paren">(</span><em>v1</em>, <em>v2</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.broadcast.is_same_working_scope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Judge if v1 and v2 works on the same scope.
+When both of them are PType but their working scopes are different, return False; otherwise
+returns true.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>v1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – object 1</li>
+<li><strong>v2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><em>object</em></a>) – object 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">if v1 and v2 work on the same scope</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.util.broadcast.working_scope">
+<code class="descclassname">bigflow.util.broadcast.</code><code class="descname">working_scope</code><span class="sig-paren">(</span><em>pvalue</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.broadcast.working_scope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the working scope of a given PType instance</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pvalue</strong> (<a class="reference internal" href="bigflow.ptype.html#bigflow.ptype.PType" title="bigflow.ptype.PType"><em>PType</em></a>) – PType instance</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">working scope</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">LogicalPlan.Scope</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if invalid argument is given</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

@@ -1,0 +1,246 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Others &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.util.utils.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.util.utils">
+<span id="others"></span><h1>Others<a class="headerlink" href="#module-bigflow.util.utils" title="永久链接至标题">¶</a></h1>
+<p>Author: panyunhong(<a class="reference external" href="mailto:bigflow-opensource&#37;&#52;&#48;baidu&#46;com">bigflow-opensource<span>&#64;</span>baidu<span>&#46;</span>com</a>)</p>
+<dl class="function">
+<dt id="bigflow.util.utils.construct">
+<code class="descclassname">bigflow.util.utils.</code><code class="descname">construct</code><span class="sig-paren">(</span><em>pipeline</em>, <em>node</em>, <em>type</em>, <em>nested_level=None</em>, <em>inner_most_type=None</em>, <em>key_serdes=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.utils.construct" title="永久链接至目标">¶</a></dt>
+<dd><p>Construct a PType from a LogicalPlan node</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pipeline</strong> (<a class="reference internal" href="bigflow.base.html#bigflow.base.Pipeline" title="bigflow.base.Pipeline"><em>Pipeline</em></a>) -- the Pipeline constructed PType belongs to</li>
+<li><strong>node</strong> (<em>LogicalPlan.Node</em>) -- node</li>
+<li><strong>type</strong> (<em>class</em>) -- class of PType to construct</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Kwargs:</dt>
+<dd>nested_leve: specify PTable's nested level if PType is a PTable
+inner_most_type:  specify PTable's inner-most type if PType is a PTable</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">PType</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body"><a class="reference internal" href="bigflow.ptype.html#bigflow.ptype.PType" title="bigflow.ptype.PType">PType</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.util.utils.detect_ptype">
+<code class="descclassname">bigflow.util.utils.</code><code class="descname">detect_ptype</code><span class="sig-paren">(</span><em>runtime_value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.utils.detect_ptype" title="永久链接至目标">¶</a></dt>
+<dd><p>Detect the default PType type for a runtime value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>runtime_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><em>object</em></a>) -- a runtime value, cannot be PType</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">detected PType class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body">class</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.util.utils.flatten_runtime_value">
+<code class="descclassname">bigflow.util.utils.</code><code class="descname">flatten_runtime_value</code><span class="sig-paren">(</span><em>runtime_value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.utils.flatten_runtime_value" title="永久链接至目标">¶</a></dt>
+<dd><p>Flatten a Python dict to tuple</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>runtime_value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><em>object</em></a>) -- value to flatten</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">flatten result</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)">object</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.util.utils.is_infinite">
+<code class="descclassname">bigflow.util.utils.</code><code class="descname">is_infinite</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.utils.is_infinite" title="永久链接至目标">¶</a></dt>
+<dd><p>Return if a PType is infinite</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>obj</strong> (<a class="reference internal" href="bigflow.ptype.html#bigflow.ptype.PType" title="bigflow.ptype.PType"><em>PType</em></a>) -- PType</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">True if the PType is infinite, False otherwise</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(在 Python v3.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.util.utils.is_ptype">
+<code class="descclassname">bigflow.util.utils.</code><code class="descname">is_ptype</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.utils.is_ptype" title="永久链接至目标">¶</a></dt>
+<dd><p>Return if an object is a PType</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><em>object</em></a>) -- object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">True if the object is a PType, False otherwise</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(在 Python v3.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

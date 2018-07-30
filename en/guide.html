@@ -1,0 +1,622 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>编程指南 &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">编程指南</a></li>
+<li><a class="reference internal" href="#id2">概述</a></li>
+<li><a class="reference internal" href="#id3">后端引擎</a></li>
+<li><a class="reference internal" href="#id4">配置</a><ul>
+<li><a class="reference internal" href="#hadoop">Hadoop配置</a></li>
+<li><a class="reference internal" href="#bigflow-env-sh">bigflow-env.sh</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#p-ptype">P类型(PType)</a><ul>
+<li><a class="reference internal" href="#pcollection">PCollection</a></li>
+<li><a class="reference internal" href="#pobject">PObject</a></li>
+<li><a class="reference internal" href="#ptable">PTable</a></li>
+<li><a class="reference internal" href="#id5">变换</a></li>
+<li><a class="reference internal" href="#apply-apply-values">apply/apply_values</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">输入/输出</a></li>
+<li><a class="reference internal" href="#sideinputs">SideInputs</a><ul>
+<li><a class="reference internal" href="#id7">闭包</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">附带文件</a></li>
+<li><a class="reference internal" href="#id10">缓存机制</a></li>
+<li><a class="reference internal" href="#id11">PCollection的顺序</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/guide.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>编程指南<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="#id2">概述</a></li>
+<li><a class="reference internal" href="#id3">后端引擎</a></li>
+<li><a class="reference internal" href="#id4">配置</a><ul>
+<li><a class="reference internal" href="#hadoop">Hadoop配置</a></li>
+<li><a class="reference internal" href="#bigflow-env-sh">bigflow-env.sh</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#p-ptype">P类型(PType)</a><ul>
+<li><a class="reference internal" href="#pcollection">PCollection</a></li>
+<li><a class="reference internal" href="#pobject">PObject</a></li>
+<li><a class="reference internal" href="#ptable">PTable</a></li>
+<li><a class="reference internal" href="#id5">变换</a></li>
+<li><a class="reference internal" href="#apply-apply-values">apply/apply_values</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">输入/输出</a></li>
+<li><a class="reference internal" href="#sideinputs">SideInputs</a><ul>
+<li><a class="reference external" href="http://en.wikipedia.org/wiki/Closure_(computer_programming)">闭包</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">附带文件</a></li>
+<li><a class="reference internal" href="#id10">缓存机制</a></li>
+<li><a class="reference internal" href="#id11">PCollection的顺序</a></li>
+<li><a href="#id12"><span class="problematic" id="id13">`错误信息和日志`_</span></a></li>
+<li><a href="#id14"><span class="problematic" id="id15">`其它`_</span></a></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h1>概述<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
+<p>Bigflow Python是一个致力于简化分布式计算任务编写和维护的Python module，它提供了对分布式数据和计算的高层抽象，你可以使用这些抽象来编写分布式计算程序。Bigflow Python能够将这些抽象映射到不同的分布式计算框架之上。</p>
+<p>Bigflow Python中，最重要的抽象被称为 <cite>P类型</cite> ，P类型是分布式数据的抽象描述，非常类似于Spark中的RDD。实际上，它们都借鉴于于Google的论文&lt;&lt;Flume Java&gt;&gt;。P类型可以通过读取(read)接口得到，例如读取文件系统中的文件/目录或是数据库中的表格，或是通过Python的已有变量构造得到。P类型可以通过 <cite>变换</cite> 来描述计算，例如，映射、分组、连接等。最终，变换后的P类型可以通过写出(write)接口持久化到文件系统/数据库中，或是将其转换为内存中的Python内置变量。此外，用户还可以将一个P类型进行缓存以便于多轮迭代计算。</p>
+<p>第二个抽象概念为 <cite>SideInputs</cite> ，它指被广播到计算中去的P类型或是Python变量。通常而言，一个计算将被并行地在计算集群中执行，这时每个计算切片都能够得到SideInputs来满足计算的需求(例如查字典)。</p>
+</div>
+<div class="section" id="id3">
+<h1>后端引擎<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h1>
+<p>目前，Bigflow Python支持两种后端执行引擎:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Local – 一个轻量的本地执行引擎，便于学习以及基于小数据集的算法验证。</li>
+<li>Spark – 开源分布式计算引擎。</li>
+</ul>
+</div></blockquote>
+<p>后端执行引擎可以在创建Pipeline的时候指定，例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">local_pipeline</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">Pipeline</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;local&quot;</span><span class="p">)</span>
+<span class="n">spark_pipeline</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">Pipeline</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;spark&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h1>配置<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="hadoop">
+<h2>Hadoop配置<a class="headerlink" href="#hadoop" title="Permalink to this headline">¶</a></h2>
+<p>Bigflow Python需要读取core-site.xml配置文件来访问HDFS。因此在使用时，用户需要首先设置好HADOOP_HOME环境变量。</p>
+</div>
+<div class="section" id="bigflow-env-sh">
+<h2>bigflow-env.sh<a class="headerlink" href="#bigflow-env-sh" title="Permalink to this headline">¶</a></h2>
+<p>bigflow-env.sh位于BIGFLOW_PYTHON_HOME/bigflow/bin下，其中包含一些Bigflow Python在运行时的可选参数。</p>
+<ul>
+<li><p class="first">Bigflow Python默认将log打印到屏幕，用户可以通过改变下面的参数来指定Log的输出文件:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BIGFLOW_LOG_FILE</span><span class="o">=</span><span class="s2">&quot;a local directory&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">对于一个P类型PValue，默认的str(PValue)仅会得到一个表示其具体类别的字符串。也即`print PValue`不会真正地触发计算。这时，如果希望看到一个P类型的内容，可以调用 <cite>PValue.get()</cite></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s2">&quot;xxx&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p1</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s2">&quot;line1&quot;</span><span class="p">,</span> <span class="s2">&quot;line2&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>用户可以设置下面的变量来改变`str(PValue)`的行为</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BIGFLOW_PTYPE_GET_ON_STR</span><span class="o">=</span><span class="n">true</span>
+</pre></div>
+</div>
+<p>这时，每次`print PValue`都会隐式地执行`PValue.get()`:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s2">&quot;line1&quot;</span><span class="p">,</span> <span class="s2">&quot;line2&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>这样做的好处在于可以使Bigflow Python写出的代码更像一个单机程序。</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="p-ptype">
+<h1>P类型(PType)<a class="headerlink" href="#p-ptype" title="Permalink to this headline">¶</a></h1>
+<p>P类型是Bigflow设计中的核心抽象，其表示集群中的分布式数据集，P类型的另一个特点是数据不可变，对P类型的任何计算都产生一个新的P类型。</p>
+<p>在Bigflow Python中，共有3中不同的P类型，其中的每一种都被设计于类似Python语言的内置类型:</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="rst/bigflow.pcollection.html#module-bigflow.pcollection" title="bigflow.pcollection: PCollection"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PCollection</span></code></a>  –  并行化的Python <cite>list</cite></li>
+<li><a class="reference internal" href="rst/bigflow.pobject.html#module-bigflow.pobject" title="bigflow.pobject: pobject"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PObject</span></code></a>      –  并行化的Python单个变量</li>
+<li><a class="reference internal" href="rst/bigflow.ptable.html#module-bigflow.ptable" title="bigflow.ptable: PTable"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PTable</span></code></a>       –  并行化的 Python <cite>dict</cite></li>
+</ol>
+<div class="section" id="pcollection">
+<h2>PCollection<a class="headerlink" href="#pcollection" title="Permalink to this headline">¶</a></h2>
+<p>PCollection表示并行化的Python <cite>list</cite> 。其可以通过一个Python list实例转换得到，或是读取文件得到:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s2">&quot;xxx&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p1</span>
+<span class="go">[...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p2</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>字符串 “<em>[…]</em>” 表示p1/p2均为PCollection。绝大多数的Bigflow变换均作用于PCollection上，而且结果多为PCollection。</p>
+<p>PCollection非常类似于Apache Spark中的弹性分布式数据集(RDD)。</p>
+</div>
+<div class="section" id="pobject">
+<h2>PObject<a class="headerlink" href="#pobject" title="Permalink to this headline">¶</a></h2>
+<p>PObject表示单个变量。其往往是聚合类变换的结果，例如max/sum/count等。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p1</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="go">o</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p2</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="go">o</span>
+</pre></div>
+</div>
+<p>字符”<em>o</em>” 表示一个PObject。PObject往往作为一个 <cite>SideInput</cite> 参与到变换中。具体的例子请参照 <cite>SideInput</cite> 部分。</p>
+</div>
+<div class="section" id="ptable">
+<h2>PTable<a class="headerlink" href="#ptable" title="Permalink to this headline">¶</a></h2>
+<p>PTable非常类似于并行化的Python <cite>dict</cite>, 其包含key到value的映射，但其value必须是另一个P类型。PTable往往是一个分组变换的结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p3</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p4</span> <span class="o">=</span> <span class="n">p3</span><span class="o">.</span><span class="n">group_by_key</span><span class="p">()</span>  <span class="c1"># group_by_key() 的输入PCollection的所有元素必须是有两个元素的tuple或list。第一个元素为key，第二个元素为value。</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p4</span>
+<span class="go">{k0: [...]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p4</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">{&quot;A&quot;: [1, 2], &quot;B&quot;: [1]}</span>
+</pre></div>
+</div>
+<p>字符串 <cite>{k0: […]}</cite> 表示 <cite>p4</cite> 是一个PTable。 <cite>p4</cite> 的key类型为Python str，value为一个PCollection。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p5</span> <span class="o">=</span> <span class="n">p4</span><span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>  <span class="c1"># 将变换 `transforms.max` 作用到p4的value，也即PCollection上。</span>
+<span class="go">{k0: o}</span>
+</pre></div>
+</div>
+<p><cite>p5</cite> 也是一个PTable，它的key与 <cite>p4</cite> 一致，value变为了PObject类型( <cite>transforms.max</cite> 的结果)。</p>
+<p>由于PTable仍然是一个P类型，因此它可以作为另一个PTable的value。例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p6</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p6</span>
+<span class="go">{k0: {k1: o}}  # 两层key，最内层value为PObject</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p7</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]},</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]}})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">p7</span>
+<span class="go">{k0: {k1: [...]}}  # 两层key，最内层value为PCollection</span>
+</pre></div>
+</div>
+<p>也即，PTable可以无限嵌套，</p>
+<p>P类型可能通过下面的三种情况构造:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="rst/bigflow.pipeline.pipeline_base.html#bigflow.pipeline.pipeline_base.PipelineBase.read" title="bigflow.pipeline.pipeline_base.PipelineBase.read"><code class="xref py py-func docutils literal notranslate"><span class="pre">Pipeline.read()</span></code></a>: 从外部存储读取</li>
+<li><a class="reference internal" href="rst/bigflow.pipeline.pipeline_base.html#bigflow.pipeline.pipeline_base.PipelineBase.parallelize" title="bigflow.pipeline.pipeline_base.PipelineBase.parallelize"><code class="xref py py-func docutils literal notranslate"><span class="pre">Pipeline.parallelize()</span></code></a>: 通过内存变量构造</li>
+<li>从另一个P类型 <a class="reference internal" href="#id5">变换</a> 得到</li>
+</ul>
+</div></blockquote>
+<p>P类型可以通过下面的三种情况使用:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="rst/bigflow.pipeline.pipeline_base.html#bigflow.pipeline.pipeline_base.PipelineBase.write" title="bigflow.pipeline.pipeline_base.PipelineBase.write"><code class="xref py py-func docutils literal notranslate"><span class="pre">Pipeline.write()</span></code></a>: 持久化到外部存储</li>
+<li><a class="reference internal" href="rst/bigflow.pipeline.pipeline_base.html#bigflow.pipeline.pipeline_base.PipelineBase.get" title="bigflow.pipeline.pipeline_base.PipelineBase.get"><code class="xref py py-func docutils literal notranslate"><span class="pre">Pipeline.get()</span></code></a>: 转换为Python内置变量</li>
+<li>作用一个 <a class="reference internal" href="#id5">变换</a> ，生成另一个P类型</li>
+</ul>
+</div></blockquote>
+<p>P类型的不断变换构造出一个有向无环图，最终完整地表达出用户的计算逻辑。</p>
+</div>
+<div class="section" id="id5">
+<h2>变换<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>Bigflow Python提供了一系列的变换原语方便用户表达计算。</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.accumulate" title="bigflow.transforms.accumulate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.accumulate</span></code></a>(pcollection,&nbsp;…)</td>
+<td>将给定的PCollection按照一个初始值和方法聚合为PObject</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.aggregate" title="bigflow.transforms.aggregate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.aggregate</span></code></a>(pcollection,&nbsp;…)</td>
+<td>将给定的PCollection按照初始值、初段聚合方法和汇总方法聚合为PObject</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.cartesian" title="bigflow.transforms.cartesian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.cartesian</span></code></a>(*pcollections,&nbsp;…)</td>
+<td>对多个输入PCollection求笛卡尔积，返回一个PCollection</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.cogroup" title="bigflow.transforms.cogroup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.cogroup</span></code></a>(*pcollections,&nbsp;…)</td>
+<td>对传入的所有pcollection进行协同分组。</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.combine" title="bigflow.transforms.combine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.combine</span></code></a>(pcollection,&nbsp;fn,&nbsp;…)</td>
+<td>给定一个合并函数，聚合输入PCollection中所有元素，这些元素以迭代器的形式给出</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.distinct" title="bigflow.transforms.distinct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.distinct</span></code></a>(pcollection,&nbsp;…)</td>
+<td>返回给定PCollection中所有不重复元素</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.diff" title="bigflow.transforms.diff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.diff</span></code></a>(pcollection1,&nbsp;…)</td>
+<td>对于给定的PCollection1和PCollection2，返回两者不相同的元素</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.extract_keys" title="bigflow.transforms.extract_keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.extract_keys</span></code></a>(ptable,&nbsp;…)</td>
+<td>提取给定PTable中所有的key</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.extract_values" title="bigflow.transforms.extract_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.extract_values</span></code></a>(ptable,&nbsp;…)</td>
+<td>提取给定PTable中所有的value</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.filter" title="bigflow.transforms.filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.filter</span></code></a>(pcollection,&nbsp;fn,&nbsp;…)</td>
+<td>对于给定的PCollection和一个断言函数，返回只满足断言函数元素的PCollection</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.first" title="bigflow.transforms.first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.first</span></code></a>(pcollection,&nbsp;**options)</td>
+<td>取出PCollection中的第一个元素</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.flatten" title="bigflow.transforms.flatten"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.flatten</span></code></a>(ptable,&nbsp;**options)</td>
+<td>对于给定PTable中的key和value中每一个元素，构造(key, value)对，结果保存在PCollection中</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.flatten_values" title="bigflow.transforms.flatten_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.flatten_values</span></code></a>(ptable,&nbsp;…)</td>
+<td>等价于 <code class="docutils literal notranslate"><span class="pre">extract_values(ptable)</span></code></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.group_by" title="bigflow.transforms.group_by"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.group_by</span></code></a>(pcollection,&nbsp;…)</td>
+<td>利用给定的key_extractor和value_extractor对输入PCollection分组，返回一个表示分组结果的PTable</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.group_by_key" title="bigflow.transforms.group_by_key"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.group_by_key</span></code></a>(pcollection,&nbsp;…)</td>
+<td>利用给定的PCollection，使用一个默认的key/value提取函数对输入的PCollection分组 ，返回一个表示分组的PTable</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.is_empty" title="bigflow.transforms.is_empty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.is_empty</span></code></a>(pcollection)</td>
+<td>对于输入PCollection，返回其是否为空</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.intersection" title="bigflow.transforms.intersection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.intersection</span></code></a>(…[,&nbsp;…])</td>
+<td>对于给定的PCollection1和PCollection2，返回所有同时存在于PCollection1和PCollection2 中的元素，即取两者交集</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.join" title="bigflow.transforms.join"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.join</span></code></a>(*pcollections,&nbsp;**options)</td>
+<td>对于多个输入PCollection，根据key对PCollection做内连接操作 ，连接结果为(key, (value1, value2, …, valuen))</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.left_join" title="bigflow.transforms.left_join"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.left_join</span></code></a>(*pcollections,&nbsp;…)</td>
+<td>对于多个输入PCollection，根据key对PCollection做左连接操作 ，连接结果为(key, (value 1, value 2, …, value n))，若第m个PCollection没有元素， 则value m为None</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.right_join" title="bigflow.transforms.right_join"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.right_join</span></code></a>(*pcollections,&nbsp;…)</td>
+<td>对于多个输入PCollection，根据key对PCollection做右连接操作 ，连接结果为(key, (value 1, value 2, …, value n))，若第m个PCollection没有元素， 则value m为None</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.full_join" title="bigflow.transforms.full_join"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.full_join</span></code></a>(*pcollections,&nbsp;…)</td>
+<td>对于多个输入PCollection，根据key对PCollection做全连接操作 ，连接结果为(key, (value 1, value 2, …, value n))，若第m个PCollection没有元素， 则value m为None</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.max" title="bigflow.transforms.max"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.max</span></code></a>(pcollection[,&nbsp;key])</td>
+<td>得到输入PCollection中最大的元素</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.max_elements" title="bigflow.transforms.max_elements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.max_elements</span></code></a>(pcollection,&nbsp;n)</td>
+<td>得到输入PCollection中前n大的元素</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.min" title="bigflow.transforms.min"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.min</span></code></a>(pcollection[,&nbsp;key])</td>
+<td>得到输入PCollection中最小的元素</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.map" title="bigflow.transforms.map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.map</span></code></a>(pvalue,&nbsp;fn,&nbsp;…)</td>
+<td>对PCollection中的每个元素做一对一映射</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.flat_map" title="bigflow.transforms.flat_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.flat_map</span></code></a>(pvalue,&nbsp;fn,&nbsp;…)</td>
+<td>对PCollection中的每个元素做一对N映射</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.reduce" title="bigflow.transforms.reduce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.reduce</span></code></a>(pcollection,&nbsp;fn,&nbsp;…)</td>
+<td>对于属于PCollection，使用给定的fn将所有元素规约为单个元素</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.sort" title="bigflow.transforms.sort"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.sort</span></code></a>(pcollection[,&nbsp;reverse])</td>
+<td>对于输入PCollection，将其进行排序</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.sum" title="bigflow.transforms.sum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.sum</span></code></a>(pcollection,&nbsp;**options)</td>
+<td>对于输入PCollection，求其所有包含元素相加的结果</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.take" title="bigflow.transforms.take"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.take</span></code></a>(pcollection,&nbsp;n,&nbsp;…)</td>
+<td>取给定PCollection中的任意n个元素。 （如果总元素数量不足n，则返回输入pcollection）</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.transform" title="bigflow.transforms.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.transform</span></code></a>(pcollection,&nbsp;…)</td>
+<td>对给定PCollection进行任意的变换，结果为另一个PCollection</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.union" title="bigflow.transforms.union"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.union</span></code></a>(*pvalues,&nbsp;**options)</td>
+<td>对于多个输入PCollection/PObject，返回包含它们所有元素的PCollection</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.to_list_pobject" title="bigflow.transforms.to_list_pobject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.to_list_pobject</span></code></a>(pvalue,&nbsp;…)</td>
+<td>对于给定的PCollection，聚合为PObject，PObject的内容为list</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.pipe" title="bigflow.transforms.pipe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bigflow.transforms.pipe</span></code></a>(pvalue,&nbsp;command,&nbsp;…)</td>
+<td>对于给定的PCollection/PTable，返回通过command处理后的PCollection</td>
+</tr>
+</tbody>
+</table>
+<p>以上的所有变换均需要作用于P类型之上，产生另一个P类型。例如，将 <cite>transforms.map</cite> 作用于PCollection上产生一个新的PCollection。如果把PCollection看作Python内置的 <cite>list</cite> ， <cite>transforms.map</cite> 的用法非常类似于Python内置的 <cite>map()</cite> 方法:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># Python list</span>
+<span class="n">pcollection</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>  <span class="c1"># 通过Python list构造出一个PCollection</span>
+
+<span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">python_list</span><span class="p">)</span>  <span class="c1"># 结果: [2, 3, 4]</span>
+<span class="n">transforms</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">pcollection</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># 结果: [2, 3, 4]</span>
+</pre></div>
+</div>
+<p>PCollection同样有一个成员方法 <cite>PCollection.map(function)</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pcollection</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># 结果: [2, 3, 4]</span>
+</pre></div>
+</div>
+<p>实际上， <cite>PCollection.map(function)</cite> 内部的实现就是 <cite>transforms.map(self)</cite> 。</p>
+<p>此外，之前的例子也可以这样写:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pcollection</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">map</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>关于 <cite>apply()</cite> 方法，请见下节。</p>
+</div>
+<div class="section" id="apply-apply-values">
+<h2>apply/apply_values<a class="headerlink" href="#apply-apply-values" title="Permalink to this headline">¶</a></h2>
+<p>所有的P类型均定义了一个成员方法 <cite>apply()</cite> ，其定义非常简单:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">transform</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>等价于:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">transform</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>用户可以根据自己的风格喜好编写代码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>或者这样写:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">flat_map</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">map</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+ <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">reduce</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>使用 <cite>apply()</cite> 的一个优点在于，用于可以将多个变换放到一个自定义的方法中，apply这个方法:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">count_youth_number</span><span class="p">(</span><span class="n">ages</span><span class="p">):</span>
+<span class="c1"># 假定age是一个PCollection</span>
+    <span class="k">return</span> <span class="n">ages</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="mi">18</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+<span class="n">ages</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">count_youth_number</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>可以看到，apply自定义方法保持了风格的统一，同时使得代码更具有内聚性，更容易复用。</p>
+<p>类似于 <cite>apply()</cite> ，PTable的成员方法 <cite>apply_values()</cite> 能够将一个变换作用在它的value上:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pt</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">pt</span>
+<span class="go">{k0: [...]}  # pt的value是一个PCollection</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">po</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>  <span class="c1"># transforms.count(PCollection) --&gt; PObject</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">po</span>
+<span class="go">{k0: o}  # po的value是一个PObject</span>
+</pre></div>
+</div>
+<p>value中的PCollection还可以用group_by_key进行再分组:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pt2</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">group_by_key</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">pt2</span>
+<span class="go">{k0: {k1: [...]}}  # pt2有两层key(经过了两次分组)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">pt2</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">{&quot;A&quot;: {&quot;a&quot;: [1, 2]}, &quot;B&quot;: {&quot;b&quot;: [3, 4]}}</span>
+</pre></div>
+</div>
+<p>可以看到，最终结果是一个嵌套的PTable。</p>
+<p>PTable可以通过 <cite>flatten()</cite> 方法转换(“打平”)为一个PCollection: 每个key和其对应的value中所有元素将构成一个(k, v)的Python tuple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pc</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">pc</span>
+<span class="go">[...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">pc</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;B&quot;, (&quot;b&quot;, 3)), (&quot;B&quot;, (&quot;b&quot;, 4)), (&quot;A&quot;, (&quot;a&quot;, 1)), (&quot;A&quot;, (&quot;a&quot;, 2))]</span>
+</pre></div>
+</div>
+<p>对于多层嵌套的PTable， <cite>flatten()</cite> 将把所有的key均打平，最终结果还是一个PCollection:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">pt2</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;B&quot;, (&quot;b&quot;, 3)), (&quot;B&quot;, (&quot;b&quot;, 4)), (&quot;A&quot;, (&quot;a&quot;, 1)), (&quot;A&quot;, (&quot;a&quot;, 2))]</span>
+</pre></div>
+</div>
+<p>这种情况下，如果希望仅打平value中的PTable，可以使用apply_values，即 <cite>apply_values(transforms.flatten)</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">pt2</span><span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">flatten</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">{&quot;A&quot;: [(&quot;a&quot;, 1), (&quot;a&quot;, 2)], &quot;B&quot;: [(&quot;b&quot;, 3), (&quot;b&quot;, 4)]}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h1>输入/输出<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h1>
+<p>Bigflow Python提供了Pipeline.read()方法从外部存储读取数据，以及Pipeline.write()方法将数据写出。输入/输出类型被抽象为 <cite>input.Source</cite> 和 <cite>output.Target</cite> ，例如，input.TextFile是一个对应于文本文件的Source。</p>
+<p>目前，Pipeline.read()/write()的结果只能为PCollection。所有已实现的Source/Target如下:</p>
+<blockquote>
+<div></div></blockquote>
+<p>注意，这里的SequenceFile实际上为Hadoop中的SequenceFileAsBinaryInputFormat/SequenceFileAsBinaryOutputFormat。也就是说，Key/Value均为BytesWritable。</p>
+</div>
+<div class="section" id="sideinputs">
+<h1>SideInputs<a class="headerlink" href="#sideinputs" title="Permalink to this headline">¶</a></h1>
+<p>当Bigflow Python提交任务时，计算被并行执行。但某些情况下，用户会期望将某些PType传入到另一个PType的变换中参与计算(由于变换实际在运行时被分布地计算，因此更确切地说，是被 <em>广播</em> 到了变换)。例如，如果希望在Bigflow中进行 <em>mapper-side join</em> ，一个较小的PCollection可以以字典的方式传入到较大PCollection/PTable的 <cite>flat_map()</cite> 变换里面。当框架遍历较大PCollection/PTable每个元素时，可以直接对较小PCollection进行遍历来查找满足需要的连接条件。</p>
+<p>大部分的分布式计算引擎本身提供了一些机制来满足这样的场景，例如Hadoop的 <cite>DistributeCache</cite> 或是Spark中的 <cite>Broadcast varirables</cite> 。</p>
+<p>在Bigflow中，这样的机制被抽象为 <cite>SideInputs</cite> :你可以将一个P类型作为参数传入到另一个P类型的变换中。</p>
+<p>绝大多数的变换均支持SideInputs，例如 <a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.map" title="bigflow.transforms.map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a>, <a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.flat_map" title="bigflow.transforms.flat_map"><code class="xref py py-func docutils literal notranslate"><span class="pre">flat_map()</span></code></a>, <a class="reference internal" href="rst/bigflow.transforms.html#bigflow.transforms.filter" title="bigflow.transforms.filter"><code class="xref py py-func docutils literal notranslate"><span class="pre">filter()</span></code></a> 等:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">threshold</span> <span class="p">,</span> <span class="n">p2</span><span class="p">)</span>  <span class="c1"># 注意这里的lambda表达式：`threshold` 为 `p2` 在运行时的值</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="go">[3, 1]</span>
+</pre></div>
+</div>
+<p>上面的例子中，p2是一个包含单个元素 <cite>4</cite> 的PObject。它被作为SideInputs传入到 <cite>filter()</cite> 变换中，因此对应的变换表达式从原来的一个输入x，变成了有两个输入: <cite>x</cite> 和 <cite>threshold</cite> ， <cite>threshold</cite> 为PObject在运行时的值，也就是4。</p>
+<div class="section" id="id7">
+<h2>闭包<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>SideInputs的用法有些类似于 <a class="reference external" href="http://en.wikipedia.org/wiki/Closure_(computer_programming)">闭包</a> 。当然，闭包在Bigflow Python中也同样支持:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">threshold</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># 假定我们经过某些计算，得到了一个Python int，值为4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">threshold</span>
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">)</span>
+<span class="go">[3, 1]</span>
+</pre></div>
+</div>
+<p>这时候，我们没有使用SideInputs: <cite>threshold</cite> 是一个内存变量，它被filter中的lambda方法所捕获，同时也能够被正确地处理。</p>
+</div>
+</div>
+<div class="section" id="id9">
+<h1>附带文件<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h1>
+<p>通常而言，当使用Bigflow Python编写的代码被提交到分布式环境中运行时，相关的方法能够自动地被序列化/反序列化到集群中。然而用户的代码可能需要从本机import一些自己定义的库。此外，用户还可能需要将一些资源文件一起随代码进行提交，并在运行时读取资源。</p>
+<p>对于这样的需求，可以使用 <cite>Pipeline.add_file()</cite> 方法:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">user_defined_module</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;PATH_OF_user_defined_module&quot;</span><span class="p">,</span> <span class="s1">&#39;REL_PATH_ON_CLUSTER&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">user_defined_module</span><span class="o">.</span><span class="n">some_function</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>如果需要添加的文件较多，可以使用 <cite>Pipeline.add_directory()</cite> 方法，将一个目录下的所有文件一起打包:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">aa.bb</span> <span class="k">import</span> <span class="n">cc</span><span class="p">,</span> <span class="n">dd</span><span class="p">,</span> <span class="o">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">add_directory</span><span class="p">(</span><span class="s2">&quot;PATH_OF_a_module&quot;</span><span class="p">,</span> <span class="s2">&quot;REL_PATH_ON_CLUSTER&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h1>缓存机制<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h1>
+<p>Pipeline的运行有两种机制触发:</p>
+<blockquote>
+<div><ul class="simple">
+<li>调用 <cite>PType.get()</cite> 或者 <cite>Pipeline.get(PType)</cite> ，两者等价。</li>
+<li>调用 <cite>Pipeline.run()</cite></li>
+</ul>
+</div></blockquote>
+<p>当Pipeline通过 <cite>PType.get()</cite> 触发运行时，P类型中的数据实际上首先被缓存起来，然后读取到内存中。因此如果一个P类型被调用多次 <cite>PType.get()</cite> ，从第二次开始，Pipeline并不会真正地做计算，而是直接读取缓存数据。除了 <cite>get()</cite> 方法之外，显示地调用 <cite>PType.cache()</cite> 也可以要求Bigflow Python在运行时将P类型数据缓存，并在之后的计算中直接读取缓存数据。缓存机制在需要多轮迭代计算时会很有用，例如实现PageRank算法。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lines</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s2">&quot;hdfs:///lines.txt&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lines</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="nb">len</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">lines</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="n">some_transforms</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">lines</span><span class="o">.</span><span class="n">cache</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="nb">len</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s2">&quot;some output path&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h1>PCollection的顺序<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h1>
+<p>对于分布式计算而言，元素的顺序往往难以保证。通常而言，PCollection应当被认为是无序数据集，只有 <cite>sort()</cite> 方法的 <strong>直接结果</strong> 保证元素的顺序:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="o">...</span><span class="p">])</span>
+<span class="nb">sorted</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>  <span class="c1"># sorted中元素降序排列</span>
+</pre></div>
+</div>
+<p>如上文所言，任何基于sorted的后续变换均不再保证顺序，例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mapped</span> <span class="o">=</span> <span class="nb">sorted</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>此时不应当再假定mapped中元素仍然有序。</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

@@ -1,0 +1,221 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Logging &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.util.log.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.util.log">
+<span id="logging"></span><h1>Logging<a class="headerlink" href="#module-bigflow.util.log" title="永久链接至标题">¶</a></h1>
+<p>A utility wraps Python built-in loggings</p>
+<dl class="class">
+<dt id="bigflow.util.log.LogFormatter">
+<em class="property">class </em><code class="descclassname">bigflow.util.log.</code><code class="descname">LogFormatter</code><span class="sig-paren">(</span><em>color=True</em>, <em>fmt='%(color)s[%(levelname)1.1s %(asctime)s %(module)s:%(lineno)d]%(end_color)s %(message)s'</em>, <em>datefmt='%y%m%d %H:%M:%S'</em>, <em>colors=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.log.LogFormatter" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Formatter" title="(在 Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Formatter</span></code></a></p>
+<p>Log formatter used in Tornado.</p>
+<p>Key features of this formatter are:</p>
+<ul class="simple">
+<li>Color support when logging to a terminal that supports it.</li>
+<li>Timestamps on every log line.</li>
+<li>Robust against str/bytes encoding problems.</li>
+</ul>
+<p>This formatter is enabled automatically by
+<cite>tornado.options.parse_command_line</cite> (unless <code class="docutils literal notranslate"><span class="pre">--logging=none</span></code> is
+used).</p>
+<dl class="attribute">
+<dt id="bigflow.util.log.LogFormatter.DEFAULT_COLORS">
+<code class="descname">DEFAULT_COLORS</code><em class="property"> = {10: 4, 20: 2, 30: 3, 40: 1}</em><a class="headerlink" href="#bigflow.util.log.LogFormatter.DEFAULT_COLORS" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bigflow.util.log.LogFormatter.DEFAULT_DATE_FORMAT">
+<code class="descname">DEFAULT_DATE_FORMAT</code><em class="property"> = '%y%m%d %H:%M:%S'</em><a class="headerlink" href="#bigflow.util.log.LogFormatter.DEFAULT_DATE_FORMAT" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bigflow.util.log.LogFormatter.DEFAULT_FORMAT">
+<code class="descname">DEFAULT_FORMAT</code><em class="property"> = '%(color)s[%(levelname)1.1s %(asctime)s %(module)s:%(lineno)d]%(end_color)s %(message)s'</em><a class="headerlink" href="#bigflow.util.log.LogFormatter.DEFAULT_FORMAT" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.util.log.LogFormatter.format">
+<code class="descname">format</code><span class="sig-paren">(</span><em>record</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.log.LogFormatter.format" title="永久链接至目标">¶</a></dt>
+<dd><p>Format the specified record as text.</p>
+<p>The record's attribute dictionary is used as the operand to a
+string formatting operation which yields the returned string.
+Before formatting the dictionary, a couple of preparatory steps
+are carried out. The message attribute of the record is computed
+using LogRecord.getMessage(). If the formatting string uses the
+time (as determined by a call to usesTime(), formatTime() is
+called to format the event time. If there is exception information,
+it is formatted using formatException() and appended to the message.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.util.log.enable_pretty_logging">
+<code class="descclassname">bigflow.util.log.</code><code class="descname">enable_pretty_logging</code><span class="sig-paren">(</span><em>logger</em>, <em>level</em>, <em>log_file=''</em>, <em>backupCount=10</em>, <em>maxBytes=10000000</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.log.enable_pretty_logging" title="永久链接至目标">¶</a></dt>
+<dd><p>Turns on formatted logging output as configured.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.util.log.enable_pretty_logging_at_debug">
+<code class="descclassname">bigflow.util.log.</code><code class="descname">enable_pretty_logging_at_debug</code><span class="sig-paren">(</span><em>logger</em>, <em>level</em>, <em>log_file=''</em>, <em>backupCount=10</em>, <em>maxBytes=10000000</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.log.enable_pretty_logging_at_debug" title="永久链接至目标">¶</a></dt>
+<dd><p>Turns on formatted logging output only at DEBUG level</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.util.log.init_log">
+<code class="descclassname">bigflow.util.log.</code><code class="descname">init_log</code><span class="sig-paren">(</span><em>level=20</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.util.log.init_log" title="永久链接至目标">¶</a></dt>
+<dd><p>init_log - initialize log module</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><p class="first"><strong>level</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- <p>msg above the level will be displayed
+DEBUG &lt; INFO &lt; WARNING &lt; ERROR &lt; CRITICAL</p>
+<p><code class="docutils literal notranslate"><span class="pre">the</span> <span class="pre">default</span> <span class="pre">value</span> <span class="pre">is</span> <span class="pre">logging.INFO</span></code></p>
+</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#OSError" title="(在 Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> -- fail to create log directories</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#IOError" title="(在 Python v3.7)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IOError</span></code></a> -- fail to open log file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

@@ -1,0 +1,767 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Planner编码规范 &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Planner编码规范</a><ul>
+<li><a class="reference internal" href="#id1">前言</a><ul>
+<li><a class="reference internal" href="#id2">1.可读性优先</a></li>
+<li><a class="reference internal" href="#id3">2.遵循范式</a></li>
+<li><a class="reference internal" href="#id4">3.代码组织原则</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">规范</a><ul>
+<li><a class="reference internal" href="#rule-0">0.文档范式</a></li>
+<li><a class="reference internal" href="#rule-1">1.使用规定的遍历算法</a></li>
+<li><a class="reference internal" href="#accept">2.把完整判断放入Accept函数中</a></li>
+<li><a class="reference internal" href="#rule-run">3.避免在Rule::Run函数中做二次遍历</a></li>
+<li><a class="reference internal" href="#rule">4.在Rule中只访问周围节点</a></li>
+<li><a class="reference internal" href="#rule-5">5.保持一个Rule内的逻辑尽量简单</a></li>
+<li><a class="reference internal" href="#tag">6.只使用Tag保存状态和中间结果</a></li>
+<li><a class="reference internal" href="#rule-7">7.不要使用公共类型作为Tag</a></li>
+<li><a class="reference internal" href="#passrun">8.禁止显式调用Pass的Run方法</a></li>
+<li><a class="reference internal" href="#run">9.保证Run方法的返回值正确</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/flume/planner-styleguide.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="planner">
+<h1>Planner编码规范<a class="headerlink" href="#planner" title="永久链接至标题">¶</a></h1>
+<p>为了统一Flume项目中Planner部分的编码风格, 增强代码的可读性和可维护性,
+这里对Pass/Rule的编写/组织作出约定, 开发者在为Planner编写代码之前, 请务必阅读此规范.
+关于Planner的基础知识, 请参见 <a class="reference internal" href="planner.html"><span class="doc">优化器框架</span></a></p>
+<div class="section" id="id1">
+<h2>前言<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>Planner的编程需遵守以下原则.</p>
+<div class="section" id="id2">
+<h3>1.可读性优先<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>Planner部分的代码基本都是基于图的计算和变换, 代码很容易变得晦涩难懂.
+在性能/可读性/可扩展性这三个代码基本评判标准之间, 我们认为可读性&gt;可扩展性&gt;性能.</p>
+<p>Planner中的代码往往只在任务提交时运行一遍, 且在一般计算中的算子数量往往有限,
+故执行计划的分析和优化绝不会成为整个任务的瓶颈, 因此性能因素在Planner的编码过程中通常可以不予考虑.</p>
+<p>原则上, 我们希望一个Pass可以被复用在多个Backend上, 出于这种考虑, 我们可以将某个Pass设计的较为复杂,
+适应更广泛的边界条件, 但是这种复杂不应该影响到代码的可读性. 可读性是一切复用的基础.</p>
+</div>
+<div class="section" id="id3">
+<h3>2.遵循范式<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>基于图的算法在实现上往往具有较大的自由度, 尤其在C++这样的混合型语言上,
+同一种遍历过程都可以有多种写法. 不幸的是, 这种自由度往往会对代码的阅读和理解造成严重干扰.</p>
+<p>Flume在Planner中提供了一些机制, 如利用PassManager来管理Pass之间的依赖,
+利用Dispatcher/Rule的来规范化遍历过程, 提供机制可以在每个图节点上加标记(Tag),
+这些机制存在的主要目的是固化相应的 <em>编程范式</em>, 而不在于提供编程方便性.</p>
+<p>我们在为Planner编写代码时, <strong>不应该</strong> 试图绕过这些机制, 或是自行实现类似机制. 严格遵循范式,
+在牺牲编程自由度的同时, 可以方便代码阅读者把更多的精力关注到图算法上, 这一点尤其重要.</p>
+</div>
+<div class="section" id="id4">
+<h3>3.代码组织原则<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>所有的Planner代码, 要按照入口Pass/内部Pass/Rule的原则来组织(入口/内部Pass参见 <a class="reference internal" href="#rule-8"><span class="std std-ref">8.禁止显式调用Pass的Run方法</span></a>).
+Pass/Rule本身应该是无状态的(常量除外), 所有的计算结果(包括中间结果)都应该体现在Plan/Unit上,
+这一点和过程式编程语言十分相似. 对应的, 我们可以把入口Pass看作是模块, 把内部Pass看成是方法,
+Rule看成是语句.</p>
+<p>每个编译单元中有且只有一个入口Pass, 其中应该包含尽量完整的逻辑.  功能相同,
+或者逻辑相似但使用范围不同的Pass, 应该尽量被整合到一个Pass文件中.
+分散定义且数量很多的Pass文件往往不利于代码阅读和维护, 同时也不利用公共逻辑的抽取和复用.
+如果某一Analysis只对某一个Pass产生作用, 建议将它和该Pass合并到同一文件中去.</p>
+<p>和Pass相反, 作为'语句'级的编程结构, 每个Rule中包含的逻辑要尽量简单易懂. 对于复杂的Rule,
+要利用 <a class="reference internal" href="#rule-3"><span class="std std-ref">3.避免在Rule::Run函数中做二次遍历</span></a>, <a class="reference internal" href="#rule-4"><span class="std std-ref">4.在Rule中只访问周围节点</span></a>, <a class="reference internal" href="#rule-5"><span class="std std-ref">5.保持一个Rule内的逻辑尽量简单</span></a> 中描述的技巧进行拆解.</p>
+<p>另外, 我们往往利用在节点打Tag的方式, 在Pass&amp;Rule之间传递信息. 这里要注意的是,
+如果某个头文件暴露了过多的公共Tag, 往往说明这个模块和其它模块之间的职责分配不够清晰,
+纠缠在一起的多个Pass会增加阅读的难度. 编程的时候, 要尽量设法避免暴露不必要的Tag.</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>规范<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="section" id="rule-0">
+<span id="id6"></span><h3>0.文档范式<a class="headerlink" href="#rule-0" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p class="first">约定</p>
+<blockquote>
+<div><p>描述信息</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Bad Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Bad Code!</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Good Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Good Code!</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="rule-1">
+<span id="id7"></span><h3>1.使用规定的遍历算法<a class="headerlink" href="#rule-1" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p class="first">约定</p>
+<blockquote>
+<div><p>flume/planner目录下提供了若干种格式化的遍历方法, 他们包括基于从属关系的先序/中序/后序遍历,
+基于数据流的正/反拓扑序遍历, 基于Task的遍历等. 我们编写的所有算法, 都必须基于这些机制进行遍历.</p>
+<p>'自由'的遍历方式往往造成难以阅读的代码. 另外, 通过一定程度的训练和适应, 一旦接受现有的设定,
+会发现还是可以比较自如的实现各种图算法的.</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Bad Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DoSomethingRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">unit</span> <span class="o">==</span> <span class="n">plan</span><span class="o">-&gt;</span><span class="n">Root</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">FindUnitsAndDoSomething</span><span class="p">(</span><span class="n">unit</span><span class="p">);</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">FindUnitsAndDoSomething</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// BAD CODE!</span>
+        <span class="n">DoSomething</span><span class="p">(</span><span class="n">unit</span><span class="p">);</span>
+        <span class="n">BOOST_FOREACH</span><span class="p">(</span><span class="n">unit</span><span class="o">*</span> <span class="n">child</span><span class="p">,</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">FindUnitsAndDoSomething</span><span class="p">(</span><span class="n">child</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="n">RuleDispatcher</span> <span class="n">dispatcher</span><span class="p">;</span>
+<span class="n">dispatcher</span><span class="p">.</span><span class="n">AddRule</span><span class="p">(</span><span class="k">new</span> <span class="n">DoSomethingRule</span><span class="p">);</span>
+<span class="n">dispatcher</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Good Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DoSomethingRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">unit</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">DepthFirstDispatcher</span> <span class="nf">dispatcher</span><span class="p">(</span><span class="n">DepthFirstDispatcher</span><span class="o">::</span><span class="n">PRE_ORDER</span><span class="p">);</span>
+<span class="n">dispatcher</span><span class="p">.</span><span class="n">AddRule</span><span class="p">(</span><span class="k">new</span> <span class="n">DoSomethingRule</span><span class="p">);</span>
+<span class="n">dispatcher</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="accept">
+<span id="rule-2"></span><h3>2.把完整判断放入Accept函数中<a class="headerlink" href="#accept" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p class="first">约定</p>
+<blockquote>
+<div><p>所有的遍历算法都需要实现Accept和Run方法. 尽量把所有的判断逻辑放在Accept中,
+而不是分布在两个函数中.</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Bad Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DoSomethingRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">Unit</span><span class="o">::</span><span class="n">LOCAL_SHUFFLE</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">unit</span><span class="o">-&gt;</span><span class="n">father</span><span class="p">()</span> <span class="o">!=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">task</span><span class="p">())</span> <span class="p">{</span>  <span class="c1">// BAD CODE!</span>
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">unit</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Good Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DoSomethingRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">Unit</span><span class="o">::</span><span class="n">LOCAL_SHUFFLE</span> <span class="o">&amp;&amp;</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">father</span><span class="p">()</span> <span class="o">==</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">task</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">unit</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="rule-run">
+<span id="rule-3"></span><h3>3.避免在Rule::Run函数中做二次遍历<a class="headerlink" href="#rule-run" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p class="first">约定</p>
+<blockquote>
+<div><p>尽量利用Accept方法将某个Rule的作用锚定在直接操作的节点上, 而不是锚定在上游/父节点上.</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Bad Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DoSomethingRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">Unit</span><span class="o">::</span><span class="n">LOCAL_SHUFFLE</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">bool</span> <span class="n">is_changed</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="n">BOOST_FOREACH</span><span class="p">(</span><span class="n">unit</span><span class="o">*</span> <span class="n">child</span><span class="p">,</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">())</span> <span class="p">{</span>  <span class="c1">// BAD CODE!</span>
+            <span class="n">is_changed</span> <span class="o">||=</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">child</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">is_changed</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Good Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DoSomethingRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">father</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">Unit</span><span class="o">::</span><span class="n">LOCAL_SHUFFLE</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">unit</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">DoSomething</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="rule">
+<span id="rule-4"></span><h3>4.在Rule中只访问周围节点<a class="headerlink" href="#rule" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p class="first">约定</p>
+<blockquote>
+<div><p>Unit中提供了方法, 能够得到某个节点的父/子/直接上下游节点. 同时,
+如DataFlowAnalysis这样的公共Pass提供了访问所有前继/后继/子孙的方法.</p>
+<p>我们约定, 在相似的实现代价下, 优先采用只访问周围节点的算法. 这样的实现往往更容易理解,
+同时能够减少不必要的外部依赖.</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Bad Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">DesendantCount</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+
+    <span class="n">DesendantCount</span><span class="p">()</span> <span class="o">:</span> <span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">CountDesendantRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">DataFlow</span><span class="o">&amp;</span> <span class="n">dataflow</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">get</span><span class="o">&lt;</span><span class="n">DataFlow</span><span class="o">&gt;</span><span class="p">();</span>  <span class="c1">// BAD CODE!</span>
+        <span class="n">unit</span><span class="o">-&gt;</span><span class="n">get</span><span class="o">&lt;</span><span class="n">DesendantCount</span><span class="o">&gt;</span><span class="p">().</span><span class="n">value</span> <span class="o">=</span> <span class="n">dataflow</span><span class="p">.</span><span class="n">nodes</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Good Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CountDesendantRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span><span class="o">&amp;</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">get</span><span class="o">&lt;</span><span class="n">DesendantCount</span><span class="o">&gt;</span><span class="p">().</span><span class="n">value</span><span class="p">;</span>
+        <span class="n">BOOST_FOREACH</span><span class="p">(</span><span class="n">unit</span><span class="o">*</span> <span class="n">child</span><span class="p">,</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">sum</span> <span class="o">+=</span> <span class="n">child</span><span class="o">-&gt;</span><span class="n">get</span><span class="o">&lt;</span><span class="n">DesendantCount</span><span class="o">&gt;</span><span class="p">().</span><span class="n">value</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">DepthFirstDispatcher</span> <span class="nf">dispatcher</span><span class="p">(</span><span class="n">DepthFirstDispatcher</span><span class="o">::</span><span class="n">POST_ORDER</span><span class="p">);</span>
+<span class="n">dispatcher</span><span class="p">.</span><span class="n">AddRule</span><span class="p">(</span><span class="k">new</span> <span class="n">DoSomethingRule</span><span class="p">);</span>
+<span class="n">dispatcher</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="rule-5">
+<span id="id8"></span><h3>5.保持一个Rule内的逻辑尽量简单<a class="headerlink" href="#rule-5" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p class="first">约定</p>
+<blockquote>
+<div><p>Rule为Planner代码编写过程中的最小单位. 一个Rule内包含Accept和Run两个方法,
+这两个方法需被视为整体看待.</p>
+<p>类似于一般程序编写中不要定义过长的语句, 我们在Planner中也不要编写职责过于复杂的Rule.
+如果一个Rule中的逻辑过于复杂, 我们要尽量分拆这个Rule.</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Bad Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DoManyThingRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// BAD CODE!</span>
+        <span class="n">DoFirstThing</span><span class="p">();</span>
+        <span class="n">DoSecondThing</span><span class="p">();</span>
+        <span class="n">DoLastThing</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">DoFirstThing</span><span class="p">();</span>
+    <span class="kt">bool</span> <span class="nf">DoSecondThing</span><span class="p">();</span>
+    <span class="kt">bool</span> <span class="nf">DoLastThing</span><span class="p">();</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Good Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DoFirstThingRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">DoFirstThing</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">DoFirstThing</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">DoSecondThingRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">DoSecondThing</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">DoSecondThing</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">DoLastThingRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">DoLastThing</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">DoLastThing</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="n">RuleDispatcher</span> <span class="n">dispatcher</span><span class="p">;</span>
+<span class="n">dispatcher</span><span class="p">.</span><span class="n">AddRule</span><span class="p">(</span><span class="k">new</span> <span class="n">DoFirstThingRule</span><span class="p">);</span>
+<span class="n">dispatcher</span><span class="p">.</span><span class="n">AddRule</span><span class="p">(</span><span class="k">new</span> <span class="n">DoSecondThingRule</span><span class="p">);</span>
+<span class="n">dispatcher</span><span class="p">.</span><span class="n">AddRule</span><span class="p">(</span><span class="k">new</span> <span class="n">DoLastThingRule</span><span class="p">);</span>
+<span class="n">dispatcher</span><span class="p">.</span><span class="n">Run</span><span class="p">();</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="tag">
+<span id="rule-6"></span><h3>6.只使用Tag保存状态和中间结果<a class="headerlink" href="#tag" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p class="first">约定</p>
+<blockquote>
+<div><p>有三个地方可以保存计算中间结果: 全局变量, Rule中定义的成员变量, Unit节点上记录的Tag标记.
+我们约定, <strong>只允许</strong> 在Unit上通过Tag保存中间计算结果.</p>
+<p>在全局变量上保存中间结果容易引起并发和扩展性问题. 成员变量上保存的结果不方便在Rule之间分享,
+并且往往会使Rule的设计变得更加复杂. 故作此约定.</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Bad Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">AllNodesCount</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>
+
+    <span class="n">AllNodesCount</span><span class="p">()</span> <span class="o">:</span> <span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">CountAllNodesRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">CountAllNodesRule</span><span class="p">()</span> <span class="o">:</span> <span class="n">m_count</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">unit</span> <span class="o">==</span> <span class="n">plan</span><span class="o">-&gt;</span><span class="n">Root</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">unit</span><span class="o">-&gt;</span><span class="n">get</span><span class="o">&lt;</span><span class="n">AllNodesCount</span><span class="o">&gt;</span><span class="p">().</span><span class="n">value</span> <span class="o">=</span> <span class="n">m_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="o">++</span><span class="n">m_count</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_count</span><span class="p">;</span>  <span class="c1">// BAD CODE!</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Good Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// By POST_ORDER</span>
+<span class="k">class</span> <span class="nc">CountAllNodesRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// for myself</span>
+        <span class="n">BOOST_FOREACH</span><span class="p">(</span><span class="n">unit</span><span class="o">*</span> <span class="n">child</span><span class="p">,</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="n">child</span><span class="o">-&gt;</span><span class="n">get</span><span class="o">&lt;</span><span class="n">AllNodesCount</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="n">unit</span><span class="o">-&gt;</span><span class="n">get</span><span class="o">&lt;</span><span class="n">AllNodesCount</span><span class="o">&gt;</span><span class="p">().</span><span class="n">value</span> <span class="o">=</span> <span class="n">count</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="rule-7">
+<span id="id9"></span><h3>7.不要使用公共类型作为Tag<a class="headerlink" href="#rule-7" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p class="first">约定</p>
+<blockquote>
+<div><p>Tag机制的实现依赖于C++的类型系统, 在Unit上可以为每一种C++类型保存唯一实例.
+如果用公共类型, 如std::map/std::string等作为Tag类型, 则很容易和其它Pass产生冲突/混淆.
+因此不要使用这些类型作为Tag.</p>
+<p>另外, 我们约定各种Proto类型只能由相应的BuildXxxMessagePass使用.</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Bad Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">Unit</span><span class="o">*&gt;</span> <span class="n">NodeSetTag</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Good Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">NodeSetTag</span> <span class="o">:</span> <span class="k">public</span> <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">Unit</span><span class="o">*&gt;</span> <span class="p">{};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="passrun">
+<span id="rule-8"></span><h3>8.禁止显式调用Pass的Run方法<a class="headerlink" href="#passrun" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p class="first">约定</p>
+<blockquote>
+<div><p>PassManager中定义了Pass之间的依赖关系, 每个Pass可以在定义的时候声明自己依赖哪些Pass,
+然后通过PassManager中的Apply方法来调用Pass.</p>
+<p>统一的依赖入口, 可以方便我们对代码做调整和拆分, 同时PassManager在调用Pass会记录相应的调试信息,
+方便我们跟踪线上问题. 为了维护代码的统一性, 我们禁止在单测之外直接调用Pass::Run方法.</p>
+<p>一些Pass在遍历过程中会改变拓扑, 从而破坏所依赖的Analysis结果. 遇到这种情形,
+建议实现者多思考一下, 大部分情况下可以通过调整算法规避这些问题. 如果确实无法避免,
+可以将一个Pass拆分成入口Pass和内部Pass.</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Bad Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DoSomethingPass</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Pass</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">PerformFirstStep</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span>
+        <span class="n">DataFlowAnalysis</span><span class="p">().</span><span class="n">Run</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span>  <span class="c1">// BAD CODE!</span>
+        <span class="n">PerformSecondStep</span><span class="p">(</span><span class="n">plan</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">PerformFirstStep</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">);</span>
+
+    <span class="kt">void</span> <span class="nf">PerformSecondStep</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Good Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">namespace</span> <span class="n">internal</span> <span class="p">{</span>
+    <span class="k">class</span> <span class="nc">PerformFirstStepPass</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Pass</span> <span class="p">{</span>
+        <span class="n">RELY_PASS</span><span class="p">(</span><span class="n">DataFlowAnalysis</span><span class="p">);</span>
+    <span class="p">};</span>
+
+    <span class="k">class</span> <span class="nc">PerformSecondStepPass</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Pass</span> <span class="p">{</span>
+        <span class="n">RELY_PASS</span><span class="p">(</span><span class="n">DataFlowAnalysis</span><span class="p">);</span>
+        <span class="n">RELY_PASS</span><span class="p">(</span><span class="n">PerformFirstStepPass</span><span class="p">);</span>
+    <span class="p">};</span>
+<span class="p">}</span>  <span class="c1">// namespace internal</span>
+
+<span class="k">class</span> <span class="nc">DoSomethingPass</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Pass</span> <span class="p">{</span>
+    <span class="n">RELY_PASS</span><span class="p">(</span><span class="n">PerformFirstStepPass</span><span class="p">);</span>
+    <span class="n">RELY_PASS</span><span class="p">(</span><span class="n">PerformSecondStepPass</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="run">
+<span id="rule-9"></span><h3>9.保证Run方法的返回值正确<a class="headerlink" href="#run" title="永久链接至标题">¶</a></h3>
+<ul>
+<li><p class="first">约定</p>
+<blockquote>
+<div><p>Rule::Run和Pass::Run的返回值代表Plan的拓扑或者关键信息是否发生改变. 有时程序员为了简单实现,
+会让这两个方法总是返回true. 这种做法容易导致死循环, 并且使得优化中间步骤变多, 影响调试.
+因此我们约定, 实现Pass时一定要保证返回值正确.</p>
+</div></blockquote>
+</li>
+<li><dl class="first docutils">
+<dt>Bad Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">Tag</span> <span class="p">{};</span>
+
+<span class="k">class</span> <span class="nc">SetTagRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">unit</span> <span class="o">==</span> <span class="n">plan</span><span class="o">-&gt;</span><span class="n">Root</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">unit</span><span class="o">-&gt;</span><span class="n">set</span><span class="o">&lt;</span><span class="n">Tag</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>  <span class="c1">// BAD CODE!</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Good Example</dt>
+<dd><div class="first last highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">Tag</span> <span class="p">{};</span>
+
+<span class="k">class</span> <span class="nc">SetTagRule</span> <span class="o">:</span> <span class="k">public</span> <span class="n">RuleDispatcher</span><span class="o">::</span><span class="n">Rule</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">unit</span> <span class="o">==</span> <span class="n">plan</span><span class="o">-&gt;</span><span class="n">Root</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">bool</span> <span class="n">is_modified</span> <span class="o">=</span> <span class="o">!</span><span class="n">unit</span><span class="o">-&gt;</span><span class="n">has</span><span class="o">&lt;</span><span class="n">Tag</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="n">unit</span><span class="o">-&gt;</span><span class="n">set</span><span class="o">&lt;</span><span class="n">Tag</span><span class="o">&gt;</span><span class="p">();</span>
+        <span class="k">return</span> <span class="n">is_modified</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

@@ -1,0 +1,220 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>欢迎来到Flume项目 &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">欢迎来到Flume项目</a></li>
+<li><a class="reference internal" href="#id1">用户文档</a></li>
+<li><a class="reference internal" href="#id2">开发者文档</a></li>
+<li><a class="reference internal" href="#id3">索引与图表</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/flume/index.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="flume">
+<h1>欢迎来到Flume项目<a class="headerlink" href="#flume" title="永久链接至标题">¶</a></h1>
+<p>Flume是百度研发的分布式数据流计算框架, 目标是提供比MapReduce更加灵活易用的计算模型。
+它是Bigflow和Wing（百度内部一个分布式SQL项目）的底层优化和执行引擎。</p>
+<p>它设计之初部分参考了Google的FlumeJava，故得此名。</p>
+</div>
+<div class="section" id="id1">
+<h1>用户文档<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">系统概览</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#flume-api">Flume-Api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#flume-core">Flume-Core</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#flume-runtime">Flume-Runtime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#id2">参考文献</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Flume-Core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core.html#id1">核心概念</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#id2">逻辑执行计划</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#wordcount">编程实例 - WordCount</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#reference">Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="backend.html">Backend和执行流程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="executor.html">算子执行框架</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="executor.html#id2">基本类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executor.html#id3">串联执行模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executor.html#id4">嵌套执行模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executor.html#id5">示例场景</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="planner.html">优化器框架</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="planner.html#id2">工作流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="planner.html#id3">执行计划的中间表示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="planner.html#id4">优化框架</a></li>
+<li class="toctree-l2"><a class="reference internal" href="planner.html#id5">优化算法</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id2">
+<h1>开发者文档<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="planner-styleguide.html">Planner编码规范</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="planner-styleguide.html#id1">前言</a></li>
+<li class="toctree-l2"><a class="reference internal" href="planner-styleguide.html#id5">规范</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plan_pass.html">Planner优化——Analysis与Pass说明</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plan_pass.html#analysispass">1. Analysis与Pass调用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plan_pass.html#id1">2. Analysis与Pass依赖</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plan_pass.html#analysis">3. Analysis介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plan_pass.html#pass">4. Pass介绍</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="shuffle-encoding.html">传输数据编码格式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shuffle-encoding.html#id2">背景</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shuffle-encoding.html#id3">编码格式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shuffle-encoding.html#id4">使用场景&amp;实例分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shuffle-encoding.html#id5">现有编码方式及改进</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id3">
+<h1>索引与图表<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="../genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="../py-modindex.html"><span class="std std-ref">模块索引</span></a></li>
+<li><a class="reference internal" href="../search.html"><span class="std std-ref">搜索页面</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

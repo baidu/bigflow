@@ -1,0 +1,309 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>传输数据编码格式 &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">传输数据编码格式</a><ul>
+<li><a class="reference internal" href="#id2">背景</a></li>
+<li><a class="reference internal" href="#id3">编码格式</a></li>
+<li><a class="reference internal" href="#id4">使用场景&amp;实例分析</a></li>
+<li><a class="reference internal" href="#id5">现有编码方式及改进</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/flume/shuffle-encoding.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>传输数据编码格式<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>本文档描述了一种编码算法, 可以把多路/多种分组方式的多条数据流编码成一条Key/Value数据流.
+该算法用于跨Task的数据传输和归并.</p>
+<div class="section" id="id2">
+<h2>背景<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>关于计算和数据模型, 请先参见 <a class="reference internal" href="core.html"><span class="doc">Flume-Core</span></a>. 在逻辑执行计划中, 根据算法的需求, 我们有很多路数据,
+每路数据都有不同的分组方式. 然而在任意一个特定的分布式框架, 都只支持有限种分组方式,
+在数据的路数上往往也有限制.</p>
+<p>所以, 我们需要一种编码方式, 能够把以任意方式分组的多路数据合并成一路,
+使得这路数据流只要按照唯一的Key进行合并/排序, 就可以高效的进行解码并进行处理. 具体来说,
+就是满足下述两个要求:</p>
+<ol class="arabic">
+<li><p class="first">得到一个Key, 就能从中解码出该条数据属于哪个Logical Plan Node, 以及其所属Scope的Key.</p>
+</li>
+<li><p class="first">编码后的Key按照逐字节比较的方式, 就能得到需要的shuffle顺序, 不需要自定义比较函数.</p>
+<ol class="loweralpha simple">
+<li>对于同一个Scope下的不同分组, 可以按照相应key的顺序进行传输.
+不同分组的数据不能重叠在合并后的流中, 总是把前一组数据传输完毕, 才会继续传输下一组.</li>
+<li>对于同一个Scope下不同路的数据, 可以指定每路到达的顺序, 即让某些路比其它路先到达.</li>
+</ol>
+<p>这样可以尽量降低需要进行缓存的数据量.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="id3">
+<h2>编码格式<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>首先给出整体的编码方式</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shuffle</span><span class="o">-</span><span class="n">key</span> <span class="p">::</span><span class="o">=</span> <span class="p">{[</span><span class="n">scope</span><span class="o">-</span><span class="n">tag</span><span class="p">]</span> <span class="n">scope</span><span class="o">-</span><span class="n">key</span> <span class="p">}</span> <span class="p">[</span><span class="n">node</span><span class="o">-</span><span class="n">tag</span><span class="p">]</span> <span class="p">{</span><span class="n">order</span><span class="o">-</span><span class="n">key</span><span class="p">}</span>
+
+<span class="n">scope</span><span class="o">-</span><span class="n">tag</span> <span class="p">::</span><span class="o">=</span> <span class="n">fix</span><span class="o">-</span><span class="n">size</span><span class="o">-</span><span class="n">integer</span>
+
+<span class="n">scoped</span><span class="o">-</span><span class="n">key</span> <span class="p">::</span><span class="o">=</span> <span class="n">fix</span><span class="o">-</span><span class="n">size</span><span class="o">-</span><span class="n">encoding</span> <span class="o">|</span> <span class="n">escape</span><span class="o">-</span><span class="n">encoding</span> <span class="o">|</span> <span class="n">last</span><span class="o">-</span><span class="n">element</span><span class="o">-</span><span class="n">encoding</span>
+
+<span class="n">node</span><span class="o">-</span><span class="n">tag</span> <span class="p">::</span><span class="o">=</span> <span class="n">fix</span><span class="o">-</span><span class="n">size</span><span class="o">-</span><span class="n">integer</span>
+
+<span class="n">order</span><span class="o">-</span><span class="n">key</span> <span class="p">::</span><span class="o">=</span> <span class="n">escape</span><span class="o">-</span><span class="n">encoding</span>
+
+<span class="n">fix</span><span class="o">-</span><span class="n">size</span><span class="o">-</span><span class="n">integer</span> <span class="p">::</span><span class="o">=</span> <span class="n">uint8</span> <span class="o">|</span> <span class="n">uint16</span> <span class="o">|</span> <span class="n">uint32</span> <span class="o">|</span> <span class="n">uint64</span>
+</pre></div>
+</div>
+<p>下面具体解释一下各个字段的意义.</p>
+<ol class="arabic">
+<li><p class="first">scope-tag/node-tag.</p>
+<p>标记该条数据属于哪个Scope/Node, 整数(uint8/uint16/uint32/uint64).
+整数位数由参与编码的路数决定, 如果某个Scope下只有一路子Scope/Node参与编码,
+则相应的scope-tag/node-tag被省略. 这些tag也能起到调整shuffle顺序的作用,
+tag排在前面那路会被优先传输.</p>
+</li>
+<li><p class="first">scope-key/order-key</p>
+<p>如果某个Node上面有N个Scope, 则这个Node中的每条Record都会附带有N个Key.
+在通过分布式框架进行传输/归并的过程中, 一些Scope需要在传输后恢复相应的Scope/Key,
+比如做GroupBy的时候. 在另一些时候, 只需要保持顺序即可, 不必恢复出具体的Key出来,
+例如做SortBy的时候.</p>
+</li>
+<li><p class="first">fix-size-encoding.</p>
+<p>适用于对固定长度的Key进行编码. 编码时只存储数据内容, 不存储长度.
+当ShuffleNode的type为BySequence时, 得到的partition就可以采用这种方式进行编码.</p>
+</li>
+<li><p class="first">escape-encoding.</p>
+<p>适用于对变长字符串进行编码. 对字符串中的'\0''\1'两种字符用'\1'进行转义,
+即编码为'\1\0'和'\1\1', 尾部以'\0'结束.
+这种编码的优点在于在多个Key的情况下能够保证比较顺序. 比如考虑两组数据</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">r0</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;ab&quot;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\0</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">r0</span> <span class="o">&gt;</span> <span class="n">r1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>如果直接串联两个字段(字符串和整数), 因为第二个字段为固定长度的整数, 也能够正常解码.
+这时编码后的结果如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">simple_encode_0</span> <span class="o">=</span> <span class="s2">&quot;ab</span><span class="se">\0</span><span class="s2">&quot;</span>
+<span class="n">simple_encode_1</span> <span class="o">=</span> <span class="s2">&quot;ac&quot;</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">simple_encode_0</span> <span class="o">&lt;</span> <span class="n">simple_encode_1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>这时如果把编码后的字符串进行逐字节比较, 得到结果和直接比较的结果相反.
+而转义编码则不存在这个问题</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">escape_encode_0</span> <span class="o">=</span> <span class="s2">&quot;ab</span><span class="se">\0\0</span><span class="s2">&quot;</span>
+<span class="n">escape_encode_1</span> <span class="o">=</span> <span class="s2">&quot;a</span><span class="se">\0</span><span class="s2">b&quot;</span>
+<span class="k">assert</span><span class="p">(</span><span class="n">escape_encode_0</span> <span class="o">&gt;</span> <span class="n">escape_encode_1</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">last-element-encoding.</p>
+<p>适用于对最后一个Key进行编码. 这时我们不需要存储Key的长度, 只需一直读到buffer的尾部即可完成解码.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="id4">
+<h2>使用场景&amp;实例分析<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">单路Groupby</p>
+<p>对于常见的单路Groupby, 只有一个Scope和一个Node参与Groupby, 这时不需要scope-tag和node-tag.
+因为只有一个Key, 所以可以采用last-element-encoding. 所以最终编码的结果就是原始Key.</p>
+</li>
+<li><p class="first">两路Join</p>
+<p>两路Join典型的逻辑计划是单个Scope, 其中有两个Node. 这时按照规则得到的编码格式是
+(escaped-key) + (0|1). 在shuffle后, 对于每一组数据, 第0路会先到达并缓存, 第1路后到达并流式处理,
+即可完成迪卡尔积的计算. 在这个过程中, 只有第0路需要被缓存起来.</p>
+</li>
+<li><p class="first">单路GroupBy + Distinct</p>
+<p>该场景下典型的逻辑计划为一组嵌套的Scope下面的一个Node. 因为每一层只有一个Scope/Node,
+tag可以被省略. GroupBy Key需要转义, Distinct Key因为在最末尾, 不需要被转义. 这样Key编码就是
+escaped-group-key + distinct-key</p>
+</li>
+<li><p class="first">单Task同时处理多个维度的分组</p>
+<p>这种场景会在Task合并优化后出现, 起到平衡Task负载的优化效果.
+我们假设这里把多个GroupBy逻辑合并到一个Task中处理, 这时的编码就是scope-tag + scope-key.
+因为每个Scope内部只有单一的Node, 故不需要node-tag. 因为scope-key在最尾部, 故不需要转义.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="id5">
+<h2>现有编码方式及改进<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>DCE下目前采用的编码方式为</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="o">-</span><span class="n">key</span> <span class="p">::</span><span class="o">=</span> <span class="n">priority</span><span class="o">-</span><span class="n">tag</span> <span class="n">partition</span> <span class="n">begin</span><span class="o">-</span><span class="n">sep</span> <span class="p">{</span> <span class="n">scope</span><span class="o">-</span><span class="n">key</span> <span class="p">}</span> <span class="n">end</span><span class="o">-</span><span class="n">sep</span> <span class="n">task</span><span class="o">-</span><span class="nb">id</span> <span class="n">tag</span>
+
+<span class="n">priority</span><span class="o">-</span><span class="n">tag</span> <span class="p">::</span><span class="o">=</span> <span class="n">uint8</span>
+
+<span class="n">partition</span> <span class="p">::</span><span class="o">=</span> <span class="n">uint32</span>
+
+<span class="n">begin</span><span class="o">-</span><span class="n">seq</span> <span class="p">::</span><span class="o">=</span> <span class="s2">&quot;</span><span class="se">\0\0</span><span class="s2">&quot;</span>
+
+<span class="n">scope</span><span class="o">-</span><span class="n">key</span> <span class="p">::</span><span class="o">=</span> <span class="n">escape</span><span class="o">-</span><span class="n">encoding</span> <span class="s1">&#39;</span><span class="se">\1</span><span class="s1">&#39;</span>
+
+<span class="n">end</span><span class="o">-</span><span class="n">seq</span> <span class="p">::</span><span class="o">=</span> <span class="s2">&quot;</span><span class="se">\0\0</span><span class="s2">&quot;</span>
+
+<span class="n">task</span><span class="o">-</span><span class="nb">id</span> <span class="p">::</span><span class="o">=</span> <span class="n">uint16</span>
+
+<span class="n">tag</span> <span class="p">::</span><span class="o">=</span> <span class="n">uint16</span>
+</pre></div>
+</div>
+<p>目前的编码方式主要用来提供两个保证:</p>
+<ol class="arabic">
+<li><p class="first">可以区分出来自不同Task/Partition的数据,</p>
+<p>因为DCE不支持多输出, 所以在特定的拓扑下一个Task有可能接受到本应由其它Task处理的数据.
+另外, 把Partition信息编码到Key中, 也方便实现HCE要求的Partitioner. 前置的partition,
+后面的task-id即是为此而设置.</p>
+</li>
+<li><p class="first">嵌套Scope中来自于父Scope的数据先传输.</p>
+<p>该保证是为了支持混合方式Shuffle, 即某些属于先传输到Reduce端进行Local Shuffle,
+再和MR传输的数据进行合并. priority-tag和begin-seq/end-seq即是为了这个目的设置.</p>
+</li>
+</ol>
+<p>目前的编码方式的缺点在于对于原始的Key增加了过多的额外编码. 对于单Task/单Partition的情形,
+单路Groupby的场景, 本来只存储原始Key就能解决问题, 但是目前的编码方式至少多用了14个字节. 实际上,
+至少在我们的benchmark中, 大部分场景下的原始Key不超过10个字节.</p>
+<p>结合上文提到过的编码方式, 我们可以采用如下方式进行编码:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">reduce</span><span class="o">-</span><span class="n">key</span> <span class="p">::</span><span class="o">=</span> <span class="n">task</span><span class="o">-</span><span class="n">partition</span><span class="o">-</span><span class="n">encoding</span> <span class="n">shuffle</span><span class="o">-</span><span class="n">key</span>
+<span class="n">task_partition</span><span class="o">-</span><span class="n">encoding</span> <span class="p">::</span><span class="o">=</span> <span class="n">task</span><span class="o">-</span><span class="n">bits</span> <span class="n">partition</span><span class="o">-</span><span class="n">bits</span> <span class="n">seq</span><span class="o">-</span><span class="n">bit</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li>根据全局的task数量及partitioin数量, 决定修要几个bit用来存储Task-Id, 几个bit用来存储partition.
+目前来说, 大部分任务可以用uint16来满足. 这里需要注意的是,
+因为考虑到对DCE合并partition功能的支持, 我们预留一个bit, 用来作为partition间的分隔符,
+以区分空数据的task.</li>
+<li>Task内部的数据采用上文的编码方式进行编码. 这个编码方式对于不同场景的适应性比较好,
+不会出现目前编码方式中对简单case浪费大量编码空间的问题.</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

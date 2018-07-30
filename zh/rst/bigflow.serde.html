@@ -1,0 +1,625 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Serde &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.serde.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.serde">
+<span id="serde"></span><h1>Serde<a class="headerlink" href="#module-bigflow.serde" title="永久链接至标题">¶</a></h1>
+<p>Bigflow 内置序列化/反序列化器</p>
+<dl class="class">
+<dt id="bigflow.serde.BoolSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">BoolSerde</code><a class="headerlink" href="#bigflow.serde.BoolSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>bool类型序列化/反序列化器</p>
+<dl class="method">
+<dt id="bigflow.serde.BoolSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.BoolSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.BoolSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.BoolSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.CPickleSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">CPickleSerde</code><a class="headerlink" href="#bigflow.serde.CPickleSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>使用CPickle去做序列化/反序列化的Serde</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.ChainSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">ChainSerde</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ChainSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>serde for chain transform.
+for example:</p>
+<blockquote>
+<div>serdex should deserialize a string unless the last serde.
+ChainSerde(serdeA, serdB);
+serdeB-&gt;serialize(serdeA-&gt;serialize(object,obj));
+serdeA-&gt;deserialize(serdeB-&gt;deserialize(buf));</div></blockquote>
+<dl class="method">
+<dt id="bigflow.serde.ChainSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ChainSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.ChainSerde.get_args">
+<code class="descname">get_args</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ChainSerde.get_args" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.ChainSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ChainSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.CppSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">CppSerde</code><a class="headerlink" href="#bigflow.serde.CppSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.Serde" title="bigflow.serde.Serde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.Serde</span></code></a></p>
+<p>所有c++实现的serde类都要求继承于此类</p>
+<dl class="method">
+<dt id="bigflow.serde.CppSerde.get_entity_config">
+<code class="descname">get_entity_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.CppSerde.get_entity_config" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.CppSerde.get_entity_name">
+<code class="descname">get_entity_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.CppSerde.get_entity_name" title="永久链接至目标">¶</a></dt>
+<dd><p>获取类名</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.DefaultSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">DefaultSerde</code><a class="headerlink" href="#bigflow.serde.DefaultSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.core.serde.omnitypes_objector.OmniObjector</span></code>, <a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>默认的序列化/反序列化器</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.DictSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">DictSerde</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.DictSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>Serde for dict</p>
+<dl class="method">
+<dt id="bigflow.serde.DictSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.DictSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.DictSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.DictSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.FastPbSerdeFactory">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">FastPbSerdeFactory</code><span class="sig-paren">(</span><em>pipeline</em>, <em>proto_file</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.FastPbSerdeFactory" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Create ProtobufSerde by fast-python-pb</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_serde_factory</span> <span class="o">=</span> <span class="n">serde</span><span class="o">.</span><span class="n">FastPbSerdeFactory</span><span class="p">(</span><span class="n">_pipeline</span><span class="p">,</span> <span class="s1">&#39;./sample.proto&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_serde</span> <span class="o">=</span> <span class="n">_serde_factory</span><span class="o">.</span><span class="n">get_serde</span><span class="p">(</span><span class="s1">&#39;bigflow.MESSAGE&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">SequenceFile</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">serde</span><span class="o">=</span><span class="n">_serde</span><span class="p">))</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="bigflow.serde.FastPbSerdeFactory.get_serde">
+<code class="descname">get_serde</code><span class="sig-paren">(</span><em>class_name</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.FastPbSerdeFactory.get_serde" title="永久链接至目标">¶</a></dt>
+<dd><p>get protobuf serde</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.FloatSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">FloatSerde</code><a class="headerlink" href="#bigflow.serde.FloatSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>float类型序列化/反序列化器</p>
+<dl class="method">
+<dt id="bigflow.serde.FloatSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.FloatSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.FloatSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.FloatSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.IdlPacketSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">IdlPacketSerde</code><span class="sig-paren">(</span><em>log_type</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.IdlPacketSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>Serde for idl_packet</p>
+<dl class="method">
+<dt id="bigflow.serde.IdlPacketSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.IdlPacketSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.IdlPacketSerde.get_log_type">
+<code class="descname">get_log_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.IdlPacketSerde.get_log_type" title="永久链接至目标">¶</a></dt>
+<dd><p>get log_type</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.IdlPacketSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.IdlPacketSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd><p>serialzie</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.IntSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">IntSerde</code><a class="headerlink" href="#bigflow.serde.IntSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>int类型序列化/反序列化器</p>
+<dl class="method">
+<dt id="bigflow.serde.IntSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.IntSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.IntSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.IntSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd><p>serialize int obj</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.ListSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">ListSerde</code><span class="sig-paren">(</span><em>*value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ListSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>list序列化/反序列化器</p>
+<dl class="method">
+<dt id="bigflow.serde.ListSerde.get_fields">
+<code class="descname">get_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ListSerde.get_fields" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.ObjectorSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">ObjectorSerde</code><span class="sig-paren">(</span><em>name</em>, <em>config=''</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ObjectorSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.Serde" title="bigflow.serde.Serde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.Serde</span></code></a></p>
+<p>Serde for objector serde</p>
+<dl class="method">
+<dt id="bigflow.serde.ObjectorSerde.get_entity_config">
+<code class="descname">get_entity_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ObjectorSerde.get_entity_config" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.ObjectorSerde.get_entity_name">
+<code class="descname">get_entity_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ObjectorSerde.get_entity_name" title="永久链接至目标">¶</a></dt>
+<dd><p>获取类名</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.Optional">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">Optional</code><span class="sig-paren">(</span><em>serde</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.Optional" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>用于支持None的序列化/反序列化</p>
+<dl class="method">
+<dt id="bigflow.serde.Optional.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.Optional.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.Optional.origin_serde">
+<code class="descname">origin_serde</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.Optional.origin_serde" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.Optional.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.Optional.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.ProtobufSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">ProtobufSerde</code><span class="sig-paren">(</span><em>msg_type</em>, <em>raise_exception_when_failed=True</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ProtobufSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.Serde" title="bigflow.serde.Serde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.Serde</span></code></a></p>
+<p>Serde for protobuf</p>
+<dl class="method">
+<dt id="bigflow.serde.ProtobufSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ProtobufSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.ProtobufSerde.get_msg_type">
+<code class="descname">get_msg_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ProtobufSerde.get_msg_type" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.ProtobufSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.ProtobufSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.SameTypeListSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">SameTypeListSerde</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.SameTypeListSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>list序列化/反序列化器，要求list中元素均为同一类型</p>
+<dl class="method">
+<dt id="bigflow.serde.SameTypeListSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.SameTypeListSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.SameTypeListSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.SameTypeListSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.Serde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">Serde</code><a class="headerlink" href="#bigflow.serde.Serde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.core.entity.EntitiedBySelf</span></code></p>
+<p>所有python实现的serde类要求继承于此类，用户可以通过继承Serde实现自定义的序列化/反序列化器</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">serde</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">CustomSerde</span><span class="p">(</span><span class="n">serde</span><span class="o">.</span><span class="n">Serde</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">assert</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">MyCostomObject</span><span class="p">))</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buf</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="n">MyCostomObject</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>在大部分的变换中都可以传递一个特殊的叫serde的参数，
+设置该参数即可指定产出的PCollection的serde。</p>
+<blockquote>
+<div>p.map(lambda x: MyCostomObject(x), serde=CustomSerde())</div></blockquote>
+<dl class="method">
+<dt id="bigflow.serde.Serde.get_entity_config">
+<code class="descname">get_entity_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.Serde.get_entity_config" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.Serde.get_entity_name">
+<code class="descname">get_entity_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.Serde.get_entity_name" title="永久链接至目标">¶</a></dt>
+<dd><p>获取类名</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.SetSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">SetSerde</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.SetSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>Serde for set</p>
+<dl class="method">
+<dt id="bigflow.serde.SetSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.SetSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.SetSerde.get_value_serde">
+<code class="descname">get_value_serde</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.SetSerde.get_value_serde" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.SetSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.SetSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.StrSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">StrSerde</code><a class="headerlink" href="#bigflow.serde.StrSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>str类型序列化/反序列化器</p>
+<dl class="method">
+<dt id="bigflow.serde.StrSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.StrSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.StrSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.StrSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.TupleLikeListSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">TupleLikeListSerde</code><span class="sig-paren">(</span><em>*value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.TupleLikeListSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>list序列化/反序列化器，list中每个元素可以为任意类型</p>
+<dl class="method">
+<dt id="bigflow.serde.TupleLikeListSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.TupleLikeListSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.TupleLikeListSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.TupleLikeListSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.serde.TupleSerde">
+<em class="property">class </em><code class="descclassname">bigflow.serde.</code><code class="descname">TupleSerde</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.TupleSerde" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.serde.CppSerde" title="bigflow.serde.CppSerde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.CppSerde</span></code></a></p>
+<p>tuple序列化/反序列化器</p>
+<dl class="method">
+<dt id="bigflow.serde.TupleSerde.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>buf</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.TupleSerde.deserialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.TupleSerde.get_args">
+<code class="descname">get_args</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.TupleSerde.get_args" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.serde.TupleSerde.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.TupleSerde.serialize" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.any">
+<code class="descclassname">bigflow.serde.</code><code class="descname">any</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.any" title="永久链接至目标">¶</a></dt>
+<dd><p>Return a serde use the default serde.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.bool_">
+<code class="descclassname">bigflow.serde.</code><code class="descname">bool_</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.bool_" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an optional bool serde.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.common_serde">
+<code class="descclassname">bigflow.serde.</code><code class="descname">common_serde</code><span class="sig-paren">(</span><em>*serdes</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.common_serde" title="永久链接至目标">¶</a></dt>
+<dd><p>输出输入serde集合中的公共serde
+目前只维护系统定义的serde, 对于用户自定义的serde, 返回None
+:param serdes: serde instances or classes</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">如果找到合适的公共serde则返回，否则返回None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.dict_of">
+<code class="descclassname">bigflow.serde.</code><code class="descname">dict_of</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.dict_of" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an optional dict serde</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.extract_elem">
+<code class="descclassname">bigflow.serde.</code><code class="descname">extract_elem</code><span class="sig-paren">(</span><em>serde</em>, <em>n</em>, <em>if_not_found=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.extract_elem" title="永久链接至目标">¶</a></dt>
+<dd><p>inner function</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.float_">
+<code class="descclassname">bigflow.serde.</code><code class="descname">float_</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.float_" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an optional float serde.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.int_">
+<code class="descclassname">bigflow.serde.</code><code class="descname">int_</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.int_" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an optional int serde.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.list_of">
+<code class="descclassname">bigflow.serde.</code><code class="descname">list_of</code><span class="sig-paren">(</span><em>*value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.list_of" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an optional list serde.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.of">
+<code class="descclassname">bigflow.serde.</code><code class="descname">of</code><span class="sig-paren">(</span><em>rtype</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.of" title="永久链接至目标">¶</a></dt>
+<dd><p>Return the serde you want.</p>
+<p>If the input arg is a type instance, such as int, str, float
+or a tuple of type instances, such as (int, str)
+or a list of type instances, such as [int, str] and [int]
+the function will return the corresponding serde to serialize and deserialize the data.</p>
+<p>The returned serde can process the Nonable data.</p>
+<dl class="docutils">
+<dt>Note:   [int] means a list of ints, it can accept any number of ints you want,</dt>
+<dd>but [int, str] can only accecpt a list who has exactly 2 elements.
+(if your data to serialize has more than 2 elements, the remaining elements may be
+lost)</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.origin">
+<code class="descclassname">bigflow.serde.</code><code class="descname">origin</code><span class="sig-paren">(</span><em>serde</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.origin" title="永久链接至目标">¶</a></dt>
+<dd><p>inner function</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.proto_of">
+<code class="descclassname">bigflow.serde.</code><code class="descname">proto_of</code><span class="sig-paren">(</span><em>msg_type</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.proto_of" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an protobuf serde
+Warning: this is not optional</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.sample">
+<code class="descclassname">bigflow.serde.</code><code class="descname">sample</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.sample" title="永久链接至目标">¶</a></dt>
+<dd><p>Return a serde can process your input data.</p>
+<p>Note: if the sample is a list, when all the data is the same type, we assume</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.set_of">
+<code class="descclassname">bigflow.serde.</code><code class="descname">set_of</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.set_of" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an optional set serde</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.str_">
+<code class="descclassname">bigflow.serde.</code><code class="descname">str_</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.str_" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an optional str serde.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.serde.tuple_of">
+<code class="descclassname">bigflow.serde.</code><code class="descname">tuple_of</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.serde.tuple_of" title="永久链接至目标">¶</a></dt>
+<dd><p>Return an optional tuple serde.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

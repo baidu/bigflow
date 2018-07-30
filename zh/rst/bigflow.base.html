@@ -1,0 +1,268 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>PipelineFactory &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.base.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.base">
+<span id="pipelinefactory"></span><h1>PipelineFactory<a class="headerlink" href="#module-bigflow.base" title="永久链接至标题">¶</a></h1>
+<p>定义用于创建 <a class="reference internal" href="bigflow.pipeline.html#module-bigflow.pipeline" title="bigflow.pipeline: all pipeline implementations"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bigflow.pipeline</span></code></a> 的工厂类</p>
+<span class="target" id="module-bigflow.base"></span><dl class="class">
+<dt id="bigflow.base.Pipeline">
+<em class="property">class </em><code class="descclassname">bigflow.base.</code><code class="descname">Pipeline</code><a class="headerlink" href="#bigflow.base.Pipeline" title="永久链接至目标">¶</a></dt>
+<dd><p>Pipeline是用户一个分布式计算任务的抽象</p>
+<dl class="staticmethod">
+<dt id="bigflow.base.Pipeline.create">
+<em class="property">static </em><code class="descname">create</code><span class="sig-paren">(</span><em>pipeline_type</em>, <em>**job_config</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.base.Pipeline.create" title="永久链接至目标">¶</a></dt>
+<dd><p>根据用户所指定的后端引擎类型以及基本配置构造一个Pipeline实例</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
+<li><strong>pipeline_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- 指定Pipeline类型，目前支持``&quot;local&quot;<code class="docutils literal notranslate"><span class="pre">和</span></code>&quot;hadoop&quot;``</li>
+<li><strong>**job_config</strong> -- <p>Pipeline配置</p>
+<p>hadoop模式：</p>
+<blockquote>
+<div>job_name: 用于指定Hadoop作业名<p>tmp_data_path: 用于指定保存运行包等信息的HDFS路径，请确保ugi有操作权限</p>
+<p>hadoop_job_conf: 用于设置Hadoop作业相关配置，优先级关系：pipeline创建时指定的参数 &gt; bigflow自动算出的参数 &gt; hadoop-site.xml里的参数</p>
+<dl class="docutils">
+<dt>default_concurrency <span class="classifier-delimiter">:</span> <span class="classifier">默认并发数。</span></dt>
+<dd>如果某级reduce数据量过小，bigflow会利用hadoop相关feature在运行时自动调小并发。</dd>
+</dl>
+</div></blockquote>
+<p>通用配置：</p>
+<blockquote>
+<div>pass_default_encoding_to_remote (bool/None): 是否传递defaultencoding配置值
+（默认编码）到远端。<p>默认情况下（或配置为None)，仅在sys模块被reload过的情况下（通过sys.setdefaultencoding判断），
+会将本地的sys.getdefaultencoding()传递到remote端。
+设置为True，则强制将本地编码透传至远端。
+设置为False，则不透传。</p>
+</div></blockquote>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body"><p class="first">Pipeline实例</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#bigflow.base.Pipeline" title="bigflow.base.Pipeline">Pipeline</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>创建一个local作业：
+&gt;&gt;&gt; base.Pipeline.create('local')</p>
+<p>创建一个hadoop作业：
+&gt;&gt;&gt; base.Pipeline.create('hadoop',</p>
+<blockquote>
+<div>job_name=&quot;test_app&quot;,
+tmp_data_path=&quot;hdfs:///app/test/&quot;,
+hadoop_job_conf={&quot;mapred.job.map.capacity&quot;: &quot;1000&quot;})</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.base.Options">
+<em class="property">class </em><code class="descclassname">bigflow.base.</code><code class="descname">Options</code><a class="headerlink" href="#bigflow.base.Options" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>for all options</p>
+<dl class="class">
+<dt id="bigflow.base.Options.Explain">
+<em class="property">class </em><code class="descname">Explain</code><a class="headerlink" href="#bigflow.base.Options.Explain" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>for explain options in base.Pipeline.create</p>
+<dl class="docutils">
+<dt>DEFAULT: Default setting.</dt>
+<dd>At most engine (Hadoop, Spark[not support yet]),
+the explaining file will be shown at the log directory of the 1st task of every vertex.</dd>
+</dl>
+<p>ON: Explain file will be shown at all task. This may be very expensive if the explaining file is too big.</p>
+<p>OFF: Do not show any explaining file.</p>
+<p>eg.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">base</span><span class="o">.</span><span class="n">Pipeline</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;dagmr&#39;</span><span class="p">,</span> <span class="n">explain</span><span class="o">=</span><span class="n">base</span><span class="o">.</span><span class="n">Options</span><span class="o">.</span><span class="n">Explain</span><span class="o">.</span><span class="n">ON</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="bigflow.base.Options.Explain.DEFAULT">
+<code class="descname">DEFAULT</code><em class="property"> = 0</em><a class="headerlink" href="#bigflow.base.Options.Explain.DEFAULT" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bigflow.base.Options.Explain.OFF">
+<code class="descname">OFF</code><em class="property"> = 2</em><a class="headerlink" href="#bigflow.base.Options.Explain.OFF" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="bigflow.base.Options.Explain.ON">
+<code class="descname">ON</code><em class="property"> = 1</em><a class="headerlink" href="#bigflow.base.Options.Explain.ON" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.base.Transformer">
+<em class="property">class </em><code class="descclassname">bigflow.base.</code><code class="descname">Transformer</code><a class="headerlink" href="#bigflow.base.Transformer" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Transformser基类</p>
+<p>用户在使用
+<a class="reference internal" href="bigflow.transforms.html#bigflow.transforms.transform" title="bigflow.transforms.transform"><code class="xref py py-func docutils literal notranslate"><span class="pre">bigflow.transforms.transform(self,</span> <span class="pre">data,</span> <span class="pre">Transformer,</span> <span class="pre">*side_inputs,</span> <span class="pre">**options)</span></code></a>
+时，需要实现一个本类的子类，并重写相关方法，此类相关样例也见前述变换文档页。</p>
+<dl class="method">
+<dt id="bigflow.base.Transformer.begin_process">
+<code class="descname">begin_process</code><span class="sig-paren">(</span><em>*side_inputs</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.base.Transformer.begin_process" title="永久链接至目标">¶</a></dt>
+<dd><p>此方法在开始处理数据之前被调用，以通知用户要开始处理数据了。</p>
+<p>用户必须返回一个可迭代的对象，其中值将会被放入结果的PCollection中。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.base.Transformer.end_process">
+<code class="descname">end_process</code><span class="sig-paren">(</span><em>*side_inputs</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.base.Transformer.end_process" title="永久链接至目标">¶</a></dt>
+<dd><p>此方法在结束处理数据时被调用，以通知用户要开始处理数据了。</p>
+<p>用户必须返回一个可迭代的对象，其中值将会被放入结果的PCollection中。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.base.Transformer.process">
+<code class="descname">process</code><span class="sig-paren">(</span><em>record</em>, <em>*side_inputs</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.base.Transformer.process" title="永久链接至目标">¶</a></dt>
+<dd><p>此方法在处理数据之时被调用，以通知用户要开始处理数据了。
+其中record即为待处理的数据。</p>
+<p>用户必须返回一个可迭代的对象，其中值将会被放入结果的PCollection中。</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

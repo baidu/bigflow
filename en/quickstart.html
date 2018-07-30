@@ -1,0 +1,320 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>快速入门 &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">快速入门</a><ul>
+<li><a class="reference internal" href="#python-shellbigflow-python">在Python shell中使用Bigflow Python</a><ul>
+<li><a class="reference internal" href="#id2">准备</a></li>
+<li><a class="reference internal" href="#id3">更多的变换操作</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">完整的程序</a><ul>
+<li><a class="reference internal" href="#spark">批处理引擎（spark）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">更多使用示例</a></li>
+<li><a class="reference internal" href="#id6">进阶教程</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/quickstart.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>快速入门<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="#python-shellbigflow-python">在Python shell中使用Bigflow Python</a><ul>
+<li><a class="reference internal" href="#id2">准备</a></li>
+<li><a class="reference internal" href="#id3">更多的变换操作</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">完整的程序</a><ul>
+<li><a class="reference internal" href="#spark">批处理引擎（spark）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">进阶教程</a></li>
+</ul>
+<p>本教程旨在提供一个使用Bigflow Python的快速上手演示。教程首先会通过在Python交互式环境(Interactive Shell)中一步一步展示Bigflow Python的基本概念和API，然后演示如何写一个完整的Bigflow Python程序。对于深入的概念和用法，请参照 <a class="reference internal" href="guide.html"><span class="doc">编程指南</span></a> 部分。</p>
+<div class="section" id="python-shellbigflow-python">
+<h2>在Python shell中使用Bigflow Python<a class="headerlink" href="#python-shellbigflow-python" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3>准备<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Bigflow Python工作在Python 2.7环境中(其它版本尚未测试)。它使用标准的CPython解释器，同时用户也能够在代码中使用第三方的Python库。</p>
+<p>获取 <a class="reference external" href="https://github.com/baidu/bigflow/releases">bigflow_python.tar.gz</a></p>
+<p>保证系统环境中已经安装好hadoop client，并设置好HADOOP_HOME，Bigflow Python需要从Hadoop配置文件中读取相应的配置来访问HDFS。
+保证系统环境中已经安装好spark client，并设置好SPARK_HOME，Bigflow Python需要从Spark配置文件中读取相应的配置来访问Spark。
+保证系统环境中已经安装好了Java，并设置好了JAVA_HOME，需要使用java来运行spark。</p>
+<p>用户通过 <a class="reference internal" href="bigflow_on_cloud.html"><span class="doc">公有云</span></a> 可以更方便的是使用Bigflow</p>
+<p>运行 <cite>bigflow/bin/pyrun</cite> 即可在Python交互式环境中使用Bigflow Python。</p>
+<p>接下来，我们可以导入相关的module了:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span>
+</pre></div>
+</div>
+<p>Bigflow Python任务通过 <cite>pipeline</cite> 进行定义，它通过一些列对抽象数据集的变换用户计算任务。同时，pipeline也代表任务最终被提交到的计算引擎上。我们可以首先创建一个本地引擎来快速地试用:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">Pipeline</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;LOCAL&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>接下来可以读一个文件:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s2">&quot;some input path&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">text</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p><cite>pipeline.read()</cite> 将本地文件映射为一个 <cite>P类型</cite> 的实例，更确切的说，是一个 <cite>PCollection</cite> 。PCollection可以看作是一个分布式的Python <cite>list</cite> 结构。TextFile表示读取的类型为文本文件，它会将文本的每一行作为PCollection的元素。注意，这时我们还没有真正地读取数据，仅仅记录了一个文本文件到PCollection的映射，因此 <cite>print text</cite> 显示的内容为省略号(“<cite>[…]</cite>”)。我们可以使用 <cite>get()</cite> 方法触发Pipeline计算，将PCollection转化为一个Python的内置list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">text</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="s1">&#39;An apple&#39;</span><span class="p">,</span> <span class="s1">&#39;a banana&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">(</span><span class="n">文本文件的每一行内容</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>PCollection定义了一系列的变换方法方便我们对其表示的数据进行计算，例如，可以使用 <cite>count()</cite> 方法统计元素的个数，也就是输入文本的行数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line_num</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">line_num</span>
+<span class="go">o</span>
+</pre></div>
+</div>
+<p>记住P类型实例的变换结果是另一个P类型实例，这次我们看到line_num通过一个 <cite>o</cite> 表示它是另一种P类型，PObject，它对应于单个值。我们可以再次调用 <cite>get()</cite> 方法看到结果:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">line_num</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">54</span>
+</pre></div>
+</div>
+<p>我们可以再使用一个 <cite>distinct()</cite> 方法得到text中所有的不重复元素:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">distinct_lines</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">distinct_lines</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><cite>distinct()</cite> 方法的返回结果是一个PCollection，我们仍然可以使用 <cite>get()</cite> 方法得到其内容，或是使用 <cite>Pipeline.write()</cite> 方法把结果写到文件中:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">distinct_lines</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s2">&quot;some output path&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>与 <cite>read()</cite> 方法类似，调用 <cite>write()</cite> 并不会马上触发文件的写操作，而仅仅将这个过程记录下来。这次我们可以使用 <cite>Pipeline.run()</cite> 触发Pipeline计算:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>这时，distinct_lines的内容真正被写到了我们指定的输出路径中。</p>
+<p>回顾一下，Bigflow Python会仅可能地推迟Pipeline的计算来对整个计算过程进行优化。触发计算的方式只有两种： <cite>get()</cite> 和 <cite>run()</cite> 方法。</p>
+</div>
+<div class="section" id="id3">
+<h3>更多的变换操作<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>Bigflow Python提供了众多的变换支持从简单到复杂的计算逻辑。比如说现在我们希望得到之前的文本文件中，单词最多的那一行:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">line_with_num</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()),</span> <span class="n">line</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line_with_num</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">else</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">(3, &quot;Whatever it uses&quot;)</span>
+</pre></div>
+</div>
+<p>第一行代码使用了 <cite>map()</cite> 变换，将每一行映射为一个tuple – (单词数, 行内容)，映射结果为另一个PCollection；第二行代码使用 <cite>reduce()</cite> 变换，将PCollection中的每两个元素进行比较，返回单词数更大的元素，最终将所有的元素聚合为一，返回一个PObject。这里的 <cite>map()</cite> 和 <cite>reduce()</cite> 用法非常类似于Python内置的 <a class="reference external" href="https://docs.python.org/2/library/functions.html#map">map()</a> 和 <a class="reference external" href="https://docs.python.org/2/library/functions.html#reduce">reduce()</a> 。 变换的参数是一个方法，例子中是Python的 <a class="reference external" href="https://docs.python.org/2/reference/expressions.html#lambda">匿名表达式(lambdas)</a> 。我们也可以显式定义方法并使用:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">max</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">if</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+<span class="gp">... </span>       <span class="k">return</span> <span class="n">a</span>
+<span class="gp">... </span>   <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>       <span class="k">return</span> <span class="n">b</span>
+<span class="gp">...</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line_with_num</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="nb">max</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">(3, &quot;Whatever it uses&quot;)</span>
+</pre></div>
+</div>
+<p>在当前的分布式计算领域，广为人知的范式便是MapReduce。在Bigflow Python中，用户能够轻易地实现一个MapReduce范式，比如以经典的Word Count为例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">words</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>  <span class="c1"># [...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">groups</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">word</span><span class="p">:</span> <span class="n">word</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">word</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># {k0: [...]}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">sum</span><span class="p">)</span>  <span class="c1"># {k0: o}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">{&quot;Whatever&quot;: 1, &quot;it&quot;: 3, &quot;use&quot;: 2}</span>
+</pre></div>
+</div>
+<p>第一行代码将输入的每一行映射为多个单词( <cite>flat_map()</cite> 变换是一个1到N的映射)，第二行使用 <cite>group_by()</cite> 变换根据单词进行分组。分组的结果是一种新的P类型 – PTable。简单而言，PTable可以看作是分布式的Python <cite>dict</cite> 类型，其具有key到另一个P类型的映射:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">groups</span>
+<span class="go">{k0: [...]}</span>
+</pre></div>
+</div>
+<p>例子中，groups是一个以单词为key，PCollection为value的PTable，PCollection的包含着多个‘1’。我们可以使用 <cite>apply_values()</cite> 方法应用任何的变换到value，也就是PCollection上。例如，之前用过的 <cite>transforms.count()</cite></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">result</span>
+<span class="go">{k0: o}</span>
+</pre></div>
+</div>
+<p>现在结果是另一个PTable，value变为了PObject(单词数量)。</p>
+<p>PTable可以通过 <cite>flatten()</cite> 变换转换为一个PCollection:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">flatten_result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">flatten_result</span>
+<span class="go">[...]</span>
+</pre></div>
+</div>
+<p>PCollection的元素为(key, value) tuple:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">flatten</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;Whatever&quot;, 1), (&quot;it&quot;, 3), (&quot;use&quot;, 2)]</span>
+</pre></div>
+</div>
+<p>Bigflow Python中所有的变换可以在 <cite>transforms</cite> 查看接口说明和用法。</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>完整的程序<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="spark">
+<h3>批处理引擎（spark）<a class="headerlink" href="#spark" title="Permalink to this headline">¶</a></h3>
+<p>之前的例子中，Pipeline运行在本地引擎上，生产环境中我们可以使用spark引擎处理真正的大规模数据。</p>
+<p>把所有的代码放到一个py文件中，在创建Pipeline的时候指定”spark”作为Pipeline类型:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;word_cnt.py&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">output</span>
+
+<span class="k">def</span> <span class="nf">word_cnt</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span> \
+            <span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">sum</span><span class="p">)</span> \
+            <span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">Pipeline</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;spark&quot;</span><span class="p">,</span> <span class="n">tmp_data_path</span><span class="o">=</span><span class="s2">&quot;some hdfs path&quot;</span><span class="p">)</span>  <span class="c1"># now the job runs on DCE</span>
+<span class="n">input_data</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s2">&quot;hdfs:///some input path&quot;</span><span class="p">))</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">())</span> \
+                   <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">word_cnt</span><span class="p">)</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s2">&quot;hdfs:///some output path&quot;</span><span class="p">))</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>运行”bin/pyrun word_cnt.py”便可以把任务提交到spark上。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>更多使用示例<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/baidu/bigflow/tree/master/bigflow_python/python/bigflow/example">examples</a></p>
+</div>
+<div class="section" id="id6">
+<h2>进阶教程<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>更多的概念和介绍，请参照Bigflow Python <a class="reference internal" href="guide.html"><span class="doc">编程指南</span></a></li>
+<li>Bigflow Python <a class="reference internal" href="rst/modules.html"><span class="doc">API索引</span></a> 参考所有API的说明。</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

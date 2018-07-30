@@ -1,0 +1,176 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>RemoveUnsinkedUnitPass &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">RemoveUnsinkedUnitPass</a><ul>
+<li><a class="reference internal" href="#id1">1. 功能介绍</a></li>
+<li><a class="reference internal" href="#id2">2. 依赖说明</a></li>
+<li><a class="reference internal" href="#id3">3. 图示说明</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/flume/passes/remove_unsinked_unit_pass.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="removeunsinkedunitpass">
+<h1>RemoveUnsinkedUnitPass<a class="headerlink" href="#removeunsinkedunitpass" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>1. 功能介绍<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>在plan中, 只有类型为SINK的叶子节点才能够作为最后一个没有输出的节点, 当没有输出的节点不是SINK类型时,
+说明在plan中存在无效的执行分支, 需要被删除。RemoveUnsinkedUnitPass的作用就是删除这类节点。</p>
+</div>
+<div class="section" id="id2">
+<h2>2. 依赖说明<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p><strong>PASS</strong></p>
+<p>无</p>
+<p><strong>ANALYSIS</strong></p>
+<p>无</p>
+</div>
+<div class="section" id="id3">
+<h2>3. 图示说明<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p><strong>plan图（运行前）</strong></p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../../_images/remove_unsinked_unit_pass_0.png"><img alt="../../_images/remove_unsinked_unit_pass_0.png" src="../../_images/remove_unsinked_unit_pass_0.png" style="width: 600px;" /></a>
+</div></blockquote>
+<p>上图中, 右侧的执行分支的结束节点没有输出, 但是又不是类型为SINK的节点, 该分支在执行过程在不具有任何
+执行的意义, 可以被删除。</p>
+<p><strong>plan图（运行后）</strong></p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../../_images/remove_unsinked_unit_pass_1.png"><img alt="../../_images/remove_unsinked_unit_pass_1.png" src="../../_images/remove_unsinked_unit_pass_1.png" style="width: 600px;" /></a>
+</div></blockquote>
+<p>对plan应用了RemoveUnsinkedUnitPass之后, 执行计划中的右侧执行分支被删除。</p>
+<p><a class="reference external" href="../plan_pass.html#pass">返回</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

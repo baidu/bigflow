@@ -1,0 +1,182 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>示例 &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">示例</a><ul>
+<li><a class="reference internal" href="#stage-map-only">示例1 – 单Stage('map-only')作业</a></li>
+<li><a class="reference internal" href="#wordcount">示例2 – WordCount</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/spark/case.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>示例<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="stage-map-only">
+<h2>示例1 – 单Stage('map-only')作业<a class="headerlink" href="#stage-map-only" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="kn">import</span> <span class="n">base</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">Pipeline</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;spark&#39;</span><span class="p">,</span> <span class="n">spark_conf</span><span class="o">=</span><span class="n">configs</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="s2">&quot;JNI&quot;</span><span class="p">)</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="n">p</span> \
+    <span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s1">&#39;/test.in&#39;</span><span class="p">))</span> \
+    <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s1">&#39;/test.out&#39;</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>生成的计划示意图如下：</p>
+<a class="reference internal image-reference" href="../_images/plan1.png"><img alt="../_images/plan1.png" class="align-center" src="../_images/plan1.png" style="width: 500px; height: 300px;" /></a>
+</div>
+<div class="section" id="wordcount">
+<h2>示例2 – WordCount<a class="headerlink" href="#wordcount" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">words</span> <span class="o">=</span> <span class="n">p</span> \
+    <span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s2">&quot;/home/wangcong09/modif.small&quot;</span><span class="p">))</span> \
+    <span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">cnt1</span> <span class="o">=</span> <span class="n">words</span> \
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+<span class="n">cnt2</span> <span class="o">=</span> <span class="n">words</span> \
+    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">count</span><span class="p">)</span> \
+    <span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">p</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cnt1</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s1">&#39;/test.out1&#39;</span><span class="p">))</span>
+<span class="n">p</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cnt2</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s1">&#39;/test.out2&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>生成的计划示意图如下：</p>
+<a class="reference internal image-reference" href="../_images/plan2.png"><img alt="../_images/plan2.png" class="align-center" src="../_images/plan2.png" style="width: 500px; height: 300px;" /></a>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

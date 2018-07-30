@@ -1,0 +1,354 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>算子执行框架 &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">算子执行框架</a><ul>
+<li><a class="reference internal" href="#id2">基本类型</a></li>
+<li><a class="reference internal" href="#id3">串联执行模型</a></li>
+<li><a class="reference internal" href="#id4">嵌套执行模型</a></li>
+<li><a class="reference internal" href="#id5">示例场景</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/flume/executor.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>算子执行框架<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>本章描述Flume-Runtime如何把各个用户算子串联在一起, 相关代码在 flume/runtime 目录下.
+关于算子及其逻辑组织关系, 参见  <a class="reference internal" href="core.html"><span class="doc">Flume-Core</span></a></p>
+<div class="section" id="id2">
+<h2>基本类型<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p><strong>Executor</strong> 是驱动用户算子的最小执行单位. 其接口定义如下:</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Executor</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">Executor</span><span class="p">()</span> <span class="p">{}</span>
+
+    <span class="c1">// 初始化方法, 传入Executor执行所需要的数据依赖</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">Setup</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">Source</span><span class="o">*&gt;&amp;</span> <span class="n">sources</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// 为其他Executor提供数据依赖.</span>
+    <span class="k">virtual</span> <span class="n">Source</span><span class="o">*</span> <span class="nf">GetSource</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">id</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">scope_level</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// 开始执行一个新的分组.</span>
+    <span class="c1">// 进入分组后, 继续的BeginGroup调用代表执行流成进入一个嵌套的分组.</span>
+    <span class="c1">// 每个BeginGroup都会有一次FinishGroup调用和其对应</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">BeginGroup</span><span class="p">(</span><span class="k">const</span> <span class="n">toft</span><span class="o">::</span><span class="n">StringPiece</span><span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// 完成执行一个分组.</span>
+    <span class="c1">// FinishGroup的调用不代表该分组执行完成, 而是通知Executor可以开始真正的执行逻辑.</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">FinishGroup</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>在Executor接口中出现的 <strong>Source</strong> 代表数据源, 其接口定义如下:</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Source类的接口采用Observer设计模式.</span>
+<span class="k">class</span> <span class="nc">Source</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">typedef</span> <span class="n">toft</span><span class="o">::</span><span class="n">Closure</span><span class="o">&lt;</span><span class="kt">void</span> <span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">ObjectCallback</span><span class="p">;</span> <span class="c1">// NOLINT</span>
+    <span class="k">typedef</span> <span class="n">toft</span><span class="o">::</span><span class="n">Closure</span><span class="o">&lt;</span><span class="kt">void</span> <span class="p">(</span><span class="k">const</span> <span class="n">toft</span><span class="o">::</span><span class="n">StringPiece</span><span class="o">&amp;</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">BinaryCallback</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">toft</span><span class="o">::</span><span class="n">Closure</span><span class="o">&lt;</span><span class="kt">void</span> <span class="p">(</span><span class="n">core</span><span class="o">::</span><span class="n">Iterator</span><span class="o">*</span><span class="p">)</span><span class="o">&gt;</span> <span class="n">IteratorCallback</span><span class="p">;</span>
+    <span class="k">typedef</span> <span class="n">toft</span><span class="o">::</span><span class="n">Closure</span><span class="o">&lt;</span><span class="kt">void</span> <span class="p">()</span><span class="o">&gt;</span> <span class="n">DoneCallback</span><span class="p">;</span>
+
+    <span class="c1">// 每个Handle代表一个数据接收者, 数据发送以组为周期.</span>
+    <span class="k">class</span> <span class="nc">Handle</span> <span class="p">{</span>
+    <span class="k">public</span><span class="o">:</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Handle</span><span class="p">()</span> <span class="p">{}</span>
+
+        <span class="c1">// 该接口用来通知数据提供者, 当前发送的一组数据不再被需要.</span>
+        <span class="k">virtual</span> <span class="kt">void</span> <span class="n">Done</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="c1">// 代表需要可迭代数据的接收者.</span>
+    <span class="k">class</span> <span class="nc">IteratorHandle</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Handle</span> <span class="p">{</span>
+    <span class="k">public</span><span class="o">:</span>
+        <span class="c1">//  回退到接收流式数据</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Fallback</span><span class="p">(</span><span class="n">ObjectCallback</span><span class="o">*</span> <span class="n">consumer</span><span class="p">,</span> <span class="n">DoneCallback</span><span class="o">*</span> <span class="n">eof</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">};</span>
+
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">Source</span><span class="p">()</span> <span class="p">{}</span>
+
+    <span class="c1">// 注册一个需要内存对象的接收者.</span>
+    <span class="c1">// consumer用来发送数据, eof用来表示一组数据处理结束.</span>
+    <span class="k">virtual</span> <span class="n">Handle</span><span class="o">*</span> <span class="n">RequireObject</span><span class="p">(</span><span class="n">ObjectCallback</span><span class="o">*</span> <span class="n">consumer</span><span class="p">,</span> <span class="n">DoneCallback</span><span class="o">*</span> <span class="n">eof</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// 注册一个需要序列化后对象的接收.</span>
+    <span class="c1">// consumer用来发送数据, eof用来表示一组数据处理结束.</span>
+    <span class="k">virtual</span> <span class="n">Handle</span><span class="o">*</span> <span class="nf">RequireBinary</span><span class="p">(</span><span class="n">BinaryCallback</span><span class="o">*</span> <span class="n">consumer</span><span class="p">,</span> <span class="n">DoneCallback</span><span class="o">*</span> <span class="n">eof</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// 注册一个需要迭代访问一组数据的接收者.</span>
+    <span class="c1">// callback在整组数据都就绪后被调用.</span>
+    <span class="k">virtual</span> <span class="n">IteratorHandle</span><span class="o">*</span> <span class="nf">RequireIterator</span><span class="p">(</span><span class="n">IteratorCallback</span><span class="o">*</span> <span class="n">callback</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h2>串联执行模型<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>在 <a class="reference internal" href="core.html#ref-to-processor"><span class="std std-ref">Processor</span></a> 一节中, 我们给出了个算子串联的例子. 对于这种模型,
+下图展示了Executor如何处理这种情形:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/executor_dag.png"><img alt="../_images/executor_dag.png" src="../_images/executor_dag.png" style="width: 600px;" /></a>
+</div></blockquote>
+<p>假设这些Processor都是以流式处理的方式串联在一起, 如果在Processor A中产生了一条记录,
+Executor A会将这条记录依次发送给下游的处理节点. 调用关系如下:</p>
+<blockquote>
+<div><ul class="simple">
+<li>ProcessorA-&gt;Process<ul>
+<li>EmitterA-&gt;Emit<ul>
+<li>ExecutorB-&gt;Receive<ul>
+<li>ProcessorB-&gt;Process<ul>
+<li>EmitterB-&gt;Emit<ul>
+<li>ExecutorD-&gt;Receive</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>ExecutorC-&gt;Receive<ul>
+<li>ProcessorC-&gt;Process<ul>
+<li>EmitterC-&gt;Emit</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="first admonition-title">参见</p>
+<p class="last">flume/runtime/common/sub_executor_manager.h 负责在各个Executor之间建立数据依赖关系</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>嵌套执行模型<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>在 <a class="reference internal" href="core.html#ref-to-scope"><span class="std std-ref">Group/Scope</span></a> 一节中, 我们展示了Flume如何表示嵌套的分组及嵌套分组中的计算逻辑.
+下图展示了Executor如何执行这类带有嵌套'子图'的逻辑计划:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/executor_tree.png"><img alt="../_images/executor_tree.png" src="../_images/executor_tree.png" style="width: 600px;" /></a>
+</div></blockquote>
+<p>对于蓝色的ShuffleExecutor来说, 它有两个子Executor, 一个是ProcessorExecutor, 用来执行求和算子,
+另一个是嵌套的ShuffleExecutor, 用来执行嵌套分组. 和一般的Executor一样,
+ShuffleExecutor从外部Source获得数据, 当读完全部一组数据后,
+ShuffleExecutor会依据用户提供的KeyReader将所有的数据分组, 并依次把每一组数据交给子Executor处理.
+对于某一组数据而言, ShuffleExecutor的调用逻辑如下:</p>
+<blockquote>
+<div><ul class="simple">
+<li>FatherExecutor-&gt;Receive</li>
+<li>...</li>
+<li>FatherExecutor-&gt;ReceiveDone<ul>
+<li>FatherExecutor-&gt;GroupDatas</li>
+<li>ChildExecutor1-&gt;BeginGroup first-day</li>
+<li>...</li>
+<li>ChildExecutorN-&gt;Begingroup first-day</li>
+<li>ChildExecutorN-&gt;FinishGroup</li>
+<li>...</li>
+<li>ChildExecutor1-&gt;FinishGroup</li>
+<li>FatherSource-&gt;DispatchData</li>
+<li>...</li>
+<li>FatherSource-&gt;NotifyDone</li>
+<li>ChildExecutor1-&gt;BeginGroup second-day</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>从前面的定义中我们看到, Executor接口中有BeginGroup和FinishGroup两个方法, 该方法由其父Executor调用,
+用以控制每组数据的执行流程. BeginGroup用来通知执行流进入到一个新的Scope,
+所有上游数据依赖都开始处理该Scope上的一个分组. FinishGroup通知执行流即将退出对应的Scope,
+每个Executor都只处理某个Scope上的数据, 当相应Scope上的FinishGroup被调用时,
+以为着所有下游数据依赖都开始处理该组数据, 这是Executor就开始准备接收上游数据,
+并将处理后的数据发往下游.</p>
+<p>按照flume-core的接口定义, 每个算子不仅需要拿到其所在Scope的分组信息,
+还需要拿到所有包含Scope的分组信息, 故父Executor还需向子Executor透传高层Scope的分组信息.
+调用关系如下:</p>
+<blockquote>
+<div><ul class="simple">
+<li>FatherExecutor-&gt;BeginGroup first-week<ul>
+<li>ChildExecutor1-&gt;BeginGroup first-week</li>
+<li>...</li>
+<li>ChildExecutorN-&gt;BeginGroup first-week</li>
+</ul>
+</li>
+<li>FatherExecutor-&gt;FinishGroup</li>
+<li>FatherExecutor-&gt;Receive</li>
+<li>FatherExecutor-&gt;ReceiveDone<ul>
+<li>FatherExecutor-&gt;Run</li>
+</ul>
+</li>
+<li>FatherExecutor-&gt;FinishGroup<ul>
+<li>ChildExecutorN-&gt;FinishGroup</li>
+<li>...</li>
+<li>ChildExecutor1-&gt;FinishGroup</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>从上面的讲述中, 我们可以看到所有的Executor按照父子关系组织成一棵树, 同时所有的数据源被串联成Dag.
+关于这一模型, 也可参见 <a class="reference internal" href="planner.html"><span class="doc">优化器框架</span></a></p>
+</div>
+<div class="section" id="id5">
+<h2>示例场景<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>假设我们在分布式数据库中存储了两组日志, 分别是网站A和网站B的登录日志. 网站A中以用户名为ID进行登录,
+网站B以邮箱地址为ID进行登录, 两组日志总都有IP信息. 我们希望汇总一下每个IP有多少个独立的登录ID.
+下面的SQL可以完成该统计:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">select</span> <span class="n">ip</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="k">distinct</span> <span class="n">A</span><span class="p">.</span><span class="n">username</span><span class="p">)</span> <span class="o">+</span> <span class="k">count</span><span class="p">(</span><span class="k">distinct</span> <span class="n">B</span><span class="p">.</span><span class="n">email</span><span class="p">)</span>
+<span class="k">from</span> <span class="n">site_a_login</span> <span class="k">as</span> <span class="n">A</span><span class="p">,</span> <span class="n">site_b_login</span> <span class="k">as</span> <span class="n">B</span>
+<span class="k">where</span> <span class="n">A</span><span class="p">.</span><span class="n">ip</span> <span class="o">=</span> <span class="n">B</span><span class="p">.</span><span class="n">ip</span>
+<span class="k">group</span> <span class="k">by</span> <span class="n">ip</span>
+</pre></div>
+</div>
+<p>这个SQL可以翻译成下图所示的逻辑执行计划:</p>
+<a class="reference internal image-reference" href="../_images/count_user_plan.png"><img alt="../_images/count_user_plan.png" src="../_images/count_user_plan.png" style="width: 800px;" /></a>
+<p>上图中, 绿色节点是LOAD_NODE, 蓝色节点是PROCESS_NODE, 黄色节点是SHUFFLE_NODE, 红色节点是SINK_NODE.
+下面的图片反映了如何在本地执行该计划:</p>
+<a class="reference internal image-reference" href="../_images/count_user_executors.png"><img alt="../_images/count_user_executors.png" src="../_images/count_user_executors.png" style="width: 800px;" /></a>
+<p>上图中方形节点代表Executor, 蓝线标识了父子关系, 圆形节点代表数据源/用户算子, 红线标识数据流.
+下面是远程执行时的Executor树:</p>
+<a class="reference internal image-reference" href="../_images/count_user_mr_task.png"><img alt="../_images/count_user_mr_task.png" src="../_images/count_user_mr_task.png" style="width: 500px;" /></a>
+<p>上图省略了部分节点, 只画出了Executor之间的关系.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

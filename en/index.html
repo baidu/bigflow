@@ -1,0 +1,211 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>欢迎来到Bigflow Python项目 &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="#">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">欢迎来到Bigflow Python项目</a></li>
+<li><a class="reference internal" href="#bigflow">Bigflow是什么?</a></li>
+<li><a class="reference internal" href="#id1">为什么要使用Bigflow?</a></li>
+<li><a class="reference internal" href="#id2">在线试用</a></li>
+<li><a class="reference internal" href="#id4">文档索引</a><ul>
+<li><a class="reference internal" href="#id5">使用者文档</a></li>
+<li><a class="reference internal" href="#id6">开发者文档</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#github">Github</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="bigflow-python">
+<h1>欢迎来到Bigflow Python项目<a class="headerlink" href="#bigflow-python" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="bigflow">
+<h1>Bigflow是什么?<a class="headerlink" href="#bigflow" title="Permalink to this headline">¶</a></h1>
+<p><strong>Baidu Bigflow</strong> (以下简称Bigflow)是百度的一套计算框架， 它致力于提供一套简单易用的接口来描述用户的计算任务，并使同一套代码可以运行在不同的执行引擎之上。</p>
+<p>它的设计中有许多思想借鉴自 <a class="reference external" href="http://pages.cs.wisc.edu/~akella/CS838/F12/838-CloudPapers/FlumeJava.pdf">google flume java</a> 以及 <a class="reference external" href="https://github.com/GoogleCloudPlatform/BigflowJavaSDK/">google cloud bigflow</a> ，另有部分接口设计借鉴自 <a class="reference external" href="http://spark.apache.org/">apache spark</a> 。</p>
+<p>用户基本可以不去关心Bigflow的计算真正运行在哪里，可以像写一个单机的程序一样写出自己的逻辑， Bigflow会将这些计算分发到相应的执行引擎之上执行。</p>
+<p>Bigflow的目标是: 使分布式程序写起来更简单，测起来更方便，跑起来更高效，维护起来更容易，迁移起来成本更小。</p>
+<p>目前Bigflow在百度公司内部对接了公司内部的批量计算引擎DCE（与社区Tez比较类似），迭代引擎Spark，以及公司内部的流式计算引擎Gemini。</p>
+<p>在开源版本中，目前仅开放了Bigflow on Spark。</p>
+</div>
+<div class="section" id="id1">
+<h1>为什么要使用Bigflow?<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>虽然Bigflow目前仅仅开源了Bigflow on Spark，但仍有许多理由让你选择Bigflow on Spark:</p>
+<ul>
+<li><p class="first"><strong>高性能</strong></p>
+<p>Bigflow的接口设计使得Bigflow可以感知更多的用户需求的细节属性，并且Bigflow会根据计算的属性进行作业的优化；另其执行层使用C++实现，用户的一些代码逻辑会被翻译为C++执行，有较大的性能提升。</p>
+<p>在公司内部的实际业务测试来看，其性能远高于用户手写的作业。根据一些从现有业务改写过来的作业平均来看，其性能都比原用户代码提升了100%+。</p>
+<p>开源版本的benchmark正在准备中。</p>
+</li>
+<li><p class="first"><strong>简单易用</strong></p>
+<p>Bigflow的接口表面看起来很像Spark，但实际实用之后会发现Bigflow使用一些独特的设计使得Bigflow的代码更像是单机程序，例如，屏蔽了partitioner的概念，支持嵌套的分布式数据集等，使得其接口更加易于理解，并且拥有更强的代码可复用性。</p>
+<p>特别的，在许多需要优化的场景中，因为Bigflow的可以进行自动的性能以及内存占用优化，所以用户可以避免许多因OOM或性能不足而必须进行的优化工作，降低用户的使用成本。</p>
+</li>
+<li><p class="first"><strong>在这里，Python是一等公民</strong></p>
+<p>我们目前原生支持的语言是Python。</p>
+<p>使用PySpark时，有不少用户都困扰于PySpark的低效，或困扰于其不支持某些CPython库，或困扰于一些功能仅在Scala和Java中可用，在PySpark中暂时处于不可用状态。</p>
+<p>而在Bigflow中，Python是一等公民（毕竟当前我们仅仅支持Python），以上问题在Bigflow中都不是问题，性能、功能、易用性都对Python用户比较友好。</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h1>在线试用<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://180.76.236.159:8732/?token=9a1bd5c7aeb2b217bef4e85c007f275e82744ba33f42eaf9">在线试用网页</a> (passwd: bigflow) 包含了一些简单的例子介绍Bigflow的概念和API用法，同时也可以在线编写Python代码尝试Bigflow的功能，可智能提示。</p>
+<p>注：该页面仅提供试用功能，并没有做安全防护，相关机器每隔一段时间会被清空一次，请不要做代码存储等操作。</p>
+</div>
+<div class="section" id="id4">
+<h1>文档索引<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id5">
+<h2>使用者文档<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="quickstart.html"><span class="doc">快速入门</span></a></li>
+<li><a class="reference internal" href="guide.html"><span class="doc">编程指南</span></a></li>
+<li><a class="reference internal" href="rst/modules.html"><span class="doc">API参考</span></a></li>
+<li><a class="reference internal" href="ppt.html"><span class="doc">相关ppt</span></a></li>
+</ul>
+</div>
+<div class="section" id="id6">
+<h2>开发者文档<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="build.html"><span class="doc">编译构建</span></a></li>
+<li><a class="reference internal" href="contributing.html"><span class="doc">如何贡献</span></a></li>
+<li><a class="reference internal" href="bigflow_design.html"><span class="doc">设计文档</span></a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="github">
+<h1>Github<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/baidu/bigflow">Bigflow</a></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="#">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

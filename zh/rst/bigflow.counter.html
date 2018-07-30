@@ -1,0 +1,179 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Counter &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.counter.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.counter">
+<span id="counter"></span><h1>Counter<a class="headerlink" href="#module-bigflow.counter" title="永久链接至标题">¶</a></h1>
+<span class="target" id="module-bigflow.counter"></span><dl class="function">
+<dt id="bigflow.counter.increase">
+<code class="descclassname">bigflow.counter.</code><code class="descname">increase</code><span class="sig-paren">(</span><em>name</em>, <em>increment=1</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.counter.increase" title="永久链接至目标">¶</a></dt>
+<dd><p>累加name对应的counter，累加值为increment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- counter名称，只接受str类型</li>
+<li><strong>increment</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.7)"><em>int</em></a>) -- 累加值，只接受正数</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal notranslate"><span class="pre">error.BigflowPlanningException</span></code> -- 此函数仅允许在 <a class="reference internal" href="bigflow.transforms.html#module-bigflow.transforms" title="bigflow.transforms: all transforms implementation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Bigflow变换</span></code></a> 的用户自定义方法(UDF)中调用，否则抛出此异常</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<ol class="last arabic simple">
+<li>counter 具有 group 的概念, 如果 name 格式为&quot;group1|name1&quot;，则 group1 为 counter 所在 group; 若不包含, 则默认的 group 为 'Flume'</li>
+<li>counter 属于一个 Bigflow Pipeline，并在 Pipeline 多次运行时累加，若需要将 counter 清零，请使用 Pipeline 的 <a class="reference internal" href="bigflow.pipeline.pipeline_base.html#bigflow.pipeline.pipeline_base.PipelineBase.reset_counter" title="bigflow.pipeline.pipeline_base.PipelineBase.reset_counter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reset_counter</span></code></a> 或 <a class="reference internal" href="bigflow.pipeline.pipeline_base.html#bigflow.pipeline.pipeline_base.PipelineBase.reset_all_counters" title="bigflow.pipeline.pipeline_base.PipelineBase.reset_all_counters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reset_all_counters</span></code></a> 方法
+当前实现中, reset_counter 是个全局操作. reset_counter 将会重置所有 pipeline 中定义的 counter. 如有多 pipeline 重置 counter 的需求, 请为每个 pipeline 设置不同的 counter idenfier</li>
+</ol>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">counter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_pipeline</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">Pipeline</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s2">&quot;LOCAL&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">all_num_counting</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">counter</span><span class="o">.</span><span class="n">increase</span><span class="p">(</span><span class="s2">&quot;all_num&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">record</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_p</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">all_num_counting</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

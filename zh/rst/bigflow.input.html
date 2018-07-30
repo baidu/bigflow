@@ -1,0 +1,523 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Input &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.input.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.input">
+<span id="input"></span><h1>Input<a class="headerlink" href="#module-bigflow.input" title="永久链接至标题">¶</a></h1>
+<p>定义所有的数据源(Source)，用于Pipeline.read()方法</p>
+<p>实现一个Source需要实现四个接口：</p>
+<ol class="arabic simple">
+<li>有一个input_format属性，是一个flume::Loader</li>
+<li>有一个objector属性，是一个Objector</li>
+<li>有一个uris属性，返回一个uri列表</li>
+<li>有一个transform_from_node方法，把一个Node变换成一个PType</li>
+<li>有一个get_size方法，计算本文件读出数据量有多少。可以返回-1(?)表示未知大小。</li>
+</ol>
+<dl class="class">
+<dt id="bigflow.input.FileBase">
+<em class="property">class </em><code class="descclassname">bigflow.input.</code><code class="descname">FileBase</code><span class="sig-paren">(</span><em>*path</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.FileBase" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>用于Pipeline.read()方法读取文件的基类</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>*path</strong> -- 读取文件的path，必须均为str或unicode类型</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="bigflow.input.FileBase.get_size">
+<code class="descname">get_size</code><span class="sig-paren">(</span><em>pipeline</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.FileBase.get_size" title="永久链接至目标">¶</a></dt>
+<dd><p>获得所有读取文件在文件系统中的大小</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">文件大小，以字节为单位</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.input.SchemaTextFile">
+<em class="property">class </em><code class="descclassname">bigflow.input.</code><code class="descname">SchemaTextFile</code><span class="sig-paren">(</span><em>*path</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.SchemaTextFile" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.input.TextFile" title="bigflow.input.TextFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.input.TextFile</span></code></a></p>
+<p>读取文本文件生成支持字段操作的SchemaPCollection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
+<li><strong>*path</strong> -- 读取文件的path, 必须均为str类型</li>
+<li><strong>**options</strong> -- <p>Arbitrary keyword arguments, 其中关键参数，
+(1). 若columns(list), 每一项为字段名，则生成SchemaPCollection的元素是dict，dict中的value类型都是str;</p>
+<p>(2). 若columns(list), 每一项为(字段名，类型)，则生成SchemaPCollection的元素是dict，
+dict中的值类型是字段对应的类型;</p>
+<p>(3). 若columns(int)，表示分割的列数，则生成SchemaPCollection的元素是tuple，tuple中的每个元素的类型都是str，
+separator(str)表示每行数据字段分隔符，默认分隔符是Tab(&quot;       &quot;);</p>
+<p>(4). 若columns(list), 每一项为python基本类型(int, str, float)，则生成SchemaPcollection的元素是tuple，
+每个tuple中的元素的类型和columns中的类型一一对应；separator(str)表示每行数据字段分隔符，默认分隔符是Tab(&quot;        &quot;);</p>
+<p>ignore_overflow(bool)表示如果文件有多余的列，是否可以忽略掉。默认为False，即出现多余的列时即会报错。</p>
+<p>ignore_illegal_line(bool): 表示当文件某一行的列数少于提供的字段数时，是否可以忽略该文件行。若不设置，则抛出异常</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;input-data&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;XiaoA</span><span class="se">\t</span><span class="s2">20</span><span class="se">\n</span><span class="s2">XiaoB</span><span class="se">\t</span><span class="s2">21</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">persons</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">SchemaTextFile</span><span class="p">(</span><span class="s2">&quot;input-data&quot;</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">persons</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[{&#39;age&#39;: &#39;20&#39;, &#39;name&#39;: &#39;XiaoA&#39;}, {&#39;age&#39;: &#39;21&#39;, &#39;name&#39;: &#39;XiaoB&#39;}]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;input-data&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;XiaoA</span><span class="se">\t</span><span class="s2">20</span><span class="se">\n</span><span class="s2">XiaoB</span><span class="se">\t</span><span class="s2">21</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">persons</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">SchemaTextFile</span><span class="p">(</span><span class="s2">&quot;input-data&quot;</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">persons</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[{&#39;age&#39;: 20, &#39;name&#39;: &#39;XiaoA&#39;}, {&#39;age&#39;: 21, &#39;name&#39;: &#39;XiaoB&#39;}]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;temp_data.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;1</span><span class="se">\t</span><span class="s2">2.0</span><span class="se">\t</span><span class="s2">biflow</span><span class="se">\n</span><span class="s2">10</span><span class="se">\t</span><span class="s2">20.10</span><span class="se">\t</span><span class="s2">inf&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">SchemaTextFile</span><span class="p">(</span><span class="s2">&quot;./temp_data.txt&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&#39;1&#39;, &#39;2.0&#39;, &#39;biflow&#39;), (&#39;10&#39;, &#39;20.1&#39;, &#39;inf&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;temp_data.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;1</span><span class="se">\t</span><span class="s2">2.0</span><span class="se">\t</span><span class="s2">biflow</span><span class="se">\n</span><span class="s2">10</span><span class="se">\t</span><span class="s2">20.10</span><span class="se">\t</span><span class="s2">inf&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">SchemaTextFile</span><span class="p">(</span><span class="s2">&quot;./temp_data.txt&quot;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(1, 2.0, &#39;biflow&#39;), (10, 20.1, &#39;inf&#39;)]</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="bigflow.input.SchemaTextFile.transform_from_node">
+<code class="descname">transform_from_node</code><span class="sig-paren">(</span><em>load_node</em>, <em>pipeline</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.SchemaTextFile.transform_from_node" title="永久链接至目标">¶</a></dt>
+<dd><p>内部接口</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.input.SequenceFile">
+<em class="property">class </em><code class="descclassname">bigflow.input.</code><code class="descname">SequenceFile</code><span class="sig-paren">(</span><em>*path</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.SequenceFile" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.input.FileBase" title="bigflow.input.FileBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.input.FileBase</span></code></a></p>
+<p>表示读取SequenceFile的数据源，SequenceFile的(Key, Value)必须均为BytesWritable，并由用户自行解析</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
+<li><strong>*path</strong> -- 读取文件的path，必须均为str类型</li>
+<li><strong>**options</strong> -- <p>其中关键参数：
+combine_multi_file: 是否可以合并多个文件到一个mapper中处理。默认为True。
+partitioned: 默认为False，如果置为True，则返回的数据集为一个ptable，</p>
+<blockquote>
+<div>ptable的key是split_info，value这个split上的全部数据所组成的pcollection。</div></blockquote>
+<p>key_serde: key如何反序列化
+value_serde: value如何反序列化
+如果未设定key_serde/value_serde，则会忽略掉key，只把value用默认序列化器反序列化并返回。</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">serde</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">StrSerde</span> <span class="o">=</span> <span class="n">serde</span><span class="o">.</span><span class="n">StrSerde</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lines</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span>
+<span class="go">        input.SequenceFile(&#39;path&#39;, key_serde=StrSerde(), value_serde=StrSerde()))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lines</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;key1&quot;, &quot;value1&quot;), (&quot;key2&quot;, &quot;value2&quot;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mytest_proto_pb2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msg_type</span> <span class="o">=</span> <span class="n">mytest_proto_pb2</span><span class="o">.</span><span class="n">MyTestPbType</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_pipeline</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s2">&quot;mytest_proto_pb2.py&quot;</span><span class="p">,</span> <span class="s2">&quot;mytest_proto_pb2.py&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pbs</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">SequenceFile</span><span class="p">(</span><span class="s1">&#39;path2&#39;</span><span class="p">,</span> <span class="n">serde</span><span class="o">=</span><span class="n">serde</span><span class="o">.</span><span class="n">ProtobufSerde</span><span class="p">(</span><span class="n">msg_type</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pbs</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># 如果未设置key_serde/value_serde，则key会被丢弃。</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="o">&lt;</span><span class="n">mytest_proto_pb2</span><span class="o">.</span><span class="n">MyTestPbType</span> <span class="n">at</span> <span class="mh">0x7fa9e262a870</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="go">     &lt;mytest_proto_pb2.MyTestPbType at 0x7fa9e262a870&gt;]</span>
+</pre></div>
+</div>
+<p>有时，Pb包在本地没有，例如，py文件在hdfs，则可以使用下边的方法：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_pipeline</span><span class="o">.</span><span class="n">add_archive</span><span class="p">(</span><span class="s2">&quot;hdfs:///proto.tar.gz&quot;</span><span class="p">,</span> <span class="s2">&quot;proto&quot;</span><span class="p">)</span> <span class="c1">#add_archive暂时不支持本地模式</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">get_pb_msg_creator</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">class_name</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="kn">import</span> <span class="nn">importlib</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">class_name</span><span class="p">]()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pbs</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">SequenceFile</span><span class="p">(</span><span class="s1">&#39;path2&#39;</span><span class="p">,</span> <span class="n">serde</span><span class="o">=</span><span class="n">serde</span><span class="o">.</span><span class="n">ProtobufSerde</span><span class="p">(</span><span class="n">get_pb_msg_creator</span><span class="p">(</span><span class="s2">&quot;proto.mytest_proto_pb2&quot;</span><span class="p">,</span> <span class="s2">&quot;MyTestPbType&quot;</span><span class="p">))))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pbs</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="o">&lt;</span><span class="n">mytest_proto_pb2</span><span class="o">.</span><span class="n">MyTestPbType</span> <span class="n">at</span> <span class="mh">0x7fa9e262a870</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="go">     &lt;mytest_proto_pb2.MyTestPbType at 0x7fa9e262a870&gt;]</span>
+</pre></div>
+</div>
+<p>如果需要自定义Serde，参见：<a class="reference internal" href="bigflow.serde.html#bigflow.serde.Serde" title="bigflow.serde.Serde"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.serde.Serde</span></code></a>。</p>
+<dl class="method">
+<dt id="bigflow.input.SequenceFile.as_type">
+<code class="descname">as_type</code><span class="sig-paren">(</span><em>kv_deserializer</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.SequenceFile.as_type" title="永久链接至目标">¶</a></dt>
+<dd><p>通过kv_deserializer反序列化读取的(Key, Value)</p>
+<p>kv_deserializer的期望签名为:</p>
+<p>kv_deserializer(key: str, value: str) =&gt; object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.input.SequenceFile.transform_from_node">
+<code class="descname">transform_from_node</code><span class="sig-paren">(</span><em>load_node</em>, <em>pipeline</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.SequenceFile.transform_from_node" title="永久链接至目标">¶</a></dt>
+<dd><p>内部接口</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.input.SequenceFileStream">
+<em class="property">class </em><code class="descclassname">bigflow.input.</code><code class="descname">SequenceFileStream</code><span class="sig-paren">(</span><em>*path</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.SequenceFileStream" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.input.FileBase" title="bigflow.input.FileBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.input.FileBase</span></code></a></p>
+<p>表示读取SequenceFile的无穷数据源，SequenceFile的(Key, Value)必须均为BytesWritable，并由用户自行解析</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
+<li><strong>*path</strong> -- 读取文件的path，必须均为str类型</li>
+<li><strong>**options</strong> -- <p>可选的参数。</p>
+<p>[Hint] max_record_num_per_round: 用于指定每轮订阅的日志条数，默认值为1000</p>
+<p>[Hint] timeout_per_round: 用于指定每轮订阅的超时时间（单位为s），默认为10s</p>
+<p>key_serde: key如何反序列化</p>
+<p>value_serde: value如何反序列化</p>
+<p>如果未设定key_serde/value_serde，则会忽略掉key，只把value用默认序列化器反序列化并返回。</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<ol class="last arabic simple">
+<li>如果path中含有子目录，则以子目录作为数据源；如果path中没有子目录，则以path作为数据源</li>
+<li>目录中有效的文件名为从0开始的正整数；如果文件不存在，会一直等待该文件</li>
+<li>目录中的文件不允许被修改，添加需要保证原子（可以先写成其他文件名，然后进行mv）</li>
+</ol>
+</div>
+<dl class="method">
+<dt id="bigflow.input.SequenceFileStream.as_type">
+<code class="descname">as_type</code><span class="sig-paren">(</span><em>kv_deserializer</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.SequenceFileStream.as_type" title="永久链接至目标">¶</a></dt>
+<dd><p>通过kv_deserializer反序列化读取的(Key, Value)</p>
+<p>kv_deserializer的期望签名为:</p>
+<p>kv_deserializer(key: str, value: str) =&gt; object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.input.SequenceFileStream.transform_from_node">
+<code class="descname">transform_from_node</code><span class="sig-paren">(</span><em>load_node</em>, <em>pipeline</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.SequenceFileStream.transform_from_node" title="永久链接至目标">¶</a></dt>
+<dd><p>内部方法</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.input.TextFile">
+<em class="property">class </em><code class="descclassname">bigflow.input.</code><code class="descname">TextFile</code><span class="sig-paren">(</span><em>*path</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.TextFile" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.input.FileBase" title="bigflow.input.FileBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.input.FileBase</span></code></a></p>
+<p>表示读取的文本文件的数据源</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>*path</strong> -- 读取文件的path，必须均为str类型</td>
+</tr>
+</tbody>
+</table>
+<p>读取文件数据示例：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lines1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s1">&#39;hdfs:///my_hdfs_dir/&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lines2</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s1">&#39;hdfs://host:port/my_hdfs_file&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lines3</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s1">&#39;hdfs:///multi_path1&#39;</span><span class="p">,</span> <span class="s1">&#39;hdfs:///multi_path2&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lines4</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s1">&#39;./local_file_by_rel_path/&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lines5</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s1">&#39;/home/work/local_file_by_abs_path/&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lines6</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;hdfs:///multi_path1&#39;</span><span class="p">,</span> <span class="s1">&#39;hdfs:///multi_path2&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>options: 其中关键参数：</dt>
+<dd><blockquote class="first">
+<div><p>combine_multi_file: 是否可以合并多个文件到一个mapper中处理。默认为True。</p>
+<dl class="docutils">
+<dt>partitioned: 默认为False，如果置为True，则返回的数据集为一个ptable，</dt>
+<dd>ptable的key是split_info，value这个split上的全部数据所组成的pcollection。:</dd>
+</dl>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f1</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;1 2 1&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f1</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f2</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data2.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f2</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;1 2 2&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f2</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">input</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s1">&#39;./data1.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;./data2.txt&#39;</span><span class="p">,</span> <span class="n">partitioned</span> <span class="o">=</span> <span class="kc">True</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">wordcount</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<span class="go">        return p.flat_map(lambda line: line.split()) \</span>
+<span class="go">                .group_by(lambda word: word) \</span>
+<span class="go">                .apply_values(transforms.count)</span>
+</pre></div>
+</div>
+<div class="last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">wordcount</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">{&#39;/home/data1.txt&#39;: {&#39;1&#39;: 2, &#39;2&#39;: 1}, &#39;/home/data2.txt&#39;: {&#39;1&#39;: 1, &#39;2&#39;, 2}}</span>
+<span class="go"># 需要注意，MR模式下，key可能不是这个格式的，切分方法也不一定是按照文件来的。</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="method">
+<dt id="bigflow.input.TextFile.transform_from_node">
+<code class="descname">transform_from_node</code><span class="sig-paren">(</span><em>load_node</em>, <em>pipeline</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.TextFile.transform_from_node" title="永久链接至目标">¶</a></dt>
+<dd><p>内部接口</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.input.TextFileStream">
+<em class="property">class </em><code class="descclassname">bigflow.input.</code><code class="descname">TextFileStream</code><span class="sig-paren">(</span><em>*path</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.TextFileStream" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="#bigflow.input.FileBase" title="bigflow.input.FileBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.input.FileBase</span></code></a></p>
+<p>表示读取的文本文件的无穷数据源。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>*path</strong> -- 读取文件目录的path，必须均为str类型</td>
+</tr>
+</tbody>
+</table>
+<p>读取文件数据示例：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  &gt;&gt;&gt; lines1 = _pipeline.read(input.TextFileStream(&#39;hdfs:///my_hdfs_dir/&#39;))
+  &gt;&gt;&gt; lines2 = _pipeline.read(input.TextFileStream(&#39;hdfs://host:port/my_hdfs_dir/&#39;))
+  &gt;&gt;&gt; lines3 = _pipeline.read(input.TextFileStream(&#39;hdfs:///multi_path1&#39;, &#39;hdfs:///multi_path2&#39;))
+  &gt;&gt;&gt; lines4 = _pipeline.read(input.TextFileStream(&#39;./local_file_by_rel_path/&#39;))
+  &gt;&gt;&gt; lines5 = _pipeline.read(input.TextFileStream(&#39;/home/work/local_file_by_abs_path/&#39;))
+  &gt;&gt;&gt; lines6 = _pipeline.read(input.TextFileStream(*[&#39;hdfs:///multi_path1&#39;, &#39;hdfs:///multi_path2&#39;]))
+
+**options: 可选的参数。
+
+    [Hint] max_record_num_per_round: 用于指定每轮订阅的日志条数，默认值为1000
+
+    [Hint] timeout_per_round: 用于指定每轮订阅的超时时间（单位为s），默认为10s
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<ol class="last arabic simple">
+<li>如果path中含有子目录，则以子目录作为数据源；如果path中没有子目录，则以path作为数据源</li>
+<li>目录中有效的文件名为从0开始的正整数；如果文件不存在，会一直等待该文件</li>
+<li>目录中的文件不允许被修改，添加需要保证原子（可以先写成其他文件名，然后进行mv）</li>
+</ol>
+</div>
+<dl class="method">
+<dt id="bigflow.input.TextFileStream.transform_from_node">
+<code class="descname">transform_from_node</code><span class="sig-paren">(</span><em>load_node</em>, <em>pipeline</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.TextFileStream.transform_from_node" title="永久链接至目标">¶</a></dt>
+<dd><p>内部接口</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.input.UserInputBase">
+<em class="property">class </em><code class="descclassname">bigflow.input.</code><code class="descname">UserInputBase</code><a class="headerlink" href="#bigflow.input.UserInputBase" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>用户输入抽象基类</p>
+<p>用户需要按以下方法重写split/load函数</p>
+<p>Eg.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LocalFileInput</span><span class="p">(</span><span class="n">UserInputBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dir</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dir</span> <span class="o">=</span> <span class="nb">dir</span>
+
+    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dir</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">split</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">split</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>用户可以重写post_process以实现一些后处理，
+post_process有一个传入参数，是一个PTable，这个PTable的key是split string,
+value是这个split上的数据。
+默认post_process方法是`bigflow.transforms.flatten_values`.</p>
+<dl class="method">
+<dt id="bigflow.input.UserInputBase.get_serde">
+<code class="descname">get_serde</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.UserInputBase.get_serde" title="永久链接至目标">¶</a></dt>
+<dd><p>User can override this method to set the serde</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.input.UserInputBase.get_size">
+<code class="descname">get_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.UserInputBase.get_size" title="永久链接至目标">¶</a></dt>
+<dd><p>user can override this method to calculate the size of the input data</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.input.UserInputBase.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>split</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.UserInputBase.load" title="永久链接至目标">¶</a></dt>
+<dd><p>Load data from a split.
+The return value will be flattened into a PCollection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.input.UserInputBase.post_process">
+<code class="descname">post_process</code><span class="sig-paren">(</span><em>ptable</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.UserInputBase.post_process" title="永久链接至目标">¶</a></dt>
+<dd><p>User can override post_process method to do some post_process.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.input.UserInputBase.split">
+<code class="descname">split</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.UserInputBase.split" title="永久链接至目标">¶</a></dt>
+<dd><p>splits urls as some splits. User should override this method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.input.user_define_format">
+<code class="descclassname">bigflow.input.</code><code class="descname">user_define_format</code><span class="sig-paren">(</span><em>user_input_base</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.input.user_define_format" title="永久链接至目标">¶</a></dt>
+<dd><p>return a FileBase object from a UserInputBase</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

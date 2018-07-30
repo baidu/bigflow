@@ -1,0 +1,476 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>SchemaPCollection设计文档 &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SchemaPCollection设计文档</a><ul>
+<li><a class="reference internal" href="#id1">设计目的</a></li>
+<li><a class="reference internal" href="#id2">设计目标</a></li>
+<li><a class="reference internal" href="#id3">接口设计</a><ul>
+<li><a class="reference internal" href="#id4">接口说明</a><ul>
+<li><a class="reference internal" href="#id5">基本接口</a></li>
+<li><a class="reference internal" href="#pobject">PObject上添加操作符重载</a></li>
+<li><a class="reference internal" href="#id6">输入输出</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">代码示范</a></li>
+<li><a class="reference internal" href="#id8">设计折衷点</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">实现</a></li>
+<li><a class="reference internal" href="#id10">性能分析</a></li>
+<li><a class="reference internal" href="#id11">缺陷与未来可能的优化点</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/design/fields.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="schemapcollection">
+<h1>SchemaPCollection设计文档<a class="headerlink" href="#schemapcollection" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>设计目的<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>虽然Bigflow现有接口较spark等同类系统抽象层次更高，嵌套数据集已经使得代码复用上有了较大优势，
+但因为无字段支持，在字段需求明显时，使用bigflow会降低代码的可读性，且实现也略为复杂。</p>
+<p>例如，bigflow中较常见下面的代码：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nums</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">)])</span>
+<span class="n">sum_by_cols</span> <span class="o">=</span> <span class="n">nums</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>这种代码一是无法复用sum（甚至更复杂的）函数，
+二是如果列数较多且各列做的操作不同时，从下标很难知道每列是干什么的，代码阅读起来困难。</p>
+<p>所以，希望能够提供一套类似于spark上的DataFrame的系统，对字段操作进行支持。</p>
+</div>
+<div class="section" id="id2">
+<h2>设计目标<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ol class="arabic simple">
+<li>支持字段操作功能</li>
+<li>进一步提升Bigflow用户代码可重用性</li>
+<li>用户尽可能容易理解</li>
+<li>额外的开销尽可能少</li>
+<li>用户代码量尽可能减少</li>
+</ol>
+<p>其中，优先级从上到下依次降低，当发生严重冲突时，一般取上边的目标。
+关于“用户代码量尽可能减少”这个目标，本方案不作为重心，
+因为减少代码量可以在基础的接口之上再想办法提供一些上层库，包装一下来实现，
+甚至有了基本API之后用户都能轻松的包装出来一些能减少代码量的函数。</p>
+</div>
+<div class="section" id="id3">
+<h2>接口设计<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id4">
+<h3>接口说明<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<div class="section" id="id5">
+<h4>基本接口<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h4>
+<p>提供一种PCollection，称为SchemaPCollection，用来表示结构化的，带字段的PCollection，
+它拥有普通PCollection的所有操作，可以直接当作每个元素是一个dict的PCollection来用。</p>
+<p>细节参考：</p>
+<p><code class="xref py py-mod docutils literal notranslate"><span class="pre">schema</span></code></p>
+<p>原则上，select/agg都应支持side_input / broadcast。</p>
+<p>以上接口为基本接口，在以上接口上，还需要实现出众多辅助API，如join/distinct/sort_by。</p>
+</div>
+<div class="section" id="pobject">
+<h4>PObject上添加操作符重载<a class="headerlink" href="#pobject" title="永久链接至标题">¶</a></h4>
+<p>让PObject支持以下操作符重载:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">+</span> <span class="o">-</span> <span class="o">*</span> <span class="o">/</span> <span class="o">&gt;</span> <span class="o">&lt;</span> <span class="o">&gt;=</span> <span class="o">&lt;=</span> <span class="o">==</span> <span class="ow">not</span> <span class="ow">and</span> <span class="ow">or</span>
+</pre></div>
+</div>
+<p>例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1">#输出3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1">#输出1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1">#输出2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1">#输出2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1">#输出2</span>
+</pre></div>
+</div>
+<p>注意，需要支持右操作符不是PObject。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1">#输出False</span>
+</pre></div>
+</div>
+<p>有了这些操作符之后，可以使得用户写出的代码更为直观。</p>
+</div>
+<div class="section" id="id6">
+<h4>输入输出<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h4>
+<p>另提供input.SchemaTextFile类和output.SchemaTextFile类，
+支持用某种分隔符分隔的文件直接读取成SchemaPCollection，
+或者将SchemaPCollection直接write到外部存储。</p>
+<p>例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">infile</span><span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">SchemaTextFile</span><span class="p">(</span><span class="s1">&#39;./input.txt&#39;</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;firstname&#39;</span><span class="p">,</span> <span class="s1">&#39;secondname&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">intable</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">infile</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">outtable</span> <span class="o">=</span> <span class="n">intable</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">select</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">cols</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">fullname</span><span class="p">:</span> <span class="n">cols</span><span class="p">[</span><span class="s1">&#39;firstname&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">cols</span><span class="p">[</span><span class="s1">&#39;secondname&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">outtable</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">SchemaTextFile</span><span class="p">(</span><span class="s1">&#39;./output.txt&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>代码示范<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>输入数据第一列为websites，第二列为clicknum。
+现需求是将websites按逗号拆分成website。
+然后按website分组，求出每个website总clicknum, 最大clicknum，以及平均clicknum。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">schema</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">Pipeline</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">)</span>
+
+<span class="n">analytics</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s1">&#39;www.alibaba.com,www.baidu.com,www.tencent.com&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                           <span class="p">(</span><span class="s1">&#39;www.baidu.com,www.tencent.com&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                           <span class="p">(</span><span class="s1">&#39;www.alibaba.com,www.tencent.com&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+                           <span class="p">(</span><span class="s1">&#39;www.alibaba.com,www.baidu.com&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                           <span class="p">(</span><span class="s1">&#39;www.alibaba.com,www.jd.com&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>\
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">from_tuple</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;websites&#39;</span><span class="p">,</span> <span class="s1">&#39;clicknum&#39;</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">select</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">cols</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;website&#39;</span><span class="p">:</span> <span class="n">cols</span><span class="p">[</span><span class="s1">&#39;websites&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)),</span>
+        <span class="s1">&#39;clicknum&#39;</span><span class="p">:</span> <span class="n">cols</span><span class="p">[</span><span class="s1">&#39;clicknum&#39;</span><span class="p">]</span>
+    <span class="p">})</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">group_by</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;website&#39;</span><span class="p">])</span>\
+    <span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">agg</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">cols</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;max_click_num&#39;</span><span class="p">:</span> <span class="n">cols</span><span class="p">[</span><span class="s1">&#39;clicknum&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+        <span class="s1">&#39;sum_click_num&#39;</span><span class="p">:</span> <span class="n">cols</span><span class="p">[</span><span class="s1">&#39;clicknum&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span>
+        <span class="s1">&#39;avg_click_num&#39;</span><span class="p">:</span> <span class="n">cols</span><span class="p">[</span><span class="s1">&#39;clicknum&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">cols</span><span class="p">[</span><span class="s1">&#39;clicknum&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+    <span class="p">})</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">flatten</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="n">analytics</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">输出结果为</span>
+<span class="sd">[{&#39;sum_click_num&#39;: 7, &#39;website&#39;: &#39;www.alibaba.com&#39;, &#39;avg_click_num&#39;: 1, &#39;max_click_num&#39;: 3},</span>
+<span class="sd">{&#39;sum_click_num&#39;: 6, &#39;website&#39;: &#39;www.tencent.com&#39;, &#39;avg_click_num&#39;: 2, &#39;max_click_num&#39;: 3},</span>
+<span class="sd">{&#39;sum_click_num&#39;: 5, &#39;website&#39;: &#39;www.baidu.com&#39;, &#39;avg_click_num&#39;: 1, &#39;max_click_num&#39;: 2},</span>
+<span class="sd">{&#39;sum_click_num&#39;: 1, &#39;website&#39;: &#39;www.jd.com&#39;, &#39;avg_click_num&#39;: 1, &#39;max_click_num&#39;: 1}]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="nb">print</span> <span class="n">analytics</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">schema</span><span class="o">.</span><span class="n">to_tuple</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;website&#39;</span><span class="p">,</span> <span class="s1">&#39;max_click_num&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">输出结果为</span>
+<span class="sd">[(&#39;www.alibaba.com&#39;, 3), (&#39;www.tencent.com&#39;, 3), (&#39;www.baidu.com&#39;, 2), (&#39;www.jd.com&#39;, 1)]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3>设计折衷点<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h3>
+<ol class="arabic">
+<li><p class="first">与DataFrame的比较</p>
+<blockquote>
+<div><p>如下是DataFrame代码：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">people</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">people</span><span class="o">.</span><span class="n">age</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="p">)</span>\
+      <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">department</span><span class="p">,</span> <span class="n">people</span><span class="o">.</span><span class="n">deptId</span> <span class="o">==</span> <span class="n">department</span><span class="o">.</span><span class="n">id</span><span class="p">))</span> \
+      <span class="o">.</span><span class="n">groupBy</span><span class="p">(</span><span class="n">department</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;gender&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s2">&quot;salary&quot;</span><span class="p">:</span> <span class="s2">&quot;avg&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="s2">&quot;max&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>较本文中所描述的方案，在合适的情况下，由于默认不改变字段的命名，不需要为每个字段都重命名，
+且由于DataFrame提供了大量的API接口，且每个接口都接收多种不同风格的参数，所以，
+每处如果选对合适风格的合适的API接口，代码量会可能会比前述接口代码量更少，并且直观上也更像SQL。</p>
+<p>但DataFrame相关接口有以下缺点：</p>
+<ol class="arabic simple">
+<li>需要提供max/min/count等UDF，且UDF都是处理单机数据集的，无法进行高级优化，无法复用旧的sum/count等操作。</li>
+<li>字段上可进行的操作极其有限，且扩展起来困难。用户已实现的任意分布式算法都无法复用，如用户实现了个count_distinct，后来需要在某字段上使用时，发现无法复用。</li>
+<li>用户自定义UDF需要派生自某几个特定的类，书写起来略为复杂。</li>
+<li>需要提供数量众多的API才能完成完整的语义，学习成本较大。</li>
+</ol>
+<p>换句话说，Bigflow上述API，主要提供了两个新语义：select/agg，其它的语义在Bigflow中都原来已存在，
+即使有改变，也都极其相似。在添加了这两个新操作之后，可以与旧的任意操作任意组合，
+进而拼接完成一切完备的功能，而DataFrame则为了表达完整语义，提供了大量不同的基本接口，
+且每个接口都提供了数种不同风格的参数，用户学习成本较大；且除显式转回旧风格rdd外，
+没有任何办法复用旧有代码。</p>
+<p>当然，我们也可以同时提供上述风格以及我们的风格的API，
+但无法避免DataFrame本来就有的接口风格不统一，太过庞杂的问题。</p>
+<p>而关于使用bigflow在一些代码书写时，可能会代码量略大于spark的问题，
+由于用户可以很轻松的在我们的API上包装出spark类似的API，所以，问题不大。</p>
+</div></blockquote>
+</li>
+<li><p class="first">为何不直接让普通的元素为dict的PCollection上即可进行上述操作，而要添加特殊的类型？</p>
+<blockquote>
+<div><p>如果使用上述接口，普通的PCollection因为不知道有哪些字段，无法拼出select_fn/agg_fn的参数，
+但，但如果把传入的参数改为一个特殊实现的类型，
+在调用中括号操作符时才去生成相应字段对应的PCollection(PObject)，或者把把接口改成下面的样子：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;* =&gt; cnt&#39;</span><span class="p">:</span> <span class="n">transforms</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
+       <span class="s1">&#39;A =&gt; A_count_distinct&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">A</span><span class="p">:</span> <span class="n">A</span><span class="o">.</span><span class="n">distinct</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span>
+       <span class="s1">&#39;A, B =&gt; percent_AB&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">:</span> <span class="n">A</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>则都可以在及时拿到输入字段，拼出用户要求的数据集。</p>
+<p>此方案优点是用户可以在任意每个元素为dict的PCollection上进行字段操作，
+不需要多一步从别的类型转成SchemaPCollection的操作。</p>
+<p>但有以下劣势：
+1. 即使我们提供了from_tuple/to_tuple函数，用户也可能会认为此函数与手工转化效率相同，而直接手工转换。</p>
+<blockquote>
+<div><p>但实际上，使用这些函数，能够避免计算中间出现dict，从而使得计算效率大大提升。</p>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><dl class="first docutils">
+<dt>较难支持以下用法，p.select(lambda cols: cols.update({'a': cols['a'] + 1}) or cols)。</dt>
+<dd>这样表示只改变少量字段。</dd>
+</dl>
+</li>
+<li>无法从语法层面避免输出字段重复，用户较难发现这个错误的用法，需要在运行层检查。</li>
+<li>需要传入许多函数，需要每个输出字段都指明需要哪几个输入字段，较为繁琐。</li>
+</ol>
+<p>但总体来看，两个方法优劣差异并不明显，各有利弊。</p>
+</div></blockquote>
+</li>
+<li><p class="first">cartesian/join的设计</p>
+<blockquote>
+<div><p>如果直接复用旧的cartesian，则返回的是一个每个元素是({}, {})的PCollection，则此后，就无法再调用schema相关操作了，且性能也较低。
+这个接口有两种可能的实现，来让用户使用起来更为方便。</p>
+<p>方案一:</p>
+<blockquote>
+<div><p>a = SchemaPCollection{a, b, c}</p>
+<p># 我们把一个有a,b,c三列的SchemaPCollection记作SchemaPCollection{a,b,c}</p>
+<p>b = SchemaPCollection{a, d}</p>
+<p>schema.cartesian(a, b) 返回的是 SchemaPCollection{0.a, 0.b, 0.c, 1.a, 1.d}</p>
+</div></blockquote>
+<p>方案二：</p>
+<blockquote>
+<div><p>a = SchemaPCollection{a, b, c}</p>
+<p>b = SchemaPCollection{a, d}</p>
+<p>如果是两个SchemaPCollection（或可转为SchemaPCollection的类型），则直接修改原cartesian函数，
+返回的类型表面看来和原来的cartesian一模一样，但是不同之处是可以直接调用select/agg，
+select_fn传入两个{}，分别表示两个表里对应的多个PObject(PCollection)</p>
+<p>例如：</p>
+<blockquote>
+<div><p>schema.cartesian(a, b).apply(schema.select, lambda a, b: {'name': a['name'] + b['name']})</p>
+</div></blockquote>
+<p>用户也可以直接把a.cartesian(b)返回的类型当作每个元素是一个tuple(dict, dict)的PCollection用。</p>
+<p>类似的, schema.join(a, b, a['id'] == b['searchid'])返回类型与cartesian返回的类型一样一样。</p>
+</div></blockquote>
+<p>方案三：</p>
+<blockquote>
+<div><p>cartesian不允许用户有重复字段名，或者如果有重复则以左边的为准。</p>
+</div></blockquote>
+</div></blockquote>
+</li>
+<li><p class="first">max_elements/sort_by等接口设计</p>
+<blockquote>
+<div><p>用户可以直接使用PCollection上的max/min/max_elements/min_elements/sort_by来完成相应的功能，
+但由于出现dict操作，性能会比较慢，并且无法在用户无感知的情况下完成优化。
+所以需要提供特殊的这几个函数，但用户如果使用原来接口，也能满足其需求。</p>
+<p>这里主要还是受限于python语言本身，导致将接口的dict设计成一个结构体类似的对象，
+将取字典数据的操作改为取成员，性能也不会有多大改善。
+如果是一些编译型语言，可以把SchemaPCollection的元素设置成一种满足特定约束的对象
+（如JavaBean对象），这样，因为在对象中设置、读取某个字段避免了hash操作，可以大大提高性能。</p>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>实现<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">API层接口实现</p>
+<blockquote>
+<div><p>为了让SchemaPCollection看起来和PCollection一样，能够执行任意的PCollection上的操作，
+可以让SchemaPCollection派生自PCollection，并且里面的数据类型确实是dict。
+但，同时，在SchemaPCollection里有一个成员变量，是一个数据类型为tuple的PCollection，
+另有成员标识出各个字段名，如果是任意的字段操作，则从数据类型为tuple的PCollection进行计算，
+构造出新的SchemaPCollection。
+按照这种方案，可以使得，如果用户没有把SchemaPCollection当成普通的PCollection进行普通PCollection的操作，
+则计算过程中生成的所有元素类型为{}的PCollection都不会在有效路径上，
+都会因为下游没有输出结点而在优化时被删除。从而使得计算过程中不会出现{}，避免了引入{}借来的开销。</p>
+<p>from_tuple/to_tuple/group_by/flatten实现都比较简单，这里略过实现方案。</p>
+<p>agg函数实现时，可以查出有哪些字段，调用多次map，把每个字段都map出一个PCollection，然后拼到dict中，
+作为参数调用用户传入的函数，调用完成后，将用户返回的dict中的多个字段进行cartesian，
+生成每个元素是tuple的PCollection，然后用该PCollection生成每个元素是dict的SchemaPCollection。</p>
+<p>select函数实现时，需要先将原数据进行一个特殊的group_by_every_record的操作（后述如何实现该操作），
+该操作会生成一个PTable,key是一个UniqID,value是每条数据的PObject。然后，
+可以利用该PObject进行map生成各个字段对应的PObject，拼成dict传递给用户，后续处理与agg函数实现类似。</p>
+<p>为何非要搞一个group_by_every_record，可以考虑下边的例子：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="k">lambda</span> <span class="n">cols</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s1">&#39;website_cnt&#39;</span><span class="p">:</span> <span class="n">cols</span><span class="p">[</span><span class="s1">&#39;websites&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">())</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p>另外，需要注意，SchemaPCollection的count/take等功能，可以重写一下，以便从tuple的PCollection上出发，
+避免生成字典。</p>
+</div></blockquote>
+</li>
+<li><p class="first">group_by_every_record如何实现</p>
+<blockquote>
+<div><p>group_by_every_record就是一种特殊的Shuffle，
+在LogicalPlan里添加一种特殊的ShuffleNode，该ShuffleNode性质在Planner层做优化时，
+与DistribteByDefault完全一致，可以完全复用相关Planner层代码。</p>
+<p>在Runtime层需要实现一种特殊的ShuffleExecutor，它每读到一条正常的Shuffle数据，
+都需要调用一次所有孩子的BeginGroup/FinishGroup。</p>
+<p>另外，如果要支持select时可传入side_input/broadcast，需要支持同一ShuffleScope下存在BroadcastShuffleNode，
+那就需要让GroupByEveryRecordShuffleExecutor可以在Broadcast数据全部到达之前，
+把另外其它路的数据全部缓存下来，直到所有Broadcast数据到达之后，再回放每条数据调用BeginGroup/FinishGroup，
+以及在每个Group内都把Broadcast数据回放一遍。
+（由于目前框架问题，这么简单一个需求实际实现时也略复杂，也许重构框架时可以考虑一下这个问题）</p>
+<p>另有一个需要注意的地方是，group_by_every_record不可使用group_by一个random uniqid的方法实现，
+因为出现不确定性的计算并用它来进行partition的话，可能在MR框架failover时产生错误。
+同样的，在全局调用group_by_every_record的话，它应该按照record本身来计算hash进行partition，
+而不应该是随便的生成一个key告诉MR框架，以防重算是一条数据两次分给了不同的下游，导致failover时出错。</p>
+</div></blockquote>
+</li>
+<li><p class="first">sort_by之后agg需要保证agg里收到的数据的顺序，该如何保证？</p>
+<blockquote>
+<div><p>我们的sort_by操作只保证后续的一个操作有序，不保证后续所有操作有序。
+这里为了保证sort_by后agg里的操作有序，只能通过一个trick的方案，
+即在sort_by之后如果调用的是agg，则添加一个什么事儿也不干的NonPartial的Processor
+来强迫结点不前移，保证后续的agg操作都有序。</p>
+</div></blockquote>
+</li>
+</ol>
+<p>高级用户教</p>
+</div>
+<div class="section" id="id10">
+<h2>性能分析<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<p>大部分场景下，数据计算时都不会真正出现dict（所有dict结点都被Planner优化删除了），所以并不会影响性能。</p>
+<p>另外，select之类的操作，由于选取字段的map函数会被前移，所以，会使得只有需要用到的数据才会过shuffle，
+进而提升性能。</p>
+<p>但，如果用户真的拿它当作元素为{}的PCollection用，调用map等操作时，确实会有性能损失，但如果是高级用户，
+可以轻松的避免写出类似的代码而完成同样的功能。</p>
+</div>
+<div class="section" id="id11">
+<h2>缺陷与未来可能的优化点<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
+<ol class="arabic simple">
+<li>由于缺少一层字段相关planner层，无法完成高级字段优化。
+未来可以添加一层优化层，将操作记录下来，翻译成flume的logical plan。</li>
+<li><dl class="first docutils">
+<dt>暂未实现直接可执行SQL语句的功能。</dt>
+<dd>类似于DataFrame和Spark-SQL的整合，这里也需要bigflow与wing进行整合，才能更好的完成此功能。</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>可以重新实现一个FieldsDictSerde，让它的Deserialize返回一个对象，该对象重写了[]操作符，</dt>
+<dd>在用户调用[]操作符时才去进行反序列化对应的列。实现与Spark Dataset类似的效果。
+但缺点依然是要进行hash操作（或者取字段的操作，在python里性能较差）。</dd>
+</dl>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

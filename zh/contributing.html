@@ -1,0 +1,228 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Bigflow Contributing &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Bigflow Contributing</a><ul>
+<li><a class="reference internal" href="#contributing-by-testing-releases">Contributing by Testing Releases</a></li>
+<li><a class="reference internal" href="#contributing-by-reviewing-changes">Contributing by Reviewing Changes</a></li>
+<li><a class="reference internal" href="#contributing-documentation-changes">Contributing Documentation Changes</a></li>
+<li><a class="reference internal" href="#contributing-bug-reports">Contributing Bug Reports</a></li>
+<li><a class="reference internal" href="#bigflow">Bigflow 代码贡献</a></li>
+<li><a class="reference internal" href="#the-review-process">The Review Process</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/contributing.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="bigflow-contributing">
+<h1>Bigflow Contributing<a class="headerlink" href="#bigflow-contributing" title="永久链接至标题">¶</a></h1>
+<div class="section" id="contributing-by-testing-releases">
+<h2>Contributing by Testing Releases<a class="headerlink" href="#contributing-by-testing-releases" title="永久链接至标题">¶</a></h2>
+<p>Bigflow 的release 版本会列出新增功能，以及功能优化，Bigflow 用户可以通过测试Bigflow 的release 版本，指出
+Bigflow 的性能、功能正确性问题，可以提交问题提交至pull request</p>
+</div>
+<div class="section" id="contributing-by-reviewing-changes">
+<h2>Contributing by Reviewing Changes<a class="headerlink" href="#contributing-by-reviewing-changes" title="永久链接至标题">¶</a></h2>
+<p>Bigflow 用户可以review Bigflow的源代码，并且指出代码中的不合适的地方，或者可能存在的bug。对于发现的问题，
+用户可以自己修复或者直接提交pull request</p>
+</div>
+<div class="section" id="contributing-documentation-changes">
+<h2>Contributing Documentation Changes<a class="headerlink" href="#contributing-documentation-changes" title="永久链接至标题">¶</a></h2>
+<p>Bigflow 用户可以对Bigflow 的文档提出修改意见，或者直接修改，并提交pull request</p>
+<p><a class="reference internal" href="contributing_en_doc.html"><span class="doc">English Document Contributing</span></a></p>
+</div>
+<div class="section" id="contributing-bug-reports">
+<h2>Contributing Bug Reports<a class="headerlink" href="#contributing-bug-reports" title="永久链接至标题">¶</a></h2>
+<p>Bigflow 用户在使用Bigflow 的过程中，或者review Bigflow 代码的过程中，发现bug，可以自己修复，或者创建pull
+request</p>
+</div>
+<div class="section" id="bigflow">
+<h2>Bigflow 代码贡献<a class="headerlink" href="#bigflow" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p class="first">Code Style Guide</p>
+<p>代码规范(请遵守现有代码规范)</p>
+</li>
+<li><p class="first">Bigflow 开发环境构建</p>
+<p><a class="reference internal" href="build.html"><span class="doc">编译构建</span></a></p>
+</li>
+<li><p class="first">测试</p>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">bigflow</span><span class="o">/</span><span class="n">bigflow_python</span><span class="o">/</span><span class="n">python</span>
+<span class="n">bigflow</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pyrun</span>  <span class="n">xx</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">添加单测</p>
+<p>可参考已有的 <cite>*_test.py</cite></p>
+</li>
+<li><p class="first">运行Python 单测</p>
+<p>eg:</p>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">bigflow</span><span class="o">/</span><span class="n">bigflow_python</span><span class="o">/</span><span class="n">python</span>
+<span class="o">./</span><span class="n">run</span><span class="o">-</span><span class="n">tests</span> <span class="n">bigflow</span><span class="o">/</span><span class="n">transform_impls</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">map_test</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">Pull Request</p>
+<p>Bigflow 开发环境构建模块已经将代码clone 到本地，并且编译通过，所以下面的所有操作在这个基础之上</p>
+</li>
+</ul>
+<ol class="arabic simple">
+<li>git checkout -b branch_name</li>
+<li>bug fix or feature develop</li>
+<li>git add file(new file or modified file)</li>
+<li>git commit -m &quot;comments&quot;</li>
+<li>git push origin branch_name</li>
+</ol>
+</div>
+<div class="section" id="the-review-process">
+<h2>The Review Process<a class="headerlink" href="#the-review-process" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li>reviewers 和committers 都可以review 用户提交的pull request</li>
+<li>pull request 可能被拒绝</li>
+<li>如果遇到与其他commiter 提交的修改冲突的情况，那么，需要解决这个冲突才能merge 到master，解决
+冲突可以通过这种方式：<ol class="loweralpha">
+<li>git remote add upstream <a class="reference external" href="https://github.com/baidu/bigflow.git">https://github.com/baidu/bigflow.git</a></li>
+<li>git rebase upstream/master</li>
+<li>解决冲突</li>
+<li>修改提交到branch</li>
+</ol>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

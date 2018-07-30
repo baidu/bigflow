@@ -1,0 +1,1835 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Transforms &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.transforms.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.transforms">
+<span id="transforms"></span><h1>Transforms<a class="headerlink" href="#module-bigflow.transforms" title="Permalink to this headline">¶</a></h1>
+<p>定义Bigflow Python中所有的变换</p>
+<p>Author: Wang, Cong(<a class="reference external" href="mailto:bigflow-opensource&#37;&#52;&#48;baidu&#46;com">bigflow-opensource<span>&#64;</span>baidu<span>&#46;</span>com</a>), panyunhong(<a class="reference external" href="mailto:bigflow-opensource&#37;&#52;&#48;baidu&#46;com">bigflow-opensource<span>&#64;</span>baidu<span>&#46;</span>com</a>)</p>
+<p><strong>注意：除特殊说明外，所有变换的用户自定义方法(UDF)输入参数都不允许修改</strong></p>
+<dl class="function">
+<dt id="bigflow.transforms.accumulate">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">accumulate</code><span class="sig-paren">(</span><em>pcollection</em>, <em>zero</em>, <em>accumulate_fn</em>, <em>*side_inputs</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.accumulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>将给定的PCollection按照一个初始值和方法聚合为PObject</p>
+<p>假设输入类型为I，输出类型为O，则zero、accumulate_fn的期望签名为:</p>
+<p>zero:  O或zero() =&gt; O</p>
+<p>accumulate_fn:  accumulate_fn(O, I) =&gt; O  (accumulate_fn的第一个参数允许被修改)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>zero</strong> (<em>value</em><em> or </em><em>function</em>) – 初始值，或是一个返回初始值的方法</li>
+<li><strong>accumulate_fn</strong> (<em>function</em>) – 聚合方法</li>
+<li><strong>*side_inputs</strong> – 参与运算的SideInputs</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">聚合结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>由于该函数的语义是数据必然按顺序一条条的流过，限制了该函数可以进行的优化工作，
+所以如果可以使用aggregate或reduce替换时，尽量使用aggregate/reduce替换该函数。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<p>TODO: Another example</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.aggregate">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">aggregate</code><span class="sig-paren">(</span><em>pcollection</em>, <em>zero</em>, <em>aggregate_fn</em>, <em>combine_fn</em>, <em>*side_inputs</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.aggregate" title="Permalink to this definition">¶</a></dt>
+<dd><p>将给定的PCollection按照初始值、初段聚合方法和汇总方法聚合为PObject</p>
+<p>假设输入类型I，输出类型为O，则zero、aggregate_fn、combine_fn的期望签名为:</p>
+<p>zero:  O或zero() =&gt; O</p>
+<p>aggregate_fn:  aggregate_fn(O, I) =&gt; O  (aggregate_fn的第一个参数允许被修改)</p>
+<p>combine_fn:  combine_fn(O, O) =&gt; O  (combine_fn的第一个参数允许被修改)</p>
+<p>在执行时aggregate会把输入pcollection先切分成许多个分片，然后对每个分片使用zero生成一个O类型的初始值。</p>
+<p>随后，在每个分片上，持续调用aggregate_fn，将分片上全部的数据聚合为一个O类型的值。</p>
+<p>最后，会再将所有分片上生成的那些O类型的值汇聚到一起，使用combine_fn最终聚合到一起。</p>
+<p>分片的规则用户不应作任何假设。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>zero</strong> (<em>value</em><em> or </em><em>callable</em>) – 初始值，或是一个返回初始值的方法。</li>
+<li><strong>aggregate_fn</strong> (<em>callable</em>) – 初段聚合方法。该方法需要两个参数。</li>
+<li><strong>combine_fn</strong> (<em>callable</em>) – 汇总方法</li>
+<li><strong>*side_inputs</strong> – 参与运算的SideInputs</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">聚合结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="s2">&quot;viva&quot;</span><span class="p">,</span> <span class="s2">&quot;la&quot;</span><span class="p">,</span> <span class="s2">&quot;vida&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># sum words length</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.cartesian">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">cartesian</code><span class="sig-paren">(</span><em>*pcollections</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.cartesian" title="Permalink to this definition">¶</a></dt>
+<dd><p>对多个输入PCollection求笛卡尔积，返回一个PCollection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>*pcollections</strong> – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">笛卡尔积</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">cartesian</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
+<span class="go">[(1, &#39;a&#39;), (1, &#39;b&#39;), (1, &#39;c&#39;), (2, &#39;a&#39;), (2, &#39;b&#39;), (2, &#39;c&#39;), (3, &#39;a&#39;), (3, &#39;b&#39;), (3, &#39;c&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p3</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p4</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p3</span><span class="o">.</span><span class="n">cartesian</span><span class="p">(</span><span class="n">p4</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(1, 2)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p5</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p3</span><span class="o">.</span><span class="n">cartesian</span><span class="p">(</span><span class="n">p5</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(1, 3), (1, 4)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p3</span><span class="o">.</span><span class="n">cartesian</span><span class="p">(</span><span class="n">p4</span><span class="p">,</span> <span class="n">p5</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(1, 2, 3), (1, 2, 4)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.cogroup">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">cogroup</code><span class="sig-paren">(</span><em>*pcollections</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.cogroup" title="Permalink to this definition">¶</a></dt>
+<dd><p>对传入的所有pcollection进行协同分组。</p>
+<p>cogroup要求所有传入的PCollection的每个元素都是一个(k, v)对，
+cogroup会用k来作为分组的key，对多个输入PCollection进行协同分组，
+返回一个PTable表示分组结果。</p>
+<p>这个返回的PTable的每个value为一个tuple，tuple的每个元素是一个PCollection，
+其中第n个PCollection表示输入的第n个PCollection在当前key下的全部数据。</p>
+<p>如果某个输入PCollection在某个key下无数据，则对应的PCollection为一个空PCollection。</p>
+<p>目前不能像group_by指定key_extractor。</p>
+<p>group_by_key可以理解成是cogroup只传有一个参数的特殊情况。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>*pcollections</strong> – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">分组结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.ptable.html#bigflow.ptable.PTable" title="bigflow.ptable.PTable">PTable</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p2</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">cogroup</span><span class="p">(</span><span class="n">_p1</span><span class="p">,</span> <span class="n">_p2</span><span class="p">)</span>
+<span class="go"># _p的值为{&quot;A&quot;: ([1, 2], [4]), &quot;B&quot;: ([3], [])} ，但由于实现难度较大，PTable的value为tuple of PCollection时的get操作暂不支持。</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span><span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">transforms</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">{&quot;A&quot;: [1, 2, 4], &quot;B&quot;: [3]}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">distinct_and_join</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span> <span class="c1"># 去重，并join</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">cogroup</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> \
+<span class="gp">... </span>            <span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">distinct</span><span class="p">(),</span> <span class="n">b</span><span class="o">.</span><span class="n">distinct</span><span class="p">()))</span> \
+<span class="gp">... </span>            <span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">cartesian</span><span class="p">)</span> \
+<span class="gp">... </span>            <span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p2</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">distinct_and_join</span><span class="p">(</span><span class="n">_p1</span><span class="p">,</span> <span class="n">_p2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;A&quot;, (1, 3)), (&quot;A&quot;, (2, 3))]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 未来bigflow会自动将p.distinct().join(q.distinct())优化成上边的样子（正在进行中）</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">semi_join</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span> <span class="c1"># 同key的join结果只输出一条</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">cogroup</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> \
+<span class="gp">... </span>            <span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">b</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span> \
+<span class="gp">... </span>            <span class="o">.</span><span class="n">apply_values</span><span class="p">(</span><span class="n">transforms</span><span class="o">.</span><span class="n">cartesian</span><span class="p">)</span> \
+<span class="gp">... </span>            <span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">semi_join</span><span class="p">(</span><span class="n">_p1</span><span class="p">,</span> <span class="n">_p2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;A&quot;, (1, 3))]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.combine">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">combine</code><span class="sig-paren">(</span><em>pcollection</em>, <em>fn</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.combine" title="Permalink to this definition">¶</a></dt>
+<dd><p>给定一个合并函数，聚合输入PCollection中所有元素，这些元素以迭代器的形式给出</p>
+<p>默认情况下，输入类型与输出类型需要一致，假设为O类型，fn的期望签名为 fn([O…]) =&gt; O，[]表示输入可遍历</p>
+<p>在执行时会把输入pcollection先切分成许多个分片，然后对每个分片的数据组成一个列表，然后调用fn，
+将每个分片中的数据合并成一个O类型的变量。
+然后，会再将所有分片上生成的那些O类型的值汇聚到一起，组成一个列表，再使用fn最终聚合到一起。</p>
+<p>分片的规则用户不应作任何假设。</p>
+<p>用户可以显式的指定pre_combine=False，关掉预聚合。如果关掉预聚合，则会直接将全部的数据组成一个列表交给fn，
+聚合成一个值。则这种情况下，fn需要的输入类型与fn返回的类型可以是不同类型的。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>fn</strong> (<em>function</em>) – 合并函数</li>
+<li><strong>**options</strong> – 可配置选项
+其中重要配置项为：
+pre_combine(bool): 是否进行预聚合。默认为True。</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">合并结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">22</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">number_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">to_lookup</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;2&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">lookup_dict_and_sum</span><span class="p">(</span><span class="n">numbers</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">to_lookup</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">numbers</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">number_list</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">lookup_dict_and_sum</span><span class="p">,</span> <span class="n">pre_combine</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">number_list</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">lookup_dict_and_sum</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">Error may occur (because of pre_combine, 1)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.count">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">count</code><span class="sig-paren">(</span><em>pcollection</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>返回给定PCollection中元素的数量</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">元素数量</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.diff">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">diff</code><span class="sig-paren">(</span><em>pcollection1</em>, <em>pcollection2</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于给定的PCollection1和PCollection2，返回两者不相同的元素</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection1</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入1</li>
+<li><strong>pcollection2</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">表示差异的PCollection</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(2, (1, 2)), (3, (1, 0))]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.distinct">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">distinct</code><span class="sig-paren">(</span><em>pcollection</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.distinct" title="Permalink to this definition">¶</a></dt>
+<dd><p>返回给定PCollection中所有不重复元素</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">不重复元素，以PCollection给出</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">distinct</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[2, 3, 1, 9]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.extract_keys">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">extract_keys</code><span class="sig-paren">(</span><em>ptable</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.extract_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>提取给定PTable中所有的key</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ptable</strong> (<a class="reference internal" href="bigflow.ptable.html#bigflow.ptable.PTable" title="bigflow.ptable.PTable"><em>PTable</em></a>) – 输入PTable</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">所有的key，以PCollection给出</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">extract_keys</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[&quot;A&quot;, &quot;B&quot;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.extract_values">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">extract_values</code><span class="sig-paren">(</span><em>ptable</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.extract_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>提取给定PTable中所有的value</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ptable</strong> (<a class="reference internal" href="bigflow.ptable.html#bigflow.ptable.PTable" title="bigflow.ptable.PTable"><em>PTable</em></a>) – 输入PTable</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">所有的value，以PCollection给出</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">extract_values</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[2, 3, 4, 5]</span>
+</pre></div>
+</div>
+<p>无论PTable为多少层嵌套，都会抽取出最内层的value</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]},</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">]}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">_p</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="n">k0</span><span class="p">:</span> <span class="p">{</span><span class="n">k1</span><span class="p">:</span> <span class="p">[</span><span class="o">...</span><span class="p">]}}</span>  <span class="c1"># 嵌套PTable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">extract_values</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.filter">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">filter</code><span class="sig-paren">(</span><em>pcollection</em>, <em>fn</em>, <em>*side_inputs</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于给定的PCollection和一个断言函数，返回只满足断言函数元素的PCollection</p>
+<p>假设输入类型为I，fn的期望签名为 fn(I) =&gt; bool</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>fn</strong> (<em>function</em>) – 断言函数</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">过滤结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[2, 8]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.first">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">first</code><span class="sig-paren">(</span><em>pcollection</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.first" title="Permalink to this definition">¶</a></dt>
+<dd><p>取出PCollection中的第一个元素</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">取出的单个元素，以PObject给出</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.flat_map">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">flat_map</code><span class="sig-paren">(</span><em>pvalue</em>, <em>fn</em>, <em>*side_inputs</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.flat_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>对PCollection中的每个元素做一对N映射</p>
+<p>对变换函数必须返回一个可遍历变量(即实现了__iter__()方法)，将迭代器中的所有元素
+构造PCollection</p>
+<p>假设输入类型为I，fn的期望签名为 fn(I) =&gt; [O…]，[]表示返回结果可遍历</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pvalue</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a><em> or </em><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject"><em>PObject</em></a>) – 输入P类型</li>
+<li><strong>fn</strong> (<em>function</em>) – 变换函数</li>
+<li><strong>*side_inputs</strong> – 参与运算的SideInputs</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Results:</dt>
+<dd>PCollection:  变换后的PCollection</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 5, 6, 7, 10, 14]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[[</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[[1, 2], [3, 6], [5, 10], [7, 14]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 6, 5, 10, 7, 14]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(1, 2), (3, 6), (5, 10), (7, 14)]</span>
+</pre></div>
+</div>
+<p>注意返回结果可以为空:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[])</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>如果返回的对象不能被遍历，则运行时会报错。
+典型的错误用法包括None或返回一个单个元素。</p>
+<p>返回对象只要是可迭代类型即可，不必一定是list。
+特别是，需要输出较多数据时，
+使用list可能会导致内存占用过大，
+用户可以直接利用python的yield语法生成一个generator，
+达到不需要占用大量内存的目的。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">make_partial_sum</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="nb">sum</span> <span class="o">+=</span> <span class="n">i</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="nb">sum</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="n">make_partial_sum</span><span class="p">)</span>
+<span class="go">[1, 3, 6, 1, 3, 6, 10, 15]</span>
+</pre></div>
+</div>
+<p>这种用法可以避免产生大list，从而避免内存占用过大的问题。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.flatten">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">flatten</code><span class="sig-paren">(</span><em>ptable</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.flatten" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于给定PTable中的key和value中每一个元素，构造(key, value)对，结果保存在PCollection中</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ptable</strong> (<a class="reference internal" href="bigflow.ptable.html#bigflow.ptable.PTable" title="bigflow.ptable.PTable"><em>PTable</em></a>) – 输入PTable</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">(key, value)对，结果以PCollection表示</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;A&quot;, 2), (&quot;A&quot;, 3), (&quot;B&quot;, 4), (&quot;B&quot;, 5)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.flatten_values">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">flatten_values</code><span class="sig-paren">(</span><em>ptable</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.flatten_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>等价于 <code class="docutils literal notranslate"><span class="pre">extract_values(ptable)</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ptable</strong> (<a class="reference internal" href="bigflow.ptable.html#bigflow.ptable.PTable" title="bigflow.ptable.PTable"><em>PTable</em></a>) – 输入PTable</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">所有的value，以PCollection给出</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span><span class="s2">&quot;A&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">flatten_values</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[2, 3, 4, 5]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.foreach">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">foreach</code><span class="sig-paren">(</span><em>pvalue</em>, <em>fn</em>, <em>*side_inputs</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.foreach" title="Permalink to this definition">¶</a></dt>
+<dd><p>对给定的PCollection/PObject中的每个元素应用一个函数，函数并不期望有任何的
+返回，而是利用其副作用产生效果。
+该函数一般用于产出数据到外部存储，同一条数据可能会被多次调用，
+用户需要注意在下游去重，或想办法保证foreach操作具有幂等性质。</p>
+<p>假设输入类型为I，fn的期望签名为 fn(I) =&gt; object，即返回值类型任意(并被忽略)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pvalue</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a><em> or </em><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject"><em>PObject</em></a>) – 输入P类型</li>
+<li><strong>fn</strong> (<em>function</em>) – 变换函数</li>
+<li><strong>*side_inputs</strong> – 参与运算的SideInputs</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Results:</dt>
+<dd>None</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">lazy_var</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">lazy_var</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s1">&#39;x.x.x.x&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">db</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;4&quot;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">foreach</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> <span class="n">r</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># all the data will be written into redis</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.full_join">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">full_join</code><span class="sig-paren">(</span><em>*pcollections</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.full_join" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于多个输入PCollection，根据key对PCollection做全连接操作
+，连接结果为(key, (value 1, value 2, …, value n))，若第m个PCollection没有元素，
+则value m为None</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>*pcollections</strong> – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">连接结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">full_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;a&quot;, (1, None)), (&quot;b&quot;, (None, 2))]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.group_by">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">group_by</code><span class="sig-paren">(</span><em>pcollection</em>, <em>key_extractor</em>, <em>value_extractor=None</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.group_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>利用给定的key_extractor和value_extractor对输入PCollection分组，返回一个表示分组结果的PTable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>key_extractor</strong> (<em>function</em>) – 用于提取key的函数</li>
+<li><strong>value_extractor</strong> (<em>function</em><em>, </em><em>optional</em>) – 用于提取value的函数</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">分组结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.ptable.html#bigflow.ptable.PTable" title="bigflow.ptable.PTable">PTable</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">{&quot;A&quot;: [4, 3, 1], &quot;B&quot;: [2]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.group_by_key">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">group_by_key</code><span class="sig-paren">(</span><em>pcollection</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.group_by_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>利用给定的PCollection，使用一个默认的key/value提取函数对输入的PCollection分组
+，返回一个表示分组的PTable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">分组结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.ptable.html#bigflow.ptable.PTable" title="bigflow.ptable.PTable">PTable</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">group_by_key</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">{&quot;A&quot;: [4, 3, 1], &quot;B&quot;: [2]}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.idl_to_str">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">idl_to_str</code><span class="sig-paren">(</span><em>pcollection</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.idl_to_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于给定的PCollection，对每条数据执行idl解包。并过滤掉idl packet类型为Heartbeat和EOF的数据。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入</li>
+<li><strong>**options</strong> – <p>可配置选项</p>
+<p>log_type: idl数据类型，目前支持log_text和log_bin，默认为log_text</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">处理后的PCollection</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.intersection">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">intersection</code><span class="sig-paren">(</span><em>pcollection1</em>, <em>pcollection2</em>, <em>output_duplicated=False</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.intersection" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于给定的PCollection1和PCollection2，返回所有同时存在于PCollection1和PCollection2
+中的元素，即取两者交集</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection1</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入1</li>
+<li><strong>pcollection2</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">相交结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">output_duplicated</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 1, 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.is_empty">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">is_empty</code><span class="sig-paren">(</span><em>pcollection</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.is_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于输入PCollection，返回其是否为空</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">表示返回结果的PObject</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">is_empty</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.join">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">join</code><span class="sig-paren">(</span><em>*pcollections</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于多个输入PCollection，根据key对PCollection做内连接操作
+，连接结果为(key, (value1, value2, …, valuen))</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>*pcollections</strong> – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">连接结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;a&quot;, (1, 2)), (&quot;a&quot;, (1, 3))]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.left_join">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">left_join</code><span class="sig-paren">(</span><em>*pcollections</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.left_join" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于多个输入PCollection，根据key对PCollection做左连接操作
+，连接结果为(key, (value 1, value 2, …, value n))，若第m个PCollection没有元素，
+则value m为None</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>*pcollections</strong> – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">连接结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">left_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;a&quot;, (1, 2)), (&quot;b&quot;, (4, None))]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.make_tuple">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">make_tuple</code><span class="sig-paren">(</span><em>*pobjects</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.make_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>将所有输入的PObject合并成一个PObject(tuple)。</p>
+<p>除返回值类型及输入类型都全是PObject外，
+结果与
+<a class="reference internal" href="#bigflow.transforms.cartesian" title="bigflow.transforms.cartesian"><code class="xref py py-func docutils literal notranslate"><span class="pre">bigflow.transforms.cartesian(self,</span> <span class="pre">*pvalues,</span> <span class="pre">**options)</span></code></a> 相同。</p>
+<p>Args: <a href="#id1"><span class="problematic" id="id2">*</span></a>pobjects (PObject) 待操作PObjects。所有输入都必须是PObject.
+:returns: 返回一个PObject(tuple), tuple中的第n个元素是第n个输入PObject对应的值。
+:rtype: PObject</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">(1, 2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p3</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p3</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">!!! AssertionError</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">make_tuple</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">(1, 1, 2)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.map">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">map</code><span class="sig-paren">(</span><em>pvalue</em>, <em>fn</em>, <em>*side_inputs</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.map" title="Permalink to this definition">¶</a></dt>
+<dd><p>对PCollection中的每个元素做一对一映射</p>
+<p>对给定的PCollection/PObject中的每个元素应用一个变换函数，以函数的返回结果
+构造PCollection/PObject</p>
+<p>假设输入类型为I，fn的期望签名为 fn(I) =&gt; O</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pvalue</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a><em> or </em><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject"><em>PObject</em></a>) – 输入P类型</li>
+<li><strong>fn</strong> (<em>function</em>) – 变换函数</li>
+<li><strong>*side_inputs</strong> – 参与运算的SideInputs</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Results:</dt>
+<dd>PType:  变换后的PCollection/PObject，与输入类型一致</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[2, 4, 6, 8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[[1, 2], [3, 6], [5, 10], [7, 14]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.max">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">max</code><span class="sig-paren">(</span><em>pcollection</em>, <em>key=None</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>得到输入PCollection中最大的元素</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>key</strong> (<em>function</em><em>, </em><em>optional</em>) – 用于提取key的函数，与Python内置``max()``中的 <code class="docutils literal notranslate"><span class="pre">key</span></code> 参数相同</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">包含最大元素的PObject</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="o">-</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.max_elements">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">max_elements</code><span class="sig-paren">(</span><em>pcollection</em>, <em>n</em>, <em>key=None</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.max_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>得到输入PCollection中前n大的元素</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>n</strong> (<em>int/PObject</em>) – 必须大于0</li>
+<li><strong>key</strong> (<em>function</em><em>, </em><em>optional</em>) – 用于提取key的函数，与Python内置``max()``中的 <code class="docutils literal notranslate"><span class="pre">key</span></code> 参数相同</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">包含前n大元素的PCollection，注意对于n=1，这里仍然返回PCollection
+而非PObject</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">max_elements</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[8, 7]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="n">_p</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># n is PObject(5)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">max_elements</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="o">-</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># key is -val</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.min">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">min</code><span class="sig-paren">(</span><em>pcollection</em>, <em>key=None</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>得到输入PCollection中最小的元素</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>key</strong> (<em>function</em><em>, </em><em>optional</em>) – 用于提取key的函数，与Python内置``min()``中的 <code class="docutils literal notranslate"><span class="pre">key</span></code> 参数相同</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">包含最小元素的PObject</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="o">-</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">8</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.min_elements">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">min_elements</code><span class="sig-paren">(</span><em>pcollection</em>, <em>n</em>, <em>key=None</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.min_elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>得到输入PCollection中前n小的元素</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>n</strong> (<em>int/PObject</em>) – 必须大于0</li>
+<li><strong>key</strong> (<em>function</em><em>, </em><em>optional</em>) – 用于提取key的函数，与Python内置``max()``中的 <code class="docutils literal notranslate"><span class="pre">key</span></code> 参数相同</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">包含前n小元素的PCollection，注意对于n=1，这里仍然返回PCollection
+而非PObject</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">min_elements</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="n">_p</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># n is PObject(5)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">min_elements</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">val</span><span class="p">:</span> <span class="o">-</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>  <span class="c1"># key is -val</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.pipe">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">pipe</code><span class="sig-paren">(</span><em>pvalue</em>, <em>command</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.pipe" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于给定的PCollection/PTable，返回通过command处理后的PCollection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pvalue</strong> (<em>PCollection/PTable</em>) – 输入</li>
+<li><strong>command</strong> – 命令行</li>
+<li><strong>**options</strong> – <p>可配置选项</p>
+<p>type: pipe类型，目前支持streaming和bistreaming，默认为streaming</p>
+<p>buffer_size: 缓存大小（单条数据），默认64MB</p>
+<p>input_fields_num: 输入command的一条数据有几个field，默认为1。
+PTable上调用pipe不需要指定；如果PCollection上调用pipe需要输入多个field，则要指定改配置，并且PCollection的元素类型需为tuple</p>
+<p>output_fields_num: command输出的数据有几个field，默认为1</p>
+<p>field_delimiter: streaming模式下field的分割符，默认为tab（制表符）</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">处理后的PCollection</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ol class="arabic simple">
+<li>pipe作用于PCollection上，pipe会将数据直接发送到管道中，框架对数据如何划分不做任何保证；</li>
+</ol>
+<p>2. pipe作用于PTable上，pipe会将PTable的Key和数据一起发送到管道中（支持嵌套），
+并保证相同Key的数据会顺序发送到管道中，例如下列代码：</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="s1">&#39;key1_a&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">&gt;&gt;&gt; </span>            <span class="s1">&#39;key2_a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;value1&#39;</span><span class="p">,</span> <span class="s1">&#39;value2&#39;</span><span class="p">],</span>
+<span class="gp">&gt;&gt;&gt; </span>            <span class="s1">&#39;key2_b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;value3&#39;</span><span class="p">,</span> <span class="s1">&#39;value4&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="p">},</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="s1">&#39;key2_b&#39;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">&gt;&gt;&gt; </span>            <span class="s1">&#39;key2_c&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;value5&#39;</span><span class="p">,</span> <span class="s1">&#39;value6&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>用户程序（cat）接收到的数据为，column间默认使用制表符（tab）作为分割符：</p>
+<blockquote>
+<div><p>key1_a      key2_a  value1</p>
+<p>key1_a      key2_a  value2</p>
+<p>key1_a      key2_b  value3</p>
+<p>key1_a      key2_b  value4</p>
+<p>key1_b      key2_c  value5</p>
+<p>key1_b      key2_c  value6</p>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+<p class="last">3. 尽量不要在PTable上通过apply_values中使用pipe（应该使用apply），
+不仅性能极差而且发送给管道的数据不包含Key；</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[&#39;1&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[&#39;A 1&#39;, &#39;A  2&#39;, &#39;B  2&#39;, &#39;B  3&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bistreaming&#39;</span><span class="p">,</span> <span class="n">input_fields_num</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_fields_num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&#39;1&#39;, &#39;a&#39;), (&#39;1&#39;, &#39;a&#39;), (&#39;2&#39;, &#39;b&#39;), (&#39;3&#39;, &#39;c&#39;)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.reduce">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">reduce</code><span class="sig-paren">(</span><em>pcollection</em>, <em>fn</em>, <em>*side_inputs</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.reduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于属于PCollection，使用给定的fn将所有元素规约为单个元素</p>
+<p>假设输入类型为I，fn的期望签名为 fn(I1, I2) =&gt; I，即输出的类型必须与输入相同  (fn的第一个参数允许被修改)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>fn</strong> (<em>function</em>) – 规约函数</li>
+<li><strong>*side_inputs</strong> – 参与运算的SideInputs</li>
+<li><strong>**options</strong> – 可配置参数</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">规约结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.right_join">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">right_join</code><span class="sig-paren">(</span><em>*pcollections</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.right_join" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于多个输入PCollection，根据key对PCollection做右连接操作
+，连接结果为(key, (value 1, value 2, …, value n))，若第m个PCollection没有元素，
+则value m为None</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>*pcollections</strong> – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">连接结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">right_join</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(&quot;a&quot;, (1, 2)), (&quot;a&quot;, (1, 3))]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.sort">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">sort</code><span class="sig-paren">(</span><em>pcollection</em>, <em>reverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于输入PCollection，将其进行排序</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>reverse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – 若True则降序排列，否则为升序排列</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">排序结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 8]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.sort_by">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">sort_by</code><span class="sig-paren">(</span><em>pcollection</em>, <em>key</em>, <em>reverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.sort_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于输入PCollection，使用给定的key将其进行排序</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>key</strong> (<em>function</em><em>, </em><em>optional</em>) – 用于提取key的函数，与Python内置``sort()``中的 <code class="docutils literal notranslate"><span class="pre">key</span></code> 参数相同。提取的key不能为None。可以返回一个key的列表，每个key都可以分别按照升序或者降序排</li>
+<li><strong>reverse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – 若True则降序排列，否则为升序排列</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">排序结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow.transform_impls</span> <span class="k">import</span> <span class="n">sort</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">sort_by</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">sort_by</span><span class="p">(</span><span class="n">p2</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">rec</span><span class="p">:[</span><span class="n">sort</span><span class="o">.</span><span class="n">ASC</span><span class="p">(</span><span class="n">rec</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">sort</span><span class="o">.</span><span class="n">DESC</span><span class="p">(</span><span class="n">rec</span><span class="p">[</span><span class="mi">1</span><span class="p">])])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 8]</span>
+<span class="go">[(1, 2), (2, 6), (2, 4), (3, 5), (3, 4)]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ol class="arabic">
+<li><p class="first">sort时所有元素类型必须相同，否则可能出现结果不正确。例如，元素1与元素2.0可能排序结果不正确。
+但作为排序的key的多列可以类型不同。</p>
+</li>
+<li><p class="first">sort/sort_by后的数据集只有以下操作可以保证顺序：</p>
+<ul class="simple">
+<li>accumulate,transform操作</li>
+<li>aggregate的第一个聚合函数(即签名为O+I=&gt;O的那个函数)。</li>
+<li>first 和 take (暂不保证语义，未来会支持)</li>
+</ul>
+<p>由于操作性质，其它操作保序也无意义（或语义不明），故不保证顺序。</p>
+</li>
+</ol>
+<p class="last">3. sort后调用write并不保证顺序。如果想保证输出有序，可以参考此文档：
+<a class="reference external" href="http://bigflow.cloud/zh/rst/bigflow.output.html">http://bigflow.cloud/zh/rst/bigflow.output.html</a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.str_to_idl">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">str_to_idl</code><span class="sig-paren">(</span><em>pcollection</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.str_to_idl" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于给定的PCollection，对每条数据执行idl打包。要求输入的数据类型为str。</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入</li>
+<li><strong>**options</strong> – <p>可配置选项</p>
+<p>log_type: idl数据类型，目前支持log_text和log_bin，默认为log_text</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">处理后的PCollection</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.substract">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">substract</code><span class="sig-paren">(</span><em>pcollection1</em>, <em>pcollection2</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.substract" title="Permalink to this definition">¶</a></dt>
+<dd><p>此接口已废弃。请使用subtract。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.subtract">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">subtract</code><span class="sig-paren">(</span><em>pcollection1</em>, <em>pcollection2</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.subtract" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于给定的PCollection1和PCollection2，返回所有存在于PCollection1但不在PCollection2
+中的元素，相当于做容器减法</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection1</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 作为被减数的PCollection</li>
+<li><strong>pcollection2</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 作为减数的PCollection</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">表示结果的PCollection</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[3, 4]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.sum">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">sum</code><span class="sig-paren">(</span><em>pcollection</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于输入PCollection，求其所有包含元素相加的结果</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>**options</strong> – 可配置参数</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">表示结果的PObject</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">_p</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.take">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">take</code><span class="sig-paren">(</span><em>pcollection</em>, <em>n</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.take" title="Permalink to this definition">¶</a></dt>
+<dd><p>取给定PCollection中的任意n个元素。
+（如果总元素数量不足n，则返回输入pcollection）</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject"><em>PObject</em></a>) – 元素数量</li>
+<li><strong>**options</strong> – 可配置参数</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">表示结果的PCollection</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2, 3]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_n</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="n">_n</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_n</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.to_list_pobject">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">to_list_pobject</code><span class="sig-paren">(</span><em>pvalue</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.to_list_pobject" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于给定的PCollection，聚合为PObject，PObject的内容为list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pvalue</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">聚合后的list</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">to_list_pobject</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 1, 2, 3]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">bigflow.pcollection.PCollection</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[&quot;&lt;type &#39;int&#39;&gt;&quot;, &quot;&lt;type &#39;int&#39;&gt;&quot;, &quot;&lt;type &#39;int&#39;&gt;&quot;, &quot;&lt;type &#39;int&#39;&gt;&quot;]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">to_list_pobject</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="go">bigflow.pobject.PObject</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">&quot;&lt;type &#39;list&#39;&gt;&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>这个是最易被滥用的一个transform。
+它可以使一个PCollection转化为一个元素为list的PObject，
+用户可以在后续的map操作中拿到这个list进行任意的单机操作，
+在一些场景下，如复用现有单机代码时，比较有用。
+但是，该变换将使得Bigflow许多优化无法执行，导致运行效率下降，
+另外，在apply_values中使用时，
+由于每个分组的数据必须转化为一个list，
+则导致在一个分组内数据过多时，会占用大量内存资源，
+甚至可能引起作业因内存占用过多而Out-Of-Memory失败。</p>
+<p>故，使用该变换前，请三思，尽量使用以下其它算子替换掉此方法，
+一些较为通用的替代方案如下（下列替换方案，按顺序前边的比后边的效率高）：</p>
+<ol class="last arabic simple">
+<li><a class="reference internal" href="#bigflow.transforms.aggregate" title="bigflow.transforms.aggregate"><code class="xref py py-func docutils literal notranslate"><span class="pre">bigflow.transforms.aggregate</span></code></a></li>
+<li><a class="reference internal" href="#bigflow.transforms.transform" title="bigflow.transforms.transform"><code class="xref py py-func docutils literal notranslate"><span class="pre">bigflow.transforms.transform</span></code></a></li>
+</ol>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.to_pobject">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">to_pobject</code><span class="sig-paren">(</span><em>pvalue</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.to_pobject" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于给定的PCollection/PTable，聚合为PObject，PObject的内容为list/dict</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pvalue</strong> (<em>PCollection/PTable</em>) – 输入</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">聚合后的list/dict</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pobject.html#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">to_pobject</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 1, 2, 3]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">({</span><span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">:</span> <span class="s1">&#39;h&#39;</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">to_pobject</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">{&#39;e&#39;: &#39;f&#39;, &#39;g&#39;: &#39;h&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.transform">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">transform</code><span class="sig-paren">(</span><em>pcollection</em>, <em>first_arg</em>, <em>*other_args</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>对给定PCollection进行任意的变换，结果为另一个PCollection</p>
+<p>transform有两种形式，形式一：</p>
+<p>基本原型为`transform(pcollection, initializer, transformer, finalizer, <a href="#id3"><span class="problematic" id="id4">*</span></a>side_inputs, <a href="#id5"><span class="problematic" id="id6">**</span></a>options)`</p>
+<p>transform将PCollection的处理分为3个阶段: 初始化，遍历及结束，分别对应于
+initializer, transformer和finalizer三个处理函数。三个函数之间有一个状态
+status(也可以理解为上下文context)，同时有一个emitter参数可以向输出PCollection发送数据</p>
+<p>假定输入数据类型为I，输出数据类型为O，initializer, transformer, finalizer各自的期望签名为:</p>
+<p>initializer(emitter, <a href="#id7"><span class="problematic" id="id8">*</span></a>side_inputs) =&gt; status(object)</p>
+<p>transformer(status, emitter, I, <a href="#id9"><span class="problematic" id="id10">*</span></a>side_inputs) =&gt; status(object)
+(transformer的第一个参数允许被修改)</p>
+<p>finalizer(status, emitter, <a href="#id11"><span class="problematic" id="id12">*</span></a>side_inputs) =&gt; None  (finalizer的第一个参数允许被修改)</p>
+<p>emitter.emit(O)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>initializer</strong> (<em>callable</em>) – 初始化函数</li>
+<li><strong>transformer</strong> (<em>callable</em>) – 变换函数</li>
+<li><strong>finalizer</strong> (<em>callable</em>) – 结束函数</li>
+<li><strong>*side_inputs</strong> – 参与计算的SideInputs</li>
+<li><strong>**options</strong> – 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">表示返回结果的PCollection</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">initializer</span><span class="p">(</span><span class="n">emitter</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">return</span> <span class="p">[]</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">transformer</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">emitter</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">status</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">inp</span><span class="p">))</span> <span class="c1">#如果要缓存一个数据，最好复制一份。</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">return</span> <span class="n">status</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">finalizer</span><span class="p">(</span><span class="n">status</span><span class="p">,</span> <span class="n">emitter</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">emitter</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_plist</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">_p</span><span class="p">,</span> <span class="n">initializer</span><span class="p">,</span> <span class="n">transformer</span><span class="p">,</span> <span class="n">finalizer</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">_plist</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="c1"># 只有一个元素，元素的内容是[1, 2, 3]这样一个列表。</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">_plist</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[[1, 2, 3]]</span>
+</pre></div>
+</div>
+<p>形式二：</p>
+<p>基本原型为`transform(pcollection, transformer, <a href="#id13"><span class="problematic" id="id14">*</span></a>side_inputs, <a href="#id15"><span class="problematic" id="id16">**</span></a>options)`
+其中transformer应为
+<a class="reference internal" href="bigflow.base.html#bigflow.base.Transformer" title="bigflow.base.Transformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.base.Transformer</span></code></a>
+类的子类，
+Transformer.begin_process在数据开始处理前会被调用。
+Transformer.process在数据开始处理时，每条数据调用一次，传入需要的数据。
+Transformer.end_process在数据处理完成后被调用。
+用户需要输出的数据以列表或其它可迭代对象的形式返回，其中所有元素都会被作为输出PCollection中的一个元素。
+（注意，如果不需要输出请返回一个空的[]，而不要返回None）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">SumTransformer</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Transformer</span><span class="p">):</span>
+<span class="gp">...</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">begin_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="bp">self</span><span class="o">.</span><span class="n">_sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="p">[]</span>
+<span class="gp">...</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="bp">self</span><span class="o">.</span><span class="n">_sum</span> <span class="o">+=</span> <span class="n">record</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="p">[]</span>
+<span class="gp">...</span>
+<span class="gp">... </span><span class="k">def</span> <span class="nf">end_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sum</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">SumTransformer</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">6</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">PartialSumTransformer</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Transformer</span><span class="p">):</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">begin_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_sum</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="p">[]</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_sum</span> <span class="o">+=</span> <span class="n">record</span>
+<span class="gp">... </span>        <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sum</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">PartialSumTransformer</span><span class="p">()),</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 3, 6]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">ZipTransformer</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">Transformer</span><span class="p">):</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">begin_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">si</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>        <span class="n">lens</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">si</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">min_len</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">lens</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="p">[]</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">,</span> <span class="o">*</span><span class="n">si</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_len</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="k">yield</span> <span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="p">)</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">],</span> <span class="n">si</span><span class="p">))</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p2</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">ZipTransformer</span><span class="p">(),</span> <span class="n">p2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(1, 4), (2, 5)]</span>
+</pre></div>
+</div>
+<p>本方法为Bigflow所提供的最底层和最复杂的变换方法，它可以表达对PCollection
+的任意变换。</p>
+<p>在有其它函数(如aggregate)能完成同样功能时，尽量不要使用该函数，框架无法了解该函数内部实现，
+无法进行许多深层次的优化工作。</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.union">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">union</code><span class="sig-paren">(</span><em>*pvalues</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.union" title="Permalink to this definition">¶</a></dt>
+<dd><p>对于多个输入PCollection/PObject，返回包含它们所有元素的PCollection</p>
+<p>输入PCollection必须为同类型</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>*pvalues</strong> – 输入PCollection/PObject</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">表示结果的PCollection</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">transforms</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p2</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transforms</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">_p1</span><span class="p">,</span> <span class="n">_p2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 7, 8]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.transforms.window_into">
+<code class="descclassname">bigflow.transforms.</code><code class="descname">window_into</code><span class="sig-paren">(</span><em>pcollection</em>, <em>window</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.transforms.window_into" title="Permalink to this definition">¶</a></dt>
+<dd><p>利用给定的window对输入PCollection分组，返回一个表示分组结果的PTable</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) – 输入PCollection</li>
+<li><strong>window</strong> (<em>Window</em>) – 输入Window</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">分组结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.ptable.html#bigflow.ptable.PTable" title="bigflow.ptable.PTable">PTable</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

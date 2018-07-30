@@ -1,0 +1,200 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>系统概览 &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">系统概览</a><ul>
+<li><a class="reference internal" href="#flume-api">Flume-Api</a></li>
+<li><a class="reference internal" href="#flume-core">Flume-Core</a></li>
+<li><a class="reference internal" href="#flume-runtime">Flume-Runtime</a></li>
+<li><a class="reference internal" href="#id2">参考文献</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/flume/overview.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>系统概览<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>Flume是百度INF和BDG团队联合开发的分布式数据流计算框架, 目标是提供比MapReduce更加灵活易用的计算模型.
+众所周知，MapReduce 模型将数据处理分为 Map/Shuffle/Reduce 三个阶段, 降低了海量数据处理的开发难度,
+对于普通的计算能够较好的支持. 但是在现实的数据处理中, 复杂的计算逻辑往往需要多轮 MapReduce,
+这往往导致高昂的开发和运行成本.</p>
+<p>Flume的设计参考了Google的FlumeJava和Apache的Spark, 将分布式计算看成是分布式数据集在算子上的变换.
+这一抽象不显式指定分布式计算的轮数/方式, 而是更贴近描述用户的逻辑. Flume项目分成三个层次:
+Flume-Core，Flume-Api和Flume-Runtime. 如下图所示:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/flume_arch.png"><img alt="../_images/flume_arch.png" src="../_images/flume_arch.png" style="width: 600px;" /></a>
+</div></blockquote>
+<div class="section" id="flume-api">
+<h2>Flume-Api<a class="headerlink" href="#flume-api" title="永久链接至标题">¶</a></h2>
+<p>Flume-Api层的目标是在Flume-Core的接口上提供面向终端用户的易用性接口, 它主要完成三方面的内容:</p>
+<ul class="simple">
+<li>提供强类型的数据集抽象</li>
+<li>提供易用的数据集操作接口</li>
+<li>根据类型信息, 自动推导生成Flume-Core中的部分算子, 简化开发代价</li>
+</ul>
+<p>Flume可以根据不同的需求和应用领域提供多套Api, 比如类似flumejava的Api和类似spark的Api,
+都可以基于Flume-Core开发, 可以显著降低开发成本. 从这个角度看,INF的Bigflow和BDG的
+Wing项目都是一种Flume-Api.</p>
+</div>
+<div class="section" id="flume-core">
+<h2>Flume-Core<a class="headerlink" href="#flume-core" title="永久链接至标题">¶</a></h2>
+<p>Flume-Core是Flume的表示层, 提供了对分布式数据计算的抽象表示, 这一表示被称为 <strong>逻辑执行计划</strong> ,
+该逻辑执行计划由分布式计算操作及其绑定算子组成. Flume-Core提供了一套接口来生成逻辑执行计划,
+并可以在分布式环境下反射并执行用户的算子.</p>
+<p>详见 <a class="reference internal" href="core.html"><span class="doc">Flume-Core</span></a></p>
+</div>
+<div class="section" id="flume-runtime">
+<h2>Flume-Runtime<a class="headerlink" href="#flume-runtime" title="永久链接至标题">¶</a></h2>
+<p>Flume-Runtime是Flume的执行层, 其主要设计目标是提供一套通用的算子执行和优化机制,
+可以使得用Flume-Core描述的逻辑执行计划能够在各种物理执行引擎上工作.
+目前Flume-Runtime支持本地执行,
+和在DAGMR上运行,
+将来Flume还会扩展到更多的平台上(后注：现已支持Spark和公司内部的Gemini）. 从这个角度看, Flume-Runtime本质上是一个通用的Worker运行时库.</p>
+<p>详见</p>
+<ul class="simple">
+<li><a class="reference internal" href="backend.html"><span class="doc">Backend和执行流程</span></a></li>
+<li><a class="reference internal" href="executor.html"><span class="doc">算子执行框架</span></a></li>
+<li><a class="reference internal" href="planner.html"><span class="doc">优化器框架</span></a></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>参考文献<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://pages.cs.wisc.edu/~akella/CS838/F12/838-CloudPapers/FlumeJava.pdf">Google FlumeJava</a></li>
+<li><a class="reference external" href="http://crunch.apache.org/">Apache Crunch</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

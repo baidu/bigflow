@@ -1,0 +1,196 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Disclaimer &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Disclaimer</a></li>
+<li><a class="reference internal" href="#building-on-mac">Building on Mac</a><ul>
+<li><a class="reference internal" href="#dependency">Dependency</a></li>
+<li><a class="reference internal" href="#building">Building</a></li>
+<li><a class="reference internal" href="#developing">Developing</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/build_and_dev_on_mac.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="disclaimer">
+<h1>Disclaimer<a class="headerlink" href="#disclaimer" title="Permalink to this headline">¶</a></h1>
+<p>Bigflow don’t support running on Mac, this article is for developers only.</p>
+</div>
+<div class="section" id="building-on-mac">
+<h1>Building on Mac<a class="headerlink" href="#building-on-mac" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="dependency">
+<h2>Dependency<a class="headerlink" href="#dependency" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">XCode and its command line tools:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">xcode</span><span class="o">-</span><span class="n">select</span> <span class="o">--</span><span class="n">install</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">JDK(&gt;=1.8), please goto <a class="reference external" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a>
+after installation, set JAVA_HOME:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+</pre></div>
+</div>
+<p>You can add this line to your shell init file(~/.bash_profile or ~/.zshrc, etc.)</p>
+</li>
+<li><p class="first">Third party tools:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">openssl</span> <span class="n">bison</span> <span class="n">libidn</span> <span class="n">libgcrypt</span> <span class="n">maven</span> <span class="n">autoconf</span> <span class="n">cmake</span> <span class="n">libtool</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="building">
+<h2>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h2>
+<p>Execute commands below should built all the targets defined in the CMakeLists.txt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># in case you don&#39;t persist this to .bash_profile or .zshrc
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
+# use brew installed bison instead as thrift requires that
+export PATH=/usr/local/opt/bison/bin:$PATH
+mkdir build
+cd build
+cmake ../
+
+make -j 3
+</pre></div>
+</div>
+</div>
+<div class="section" id="developing">
+<h2>Developing<a class="headerlink" href="#developing" title="Permalink to this headline">¶</a></h2>
+<p>We use CLion(<a class="reference external" href="https://www.jetbrains.com/clion/">https://www.jetbrains.com/clion/</a>) as our primary dev tool.
+Open CMakeLists.txt as a project should setup everything smoothly.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

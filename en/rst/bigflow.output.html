@@ -1,0 +1,443 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Output &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.output.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.output">
+<span id="output"></span><h1>Output<a class="headerlink" href="#module-bigflow.output" title="Permalink to this headline">¶</a></h1>
+<p>定义所有的数据输出抽象(Target)，用于Pipeline.write()方法</p>
+<dl class="class">
+<dt id="bigflow.output.FileBase">
+<em class="property">class </em><code class="descclassname">bigflow.output.</code><code class="descname">FileBase</code><span class="sig-paren">(</span><em>path</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.FileBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>用于Pipeline.write()方法读取文件的基类</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – 写文件的path，必须为str类型</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># 对数据按照tab分割的第一个元素进行hash，将结果分割成2000个文件，并且保证每个文件内有序。</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 代码示例：</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipeline</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">data</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">),</span>
+<span class="gp">&gt;&gt;&gt; </span>        <span class="n">output</span><span class="o">.</span><span class="n">TextFile</span><span class="p">(</span><span class="s2">&quot;your output dir&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>            <span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>            <span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">partition_fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">hash</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">%</span> <span class="n">n</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="bigflow.output.FileBase.partition">
+<code class="descname">partition</code><span class="sig-paren">(</span><em>n=None</em>, <em>partition_fn=None</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.FileBase.partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>对输出结果进行分组</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – 输出结果的分组个数，具体表现为产生n个输出文件，文件内容为各组数据</li>
+<li><strong>partition_fn</strong> (<em>callable</em>) – 用于指定分组方式的函数</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">返回self</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.input.html#bigflow.input.FileBase" title="bigflow.input.FileBase">FileBase</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.FileBase.sort">
+<code class="descname">sort</code><span class="sig-paren">(</span><em>reverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.FileBase.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>根据数据实际值对数据进行排序(默认为升序)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>reverse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – 是否降序排序</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">返回self</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="bigflow.input.html#bigflow.input.FileBase" title="bigflow.input.FileBase">FileBase</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.FileBase.sort_by">
+<code class="descname">sort_by</code><span class="sig-paren">(</span><em>key_read_fn=None</em>, <em>reverse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.FileBase.sort_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>通过key_read_fn获取key，并根据key对数据进行排序(默认为升序)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>key_reader_fn</strong> (<em>callable</em>) – 用户获取key的函数</li>
+<li><strong>reverse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – 是否降序排序</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">返回self</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.input.html#bigflow.input.FileBase" title="bigflow.input.FileBase">FileBase</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.output.SchemaTextFile">
+<em class="property">class </em><code class="descclassname">bigflow.output.</code><code class="descname">SchemaTextFile</code><span class="sig-paren">(</span><em>path</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.SchemaTextFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bigflow.output.TextFile" title="bigflow.output.TextFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.output.TextFile</span></code></a></p>
+<p>读取文本文件生成支持字段操作的SchemaPCollection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – 写文件的path，必须为str类型</li>
+<li><strong>**options</strong> – Arbitrary keyword arguments, 其中关键参数，
+若SchemaPCollection的元素是dict, 必须指定columns(list)表示输出的字段名，
+若SchemaPCollection的元素是tuple, 可以直接输出所有数据
+separator(str)表示每行数据字段分隔符，默认分隔符是Tab(”       “)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bigflow</span> <span class="k">import</span> <span class="n">schema</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tps</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([(</span><span class="s1">&#39;XiaoA&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;XiaoB&#39;</span><span class="p">,</span> <span class="mi">21</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dicts</span> <span class="o">=</span> <span class="n">tps</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">):</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">:</span> <span class="n">age</span><span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dicts</span> <span class="o">=</span> <span class="n">dicts</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="p">,</span> <span class="n">serde</span><span class="o">=</span><span class="n">schema</span><span class="o">.</span><span class="n">of</span><span class="p">([</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">]))</span> <span class="c1"># 下一个版本中这行可以省去</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_pipeline</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dicts</span><span class="p">,</span> <span class="n">output</span><span class="o">.</span><span class="n">SchemaTextFile</span><span class="p">(</span><span class="s1">&#39;./output&#39;</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./output/part-00000&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="go">XiaoA   20</span>
+<span class="go">XiaoB   21</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="bigflow.output.SchemaTextFile.transform_to_node">
+<code class="descname">transform_to_node</code><span class="sig-paren">(</span><em>ptype</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.SchemaTextFile.transform_to_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>内部接口</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.output.SequenceFile">
+<em class="property">class </em><code class="descclassname">bigflow.output.</code><code class="descname">SequenceFile</code><span class="sig-paren">(</span><em>path</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.SequenceFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bigflow.output.FileBase" title="bigflow.output.FileBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.output.FileBase</span></code></a></p>
+<p>输出到SequenceFile文件的Target，SequenceFile的(Key, Value)将被写为BytesWritable，用户使用as_type()函数自行将数据序列化</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – 写文件的path，必须为str类型</li>
+<li><strong>**options</strong> – 其中关键参数有：
+overwrite: 如果目标位置已经存在，是否进行覆盖写操作。默认为True。
+async_mode: 是否使用异步写。默认为True。
+key_serde: key如何被序列化为字符串。
+value_serde: value如果被序列化为字符串。
+需要注意, key_serde/value_serde如果设置，则数据必须是一个两个元素的tuple。
+如果不设置，则认为全部的数据使用默认序列化器写到sequence file的value中，key为空。</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="bigflow.output.SequenceFile.as_type">
+<code class="descname">as_type</code><span class="sig-paren">(</span><em>kv_serializer</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.SequenceFile.as_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>通过kv_serializer将数据序列化为(Key, Value)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kv_serializer</strong> (<em>callable</em>) – 序列化函数</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">返回self</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="bigflow.input.html#bigflow.input.SequenceFile" title="bigflow.input.SequenceFile">SequenceFile</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">kv_deserializer的期望签名为:</p>
+</div>
+<p>kv_deserializer(object) =&gt; (str, str)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.SequenceFile.transform_to_node">
+<code class="descname">transform_to_node</code><span class="sig-paren">(</span><em>ptype</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.SequenceFile.transform_to_node" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.output.TextFile">
+<em class="property">class </em><code class="descclassname">bigflow.output.</code><code class="descname">TextFile</code><span class="sig-paren">(</span><em>path</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.TextFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#bigflow.output.FileBase" title="bigflow.output.FileBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.output.FileBase</span></code></a></p>
+<blockquote>
+<div><p>输出到文本文件的Target</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd><p class="first">path (str):  写文件的path，必须为str类型
+<a href="#id1"><span class="problematic" id="id2">**</span></a>options: 其中关键参数有：</p>
+<blockquote class="last">
+<div><p>overwrite: 如果目标位置已经存在，是否进行覆盖写操作。默认为True。
+async_mode: 是否使用异步写。默认为True。</p>
+<p>record_delimiter: 输出文本的分隔符，默认’</p>
+</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>‘；</dt>
+<dd>若指定为None，则将所有数据按字节流连续输出</dd>
+</dl>
+<dl class="attribute">
+<dt id="bigflow.output.TextFile.compression_types">
+<code class="descname">compression_types</code><em class="property"> = {'gzip': 1}</em><a class="headerlink" href="#bigflow.output.TextFile.compression_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.TextFile.transform_to_node">
+<code class="descname">transform_to_node</code><span class="sig-paren">(</span><em>ptype</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.TextFile.transform_to_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>内部接口</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.TextFile.with_compression">
+<code class="descname">with_compression</code><span class="sig-paren">(</span><em>compression_type</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.TextFile.with_compression" title="Permalink to this definition">¶</a></dt>
+<dd><p>对输出文件进行压缩</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>compression_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – 压缩格式，目前仅支持”gzip”</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">返回self</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#bigflow.output.TextFile" title="bigflow.output.TextFile">TextFile</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bigflow.output.UserOutputBase">
+<em class="property">class </em><code class="descclassname">bigflow.output.</code><code class="descname">UserOutputBase</code><a class="headerlink" href="#bigflow.output.UserOutputBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>用户Output基类</p>
+<dl class="method">
+<dt id="bigflow.output.UserOutputBase.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.UserOutputBase.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>用户可以重写该方法。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.UserOutputBase.get_commiter">
+<code class="descname">get_commiter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.UserOutputBase.get_commiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>用户可以重写该方法。
+返回一个commiter, 默认表示不需要commit阶段
+commiter应该是一个无参函数。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.UserOutputBase.open">
+<code class="descname">open</code><span class="sig-paren">(</span><em>partition</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.UserOutputBase.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>用户可以重写该方法。
+传入参数partition表示这是第几个partition</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.UserOutputBase.partition_fn">
+<code class="descname">partition_fn</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.UserOutputBase.partition_fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>用户可以重写该方法。
+返回一个partition fn。
+partition_fn原型应为：(data, total_partition) =&gt; partition
+返回None则表示不太关心如何partition。</p>
+<p>如果partition_number</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.UserOutputBase.partition_number">
+<code class="descname">partition_number</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.UserOutputBase.partition_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>用户可以重写该方法。
+返回一个int型的数，表示总共要把数据partition成多少份。</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.UserOutputBase.pre_process">
+<code class="descname">pre_process</code><span class="sig-paren">(</span><em>pval</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.UserOutputBase.pre_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>用户可以重写该方法。
+进行前处理，默认不处理</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.output.UserOutputBase.sink">
+<code class="descname">sink</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.UserOutputBase.sink" title="Permalink to this definition">¶</a></dt>
+<dd><p>用户可以重写该方法。</p>
+<p>该方法对每条数据调用一次</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="bigflow.output.user_define_format">
+<code class="descclassname">bigflow.output.</code><code class="descname">user_define_format</code><span class="sig-paren">(</span><em>user_output_base</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.output.user_define_format" title="Permalink to this definition">¶</a></dt>
+<dd><p>内部函数</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

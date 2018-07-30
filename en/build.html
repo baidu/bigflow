@@ -1,0 +1,187 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>编译 &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">编译</a></li>
+<li><a class="reference internal" href="#id2">测试</a></li>
+<li><a class="reference internal" href="#docker">使用Docker构建</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/build.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>目前在centos7.1测试通过</p>
+<div class="section" id="id1">
+<h1>编译<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">baidu</span><span class="o">/</span><span class="n">bigflow</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">bigflow</span><span class="o">/</span><span class="n">build_support</span>
+<span class="n">sh</span> <span class="n">build_deps</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">source</span> <span class="o">./</span><span class="n">environment</span>
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">../</span><span class="n">build</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="o">../</span><span class="n">build</span> <span class="o">&amp;&amp;</span> <span class="n">cmake</span> <span class="o">..</span>
+<span class="n">make</span>
+<span class="n">make</span> <span class="n">release</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h1>测试<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">bigflow_python</span><span class="o">/</span><span class="n">python</span><span class="o">/</span>
+<span class="n">sh</span> <span class="n">run</span><span class="o">-</span><span class="n">tests</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="docker">
+<h1>使用Docker构建<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h1>
+<p>先下载bigflow代码库:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">baidu</span><span class="o">/</span><span class="n">bigflow</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">bigflow</span>
+</pre></div>
+</div>
+<p>运行:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>docker run -i -t -v $PWD:/root/bigflow centos:7.1.1503 /bin/bash
+</pre></div>
+</div>
+<p>进入centos docker镜像</p>
+<p>在镜像中执行：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">sudo</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">bigflow</span><span class="o">/</span><span class="n">build_support</span>
+<span class="n">sh</span> <span class="n">build_deps</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">source</span> <span class="o">./</span><span class="n">environment</span>
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">../</span><span class="n">build</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="o">../</span><span class="n">build</span> <span class="o">&amp;&amp;</span> <span class="n">cmake</span> <span class="o">..</span>
+<span class="n">make</span>
+<span class="n">make</span> <span class="n">release</span>
+</pre></div>
+</div>
+<p>注意，上述方法的执行环境是一次性的，用户可以使用docker命令保存编译完的docker镜像，或使用daemon的方式运行，具体方法这里不再详述。请参考docker文档。</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

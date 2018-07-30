@@ -1,0 +1,327 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>优化器框架 &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">优化器框架</a><ul>
+<li><a class="reference internal" href="#id2">工作流程</a></li>
+<li><a class="reference internal" href="#id3">执行计划的中间表示</a><ul>
+<li><a class="reference internal" href="#unit-leafunit">Unit/LeafUnit</a></li>
+<li><a class="reference internal" href="#plan">Plan</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">优化框架</a><ul>
+<li><a class="reference internal" href="#pass">Pass</a></li>
+<li><a class="reference internal" href="#dispatcher">Dispatcher</a></li>
+<li><a class="reference internal" href="#ruledispatcher">RuleDispatcher</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">优化算法</a><ul>
+<li><a class="reference internal" href="#id6">独立算子合并</a></li>
+<li><a class="reference internal" href="#id7">分桶合并</a></li>
+<li><a class="reference internal" href="#partial-processor">Partial-Processor前置</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/flume/planner.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>优化器框架<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<p>Flume的优化器框架承担两个任务,
+一是把逻辑执行计划转换为物理执行计划, 二是针对不同的backend对执行流程进行优化.
+一般来说，每个backend都有一个对应的planner作为专用的优化器.</p>
+<div class="section" id="id2">
+<h2>工作流程<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>Planner的工作流程分为三个步骤:</p>
+<ol class="arabic simple">
+<li>把逻辑执行计划翻译成flume任务的中间表示层Plan</li>
+<li>在Plan上对执行流程进行优化, 包括通用优化和与backend有关的专用优化</li>
+<li>把优化结束的Plan翻译成物理执行计划</li>
+</ol>
+<p>从这里可以看出, planner与Flume-Core和Flume-Runtime中的算子执行框架具有紧密的联系.</p>
+</div>
+<div class="section" id="id3">
+<h2>执行计划的中间表示<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<p>Plan是介于逻辑执行计划和物理执行计划之间的一种表示, 这种中间表示是一棵树,
+树的非叶子节点由Unit组成, 代表一个Executor,
+叶子节点由LeafUnit组成, 代表Executor上的一个用户算子/数据集.</p>
+<p>所有的叶子节点之间还有一些边表示数据集之间的依赖关系, 因此Plan的描述其实是Tree + DAG.</p>
+<p>节点之间的父子关系在Plan中称为Control, 叶子节点之间的数据依赖在Plan中称为Dependency,
+Plan提供了以下接口来修改节点之间的关系:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">AddControl</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">father</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">child</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">RemoveControl</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">father</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">child</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">ReplaceControl</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">father</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">child</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">);</span>
+
+<span class="n">void</span> <span class="n">AddDependency</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">source</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">target</span><span class="p">,</span> <span class="n">const</span> <span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">tag</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">RemoveDependency</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">source</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">target</span><span class="p">);</span>
+<span class="n">void</span> <span class="n">ReplaceDependency</span><span class="p">(</span><span class="n">Unit</span><span class="o">*</span> <span class="n">source</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">target</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="section" id="unit-leafunit">
+<h3>Unit/LeafUnit<a class="headerlink" href="#unit-leafunit" title="永久链接至标题">¶</a></h3>
+<p>Unit/LeafUnit中记录了如下信息:</p>
+<ul class="simple">
+<li>id, 仅在LeafUnit中有效, 唯一标识用户算子/数据集的输出</li>
+<li>type, Executor的类型, 例如DEFAULT, LOGICAL, LOCAL_SHUFFLE, EXTERNAL</li>
+<li>scope_level, 和Executor中的scope_level含义相同</li>
+<li>father, 父节点</li>
+<li>childs, 子节点, 包括Unit和LeafUnit</li>
+<li>nodes, 以当前节点为根的子树中的所有LeafUnit</li>
+<li>inputs, 从非nodes节点到nodes节点的所有Dependency</li>
+<li>outputs, 从nodes节点到非nodes节点的所有Dependency</li>
+<li>users, 由outputs的所有目标节点组成的集合</li>
+<li>needs, 由inputs的所有源节点组成的集合</li>
+<li>upstreams, 节点集合, 每个upstream和当前节点之间都存在一条Dependency链</li>
+<li>downstreams, 节点集合, 当前节点和每个downstream之间都存在一条Dependency链</li>
+</ul>
+<p>优化器可以通过Unit/LeafUnit提供的接口读取以上信息</p>
+</div>
+<div class="section" id="plan">
+<h3>Plan<a class="headerlink" href="#plan" title="永久链接至标题">¶</a></h3>
+<p>除了修改节点关系的接口, Plan还提供了以下方法:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">explict</span> <span class="n">Plan</span><span class="p">(</span><span class="n">const</span> <span class="n">PbLogicalPlan</span><span class="o">&amp;</span> <span class="n">message</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>根据逻辑执行计划初始化Unit/LeafUnit, 并维护节点上a的信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">*</span> <span class="n">Root</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>获取根节点, 结合Unit中的childs信息, 可以实现对Executor-Tree的遍历</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">*</span> <span class="n">NewUnit</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>创建一个新的Unit节点, 返回的节点没有父节点, 也不属于任何Dependency</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">GetAllUnits</span><span class="p">(</span><span class="n">std</span><span class="p">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Unit</span><span class="o">*&gt;*</span> <span class="n">result</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>获取所有Unit/LeafUnit的集合</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">GetTopologicalOrder</span><span class="p">(</span><span class="n">std</span><span class="p">::</span><span class="nb">list</span><span class="o">&lt;</span><span class="n">Unit</span><span class="o">*&gt;*</span> <span class="n">result</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>以拓扑顺序获取所有LeafUnit的集合</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>优化框架<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<p>Flume-Runtime的优化框架由Pass和Dispatcher组成.</p>
+<div class="section" id="pass">
+<h3>Pass<a class="headerlink" href="#pass" title="永久链接至标题">¶</a></h3>
+<p>所有的优化都被认为是对Plan的一种变换, 即一个优化算法的输入是一个Plan, 输出也是一个Plan. 这种变换被抽象为Pass:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Pass</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">Pass</span><span class="p">()</span> <span class="p">{}</span>
+
+    <span class="c1">// return true if plan is modified</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>从代码层次看，planner的执行过程是通过逻辑执行计划创建Plan, 创建多个Pass对Plan进行修改, 最后生成物理执行计划.</p>
+</div>
+<div class="section" id="dispatcher">
+<h3>Dispatcher<a class="headerlink" href="#dispatcher" title="永久链接至标题">¶</a></h3>
+<p>通常来说, Pass对Plan进行的变换需要按照一定的顺序对Unit/LeafUnit进行遍历, 这种遍历模型就是Dispatcher.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Dispatcher</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">Dispatcher</span><span class="p">()</span> <span class="p">{}</span>
+
+    <span class="c1">// return true if plan is modified</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Dispatcher的接口和Pass是一样的, 两者的区别在于含义不同, Pass代表一个完整的优化过程,
+经过一个Pass的处理, Plan必须处于一个合理的状态,
+而一个Pass可能包括多个Dispatcher, 每个Dispatcher也可能执行多次.</p>
+</div>
+<div class="section" id="ruledispatcher">
+<h3>RuleDispatcher<a class="headerlink" href="#ruledispatcher" title="永久链接至标题">¶</a></h3>
+<p>RuleDispatcher是一个单节点遍历模型, 它把对Plan的处理拆分成对每一个节点的处理,
+对每一个节点的处理则被抽象为对这个节点使用若干Rule, 这个类定义如下:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RuleDispatcher</span> <span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="k">class</span> <span class="nc">Rule</span> <span class="p">{</span>
+    <span class="k">public</span><span class="o">:</span>
+        <span class="k">virtual</span> <span class="o">~</span><span class="n">Rule</span><span class="p">()</span> <span class="p">{}</span>
+        <span class="c1">// return true if this Rule could Run(plan, unit)</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Accept</span><span class="p">(</span><span class="k">const</span> <span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="k">const</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// return true if plan is modified</span>
+        <span class="k">virtual</span> <span class="kt">bool</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="k">virtual</span> <span class="o">~</span><span class="n">RuleDispatcher</span><span class="p">();</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="nf">Run</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">);</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="nf">AddRule</span><span class="p">(</span><span class="n">Rule</span><span class="o">*</span> <span class="n">rule</span><span class="p">);</span>
+
+<span class="k">protected</span><span class="o">:</span>
+    <span class="k">virtual</span> <span class="kt">bool</span> <span class="n">Dispatch</span><span class="p">(</span><span class="n">Plan</span><span class="o">*</span> <span class="n">plan</span><span class="p">,</span> <span class="n">Unit</span><span class="o">*</span> <span class="n">unit</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>RuleDispatcher的Run方法首先从plan中获取所有Unit/LeafUnit节点, 然后对每一个节点执行Dispatch方法,
+后者尝试对这个节点应用所有注册的Rule.</p>
+<p>RuleDispatcher对Plan的遍历是无序的, 目前扩展了两类固定顺序的RuleDispatcher:</p>
+<ul class="simple">
+<li>DepthFirstDispatcher: 按照Plan中的Control关系深度遍历, 提供PRE_ORDER和POST_ORDER两种模式</li>
+<li>TopologicalDispatcher: 按照LeafUnit的Dependency关系进行拓扑遍历, 提供顺序和逆序两种模式</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>优化算法<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<p>优化算法继承Pass接口, 目前支持的优化包括独立算子合并, 分桶合并, Partial-Processor前置.</p>
+<div class="section" id="id6">
+<h3>独立算子合并<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h3>
+<p>global scope中的每个独立算子(Process, Union, Sink)默认会产生一轮独立的分布式计算,
+本算法将其中连续的独立算子合并到同一轮.</p>
+<a class="reference internal image-reference" href="../_images/combine_single_nodes.png"><img alt="../_images/combine_single_nodes.png" src="../_images/combine_single_nodes.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="id7">
+<h3>分桶合并<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h3>
+<p>当使用分桶进行shuffle时, DistributeByDefault表明数据可以按照任意方式分成N份,
+这时数据会按照flume内置的一个算法来分桶, 但如果数据在前一轮计算中已经按照某种方式分成了N份,
+那么flume就没必要再进行一次分桶shuffle了, 本算法把这种情况下的分桶计算和前一轮计算合并.</p>
+<a class="reference internal image-reference" href="../_images/combine_free_distribute.png"><img alt="../_images/combine_free_distribute.png" src="../_images/combine_free_distribute.png" style="width: 600px;" /></a>
+</div>
+<div class="section" id="partial-processor">
+<h3>Partial-Processor前置<a class="headerlink" href="#partial-processor" title="永久链接至标题">¶</a></h3>
+<p>partial属性表明同一组数据可以分任意多次进行运算, 如果数据在shuffle之后进行partial运算,
+本算法可以把这次运算提前到shuffle之前, 以减少shuffle的数据量.</p>
+<a class="reference internal image-reference" href="../_images/promote_partial_processor.png"><img alt="../_images/promote_partial_processor.png" src="../_images/promote_partial_processor.png" style="width: 600px;" /></a>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

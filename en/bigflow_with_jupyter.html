@@ -1,0 +1,176 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>下载bigflow_python.tar.gz &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">下载bigflow_python.tar.gz</a></li>
+<li><a class="reference internal" href="#pysqlite">安装pysqlite</a></li>
+<li><a class="reference internal" href="#jupyter">安装jupyter</a></li>
+<li><a class="reference internal" href="#id1">运行jupyter</a></li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/bigflow_with_jupyter.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="bigflow-python-tar-gz">
+<h1>下载bigflow_python.tar.gz<a class="headerlink" href="#bigflow-python-tar-gz" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span>
+<span class="n">mkdir</span> <span class="n">bigflow</span>
+<span class="n">cd</span> <span class="n">bigflow</span>
+<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">angopher</span><span class="o">/</span><span class="n">bigflow</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">untagged</span><span class="o">-</span><span class="mf">04e38</span><span class="n">c8705db118f7148</span><span class="o">/</span><span class="n">bigflow_python</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">tar</span> <span class="n">zxvf</span> <span class="n">bigflow_python</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="pysqlite">
+<h1>安装pysqlite<a class="headerlink" href="#pysqlite" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>yum install sqlite-devel -y
+export LIBRARY_PATH=~/bigflow/bigflow/python_runtime/lib:$LIBRARY_PATH
+bigflow/bin/bigflow pip install pysqlite
+</pre></div>
+</div>
+</div>
+<div class="section" id="jupyter">
+<h1>安装jupyter<a class="headerlink" href="#jupyter" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bigflow</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bigflow</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">jupyter</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h1>运行jupyter<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<dl class="docutils">
+<dt>::</dt>
+<dd>bigflow jupyter notebook –no-browse –port 8732 –ip=*</dd>
+</dl>
+<p>之后按提示，访问页面即可。</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

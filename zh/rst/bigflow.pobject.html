@@ -1,0 +1,386 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>PObject &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.pobject.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.pobject">
+<span id="pobject"></span><h1>PObject<a class="headerlink" href="#module-bigflow.pobject" title="永久链接至标题">¶</a></h1>
+<p><a class="reference internal" href="#bigflow.pobject.PObject" title="bigflow.pobject.PObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.pobject.PObject</span></code></a> 定义</p>
+<span class="target" id="module-bigflow.pobject"></span><dl class="class">
+<dt id="bigflow.pobject.PObject">
+<em class="property">class </em><code class="descclassname">bigflow.pobject.</code><code class="descname">PObject</code><span class="sig-paren">(</span><em>node</em>, <em>pipeline</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pobject.PObject" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference internal" href="bigflow.ptype.html#bigflow.ptype.PType" title="bigflow.ptype.PType"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.ptype.PType</span></code></a></p>
+<p>用于表示单个元素的 <a class="reference internal" href="bigflow.ptype.html#bigflow.ptype.PType" title="bigflow.ptype.PType"><code class="xref py py-class docutils literal notranslate"><span class="pre">bigflow.ptype.PType</span></code></a>，通常为聚合类变换的结果，例如 <a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection.combine" title="bigflow.pcollection.PCollection.combine"><code class="xref py py-func docutils literal notranslate"><span class="pre">bigflow.pcollection.PCollection.combine()</span></code></a>,
+<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection.aggregate" title="bigflow.pcollection.PCollection.aggregate"><code class="xref py py-func docutils literal notranslate"><span class="pre">bigflow.pcollection.PCollection.aggregate()</span></code></a></p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">用户不应当直接使用其构造方法</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">Python不允许重载这3个运算符(and, or, not)，用户不应该在PObject上使用这三个运算符。Bigflow重载的是按位运算(&amp;, <a href="#id1"><span class="problematic" id="id2">|</span></a>, ^)</p>
+</div>
+<p>PObject类上重载了以下操作符：</p>
+<p>双目操作符：</p>
+<blockquote>
+<div>__add__, __sub__, __mul__, __div__,
+__floordiv__, __mod__, __pow__, __lshift__,
+__rshift__, __and__, __xor__, __or__,
+__lt__, __le__, __eq__, __ge__, __gt__, __ne__
+__radd__, __rsub__, __rmul__, __rdiv__,
+__rfloordiv__, __rmod__, __rpow__, __rlshift__,
+__rrshift__, __rand__, __rxor__, __ror__</div></blockquote>
+<p>单目操作符：</p>
+<blockquote>
+<div>__neg__, __pos__, __abs__, __invert__</div></blockquote>
+<p>这些操作都将返回一个把相应数据进行相应变换后的pobject。</p>
+<p>例如：p.sum() / p.count()等价于p.sum().map(lambda s, c: s / c, p.count())</p>
+<p>同时, PObject 禁止了 bool 操作, 调用 bool(PObject) 或者 if PObject 将会抛出异常.
+:param node: LogicalPlan.Node
+:type node: Node</p>
+<dl class="method">
+<dt id="bigflow.pobject.PObject.as_pcollection">
+<code class="descname">as_pcollection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pobject.PObject.as_pcollection" title="永久链接至目标">¶</a></dt>
+<dd><p>将PObject转为PCollection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">变换结果</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pobject.PObject.cartesian">
+<code class="descname">cartesian</code><span class="sig-paren">(</span><em>*pvalues</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pobject.PObject.cartesian" title="永久链接至目标">¶</a></dt>
+<dd><p>求当前算子与pvalues的笛卡尔积。
+等价于 <a class="reference internal" href="bigflow.transforms.html#bigflow.transforms.cartesian" title="bigflow.transforms.cartesian"><code class="xref py py-func docutils literal notranslate"><span class="pre">bigflow.transforms.cartesian(self,</span> <span class="pre">*pvalues,</span> <span class="pre">**options)</span></code></a></p>
+<p>Args: <a href="#id3"><span class="problematic" id="id4">*</span></a>pvalues (PObject/PCollection)
+:returns: 此PObject与所有参数的笛卡尔积。结果PCollection中的每条记录是一个tuple。</p>
+<blockquote>
+<div>每个tuple的第n个元素是第n个输入ptype对象的记录。</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p2</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span><span class="o">.</span><span class="n">cartesian</span><span class="p">(</span><span class="n">_p2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(1, 2)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p3</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span><span class="o">.</span><span class="n">cartesian</span><span class="p">(</span><span class="n">_p3</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(1, 3), (1, 4)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span><span class="o">.</span><span class="n">cartesian</span><span class="p">(</span><span class="n">_p2</span><span class="p">,</span> <span class="n">_p3</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[(1, 2, 3), (1, 2, 4)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pobject.PObject.ceil">
+<code class="descname">ceil</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pobject.PObject.ceil" title="永久链接至目标">¶</a></dt>
+<dd><p>PObject ceil(类似于math.ceil)算子</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">PObject</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mf">1.2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">_p1</span><span class="o">.</span><span class="n">ceil</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pobject.PObject.flat_map">
+<code class="descname">flat_map</code><span class="sig-paren">(</span><em>fn</em>, <em>*side_inputs</em>, <em>**option</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pobject.PObject.flat_map" title="永久链接至目标">¶</a></dt>
+<dd><p>对包含的元素进行一对多变换，等同于 <code class="docutils literal notranslate"><span class="pre">transforms.map(self,</span> <span class="pre">fn,</span> <span class="pre">*side_inputs,</span> <span class="pre">**options)</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> (<em>function</em>) -- 变换函数</li>
+<li><strong>*side_inputs</strong> -- 参与运算的SideInputs</li>
+<li><strong>**options</strong> -- 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body"><p class="first">变换结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">flat_map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pobject.PObject.floor">
+<code class="descname">floor</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pobject.PObject.floor" title="永久链接至目标">¶</a></dt>
+<dd><p>PObject floor(类似于math.floor)算子</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">PObject</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mf">1.2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">_p1</span><span class="o">.</span><span class="n">floor</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pobject.PObject.map">
+<code class="descname">map</code><span class="sig-paren">(</span><em>fn</em>, <em>*side_inputs</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pobject.PObject.map" title="永久链接至目标">¶</a></dt>
+<dd><p>对包含的元素进行变换，等同于 <code class="docutils literal notranslate"><span class="pre">transforms.map(self,</span> <span class="pre">fn,</span> <span class="pre">*side_inputs,</span> <span class="pre">**options)</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
+<li><strong>fn</strong> (<em>function</em>) -- 变换函数</li>
+<li><strong>*side_inputs</strong> -- 参与运算的SideInputs</li>
+<li><strong>**options</strong> -- 可配置选项</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body"><p class="first">变换结果</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#bigflow.pobject.PObject" title="bigflow.pobject.PObject">PObject</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pobject.PObject.not_">
+<code class="descname">not_</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pobject.PObject.not_" title="永久链接至目标">¶</a></dt>
+<dd><p>PObject not算子</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">PObject</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">_p1</span><span class="o">.</span><span class="n">not_</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pobject.PObject.round">
+<code class="descname">round</code><span class="sig-paren">(</span><em>n=0</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pobject.PObject.round" title="永久链接至目标">¶</a></dt>
+<dd><p>PObject round(类似于math.round)算子
+:param n: 小数点后面保留的位数</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">PObject</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mf">1.2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">_p1</span><span class="o">.</span><span class="n">round</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pobject.PObject.union">
+<code class="descname">union</code><span class="sig-paren">(</span><em>other</em>, <em>*others</em>, <em>**option</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pobject.PObject.union" title="永久链接至目标">¶</a></dt>
+<dd><p>将元素与其他PCollection/PObject中的所有元素共同构成PCollection
+等同于 <code class="docutils literal notranslate"><span class="pre">transforms.union(self,</span> <span class="pre">other,</span> <span class="pre">*others)</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
+<li><strong>other</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a><em> or </em><a class="reference internal" href="#bigflow.pobject.PObject" title="bigflow.pobject.PObject"><em>PObject</em></a>) -- 其他PCollection/PObject</li>
+<li><strong>*others</strong> -- 其他PCollection/PObject</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body"><p class="first">表示结果的PCollection</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p2</span> <span class="o">=</span> <span class="n">_pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_p1</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">_p2</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">[1, 2, 3]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

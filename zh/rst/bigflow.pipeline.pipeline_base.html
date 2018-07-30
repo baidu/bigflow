@@ -1,0 +1,454 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BasePipeline &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/rst/bigflow.pipeline.pipeline_base.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-bigflow.pipeline.pipeline_base">
+<span id="basepipeline"></span><h1>BasePipeline<a class="headerlink" href="#module-bigflow.pipeline.pipeline_base" title="永久链接至标题">¶</a></h1>
+<p>Pipeline基类定义</p>
+<dl class="class">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase">
+<em class="property">class </em><code class="descclassname">bigflow.pipeline.pipeline_base.</code><code class="descname">PipelineBase</code><span class="sig-paren">(</span><em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase" title="永久链接至目标">¶</a></dt>
+<dd><p>基类：<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Pipeline基类</p>
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.add_archive">
+<code class="descname">add_archive</code><span class="sig-paren">(</span><em>file_path</em>, <em>resource_path</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.add_archive" title="永久链接至目标">¶</a></dt>
+<dd><p>向Pipeline添加一个压缩文件，使得该文件在运行期自动被解包</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- 文件路径，目前仅支持HDFS</li>
+<li><strong>resource_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- 运行期访问该文件解压后的路径</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.add_cache_id">
+<code class="descname">add_cache_id</code><span class="sig-paren">(</span><em>cache_id</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.add_cache_id" title="永久链接至目标">¶</a></dt>
+<dd><p>save the ptype cache node id for use</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.add_directory">
+<code class="descname">add_directory</code><span class="sig-paren">(</span><em>dir_path</em>, <em>resource_path=''</em>, <em>is_only_python_files_accepted=False</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.add_directory" title="永久链接至目标">¶</a></dt>
+<dd><p>向Pipeline添加一个目录，使得该目录下的文件/子目录能够在运行期被访问</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dir_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- 需要添加的本地目录路径</li>
+<li><strong>resource_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- 计算引擎运行时访问该目录的路径, 应是相对路径. 如未提供, 则 dir_path 下的所有
+文件和子目录将会在远端的当前目录.</li>
+<li><strong>is_only_python_files_accepted</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(在 Python v3.7)"><em>bool</em></a>) -- 是否仅添加目录下的.py/.pyc/.egg文件，默认为False</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">如 resource_path 未提供, 且调用了多次 add_directory, 各个目录下的文件或者子目录如果存在重
+名, 则为未定义行为. 有可能在添加时就出错, 也有可能在远端启动出错. 为避免该情况, 可以为每个要添
+加的 dir_path 设置惟一的 resource_path.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.add_egg_file">
+<code class="descname">add_egg_file</code><span class="sig-paren">(</span><em>file_path</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.add_egg_file" title="永久链接至目标">¶</a></dt>
+<dd><p>向Pipeline添加一个egg文件，使得该文件会在运行期自动被添加到PYTHONPATH中</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>file_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- egg文件路径</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.add_file">
+<code class="descname">add_file</code><span class="sig-paren">(</span><em>source</em>, <em>resource_path=None</em>, <em>executable=False</em>, <em>from_bytes=False</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.add_file" title="永久链接至目标">¶</a></dt>
+<dd><p>向Pipeline添加单个文件，使得该文件能够在运行期被访问</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
+<li><strong>source</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- 需要添加的文件路径或者比特数据流</li>
+<li><strong>resource_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- 计算引擎运行时访问该文件的本地路径, 应是相对路径. 也即在远端, source 将会被映射
+成该 resource_path 路径, 用户程序可以直接用该路径访问.</li>
+<li><strong>executable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(在 Python v3.7)"><em>bool</em></a>) -- 若为True，则该文件在运行期会被添加可执行属性</li>
+<li><strong>from_bytes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(在 Python v3.7)"><em>bool</em></a>) -- 若为True, 则表示远端文件的内容即为 source 的比特数据流, 默认为 False, source
+应为一个文件路径</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">add_file</span><span class="p">(</span><span class="s1">&#39;/path/to/local/or/hdfs/file&#39;</span><span class="p">,</span> <span class="s1">&#39;./target_path_a&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="k">def</span> <span class="nf">remote_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="o">..</span>     <span class="c1"># This is a dumb example, don&#39;t do this in production,</span>
+<span class="o">..</span>     <span class="kn">import</span> <span class="nn">os</span>
+<span class="o">..</span>     <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s1">&#39;./target_path_a&#39;</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="n">pc</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">parallelize</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="o">&gt;&gt;</span> <span class="n">filtered_pc</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">remote_filter</span><span class="p">)</span>
+<span class="o">&gt;&gt;</span> <span class="nb">print</span> <span class="n">pc</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">filtered_pc</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="o">..</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.async_run">
+<code class="descname">async_run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.async_run" title="永久链接至目标">¶</a></dt>
+<dd><p>立刻运行Pipeline并等待作业提交完成</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BigflowRuntimeException</span></code> -- 若运行期出错抛出此异常</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.config">
+<code class="descname">config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.config" title="永久链接至目标">¶</a></dt>
+<dd><p>获得job config</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">用户不应当修改此Pipeline job config</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body">JobConfig</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.default_objector">
+<code class="descname">default_objector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.default_objector" title="永久链接至目标">¶</a></dt>
+<dd><p>返回该Pipeline的默认序列化/反序列化器</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">序列化/反序列化器，用户不应当修改此objector</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body">Objector</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>pvalue</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.get" title="永久链接至目标">¶</a></dt>
+<dd><p>将一个P类型表示的数据汇聚为内存变量，相当于调用pvalue.get()。改方法隐式调用pvalue.cache()
+并立即触发Pipeline.run()</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>pvalue</strong> (<a class="reference internal" href="bigflow.ptype.html#bigflow.ptype.PType" title="bigflow.ptype.PType"><em>PType</em></a>) -- P类型实例</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">内存变量</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)">object</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.id">
+<code class="descname">id</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.id" title="永久链接至目标">¶</a></dt>
+<dd><p>得到表示该Pipeline的唯一ID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">返回:</th><td class="field-body">Pipeline ID</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回类型:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(在 Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.parallelize">
+<code class="descname">parallelize</code><span class="sig-paren">(</span><em>dataset</em>, <em>**options</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.parallelize" title="永久链接至目标">¶</a></dt>
+<dd><p>将一段内存变量映射为一个P类型实例</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
+<li><strong>dataset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(在 Python v3.7)"><em>object</em></a>) -- 任意类型的内存变量</li>
+<li><strong>options</strong> -- serde: 设置dataset的serde对象</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body"><p class="first">表示该内存变量的P类型</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><p class="first last"><a class="reference internal" href="bigflow.ptype.html#bigflow.ptype.PType" title="bigflow.ptype.PType">PType</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.plan">
+<code class="descname">plan</code><span class="sig-paren">(</span><em>cache_id</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.plan" title="永久链接至目标">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>source</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.read" title="永久链接至目标">¶</a></dt>
+<dd><p>将外部存储的数据映射为一个PCollection，并在运行时读取数据</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>source</strong> (<em>Source</em>) -- 表示外部存储的Source实例</td>
+</tr>
+<tr class="field-even field"><th class="field-name">返回:</th><td class="field-body">读取结果</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">返回类型:</th><td class="field-body"><a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection">PCollection</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.reset_all_counters">
+<code class="descname">reset_all_counters</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.reset_all_counters" title="永久链接至目标">¶</a></dt>
+<dd><p>将所有counter清零</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">error.BigflowRuntimeException</span></code> -- 此方法不允许在 <a class="reference internal" href="bigflow.transforms.html#module-bigflow.transforms" title="bigflow.transforms: all transforms implementation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Bigflow变换</span></code></a> 的用户自定义方法(UDF)中调用，否则抛出此异常</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.reset_counter">
+<code class="descname">reset_counter</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.reset_counter" title="永久链接至目标">¶</a></dt>
+<dd><p>将一个counter清零, 若 name 中不包含 group 部分, 则默认将 Flume group 下面对应的 counter 清零</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(在 Python v3.7)"><em>str</em></a>) -- counter名称，其说明请参考 <a class="reference internal" href="bigflow.counter.html#module-bigflow.counter" title="bigflow.counter: counter api"><code class="xref py py-mod docutils literal notranslate"><span class="pre">counter模块</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">error.BigflowRuntimeException</span></code> -- 此方法不允许在 <a class="reference internal" href="bigflow.transforms.html#module-bigflow.transforms" title="bigflow.transforms: all transforms implementation"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Bigflow变换</span></code></a> 的用户自定义方法(UDF)中调用，否则抛出此异常</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.run" title="永久链接至目标">¶</a></dt>
+<dd><p>立刻运行Pipeline并等待结束</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BigflowRuntimeException</span></code> -- 若运行期出错抛出此异常</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.set_fini_hook">
+<code class="descname">set_fini_hook</code><span class="sig-paren">(</span><em>name</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.set_fini_hook" title="永久链接至目标">¶</a></dt>
+<dd><p>向Pipeline设置一个结束钩子，使得Pipeline能够在进程结束前依次执行
+:param name: 钩子名称
+:type name: str
+:param fn: 方法名称
+:type fn: callable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.set_init_hook">
+<code class="descname">set_init_hook</code><span class="sig-paren">(</span><em>name</em>, <em>fn</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.set_init_hook" title="永久链接至目标">¶</a></dt>
+<dd><p>向Pipeline设置一个初始化钩子，使得Pipeline能够在进程启动时依次执行(按钩子名字排序)
+:param name: 钩子名称, 用户应使用 str 作为钩子名字, 同时钩子应使用 ascii 码中字符.
+:type name: str
+:param fn: 方法名称
+:type fn: callable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bigflow.pipeline.pipeline_base.PipelineBase.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>pcollection</em>, <em>target</em><span class="sig-paren">)</span><a class="headerlink" href="#bigflow.pipeline.pipeline_base.PipelineBase.write" title="永久链接至目标">¶</a></dt>
+<dd><p>将一个PCollection映射为外部存储数据，并在运行期写到该外部存储</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pcollection</strong> (<a class="reference internal" href="bigflow.pcollection.html#bigflow.pcollection.PCollection" title="bigflow.pcollection.PCollection"><em>PCollection</em></a>) -- 要写出的PCollection</li>
+<li><strong>target</strong> (<em>Target</em>) -- 表示外部存储的Target实例</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

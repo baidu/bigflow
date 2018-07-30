@@ -1,0 +1,534 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>模块设计 &#8212; Bigflow Python 1.0.0 文档</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">內容目录</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">模块设计</a><ul>
+<li><a class="reference internal" href="#core-api-logicalplan">Core API(LogicalPlan)</a></li>
+<li><a class="reference internal" href="#sparkplanner">SparkPlanner</a><ul>
+<li><a class="reference internal" href="#proto">逻辑计划定义(proto描述)</a></li>
+<li><a class="reference internal" href="#plannerlogicaloptimizing">Planner策略–LogicalOptimizing</a></li>
+<li><a class="reference internal" href="#plannertopologicaloptimizing">Planner策略–TopologicalOptimizing</a></li>
+<li><a class="reference internal" href="#plannerruntimeprocedure">Planner翻译–RuntimeProcedure</a></li>
+<li><a class="reference internal" href="#plannertranslationprocedure">Planner翻译–TranslationProcedure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sparkruntime">SparkRuntime</a><ul>
+<li><a class="reference internal" href="#runtime-client">Runtime(client):</a></li>
+<li><a class="reference internal" href="#runtime-worker">Runtime(Worker):</a></li>
+<li><a class="reference internal" href="#cache">Cache机制</a></li>
+<li><a class="reference internal" href="#id2">其他相关问题：构建、部署和依赖</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/spark/model_design.rst.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="转向" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>模块设计<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="section" id="core-api-logicalplan">
+<h2>Core API(LogicalPlan)<a class="headerlink" href="#core-api-logicalplan" title="永久链接至标题">¶</a></h2>
+<p>作为逻辑计划层，与LogicalPlan与分布式计算引擎无关，因此完全沿用已有的设计/实现</p>
+</div>
+<div class="section" id="sparkplanner">
+<h2>SparkPlanner<a class="headerlink" href="#sparkplanner" title="永久链接至标题">¶</a></h2>
+<div class="section" id="proto">
+<h3>逻辑计划定义(proto描述)<a class="headerlink" href="#proto" title="永久链接至标题">¶</a></h3>
+<p>一个或多个PbSparkTask(按照Shuffle划分后的执行树)构成一个PbSparkRDD，一个或多个PbSparkRDD构成
+PbSparkJob</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="n">PbSparkJob</span> <span class="p">{</span>
+    <span class="n">repeated</span> <span class="n">PbSparkRDD</span> <span class="n">rdd</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+ <span class="n">message</span> <span class="n">PbSparkRDD</span> <span class="p">{</span>
+    <span class="k">enum</span> <span class="n">Type</span> <span class="p">{</span>
+        <span class="n">INPUT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>   <span class="c1">// 从外部读入数据，类似于DCE Mapper</span>
+        <span class="n">GENERAL</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>   <span class="c1">// 从Shuffle读入数据，类似于DCE Reducer</span>
+    <span class="p">}</span>
+    <span class="n">optional</span> <span class="n">uint32</span> <span class="n">rdd_index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">repeated</span> <span class="n">PbSparkTask</span> <span class="n">task</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>   <span class="c1">// 当同层RDD合并时，一个RDD包含多个Task</span>
+    <span class="n">repeated</span> <span class="n">uint32</span> <span class="n">parent_rdd_index</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>  <span class="c1">// Lineage info</span>
+    <span class="n">optional</span> <span class="n">uint32</span> <span class="n">concurrency</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>  <span class="c1">//  Partition数，当同层RDD合并时，它们的Concurrency同样合并</span>
+<span class="p">}</span>
+
+<span class="n">message</span> <span class="n">PbSparkTask</span> <span class="p">{</span>
+    <span class="n">optional</span> <span class="n">uint32</span> <span class="n">task_index</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">optional</span> <span class="n">Type</span> <span class="n">type</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="c1">// Not needed maybe</span>
+    <span class="n">optional</span> <span class="n">uint32</span> <span class="n">rdd_index</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="n">optional</span> <span class="n">uint32</span> <span class="n">concurrency</span> <span class="o">=</span> <span class="mi">4</span> <span class="p">[</span><span class="k">default</span> <span class="o">=</span> <span class="mi">1</span><span class="p">];</span>  <span class="c1">// Task所包含的Partition数</span>
+    <span class="n">optional</span> <span class="n">uint32</span> <span class="n">partition_offset</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">[</span><span class="k">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">];</span>  <span class="c1">// 同层RDD合并时，Task所属的Partition偏移值</span>
+    <span class="n">optional</span> <span class="n">PbHadoopInput</span> <span class="n">hadoop_input</span> <span class="o">=</span> <span class="mi">101</span><span class="p">;</span>  <span class="c1">// INPUT类RDD包含</span>
+    <span class="n">optional</span> <span class="n">PbShuffleInput</span> <span class="n">shuffle_input</span> <span class="o">=</span> <span class="mi">102</span><span class="p">;</span>  <span class="c1">// GENERAL类RDD包含</span>
+    <span class="n">optional</span> <span class="n">PbShuffleOutput</span> <span class="n">shuffle_output</span> <span class="o">=</span> <span class="mi">103</span><span class="p">;</span>  <span class="c1">// 所有RDD都包含</span>
+    <span class="n">optional</span> <span class="n">PbExecutor</span> <span class="n">root</span> <span class="o">=</span> <span class="mi">201</span><span class="p">;</span>  <span class="c1">//  Executor Tree根节点</span>
+    <span class="n">message</span> <span class="n">PbHadoopInput</span> <span class="p">{</span>
+        <span class="n">optional</span> <span class="n">string</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">optional</span> <span class="n">PbEntity</span> <span class="n">spliter</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">repeated</span> <span class="n">string</span> <span class="n">uri</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="n">optional</span> <span class="n">string</span> <span class="n">input_format</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">message</span> <span class="n">PbShuffleOutput</span> <span class="p">{</span>
+        <span class="n">message</span> <span class="n">Channel</span> <span class="p">{</span>
+            <span class="n">required</span> <span class="n">string</span> <span class="n">from</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">required</span> <span class="n">PbScope</span> <span class="n">transfer_scope</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="n">required</span> <span class="n">PbTransferEncoder</span> <span class="n">encoder</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+            <span class="n">required</span> <span class="n">uint32</span> <span class="n">task_index</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+            <span class="n">optional</span> <span class="n">uint32</span> <span class="n">task_concurrency</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">[</span><span class="k">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">];</span>
+            <span class="n">optional</span> <span class="n">uint32</span> <span class="n">task_offset</span> <span class="o">=</span> <span class="mi">6</span> <span class="p">[</span><span class="k">default</span> <span class="o">=</span> <span class="mi">0</span><span class="p">];</span>
+        <span class="p">};</span>
+        <span class="n">required</span> <span class="n">string</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">repeated</span> <span class="n">Channel</span> <span class="n">channel</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">};</span>
+    <span class="n">message</span> <span class="n">PbShuffleInput</span> <span class="p">{</span>
+        <span class="n">message</span> <span class="n">Channel</span> <span class="p">{</span>
+            <span class="n">required</span> <span class="n">string</span> <span class="n">identity</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">required</span> <span class="n">string</span> <span class="n">port</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+            <span class="n">required</span> <span class="n">uint32</span> <span class="n">priority</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">required</span> <span class="n">string</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>  <span class="c1">// external id</span>
+        <span class="n">required</span> <span class="n">PbTransferDecoder</span> <span class="n">decoder</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">repeated</span> <span class="n">Channel</span> <span class="n">channel</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+        <span class="n">optional</span> <span class="kt">bool</span> <span class="n">must_keep_empty_group</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plannerlogicaloptimizing">
+<h3>Planner策略–LogicalOptimizing<a class="headerlink" href="#plannerlogicaloptimizing" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li>LoadLogicalPlanPass</li>
+</ul>
+<p>读取PbLogicalPlan，生成以Node为单位的Plan</p>
+<p>本Pass应当第一个被执行，相当于Planner初始化</p>
+<ul class="simple">
+<li>SplitUnionUnitPass</li>
+</ul>
+<p>若两个Node之间存在重边，将UnionNode加到其中一条边上（以避免重边的存在），同时将UnionNode打上&lt;MustKeep&gt; tag，以避免被RemoveUselessUnionPass删除。</p>
+<blockquote>
+<div>SplitUnionUnitPass功能示例：</div></blockquote>
+<a class="reference internal image-reference" href="../_images/split_union_unit_pass.png"><img alt="../_images/split_union_unit_pass.png" class="align-center" src="../_images/split_union_unit_pass.png" style="width: 250px; height: 130px;" /></a>
+<ul class="simple">
+<li>PromotePartialProcessPass</li>
+</ul>
+<p>SortedSourceAnalysis: 为每个Unit打&lt;SortedSource&gt; tag，内容是离自己最近的Sorted Scope所产生的Unit</p>
+<a class="reference internal image-reference" href="../_images/sorted_source_analysis.png"><img alt="../_images/sorted_source_analysis.png" class="align-center" src="../_images/sorted_source_analysis.png" style="width: 350px; height: 150px;" /></a>
+<p>FindPartialProcessAndPromote：若一个PartialProcessNode直接上游只有1个，同时该上游处于不包含该
+PartialProcessNode的SortedShuffleScope中，则可以将该PartialProcessNode前移到SortedShuffleScope内</p>
+<a class="reference internal image-reference" href="../_images/find_partial_process_and_promote.png"><img alt="../_images/find_partial_process_and_promote.png" class="align-center" src="../_images/find_partial_process_and_promote.png" style="width: 350px; height: 150px;" /></a>
+<ul class="simple">
+<li>PruneCachedPathPass</li>
+</ul>
+<p>将具有&lt;CacheReader&gt; tag的Node进行变换：</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>构造一个LoadScope和LoadNode</li>
+<li>构造一个ProcessNode对LoadNode的数据进行变换</li>
+<li>若被Cache数据具有分组信息，则构造相应的ShuffleScope/ShuffleNode还原分组信息</li>
+<li>若Node为ProcessNode，则将分组Key去掉</li>
+<li>切断与上游Unit的边</li>
+<li>添加到原下游Unit的边</li>
+</ol>
+</div></blockquote>
+<ul class="simple">
+<li>CacheAnalysis</li>
+</ul>
+<p>把尚未Cache过，但Node信息中具有is_cache属性的Node打上&lt;ShouldCache&gt; tag，以在接下来的Pass中更新为一个Writer</p>
+<ul class="simple">
+<li>RemoveUnsinkedPass</li>
+</ul>
+<p>删除掉没有下游，且不具有&lt;HasSideEffect&gt; tag的Unit</p>
+<a class="reference internal image-reference" href="../_images/remove_unsinked_pass.png"><img alt="../_images/remove_unsinked_pass.png" class="align-center" src="../_images/remove_unsinked_pass.png" style="width: 350px; height: 250px;" /></a>
+<p>本Pass被许多Pass所依赖，进行诸如Unit前移、剪枝之后的清理工作</p>
+<ul class="simple">
+<li>RemoveUselessUnionPass</li>
+</ul>
+<p>删除只有一个上游，同时不具有&lt;MustKeep&gt; tag的Union Node</p>
+<a class="reference internal image-reference" href="../_images/remove_useless_union_pass.png"><img alt="../_images/remove_useless_union_pass.png" class="align-center" src="../_images/remove_useless_union_pass.png" style="width: 350px; height: 250px;" /></a>
+<p>按照定义，UnionNode仅为一种虚拟节点，目的在于合并逻辑上的同构数据流，而不表示具体的执行逻辑。因此仅有
+一个上游的UnionNode通常来说没有意义，可以直接删去。但当利用UnionNode处理重边时（参见SplitUnionUnitPass），
+此时插入的UnionNode仅有一个上游且不能删除，这样的UnionNode被打上&lt;MustKeep&gt; tag</p>
+<ul class="simple">
+<li>RemoveEmptyUnitPass</li>
+</ul>
+<p>删除没有孩子节点的非叶子节点</p>
+<p>本Pass主要配合RemoveUnsinkedPass和RemoveUselessUnionPass一起，在后两者删除掉一条路径上的节点后，将被
+删“空”的Unit删除</p>
+<ul class="simple">
+<li>AddDistributeByDefaultPass</li>
+</ul>
+<p>查找Global Scope下的UnionNode或具有Partial边的ProcessNode，为其添加一个DistributeByDefaultScope，同时
+将ProcessNode的非Partial边改为Broadcast到新添加的Scope中</p>
+<a class="reference internal image-reference" href="../_images/add_distribute_by_default_pass.png"><img alt="../_images/add_distribute_by_default_pass.png" class="align-center" src="../_images/add_distribute_by_default_pass.png" style="width: 400px; height: 250px;" /></a>
+</div>
+<div class="section" id="plannertopologicaloptimizing">
+<h3>Planner策略–TopologicalOptimizing<a class="headerlink" href="#plannertopologicaloptimizing" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li>AddTaskUnitPass</li>
+</ul>
+<p>Task切分：为所有GlobalScope上的节点添加一个父Unit，Unit类型为Task</p>
+<a class="reference internal image-reference" href="../_images/add_task_unit_pass.png"><img alt="../_images/add_task_unit_pass.png" class="align-center" src="../_images/add_task_unit_pass.png" style="width: 400px; height: 250px;" /></a>
+<p>AddTaskUnitPass可以看作是逻辑计划与物理计划的分割点，Task可以是分布式作业的物理执行单元</p>
+<ul class="simple">
+<li>SetDefaultConcurrencyPass</li>
+</ul>
+<p>本Pass依赖于DataFlowAnalysis</p>
+<p>为Task设置concurrency并发量，然后尝试使用concurrency设置DistributeByDefault类型Bucket ShuffleScope的
+桶数。</p>
+<p>设置Task concurrency的原则为：</p>
+<ol class="loweralpha simple">
+<li>若Task Unit已有TaskConcurrency标签，则使用TaskConcurrency标签值</li>
+<li>否则，若Task并非Mapper，则使用Default concurrency</li>
+</ol>
+<p>为DistributeByDefault类型Bucket ShuffleScope的方式为：</p>
+<ol class="loweralpha simple">
+<li>ShuffleScope需要为其所在的Task的直接孩子，同时Task不为Mapper Task。</li>
+<li>用Task的&lt;TaskConcurrency&gt;标签设置设置Bucket ShuffleScope的桶数(bucket size)。同时打上&lt;NotUserSetBucketSize&gt;
+tag，标明桶数并非显式设置。</li>
+<li>遍历该ShuffleScope的上游Unit的Father Scope(上游ShuffleScope)，若其ID与该ShuffleScope相同，则说明上
+游ShuffleScope是由当前ShuffleScope前移产生，也对其打上&lt;NotUserSetBucketSize&gt; tag</li>
+</ol>
+<ul class="simple">
+<li>PromotePartialUnitPass</li>
+</ul>
+<p>本Pass负责将位于一个Task&quot;入口处&quot;的Scope、ShuffleNode和PartialProcessNode前移到上一个Task中，以使得：</p>
+<p>1. 对于Scope和ShuffleNode的移动，可以使得上一个Task能够获取Shuffle的信息，即理解Shuffle Key以及相应的
+Partition等等</p>
+<p>2. 对于PartialProcessNode的移动，可以使得计算逻辑在Shuffle过程之前进行，对于绝大多数场景，该移动可以
+减少Shuffle数据的条数</p>
+<p>Pass示意图：</p>
+<a class="reference internal image-reference" href="../_images/promote_partial_unit_pass.png"><img alt="../_images/promote_partial_unit_pass.png" class="align-center" src="../_images/promote_partial_unit_pass.png" style="width: 800px;" /></a>
+<ul class="simple">
+<li>MergeTaskPass</li>
+</ul>
+<p>用于Task的合并逻辑，主要应当分两部分：</p>
+<ol class="arabic simple">
+<li>将上下游Task合并，合并的规则主要有：</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>上下游Task有显式指定的并发值，并且相等，合并后并发值为原相等的并发值</li>
+<li>上下游Task中，有一个没有显示指定的并发值(也就是并发量可以随意指定)，另一个有显式指定的并发值，</li>
+</ol>
+<blockquote>
+<div>则合并后的并发值为显式指定的那个</div></blockquote>
+</div></blockquote>
+<a class="reference internal image-reference" href="../_images/merge_task_pass.png"><img alt="../_images/merge_task_pass.png" class="align-center" src="../_images/merge_task_pass.png" style="width: 400px; height: 250px;" /></a>
+</div>
+<div class="section" id="plannerruntimeprocedure">
+<h3>Planner翻译–RuntimeProcedure<a class="headerlink" href="#plannerruntimeprocedure" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li>RemoveEmptyUnitPass</li>
+</ul>
+<p>将一个空的非叶子Unit删除：在经过一系列的合并/删除/前移工作之后可能出现这种情况。尽管Runtime Executor
+应当能够处理空Unit(什么都不做)，从性能上的考虑，本Pass很有必要</p>
+<ul class="simple">
+<li>AddCommonExecutorPass</li>
+</ul>
+<p>将与计算引擎无关的非叶子Unit转换为相应的ExecutorUnit，例如，ProcessUnit转换为ProcessExecutor，为生成Pb
+message做准备</p>
+<ul class="simple">
+<li>AddTransferExecutorPass</li>
+</ul>
+<p>将与Spark引擎相关的非叶子Unit转换为相应的ExecutorUnit，例如，添加ShuffleInputExecutor/ShuffleOutputExecutor</p>
+</div>
+<div class="section" id="plannertranslationprocedure">
+<h3>Planner翻译–TranslationProcedure<a class="headerlink" href="#plannertranslationprocedure" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li>BuildCommonExecutorPass</li>
+</ul>
+<p>（AddCommonExecutorPass的后续工作）：为添加的CommonExecutor构建Pb message</p>
+<ul class="simple">
+<li>BuildTransferExecutorPass</li>
+</ul>
+<p>（AddTransferExecutorPass的后续工作）：为添加的TransferExecutor构建Pb message</p>
+<ul class="simple">
+<li>BuildPhysicalPlanPass</li>
+</ul>
+<p>（所有优化/翻译工作的最后一步）：生成总的PbSparkJob message，得到最终的物理计划</p>
+</div>
+</div>
+<div class="section" id="sparkruntime">
+<h2>SparkRuntime<a class="headerlink" href="#sparkruntime" title="永久链接至标题">¶</a></h2>
+<div class="section" id="runtime-client">
+<h3>Runtime(client):<a class="headerlink" href="#runtime-client" title="永久链接至标题">¶</a></h3>
+<p>SparkBackend：</p>
+<p>作为client执行入口，SparkBackend负责如下职能：</p>
+<ol class="arabic simple">
+<li>提交一个由Pb Message描述的逻辑计划，通过SparkPlanner将其翻译为物理计划</li>
+<li>为上层的SparkPipeline维护作业的上下文状态BackendContext，其首先代理一个JVM下的SparkContext，
+通过以进程间RPC或是进程内JNI调用的方式与SparkContext通讯。同时BackendContext也负责记录Backend自身
+的状态信息，例如哪些Node被Cache/哪些路径已经被写过等</li>
+</ol>
+<p>SparkJob：</p>
+<p>SparkJob(.scala): 是通过spark-submit提交作业时指定的main class，即Spark任务的入口方法。SparkJob应当
+接受用于描述物理计划的PbPhysicalPlan，将其解释为能够实际执行的Spark任务并提交给Spark执行。具体而言，
+就是通过PbPhysicalPlan中的PbRDD构造出RDD，以及他们之间的lineage，构造方式如下：</p>
+<ol class="loweralpha simple">
+<li>对于InputRDD，构造出相应的HadoopInputRDD，通过Hadoop InputFormat读取，然后使用mapPartitions方法
+调用封装了Bigflow Task的functor，由functor驱动Bigflow Runtime逻辑</li>
+<li>对于GeneralRDD，对parent RDD使用repartitionAndSortWithinPartitions进行shuffle，然后同样使用mapPartitions</li>
+</ol>
+<blockquote>
+<div>驱动Bigflow Task</div></blockquote>
+<p>对于没有下游的RDD，意味着其会有输出，将所有RDD union起来，汇集一个根RDD，根RDD没有任何数据，其作用是
+驱动Spark执行编译好的RDD</p>
+<p>最终，这样的逻辑可以通过一个接口来描述：</p>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">val</span> <span class="n">finalRdd</span> <span class="k">=</span> <span class="n">compile</span><span class="o">(</span><span class="n">pbRdds</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">PbSparkRDD</span><span class="o">])</span>
+<span class="n">finalRdd</span><span class="o">.</span><span class="n">collect</span><span class="o">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="runtime-worker">
+<h3>Runtime(Worker):<a class="headerlink" href="#runtime-worker" title="永久链接至标题">¶</a></h3>
+<p>这一部分负责在Spark平台节点上运行时，RDD与Bigflow Worker的交互模块，主要的示意图如下：</p>
+<a class="reference internal image-reference" href="../_images/runtime_worker.png"><img alt="../_images/runtime_worker.png" class="align-center" src="../_images/runtime_worker.png" style="width: 800px;" /></a>
+<p>图中主要的类/模块解释：</p>
+<ul class="simple">
+<li>BigflowExecutor.iterator</li>
+</ul>
+<p>BigflowExecutor封装一个C++端的BigflowTask，并使用JNI接口暴露给JVM，以使得Spark RDD运行期进行计算时
+被调用。</p>
+<p>RDD在运行时，通过一个内置的Iterator驱动数据的执行。Iterator是仅能遍历一次的迭代器，其需要实现两个抽
+象方法：next()和hasNext()</p>
+<p>Iterator是一个拉数据的模型。现有的Bigflow RuntimeDispatcher是一个推数据的模型。我们需要一个中间的Buffer
+将dispatcher推数据模型转换为拉模型，其伪代码如下：</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nf">FluneTaskRunnerIterator</span><span class="p">(</span><span class="nl">input</span><span class="p">:</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="n">extends</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="n">with</span> <span class="n">Serializable</span> <span class="p">{</span>
+
+    <span class="n">val</span> <span class="n">bigflowTask</span> <span class="o">=</span> <span class="n">createJniTask</span><span class="p">()</span>
+
+    <span class="n">val</span> <span class="nl">outputBuffer</span><span class="p">:</span> <span class="n">bigflowTask</span><span class="p">.</span><span class="n">getJniBuffer</span><span class="p">()</span> <span class="c1">// Bigflow Task的输出</span>
+
+    <span class="k">override</span> <span class="n">def</span> <span class="nl">hasNext</span><span class="p">:</span> <span class="n">Boolean</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">outputBuffer</span><span class="p">.</span><span class="n">hasNext</span><span class="p">())</span> <span class="p">{</span>
+            <span class="nb">true</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">hasNext</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">outputBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+            <span class="n">bigflowTask</span><span class="p">.</span><span class="n">processInput</span><span class="p">(</span><span class="n">input</span><span class="p">.</span><span class="n">next</span><span class="p">())</span>
+            <span class="n">hasNext</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">isInputDone</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nb">false</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="n">bigflowTask</span><span class="p">.</span><span class="n">inputDone</span><span class="p">()</span>
+            <span class="n">isInputDone</span> <span class="o">=</span> <span class="nb">true</span>
+            <span class="n">hasNext</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">override</span> <span class="n">def</span> <span class="n">next</span><span class="p">()</span><span class="o">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">outputBuffer</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>BigflowTask</li>
+</ul>
+<p>BigflowTask是一个Bigflow任务的对外抽象，它通过一个PbSparkTask的PbMessage构造，由SparkExecutorFactory
+构造一个Bigflow ExecutorTree。通过ExecutorTree中的(Hadoop/Shuffle)InputExecutor和ShuffleOutputExecutor
+提供数据输入和产出的相关接口。</p>
+<p>除此之外，BigflowTask还负责维护所有的C++端分配的内存。</p>
+<p>BigflowTask的对外接口应当包含：</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">process_input</span><span class="p">(</span><span class="k">const</span> <span class="n">StringPiece</span><span class="o">&amp;</span> <span class="n">key</span><span class="p">,</span> <span class="k">const</span> <span class="n">StringPiece</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span>
+<span class="kt">void</span> <span class="n">input_done</span><span class="p">()</span>
+<span class="n">KVBuffer</span><span class="o">*</span> <span class="n">get_output_buffer</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>KVBuffer</li>
+</ul>
+<p>BigflowTask的输出以K/V键值对分别序列化后的bytes数组表示，KVBuffer负责Runtime C++端的序列化后数据与JVM
+的交互。具体地，申请一段内存buffer，然后依次向buffer内填充，具体的填充方式为key length, key bytes,
+value length, value_bytes。同时，KVBuffer也维护一个指针，指明当前数据读取的位置，以供JVM端根据位置取走
+bytes数据</p>
+<p>KVBuffer的对外接口应当包含：</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">reset</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">put</span><span class="p">(</span><span class="k">const</span> <span class="n">toft</span><span class="o">::</span><span class="n">StringPiece</span><span class="o">&amp;</span> <span class="n">key</span><span class="p">,</span> <span class="k">const</span> <span class="n">toft</span><span class="o">::</span><span class="n">StringPiece</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">);</span>
+<span class="k">const</span> <span class="kt">bool</span> <span class="nf">has_next</span><span class="p">();</span>
+<span class="kt">void</span> <span class="nf">next</span><span class="p">();</span>
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="nf">current_pos</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cache">
+<h3>Cache机制<a class="headerlink" href="#cache" title="永久链接至标题">¶</a></h3>
+<p>Spark有一个CacheManager作为缓存机制的抽象，它为RDD隐藏了更下层的存储机制BlockManager。CacheManager其
+对外只暴露一个接口：</p>
+<div class="highlight-scala notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="n">getOrCompute</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span>
+    <span class="n">rdd</span><span class="k">:</span> <span class="kt">RDD</span><span class="o">[</span><span class="kt">T</span><span class="o">],</span>
+    <span class="n">partition</span><span class="k">:</span> <span class="kt">Partition</span><span class="o">,</span>
+    <span class="n">context</span><span class="k">:</span> <span class="kt">TaskContext</span><span class="o">,</span>
+    <span class="n">storageLevel</span><span class="k">:</span> <span class="kt">StorageLevel</span><span class="o">)</span><span class="k">:</span> <span class="kt">Iterator</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>由于Bigflow将Spark RDD看作是粗粒度的Task，因此getOrCompute并不适用。我们需要实现一个Bigflow
+SparkCacheManager更细粒度地与Spark的CacheManager/BlockManager进行交互，管理cache：</p>
+<ul class="simple">
+<li>SparkCacheManager::CacheWriter:</li>
+</ul>
+<p>CacheWriter自身维护一个链表/数组对缓存cache数据，通过其自身的write(key, value)将数据缓存起来，并在
+writer.close()调用时构造一个Java Iterator，调用Scala下的</p>
+<p>CacheManager.putInBlockManager进行缓存。(注意putInBlockManager是一个私有方法，需要通过反射强行调用)，
+如下图所示：</p>
+<a class="reference internal image-reference" href="../_images/cache_writer.png"><img alt="../_images/cache_writer.png" class="align-center" src="../_images/cache_writer.png" style="width: 600px; height: 400px;" /></a>
+<ul class="simple">
+<li>SparkCacheManager::Reader:</li>
+</ul>
+<p>BlockManager的get方法直接返回一个Some[BlockResult]，当数据已被缓存并正确读取时，可以通过BlockResult.data
+拿到以Iterator表示的数据。对于Bigflow而言，可以利用其构造一个</p>
+<p>RDD作为输入源（类似于HadoopInputRDD），如下图所示：</p>
+<a class="reference internal image-reference" href="../_images/reader.png"><img alt="../_images/reader.png" class="align-center" src="../_images/reader.png" style="width: 600px; height: 400px;" /></a>
+</div>
+<div class="section" id="id2">
+<h3>其他相关问题：构建、部署和依赖<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h3>
+<p>由上讨论，Runtime的worker部分通过RDD内部通过JNI调用的方式来完成，其包含：</p>
+<p>C++部分封装在一个叫做Runtime的模块里面，比如baidu.bigflow.runtime.spark.Runtime，</p>
+<ul class="simple">
+<li>执行的入口SparkTask</li>
+<li>数据交互相关模块的实现，例如OutputBuffer</li>
+<li>SparkExecutorFactory及所有的Executor实现</li>
+<li>FlumeLogService用于Debug的Log模块</li>
+<li>FlumeCounterService用于实现Counter的模块</li>
+</ul>
+<p>这个模块要求能够以-fPic的方式编译为动态链接库在运行时被加载到JVM中通过JNI调用。例如，对于Bigflow Python，
+这个链接库可以叫做libbflpyrt.so(BigflowPythonRuntime)：</p>
+<ul class="simple">
+<li>Python Interpreter不能够使用静态编译的方式构建，即Bigflow自带的Python在编译时，使用动态编译得到
+libpython.so，将其打包进前面提到的libbflpyrt.so</li>
+<li>Python Runtime也要替换为相应的基于libpython.so的版本</li>
+</ul>
+<a class="reference internal image-reference" href="../_images/runtime.png"><img alt="../_images/runtime.png" class="align-center" src="../_images/runtime.png" style="width: 600px; height: 400px;" /></a>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总目录"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python 模块索引"
+             >模块</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 文档</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>

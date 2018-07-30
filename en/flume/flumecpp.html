@@ -1,0 +1,244 @@
+
+
+<!doctype html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Flume C++ &#8212; Bigflow Python 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/bizstyle.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+   <!--<script src="static/lang_switch.js"></script>-->
+   <script>
+      function changelang(lang)
+      {
+           var url = document.location.toString();
+           var arrUrl = url.split("/");
+           var newUrl = "http://bigflow.cloud/" + lang + "/" + arrUrl.slice(4).join("/");
+           window.location.href=newUrl;
+       }
+   </script>
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Flume C++</a><ul>
+<li><a class="reference internal" href="#id1">基本数据模型和接口</a></li>
+<li><a class="reference internal" href="#id2">扩展接口</a></li>
+<li><a class="reference internal" href="#api-reference">API Reference</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/flume/flumecpp.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="flume-c">
+<h1>Flume C++<a class="headerlink" href="#flume-c" title="Permalink to this headline">¶</a></h1>
+<p>Flume C++是基于Flume-Core开发的一种方便用户直接使用的C++泛型接口. Flume C++的设计参考了google的
+<a class="reference external" href="http://pages.cs.wisc.edu/~akella/CS838/F12/838-CloudPapers/FlumeJava.pdf">flumejava</a>.</p>
+<div class="section" id="id1">
+<h2>基本数据模型和接口<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Flume C++的基本类型是PCollection&lt;T&gt;, 该类型抽象了Map阶段的输入流,
+即按行组织的数据流, 每一行的类型都是T. 对于一个PCollection&lt;T&gt;对象,
+我们不提供直接访问其行数据的接口, 相反我们提供了ParallelDo接口,
+用户可以将自定义的functor传入, 对PCollection&lt;T&gt;中的每一行应用该functor.
+下面的伪代码反映了其使用方式.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PCollection</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span> <span class="n">ReadTextFileCollection</span><span class="p">(</span><span class="s">&quot;hdfs://path/to/file.txt&quot;</span><span class="p">);</span>
+
+<span class="k">struct</span> <span class="n">SplitLineFn</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">Process</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">line</span><span class="p">,</span> <span class="n">EmitFn</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;*</span> <span class="n">emit_fn</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">boost</span><span class="o">::</span><span class="n">tokenizer</span><span class="o">&lt;&gt;</span> <span class="n">tokens</span><span class="p">(</span><span class="n">line</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">tokenizer</span><span class="o">&lt;&gt;::</span><span class="n">iterator</span> <span class="n">it</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">tokens</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">emit_fn</span><span class="o">-&gt;</span><span class="n">Emit</span><span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">};</span>
+<span class="p">};</span>
+<span class="n">PCollection</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">words</span> <span class="o">=</span> <span class="n">lines</span><span class="p">.</span><span class="n">ParallelDo</span><span class="p">(</span><span class="n">SplitLineFn</span><span class="p">(),</span> <span class="n">CollectionOf</span><span class="p">(</span><span class="n">Strings</span><span class="p">()));</span>
+</pre></div>
+</div>
+<p>从PCollection&lt;T&gt;衍生出来的类型是PTable&lt;K, V&gt;, 实际上PTable&lt;K, V&gt;继承自PCollection&lt; Pair&lt;K, V&gt; &gt;.
+返回类型为Pair&lt;K, V&gt;的functor, 可以将PCollection&lt;T&gt;转化为PTable&lt;K, V&gt;.在MR模型中,
+PTable&lt;K, V&gt;实际上代表MR中Mapper的输出结果. 下面的伪代码给出了一种使用方法.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">CountOneFn</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">Process</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">word</span><span class="p">,</span> <span class="n">EmitFn</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;*</span> <span class="n">emit_fn</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">emit_fn</span><span class="o">-&gt;</span><span class="n">Emit</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="n">PTable</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">words_with_ones</span> <span class="o">=</span>
+        <span class="n">words</span><span class="p">.</span><span class="n">ParallelDo</span><span class="p">(</span><span class="n">CountOneFn</span><span class="p">(),</span> <span class="n">TableOf</span><span class="p">(</span><span class="n">Strings</span><span class="p">(),</span> <span class="n">Ints</span><span class="p">()));</span>
+</pre></div>
+</div>
+<p>PTable&lt;K, V&gt;在PCollection提供的接口之外, 还提供了GroupByKey接口,
+这个接口会将PTable&lt;K, V&gt;转化为PTable&lt;K, Collection&lt;V&gt;&gt;. 代码示例如下:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PTable</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="n">Collection</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">grouped_words_with_ones</span> <span class="o">=</span> <span class="n">words_with_ones</span><span class="p">.</span><span class="n">GroupByKey</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>这一转换过程可以类比为MapReduce模型中的Shuffle过程,
+在这个过程中得到的PTable&lt;K, Collection&lt;V&gt;&gt;是Flume C++的第三种基础类型.
+PTable&lt;K, Collection&lt;V&gt;&gt;代表了被分组后的数据, 对于这类数据, 我们可以进行Combine操作.
+代码示例:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="n">SUM_INTS</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">Combine</span><span class="p">(</span><span class="k">const</span> <span class="n">Collection</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">inputs</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">accumulate</span><span class="p">(</span><span class="n">inputs</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">inputs</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+<span class="n">PTable</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">word_counts</span> <span class="o">=</span> <span class="n">grouped_words_with_ones</span><span class="p">.</span><span class="n">CombineValues</span><span class="p">(</span><span class="n">SUM_INTS</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>上面的用户代码展示了一个WordCount程序的书写流程. 事实上,
+Flume C++所有的数据操作都可以被抽象成在这几种基本数据类型之间的转换. 下面的图展示了转换的路径:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="../_images/flumejava_datamodel.png"><img alt="../_images/flumejava_datamodel.png" src="../_images/flumejava_datamodel.png" style="width: 450px;" /></a>
+</div></blockquote>
+</div>
+<div class="section" id="id2">
+<h2>扩展接口<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>上一节中, 我们展示了模仿FlumeJava提供的Flume C++基本接口. 可以看到,
+该接口基本是基于MapReduce模型进行设计. 然而, 从 <a class="reference internal" href="core.html"><span class="doc">Flume-Core</span></a> 的设计中我们可以看到,
+Flume的底层抽象实际上具有比MR模型更强的表达能力. 我们可以从以下几个方面对Flume C++进行扩展:</p>
+<ul>
+<li><p class="first">提供更加丰富的接口. 实际上, FlumeJava中的PCollection和
+<a class="reference external" href="http://spark.apache.org/docs/latest/scala-programming-guide.html">Spark</a>
+中的RDD概念有很大相似性. 而在 <a class="reference internal" href="core.html"><span class="doc">Flume-Core</span></a> 的设计中, 每一个逻辑计划节点只有一路输出,
+因此该逻辑节点实际上可以被看做一个PCollection(RDD). 因此, Spark中为RDD提供的操作方法,
+也都可以较容易的基于 <a class="reference internal" href="core.html"><span class="doc">Flume-Core</span></a> 实现.</p>
+</li>
+<li><p class="first">提供嵌套分组的PTable. 在FlumeJava的论文中, PTable&lt;K, V&gt;是用来描述带有分组信息的集合,
+PTable&lt;K, Collection&lt;V&gt;&gt;用来描述分组后的集合. 我们可以通过提供PTable&lt;K1, K2, V&gt;这样的集合,
+使得Flume C++同样具有描述嵌套分组的能力. 这样, 用户就可以把同一个算子应用到不同的分组作用域中,
+提高代码复用能力. 该机制经过扩展, 也可能具备支持实时计算的能力, 如:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">PTable</span><span class="o">&lt;</span><span class="n">Hour</span><span class="p">,</span> <span class="n">Minute</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">lines</span> <span class="o">=</span>
+        <span class="n">ReadRealTimeText</span><span class="p">(</span><span class="s">&quot;minus://target&quot;</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">60</span><span class="p">);</span>
+
+<span class="c1">// Group by the leftmost ONE key</span>
+<span class="n">WordCount</span><span class="p">(</span><span class="n">lines</span><span class="p">.</span><span class="n">GroupByKey</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">()).</span><span class="n">SaveEachGroup</span><span class="p">(</span><span class="s">&quot;hdfs://$1.log.hours&quot;</span><span class="p">);</span>
+
+<span class="c1">// Group by the leftmost TWO key</span>
+<span class="n">WordCount</span><span class="p">(</span><span class="n">lines</span><span class="p">.</span><span class="n">GroupByKey</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">()).</span><span class="n">SaveEachGroup</span><span class="p">(</span><span class="s">&quot;hdfs://$1:$2.log.minuts&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">实现PObject和Accumulator接口. PObject是FlumeJava中的概念, 它提供了一种方便的手段,
+使得可以从程序中直接获得分布式计算的结果. Accumulator是Spark中的概念,
+它类似于MapReduce中的Counter, 只不过Accumulator可以被绑定到一个程序变量上,
+在分布式计算结束后可以从程序中直接访问到. 这两种机制的加入, 可以方便多轮迭代计算的开发.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
+<p>待补充</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li>
+	    <select name="lang" onChange="changelang(this.value)">
+                <option value ="zh">Chinese</option>
+                <option value ="en">English</option>
+            </select>
+        </li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Bigflow Python 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Baidu.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+   <script>
+       var url = document.location.toString();
+       var lang = url.split("/")[3];
+       var selects = document.getElementsByName("lang");
+    
+       var options_idx = 0;
+       var selects_idx = 0;
+       for (selects_idx = 0; selects_idx < selects.length; selects_idx++) {
+           var select = selects[selects_idx];
+           for (options_idx = 0; options_idx < select.options.length; options_idx++) {
+               if (select.options[options_idx].value == lang) {
+                   select.options[options_idx].selected = true;
+               }
+           }
+      }
+   </script>
+  </body>
+</html>
