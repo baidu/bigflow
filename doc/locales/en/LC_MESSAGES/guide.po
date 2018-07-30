@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Bigflow Python 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-05 08:31+0000\n"
+"POT-Creation-Date: 2018-07-30 06:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.5.3\n"
+"Generated-By: Babel 2.6.0\n"
 
 #: ../../guide.rst:2
 msgid "编程指南"
@@ -326,345 +326,353 @@ msgstr ""
 msgid "Bigflow Python提供了一系列的变换原语方便用户表达计算。"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.accumulate <bigflow.transforms.accumulate>`\\ "
 "\\(pcollection\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "将给定的PCollection按照一个初始值和方法聚合为PObject"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.aggregate <bigflow.transforms.aggregate>`\\ "
 "\\(pcollection\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "将给定的PCollection按照初始值、初段聚合方法和汇总方法聚合为PObject"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.cartesian <bigflow.transforms.cartesian>`\\ "
 "\\(\\*pcollections\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对多个输入PCollection求笛卡尔积，返回一个PCollection"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.cogroup <bigflow.transforms.cogroup>`\\ "
 "\\(\\*pcollections\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对传入的所有pcollection进行协同分组。"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.combine <bigflow.transforms.combine>`\\ "
 "\\(pcollection\\, fn\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "给定一个合并函数，聚合输入PCollection中所有元素，这些元素以迭代器的形式给出"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.distinct <bigflow.transforms.distinct>`\\ "
 "\\(pcollection\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "返回给定PCollection中所有不重复元素"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.diff <bigflow.transforms.diff>`\\ "
 "\\(pcollection1\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对于给定的PCollection1和PCollection2，返回两者不相同的元素"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.extract_keys "
 "<bigflow.transforms.extract_keys>`\\ \\(ptable\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "提取给定PTable中所有的key"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.extract_values "
 "<bigflow.transforms.extract_values>`\\ \\(ptable\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "提取给定PTable中所有的value"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.filter <bigflow.transforms.filter>`\\ "
 "\\(pcollection\\, fn\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对于给定的PCollection和一个断言函数，返回只满足断言函数元素的PCollection"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.first <bigflow.transforms.first>`\\ "
 "\\(pcollection\\, \\*\\*options\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "取出PCollection中的第一个元素"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.flatten <bigflow.transforms.flatten>`\\ "
 "\\(ptable\\, \\*\\*options\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对于给定PTable中的key和value中每一个元素，构造(key, value)对，结果保存在PCollection中"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.flatten_values "
 "<bigflow.transforms.flatten_values>`\\ \\(ptable\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "等价于 ``extract_values(ptable)``"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.group_by <bigflow.transforms.group_by>`\\ "
 "\\(pcollection\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "利用给定的key_extractor和value_extractor对输入PCollection分组，返回一个表示分组结果的PTable"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.group_by_key "
 "<bigflow.transforms.group_by_key>`\\ \\(pcollection\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "利用给定的PCollection，使用一个默认的key/value提取函数对输入的PCollection分组 ，返回一个表示分组的PTable"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.is_empty <bigflow.transforms.is_empty>`\\ "
 "\\(pcollection\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对于输入PCollection，返回其是否为空"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.intersection "
 "<bigflow.transforms.intersection>`\\ \\(...\\[\\, ...\\]\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 "对于给定的PCollection1和PCollection2，返回所有同时存在于PCollection1和PCollection2 "
 "中的元素，即取两者交集"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.join <bigflow.transforms.join>`\\ "
 "\\(\\*pcollections\\, \\*\\*options\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
-msgid "对于多个输入PCollection，根据key对PCollection做内连接操作 ，连接结果为(key, (value1, value2, ."
+#: ../../guide.rst:214:<autosummary>:1
+msgid ""
+"对于多个输入PCollection，根据key对PCollection做内连接操作 ，连接结果为(key, (value1, value2, "
+"..., valuen))"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.left_join <bigflow.transforms.left_join>`\\ "
 "\\(\\*pcollections\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
-msgid "对于多个输入PCollection，根据key对PCollection做左连接操作 ，连接结果为(key, (value 1, value 2, ."
+#: ../../guide.rst:214:<autosummary>:1
+msgid ""
+"对于多个输入PCollection，根据key对PCollection做左连接操作 ，连接结果为(key, (value 1, value 2, "
+"..., value n))，若第m个PCollection没有元素， 则value m为None"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.right_join <bigflow.transforms.right_join>`\\ "
 "\\(\\*pcollections\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
-msgid "对于多个输入PCollection，根据key对PCollection做右连接操作 ，连接结果为(key, (value 1, value 2, ."
+#: ../../guide.rst:214:<autosummary>:1
+msgid ""
+"对于多个输入PCollection，根据key对PCollection做右连接操作 ，连接结果为(key, (value 1, value 2, "
+"..., value n))，若第m个PCollection没有元素， 则value m为None"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.full_join <bigflow.transforms.full_join>`\\ "
 "\\(\\*pcollections\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
-msgid "对于多个输入PCollection，根据key对PCollection做全连接操作 ，连接结果为(key, (value 1, value 2, ."
+#: ../../guide.rst:214:<autosummary>:1
+msgid ""
+"对于多个输入PCollection，根据key对PCollection做全连接操作 ，连接结果为(key, (value 1, value 2, "
+"..., value n))，若第m个PCollection没有元素， 则value m为None"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.max <bigflow.transforms.max>`\\ "
 "\\(pcollection\\[\\, key\\]\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "得到输入PCollection中最大的元素"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.max_elements "
 "<bigflow.transforms.max_elements>`\\ \\(pcollection\\, n\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "得到输入PCollection中前n大的元素"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.min <bigflow.transforms.min>`\\ "
 "\\(pcollection\\[\\, key\\]\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "得到输入PCollection中最小的元素"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.map <bigflow.transforms.map>`\\ \\(pvalue\\, "
 "fn\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对PCollection中的每个元素做一对一映射"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.flat_map <bigflow.transforms.flat_map>`\\ "
 "\\(pvalue\\, fn\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对PCollection中的每个元素做一对N映射"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.reduce <bigflow.transforms.reduce>`\\ "
 "\\(pcollection\\, fn\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对于属于PCollection，使用给定的fn将所有元素规约为单个元素"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.sort <bigflow.transforms.sort>`\\ "
 "\\(pcollection\\[\\, reverse\\]\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对于输入PCollection，将其进行排序"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.sum <bigflow.transforms.sum>`\\ "
 "\\(pcollection\\, \\*\\*options\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对于输入PCollection，求其所有包含元素相加的结果"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.take <bigflow.transforms.take>`\\ "
 "\\(pcollection\\, n\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "取给定PCollection中的任意n个元素。 （如果总元素数量不足n，则返回输入pcollection）"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.transform <bigflow.transforms.transform>`\\ "
 "\\(pcollection\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对给定PCollection进行任意的变换，结果为另一个PCollection"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.union <bigflow.transforms.union>`\\ "
 "\\(\\*pvalues\\, \\*\\*options\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对于多个输入PCollection/PObject，返回包含它们所有元素的PCollection"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.to_list_pobject "
 "<bigflow.transforms.to_list_pobject>`\\ \\(pvalue\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对于给定的PCollection，聚合为PObject，PObject的内容为list"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid ""
 ":obj:`bigflow.transforms.pipe <bigflow.transforms.pipe>`\\ \\(pvalue\\, "
 "command\\, ...\\)"
 msgstr ""
 
-#: ../../<autosummary>:1
+#: ../../guide.rst:214:<autosummary>:1
 msgid "对于给定的PCollection/PTable，返回通过command处理后的PCollection"
 msgstr ""
 
@@ -879,4 +887,24 @@ msgstr ""
 #: ../../guide.rst:414
 msgid "此时不应当再假定mapped中元素仍然有序。"
 msgstr ""
+
+#~ msgid ""
+#~ "对于多个输入PCollection，根据key对PCollection做内连接操作 ，连接结果为(key, "
+#~ "(value1, value2, ."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "对于多个输入PCollection，根据key对PCollection做左连接操作 ，连接结果为(key, "
+#~ "(value 1, value 2, ."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "对于多个输入PCollection，根据key对PCollection做右连接操作 ，连接结果为(key, "
+#~ "(value 1, value 2, ."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "对于多个输入PCollection，根据key对PCollection做全连接操作 ，连接结果为(key, "
+#~ "(value 1, value 2, ."
+#~ msgstr ""
 
