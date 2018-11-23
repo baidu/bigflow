@@ -7,7 +7,7 @@ SET(THRIFT_INCLUDE_DIR "${THRIFT_INSTALL_DIR}/include/" CACHE PATH "Thrift inclu
 ExternalProject_Add(
     extern_thrift
     DOWNLOAD_DIR ${THIRD_PARTY_PATH}
-    DOWNLOAD_COMMAND rm -rf ${THRIFT_SOURCES_DIR} && git clone https://git-wip-us.apache.org/repos/asf/thrift.git thrift
+    DOWNLOAD_COMMAND rm -rf ${THRIFT_SOURCES_DIR} && git clone git@github.com:apache/thrift.git
     # 0.9.1 cannot be built on mac, we have to choose 0.9.3, which requires a high version of bison
     # todo: find another way to specify /usr/local/opt/bison/bin, but it shoudn't affect linux's build
     # bison is also known as byacc
