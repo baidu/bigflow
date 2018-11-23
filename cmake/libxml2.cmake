@@ -7,8 +7,8 @@ SET(LIBXML2_INCLUDE_DIR "${LIBXML2_INSTALL_DIR}/include" CACHE PATH "gflags incl
 ExternalProject_Add(
     extern_libxml2
     DOWNLOAD_DIR ${THIRD_PARTY_PATH}
-    DOWNLOAD_COMMAND rm -rf ${LIBXML2_SOURCES_DIR} && git clone git://git.gnome.org/libxml2 --depth=1
-    CONFIGURE_COMMAND cd ${LIBXML2_SOURCES_DIR} && autoreconf -fiv && CPPFLAGS=-fPIC ./configure --with-python=no --prefix=${LIBXML2_INSTALL_DIR}
+    DOWNLOAD_COMMAND rm -rf ${LIBXML2_SOURCES_DIR} && git clone git@github.com:GNOME/libxml2.git
+    CONFIGURE_COMMAND cd ${LIBXML2_SOURCES_DIR} && git checkout v2.9.7 && autoreconf -fiv && CPPFLAGS=-fPIC ./configure --with-python=no --prefix=${LIBXML2_INSTALL_DIR}
     BUILD_COMMAND cd ${LIBXML2_SOURCES_DIR} && make -j 8
     INSTALL_COMMAND cd ${LIBXML2_SOURCES_DIR} && make install
     )

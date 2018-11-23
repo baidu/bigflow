@@ -1,4 +1,3 @@
-
 INCLUDE(ExternalProject)
 
 SET(LEVELDB_SOURCES_DIR ${THIRD_PARTY_PATH}/leveldb)
@@ -7,9 +6,9 @@ ExternalProject_Add(
     extern_leveldb
     DOWNLOAD_DIR ${THIRD_PARTY_PATH}
     DOWNLOAD_COMMAND rm -rf ${THIRD_PARTY_PATH}/leveldb && git clone https://github.com/google/leveldb.git
-    CONFIGURE_COMMAND echo ""
-    BUILD_COMMAND cd ${THIRD_PARTY_PATH}/leveldb && CC=gcc CXX=g++ CXXFLAGS=-fPIC make -j 8
-    INSTALL_COMMAND cp -r ${THIRD_PARTY_PATH}/leveldb/include/leveldb ${THIRD_PARTY_PATH}/include/ && cp ${LEVELDB_SOURCES_DIR}/out-static/libleveldb.a ${THIRD_PARTY_PATH}/lib
+    CONFIGURE_COMMAND cd ${THIRD_PARTY_PATH}/leveldb && rm -fr build && mkdir build && cd build && CXXFLAGS=-fPIC cmake ..
+    BUILD_COMMAND cd ${THIRD_PARTY_PATH}/leveldb/build && CC=gcc CXX=g++ CXXFLAGS=-fPIC make -j 8
+    INSTALL_COMMAND cp -r ${THIRD_PARTY_PATH}/leveldb/include/leveldb ${THIRD_PARTY_PATH}/include/ && cp ${LEVELDB_SOURCES_DIR}/build/libleveldb.a ${THIRD_PARTY_PATH}/lib
     )
 
 ADD_LIBRARY(leveldb STATIC IMPORTED GLOBAL)
