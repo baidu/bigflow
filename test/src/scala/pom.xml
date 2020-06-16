@@ -12,7 +12,7 @@
     <maven.compiler.target>1.6</maven.compiler.target>
     <encoding>UTF-8</encoding>
     <scala.version>2.10.4</scala.version>
-    <spark.version>1.4.2.0-baidu-SNAPSHOT</spark.version>
+    <spark.version>2.2.3</spark.version>
   </properties>
   <dependencies>
     <dependency>
