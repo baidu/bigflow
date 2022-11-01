@@ -33,9 +33,15 @@ unsigned int ${resource_src_name}_len= xx;
 ${resource_src_name} is mapped from src_name by replacing '/' or '.' to '_'.
 
 """
-
+from __future__ import print_function
 import os
 import sys
+
+
+# Assume 'reduce' fuction needs to be imported in this way in future versions.
+version_info = int(sys.version.split('.')[0])
+if version_info > 2:
+    from functools import reduce
 
 
 def generate_line(byte_list):
@@ -46,7 +52,7 @@ def generate_line(byte_list):
 def generate_resource_and_src_list(base_dir, src_list):
     resource_list = []
     for src in src_list:
-        prefix = os.path.commonprefix({base_dir, src})
+        prefix = os.path.commonprefix([base_dir, src])
         component = src[len(prefix):].lstrip('/')
         resource_name = component.replace('/', '_').replace('.', '_')
         c_filename = resource_name + ".c"
@@ -68,9 +74,9 @@ if __name__ == "__main__":
     resource_list = generate_resource_and_src_list(base_dir, srcs)
 
     hfile = open(header_file, 'w')
-    print >> hfile, '#ifdef __cplusplus'
-    print >> hfile, 'extern "C" {'
-    print >> hfile, '#endif'
+    print('#ifdef __cplusplus', file=hfile)
+    print('extern "C" {', file=hfile)
+    print('#endif', file=hfile)
 
     for (source, resource_name, c_filename, size) in resource_list:
         f = open(source, 'rb')
@@ -87,16 +93,16 @@ if __name__ == "__main__":
         if len(byte_list) > 0:
             line_list.append(generate_line(byte_list))
 
-        print >> hfile, "extern const char RESOURCE_%s[%d];" % (resource_name, size)
+        print("extern const char RESOURCE_%s[%d];" % (resource_name, size), file=hfile)
         with open(c_filename, "w") as c_file:
-            print >> c_file, "const char RESOURCE_%s[] = {" % resource_name
-            line_list[len(line_list) - 1] = line_list[len(line_list) - 1][ : -1]
+            print("const char RESOURCE_%s[] = {" % resource_name, file=c_file)
+            line_list[len(line_list) - 1] = line_list[len(line_list) - 1][:-1]
             for line in line_list:
-                print >> c_file, '   ', line
-            print >> c_file, '};'
-            print >> c_file, "unsigned int %s_len = %d;" % (resource_name, size)
+                print('   ' + line, file=c_file)
+            print('};', file=c_file)
+            print("unsigned int %s_len = %d;" % (resource_name, size), file=c_file)
 
-    print >> hfile, '#ifdef __cplusplus'
-    print >> hfile, '}'
-    print >> hfile, '#endif'
+    print('#ifdef __cplusplus', file=hfile)
+    print('}', file=hfile)
+    print('#endif', file = hfile)
     hfile.close()
